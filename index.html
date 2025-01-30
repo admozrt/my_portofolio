@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Resume - Adi Rakhmatullah Ma'arif</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
+</head>
+<body class="bg-gray-800 text-gray-800 font-sans scroll-smooth">
+
+  <!-- Navbar -->
+  <nav class="bg-gray-800 text-white shadow-lg fixed w-full h-18 z-10 ">
+    <div class="container mx-auto px-6 py-4 flex justify-between items-center max-w-6xl">
+      <a href="#about" class="text-xl font-bold text-white">Portfolio</a>
+      <!-- Mobile Menu Button -->
+      <button id="mobile-menu-button" class="md:hidden focus:outline-none">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+        </svg>
+      </button>
+      <!-- Desktop Menu -->
+      <div id="navbar-menu" class="hidden md:flex space-x-6">
+        <a href="#about" class="hover:text-blue-500">Tentang</a>
+        <a href="#experience" class="hover:text-blue-500">Pengalaman</a>
+        <a href="#project" class="hover:text-blue-500">Proyek</a>
+        <a href="#education" class="hover:text-blue-500">Pendidikan</a>
+        <a href="#skill" class="hover:text-blue-500">Keahlian</a>
+        <a href="#interest" class="hover:text-blue-500">Minat</a>
+        <a href="#award" class="hover:text-blue-500">Sertifikat</a>
+      </div>
+    </div>
+    <!-- Mobile Menu (Dropdown) -->
+    <div id="mobile-menu" class="md:hidden hidden bg-gray-800 text-white">
+      <div class="flex flex-col space-y-4 px-6 py-4">
+        <a href="#about" class="hover:text-blue-500">Tentang</a>
+        <a href="#experience" class="hover:text-blue-500">Pengalaman</a>
+        <a href="#project" class="hover:text-blue-500">Proyek</a>
+        <a href="#education" class="hover:text-blue-500">Pendidikan</a>
+        <a href="#skill" class="hover:text-blue-500">Keahlian</a>
+        <a href="#interest" class="hover:text-blue-500">Minat</a>
+        <a href="#award" class="hover:text-blue-500">Sertifikat</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- About Section -->
+<section id="about" class="pt-20 pb-10 bg-white" data-aos="fade-up">
+    <div class="container mx-auto px-6 max-w-6xl">
+      <h2 class="text-3xl font-bold text-center mb-6">Tentang Saya</h2>
+      <div class="flex flex-col md:flex-row items-center">
+        <!-- Foto dengan bentuk kotak dan sedikit rounded -->
+        <div class="w-52 h-32 mb-6 md:mb-0 md:mr-6 overflow-hidden rounded-lg shadow-lg">
+          <img src="img/my1.jpg" alt="Profile Picture" class="w-full h-full object-cover">
+        </div>
+        <div class="text-center md:text-left">
+          <p class="text-gray-700 mb-4">
+            Halo! <strong>Saya Adi Rakhmatullah Ma'arif</strong>, seorang pengembang web yang bersemangat dengan pengalaman dalam membangun website yang responsif dan ramah pengguna.
+            Saya berspesialisasi dalam pengembangan web dari back-end maupun front-end dan senang bekerja dengan teknologi modern baru.
+          </p>
+          <p class="text-gray-700">
+            Contact : <a href="mailto:admozart996@gmail.com" class="text-blue-500">admozart996@gmail.com</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Experience Section -->
+  <section id="experience" class="py-10 bg-gray-50" data-aos="fade-up">
+    <div class="container mx-auto px-6 max-w-6xl">
+      <h2 class="text-3xl font-bold text-center mb-6">Pengalaman</h2>
+      <div class="space-y-6">
+        <div class="bg-white p-6 rounded-lg shadow">
+          <h3 class="text-xl font-bold">Freelance Web Developer</h3>
+          <p class="text-gray-600">Februari 2020 - Sekarang</p>
+          <p class="text-gray-700 mt-2">
+            Membuat, Mengembangkan dan memelihara website klien, memastikan performa tinggi dan responsif.
+          </p>
+        </div>
+        <div class="bg-white p-6 rounded-lg shadow">
+          <h3 class="text-xl font-bold">Developer</h3>
+          <p class="text-gray-600">RSJ Sambang Lihum · Januari 2024 - Sekarang</p>
+          <p class="text-gray-700 mt-2">
+            Mengembangkan dan memelihara SIMRS (Sistem Informasi Rumah Sakit) yang digunakan oleh RSJ Sambang Lihum, memastikan keamanan dan kenyamanan sistem.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Project Section -->
+  <section id="project" class="py-10 bg-white" data-aos="fade-up">
+    <div class="container mx-auto px-6 max-w-6xl">
+      <h2 class="text-3xl font-bold text-center mb-6">Proyek</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div class="bg-gray-50 p-6 rounded-lg shadow">
+          <h3 class="text-xl font-bold">TNI AD - Rindam Mulawarman</h3>
+          <p class="text-gray-700 mt-2">
+            Website admin pengelolaan honor pegawai yang dibangun dengan Laravel dan Bootstrap.
+          </p>
+        </div>
+        <div class="bg-gray-50 p-6 rounded-lg shadow">
+          <h3 class="text-xl font-bold">Mts Hidayatullah (SMIH)</h3>
+          <p class="text-gray-700 mt-2">
+            Sistem Informasi pengelolaan sekolah yang dibangun dengan PHP Native dan Bootstrap.
+          </p>
+        </div>
+        <div class="bg-gray-50 p-6 rounded-lg shadow">
+          <h3 class="text-xl font-bold">CV. Galih Pamungkas</h3>
+          <p class="text-gray-700 mt-2">
+            Website admin pengelolaan kelapa sawit yang dibangun dengan PHP Native dan Bootstrap.
+          </p>
+        </div>
+        <div class="bg-gray-50 p-6 rounded-lg shadow">
+          <h3 class="text-xl font-bold">Universitas Borneo Lestari</h3>
+          <p class="text-gray-700 mt-2">
+            Sistem Informasi pengelolaan asset dan arsip kampus yang dibangun dengan Codeigniter dan Bootstrap.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Education Section -->
+  <section id="education" class="py-10 bg-gray-50" data-aos="fade-up">
+    <div class="container mx-auto px-6 max-w-6xl">
+      <h2 class="text-3xl font-bold text-center mb-6">Pendidikan</h2>
+      <div class="space-y-6">
+        <div class="bg-white p-6 rounded-lg shadow">
+          <h3 class="text-xl font-bold">Universitas Islam Kalimantan</h3>
+          <p class="text-gray-600">S1 - Teknik Informatika · 2016 - 2021</p>
+        </div>
+        <div class="bg-white p-6 rounded-lg shadow">
+          <h3 class="text-xl font-bold">MA Miftahul Khairiyah</h3>
+          <p class="text-gray-600">IPS · 2013 - 2016</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Skill Section -->
+  <section id="skill" class="py-10 bg-white" data-aos="fade-up">
+    <div class="container mx-auto px-6 max-w-6xl">
+      <h2 class="text-3xl font-bold text-center mb-6">Keahlian</h2>
+      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        <div class="bg-gray-50 p-6 rounded-lg shadow text-center">
+          <i class="fab fa-html5 text-6xl text-orange-500 mb-2"></i>
+          <p class="text-gray-700">HTML</p>
+        </div>
+        <div class="bg-gray-50 p-6 rounded-lg shadow text-center">
+          <i class="fab fa-css3-alt text-6xl text-blue-500 mb-2"></i>
+          <p class="text-gray-700">CSS</p>
+        </div>
+        <div class="bg-gray-50 p-6 rounded-lg shadow text-center">
+          <i class="fab fa-php text-6xl text-blue-500 mb-2"></i>
+          <p class="text-gray-700">PHP</p>
+        </div>
+        <div class="bg-gray-50 p-6 rounded-lg shadow text-center">
+          <i class="fab fa-js-square text-6xl text-yellow-500 mb-2"></i>
+          <p class="text-gray-700">JavaScript</p>
+        </div>
+        <div class="bg-gray-50 p-6 rounded-lg shadow text-center">
+          <i class="fab fab fa-laravel text-6xl text-blue-400 mb-2"></i>
+          <p class="text-gray-700">Laravel</p>
+        </div>
+        <div class="bg-gray-50 p-6 rounded-lg shadow text-center">
+          <i class="fab fa-node-js text-6xl text-green-500 mb-2"></i>
+          <p class="text-gray-700">Node.js</p>
+        </div>
+        <div class="bg-gray-50 p-6 rounded-lg shadow text-center">
+          <i class="fab fa-bootstrap text-6xl text-purple-500 mb-2"></i>
+          <p class="text-gray-700">Bootstrap</p>
+        </div>
+        <div class="bg-gray-50 p-6 rounded-lg shadow text-center">
+          <i class="fab fa-css3 text-6xl text-purple-500 mb-2"></i>
+          <p class="text-gray-700">Tailwind</p>
+        </div>
+        <div class="bg-gray-50 p-6 rounded-lg shadow text-center">
+          <i class="fas fa-database text-6xl text-blue-500 mb-2"></i>
+          <p class="text-gray-700">Database</p>
+        </div>
+        <div class="bg-gray-50 p-6 rounded-lg shadow text-center">
+          <i class="fab fa-git-alt text-6xl text-red-500 mb-2"></i>
+          <p class="text-gray-700">Git</p>
+        </div>
+        <div class="bg-gray-50 p-6 rounded-lg shadow text-center">
+          <i class="fab fa-npm text-6xl text-red-500 mb-2"></i>
+          <p class="text-gray-700">NPM</p>
+        </div>
+        <!-- <div class="bg-gray-50 p-6 rounded-lg shadow text-center">
+          <i class="fab fa-microsoft text-6xl text-purple-500 mb-2"></i>
+          <p class="text-gray-700">Microsoft Office</p>
+        </div> -->
+      </div>
+    </div>
+  </section>
+  
+  <!-- Interest Section -->
+  <section id="interest" class="py-10 bg-gray-50" data-aos="fade-up">
+    <div class="container mx-auto px-6 max-w-6xl">
+      <h2 class="text-3xl font-bold text-center mb-6">Minat</h2>
+      <p class="text-gray-700 text-center">
+        Saya menikmati kegiatan olahraga luar ruangan seperti sepakbola dan senang membaca. Saya juga sangat tertarik mempelajari teknologi baru dan berkontribusi pada proyek open-source.
+      </p>
+    </div>
+  </section>
+
+  <!-- Award Section -->
+  <section id="award" class="py-10 bg-white" data-aos="fade-up">
+    <div class="container mx-auto px-6 max-w-6xl">
+      <h2 class="text-3xl font-bold text-center mb-6">Awards & Certifications</h2>
+      <div class="space-y-6">
+        <div class="bg-gray-50 p-6 rounded-lg shadow">
+          <h3 class="text-xl font-bold">Google Analytics Certified Developer</h3>
+        </div>
+        <div class="bg-gray-50 p-6 rounded-lg shadow">
+          <h3 class="text-xl font-bold">Mobile Web Specialist - Google Certification</h3>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-gray-800 text-white py-6">
+    <div class="container mx-auto px-6 text-center max-w-6xl">
+      <p>&copy; 2023 Adi Rakhmatullah Ma'arif. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+  <script>
+    // Initialize AOS (Animate On Scroll)
+    AOS.init({
+      duration: 1000, // Animation duration
+      once: false, // Whether animation should happen only once
+    });
+
+    // Toggle Mobile Menu
+    const mobileMenuButton = document.getElementById('mobile-menu-button');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    mobileMenuButton.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden'); // Toggle visibility of mobile menu
+    });
+
+    // Smooth Scroll for Navigation Links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault(); // Prevent default anchor behavior
+        const targetId = this.getAttribute('href').substring(1); // Get target section ID
+        const targetSection = document.getElementById(targetId); // Find target section
+        if (targetSection) {
+          targetSection.scrollIntoView({
+            behavior: 'smooth', // Smooth scroll
+            block: 'start', // Align to the top of the section
+          });
+          // Hide mobile menu after clicking a link
+          mobileMenu.classList.add('hidden');
+        }
+      });
+    });
+  </script>
+</body>
+</html>
