@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://admoz.pages.dev/sitemap.xml
