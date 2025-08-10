@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Adi Rakhmatullah Ma'arif - Web Developer, seorang pengembang web dengan pengalaman dalam membangun website responsif dan ramah pengguna. Lihat proyek dan pengalaman saya.">
-  <title>Adi Rakhmatullah Ma'arif - Web Developer</title>
+  <meta name="description" content="Adi Rakhmatullah Ma'arif - Software Enginer, seorang pengembang web dengan pengalaman dalam membangun website responsif dan ramah pengguna. Lihat proyek dan pengalaman saya.">
+  <title>Adi Rakhmatullah Ma'arif - Software Enginer</title>
   <link rel="apple-touch-icon" sizes="180x180" href="img/apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="32x32" href="img/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="img/favicon-16x16.png">
@@ -35,6 +35,35 @@
     @keyframes highlight-fade {
         from { background-color: #fffb8f; }
         to { background-color: #ffeb3b; }
+    }
+
+    /* Project Card Hover Effects */
+    .project-card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .project-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    }
+    
+    .project-thumbnail {
+        transition: transform 0.3s ease;
+    }
+    
+    .project-card:hover .project-thumbnail {
+        transform: scale(1.05);
+    }
+
+    /* Link button styles */
+    .project-link {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        transition: all 0.3s ease;
+    }
+    
+    .project-link:hover {
+        background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+        transform: scale(1.05);
     }
   </style>
 
@@ -106,11 +135,11 @@
   <!-- About Section -->
   <section id="about" class="pt-20 pb-10 bg-white" data-aos="fade-up">
     <div class="container mx-auto px-6 max-w-7xl animate__animated animate__fadeInUp">
-      <h1 class="text-3xl text-center font-bold mb-3">Adi Rakhmatullah Ma'arif - Web Developer</h1>
+      <h1 class="text-3xl text-center font-bold mb-3">Adi Rakhmatullah Ma'arif - Software Enginer</h1>
       <h2 class="text-3xl font-bold text-center mb-6">Tentang</h2>
       <div class="flex flex-col md:flex-row items-center">
         <div class="w-56 h-46 mb-6 md:w-96 md:h-56 md:mb-0 md:mr-6 overflow-hidden rounded-lg shadow-lg">
-          <img src="img/my1.jpg" alt="Adi Rakhmatullah Ma'arif - Web Developer" class="w-full h-full object-cover">
+          <img src="img/my1.jpg" alt="Adi Rakhmatullah Ma'arif - Software Enginer" class="w-full h-full object-cover">
         </div>
         <div class="text-center md:text-left">
           <p class="text-gray-700 mb-4">
@@ -221,7 +250,7 @@
       <h2 class="text-3xl font-bold text-center mb-6">Pengalaman</h2>
       <div class="space-y-6">
         <div class="bg-white p-6 rounded-lg shadow">
-          <h3 class="text-xl text-blue-400 font-bold">Freelance Web Developer</h3>
+          <h3 class="text-xl text-blue-400 font-bold">Freelance Software Enginer</h3>
           <p class="text-gray-600">Februari 2020 - Sekarang</p>
           <p class="text-gray-700 mt-2">
             Membuat, Mengembangkan dan memelihara website klien, memastikan performa tinggi dan responsif.
@@ -243,71 +272,136 @@
     <div class="container mx-auto px-6 max-w-7xl animate__animated animate__fadeInUp">
       <h2 class="text-3xl font-bold text-center mb-6">Proyek</h2>
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <div class="bg-gray-50 p-6 rounded-lg shadow">
-          <h3 class="text-xl text-blue-400 font-bold">TNI AD - Rindam Mulawarman</h3>
-          <p class="text-gray-700 mt-2">
-            Sistem Informasi pengelolaan honor pegawai yang dibangun dengan Laravel dan Bootstrap.
-          </p>
+        
+        <!-- Project 1: TNI AD -->
+        <div class="bg-gray-50 rounded-lg shadow project-card overflow-hidden">
+          <div class="h-48 bg-gradient-to-br from-green-400 to-green-600 relative overflow-hidden">
+            <div class="project-thumbnail w-full h-full flex items-center justify-center">
+              <i class="fas fa-shield-alt text-6xl text-white opacity-80"></i>
+            </div>
+            <!-- Overlay untuk efek visual -->
+            <div class="absolute inset-0 bg-black bg-opacity-20"></div>
+          </div>
+          <div class="p-6">
+            <h3 class="text-xl text-blue-400 font-bold mb-3">TNI AD - Rindam Mulawarman</h3>
+            <p class="text-gray-700 mb-4">
+              Sistem Informasi pengelolaan honor pegawai yang dibangun dengan Laravel dan Bootstrap.
+            </p>
+            <div class="flex items-center justify-between">
+              <span class="text-sm text-gray-500">
+                <i class="fab fa-laravel mr-1"></i> Laravel + Bootstrap
+              </span>
+              <a href="#" class="project-link text-white px-4 py-2 rounded-lg text-sm font-semibold inline-flex items-center">
+                <i class="fas fa-external-link-alt mr-2"></i>
+                Lihat
+              </a>
+            </div>
+          </div>
         </div>
-        <div class="bg-gray-50 p-6 rounded-lg shadow">
-          <h3 class="text-xl text-blue-400 font-bold">Mts Hidayatullah (SMIH)</h3>
-          <p class="text-gray-700 mt-2">
-            Sistem Informasi pengelolaan sekolah yang dibangun dengan PHP Native dan Bootstrap.
-          </p>
+
+        <!-- Project 2: MTS Hidayatullah -->
+        <div class="bg-gray-50 rounded-lg shadow project-card overflow-hidden">
+          <div class="h-48 bg-gradient-to-br from-blue-400 to-blue-600 relative overflow-hidden">
+            <div class="project-thumbnail w-full h-full flex items-center justify-center">
+              <i class="fas fa-graduation-cap text-6xl text-white opacity-80"></i>
+            </div>
+            <div class="absolute inset-0 bg-black bg-opacity-20"></div>
+          </div>
+          <div class="p-6">
+            <h3 class="text-xl text-blue-400 font-bold mb-3">Mts Hidayatullah (SMIH)</h3>
+            <p class="text-gray-700 mb-4">
+              Sistem Informasi pengelolaan sekolah yang dibangun dengan PHP Native dan Bootstrap.
+            </p>
+            <div class="flex items-center justify-between">
+              <span class="text-sm text-gray-500">
+                <i class="fab fa-php mr-1"></i> PHP + Bootstrap
+              </span>
+              <a href="#" class="project-link text-white px-4 py-2 rounded-lg text-sm font-semibold inline-flex items-center">
+                <i class="fas fa-external-link-alt mr-2"></i>
+                Lihat
+              </a>
+            </div>
+          </div>
         </div>
-        <div class="bg-gray-50 p-6 rounded-lg shadow">
-          <h3 class="text-xl text-blue-400 font-bold">PT. INDICO YOUTH</h3>
-          <p class="text-gray-700 mt-2">
-            Sistem Informasi absensi pegawai yang dibangun dengan CodeIgniter, Map Location dan Bootstrap.
-          </p>
+
+        <!-- Project 3: PT. INDICO YOUTH -->
+        <div class="bg-gray-50 rounded-lg shadow project-card overflow-hidden">
+          <div class="h-48 bg-gradient-to-br from-purple-400 to-purple-600 relative overflow-hidden">
+            <div class="project-thumbnail w-full h-full flex items-center justify-center">
+              <i class="fas fa-clock text-6xl text-white opacity-80"></i>
+            </div>
+            <div class="absolute inset-0 bg-black bg-opacity-20"></div>
+          </div>
+          <div class="p-6">
+            <h3 class="text-xl text-blue-400 font-bold mb-3">PT. INDICO YOUTH</h3>
+            <p class="text-gray-700 mb-4">
+              Sistem Informasi absensi pegawai yang dibangun dengan CodeIgniter, Map Location dan Bootstrap.
+            </p>
+            <div class="flex items-center justify-between">
+              <span class="text-sm text-gray-500">
+                <i class="fas fa-code mr-1"></i> CodeIgniter + Map
+              </span>
+              <a href="#" class="project-link text-white px-4 py-2 rounded-lg text-sm font-semibold inline-flex items-center">
+                <i class="fas fa-external-link-alt mr-2"></i>
+                Lihat
+              </a>
+            </div>
+          </div>
         </div>
-        <div class="bg-gray-50 p-6 rounded-lg shadow">
-          <h3 class="text-xl text-blue-400 font-bold">Universitas Borneo Lestari</h3>
-          <p class="text-gray-700 mt-2">
-            Sistem Informasi asset dan arsip kampus yang dibangun dengan CodeIgniter dan Bootstrap.
-          </p>
+
+        <!-- Project 4: Universitas Borneo Lestari -->
+        <div class="bg-gray-50 rounded-lg shadow project-card overflow-hidden">
+          <div class="h-48 bg-gradient-to-br from-indigo-400 to-indigo-600 relative overflow-hidden">
+            <div class="project-thumbnail w-full h-full flex items-center justify-center">
+              <i class="fas fa-university text-6xl text-white opacity-80"></i>
+            </div>
+            <div class="absolute inset-0 bg-black bg-opacity-20"></div>
+          </div>
+          <div class="p-6">
+            <h3 class="text-xl text-blue-400 font-bold mb-3">Universitas Borneo Lestari</h3>
+            <p class="text-gray-700 mb-4">
+              Sistem Informasi asset dan arsip kampus yang dibangun dengan CodeIgniter dan Bootstrap.
+            </p>
+            <div class="flex items-center justify-between">
+              <span class="text-sm text-gray-500">
+                <i class="fas fa-code mr-1"></i> CodeIgniter + Bootstrap
+              </span>
+              <a href="#" class="project-link text-white px-4 py-2 rounded-lg text-sm font-semibold inline-flex items-center">
+                <i class="fas fa-external-link-alt mr-2"></i>
+                Lihat
+              </a>
+            </div>
+          </div>
         </div>
-        <div class="bg-gray-50 p-6 rounded-lg shadow">
-          <h3 class="text-xl text-blue-400 font-bold">PT.Timur Mila Utama</h3>
-          <p class="text-gray-700 mt-2">
-            Sistem Informasi Web dan Mobile pemesanan tiket kapal yang dibangun dengan Backend - Laravel,Frontend - React dan React Native.
-          </p>
+
+        <!-- Project 5: PT.Timur Mila Utama -->
+        <div class="bg-gray-50 rounded-lg shadow project-card overflow-hidden md:col-span-2 lg:col-span-1">
+          <div class="h-48 bg-gradient-to-br from-blue-400 to-blue-600 relative overflow-hidden">
+            <img src="assets/PTTMU/PTTMU.png" 
+                alt="PT. Timur Mila Utama - Sistem Pemesanan Tiket Kapal" 
+                class="project-thumbnail w-full h-full object-cover">
+            <div class="absolute inset-0 bg-black bg-opacity-20"></div>
+          </div>
+          <div class="p-6">
+            <h3 class="text-xl text-blue-400 font-bold mb-3">PT.Timur Mila Utama</h3>
+            <p class="text-gray-700 mb-4">
+              Sistem Informasi Web dan Mobile pemesanan tiket kapal yang dibangun dengan Backend - Laravel, Frontend - React dan React Native.
+            </p>
+            <div class="flex items-center justify-between">
+              <span class="text-sm text-gray-500">
+                <i class="fab fa-laravel mr-1"></i> Laravel + React
+              </span>
+              <a href="https://timurmilautama.co.id" class="project-link text-white px-4 py-2 rounded-lg text-sm font-semibold inline-flex items-center">
+                <i class="fas fa-external-link-alt mr-2"></i>
+                Lihat
+              </a>
+            </div>
+          </div>
         </div>
+
       </div>
     </div>
   </section>
-
-  <!-- Education Section -->
-  <section id="education" class="py-10 bg-gray-50" data-aos="fade-up">
-    <div class="container mx-auto px-6 max-w-7xl animate__animated animate__fadeInUp">
-      <h2 class="text-3xl font-bold text-center mb-6">Pendidikan</h2>
-      <div class="space-y-6">
-        <div class="bg-white p-6 rounded-lg shadow">
-          <h3 class="text-xl text-blue-400 font-bold">Universitas Islam Kalimantan</h3>
-          <p class="text-gray-600">S1 - Teknik Informatika · 2016 - 2021</p>
-        </div>
-        <div class="bg-white p-6 rounded-lg shadow">
-          <h3 class="text-xl text-blue-400 font-bold">MA Miftahul Khairiyah</h3>
-          <p class="text-gray-600">IPS · 2013 - 2016</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Award Section -->
-  <!-- <section id="award" class="py-10 bg-white" data-aos="fade-up">
-    <div class="container mx-auto px-6 max-w-7xl animate__animated animate__fadeInUp">
-      <h2 class="text-3xl font-bold text-center mb-6">Sertifikat</h2>
-      <div class="space-y-6">
-        <div class="bg-gray-50 p-6 rounded-lg shadow">
-          <h3 class="text-xl text-blue-400 font-bold">Google Analytics Certified Developer</h3>
-        </div>
-        <div class="bg-gray-50 p-6 rounded-lg shadow">
-          <h3 class="text-xl text-blue-400 font-bold">Mobile Web Specialist - Google Certification</h3>
-        </div>
-      </div>
-    </div>
-  </section> -->
 
   <!-- Footer -->
   <footer class="bg-gray-800 text-white py-6">
@@ -315,6 +409,7 @@
       <p>&copy; Adi Rakhmatullah Ma'arif, S.Kom.</p>
     </div>
   </footer>
+  
   <!-- Scripts -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
   <!-- Noted -->
@@ -323,7 +418,7 @@
       "@context": "https://schema.org",
       "@type": "Person",
       "name": "Adi Rakhmatullah Ma'arif",
-      "jobTitle": "Web Developer",
+      "jobTitle": "Software Enginer",
       "url": "https://admoz.pages.dev",
       "sameAs": [
         "https://www.linkedin.com/in/adi-rakhmatullah-ma-arif-145b3723b",
@@ -343,7 +438,7 @@
       "image": "https://admoz.pages.dev/img/my1.jpg",
       "hasOccupation": {
         "@type": "Occupation",
-        "name": "Web Developer",
+        "name": "Software Enginer",
         "skills": "Web Development, System Architecture, Database Design"
       }
     }
@@ -392,7 +487,6 @@
           document.getElementById('mobileSearchInput').value = e.target.value;
           performSearch();
       });
-
 
       // Inisialisasi AOS
       AOS.init({
