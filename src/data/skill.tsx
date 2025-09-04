@@ -7,7 +7,6 @@ import {
   faDocker,
   faHtml5,
   faCss3Alt,
-  faSass,
   faGitAlt,
   faNpm,
   faBootstrap,
