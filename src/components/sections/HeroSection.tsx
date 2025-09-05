@@ -48,14 +48,14 @@ export const HeroSection: React.FC = () => {
           <div className="flex flex-wrap justify-center gap-4">
             <button 
               onClick={() => document.getElementById('proyek')?.scrollIntoView({ behavior: 'smooth' })}
-              className="px-8 py-3 border-2 border-blue-100 bg-gradient-to-l from-blue-400 to-grey-600 dark:from-blue-500 to-blue-800 text-white rounded-full hover:shadow-lg hover:scale-105 transition-all duration-200 flex items-center gap-2"
+              className="px-8 py-3 bg-gradient-to-l from-blue-400 to-grey-600 dark:from-blue-500 to-blue-800 text-white rounded-full hover:shadow-lg hover:scale-105 transition-all duration-200 flex items-center gap-2"
             >
               <Code className="w-5 h-5" />
               Lihat Karya Saya
             </button>
             <button 
               onClick={() => document.getElementById('kontak')?.scrollIntoView({ behavior: 'smooth' })}
-              className="px-8 py-3 border-2 border-blue-100 bg-gradient-to-r from-blue-400 to-grey-600 dark:from-blue-500 to-blue-800 text-white rounded-full hover:shadow-lg hover:scale-105 transition-all duration-200 flex items-center gap-2"
+              className="px-8 py-3 bg-gradient-to-r from-blue-400 to-grey-600 dark:from-blue-500 to-blue-800 text-white rounded-full hover:shadow-lg hover:scale-105 transition-all duration-200 flex items-center gap-2"
             >
               <Mail className="w-5 h-5" />
               Hubungi Saya
