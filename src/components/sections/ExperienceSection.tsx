@@ -8,7 +8,7 @@ export const ExperienceSection: React.FC = () => {
       <div className="container mx-auto px-6 max-w-8xl">
         <div className="text-center mb-16">
           <h2 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">Pengalaman Profesional</h2>
-          <p className="text-xl text-gray-600 dark:text-gray-300">Perjalanan saya dalam pengembangan perangkat lunak</p>
+          <p className="text-xl text-gray-600 dark:text-gray-300">Perjalanan saya dalam pengembangan perangkat lunak digital</p>
         </div>
 
         <div className="space-y-8">

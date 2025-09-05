@@ -1,5 +1,5 @@
 import React from 'react';
-import { Github, Linkedin, Mail, Phone } from 'lucide-react';
+import { Github, Linkedin, Mail, MessageCircle, Phone } from 'lucide-react';
 import { skills } from '../../data/skill';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
@@ -12,7 +12,7 @@ export const AboutSection: React.FC = () => {
           <p className="text-xl text-gray-600 dark:text-gray-300">Kenali lebih jauh latar belakang dan keahlian saya</p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-16">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">
           <div>
             <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">Gambaran Profesional</h3>
             <p className="text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">
@@ -29,7 +29,7 @@ export const AboutSection: React.FC = () => {
             
             <div id="kontak" className="bg-gray-50 dark:bg-gray-800 p-6 rounded-xl">
               <h4 className="text-lg font-semibold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
-                <Mail className="w-5 h-5 text-blue-500" />
+                <MessageCircle className="w-5 h-5 text-blue-500" />
                 Informasi Kontak
               </h4>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">

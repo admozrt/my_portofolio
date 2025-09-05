@@ -3,23 +3,23 @@ import type { Project } from '../types';
 export const projects: Project[] = [
   {
     id: 1,
-    title: 'PT. Timur Mila Utama',
-    description: 'Platform tiket kapal komprehensif dengan penjadwalan real-time, gateway pembayaran terintegrasi, dan antarmuka mobile responsif untuk optimisasi transportasi maritim.',
+    title: 'TMU Ferry - Platform Tiket Kapal',
+    description: 'Platform tiket kapal komprehensif dengan penjadwalan real-time, gateway pembayaran terintegrasi, dan antarmuka mobile responsif untuk optimisasi transportasi maritim pada PT.Timur Mila Utama.',
     technologies: ['Laravel', 'React','React Native','MySQL', 'Redis', 'Gateway Pembayaran', 'Integrasi API'],
     link: 'https://timurmilautama.co.id',
     gradient: 'from-blue-500 via-blue-600 to-cyan-600',
     featured: true,
-    status: 'selesai'
+    status: 'sedang_berjalan'
   },
   {
     id: 2,
     title: 'SIPARBA - Sistem Informasi Pariwisata',
-    description: 'Sistem informasi pariwisata berbasis web yang menyediakan data destinasi komprehensif, acara budaya, dan promosi potensi pariwisata daerah.',
+    description: 'Sistem informasi pariwisata berbasis web yang menyediakan data destinasi komprehensif, acara budaya, dan promosi potensi pariwisata daerah Kota Banjarbaru.',
     technologies: ['Laravel', 'React', 'PostgreSQL', 'Integrasi API'],
     link: 'https://siparba.dinara-sanur.biz.id',
-    gradient: 'from-purple-500 via-purple-600 to-pink-600',
+    gradient: 'from-orange-500 via-orange-600 to-red-600',
     featured: true,
-    status: 'selesai'
+    status: 'sedang_berjalan'
   },
   {
     id: 3,
@@ -54,8 +54,8 @@ export const projects: Project[] = [
   {
     id: 6,
     title: 'Manajemen Aset Universitas',
-    description: 'Sistem manajemen aset digital dan arsip dengan kategorisasi otomatis, pencarian cerdas, dan backup terdistribusi untuk preservasi data jangka panjang.',
-    technologies: ['CodeIgniter', 'Bootstrap', 'MySQL', 'Manajemen File'],
+    description: 'Sistem manajemen aset digital dan arsip dengan kategorisasi otomatis, pencarian cerdas, peminjaman aset dengan scan QR dan backup terdistribusi untuk preservasi data jangka panjang.',
+    technologies: ['CodeIgniter', 'Bootstrap', 'MySQL', 'Manajemen File','Scan QR'],
     link: '#',
     gradient: 'from-orange-500 via-orange-600 to-red-600',
     icon: 'fas fa-university',

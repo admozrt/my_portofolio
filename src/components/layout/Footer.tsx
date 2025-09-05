@@ -51,8 +51,7 @@ export const Footer: React.FC = () => {
         </div>
         
         <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
-          <p>&copy; 2024 Adi Rakhmatullah Ma'arif. Semua hak dilindungi.</p>
-          <p className="text-sm mt-2">Dibangun dengan React, TypeScript, dan Tailwind CSS</p>
+            <p>&copy; {new Date().getFullYear()} Adi Rakhmatullah Ma'arif, S.Kom</p>
         </div>
       </div>
     </footer>
