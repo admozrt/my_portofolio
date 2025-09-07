@@ -4,7 +4,7 @@ export const experiences: Experience[] = [
   {
     id: 1,
     title: 'Pengembang Full Stack',
-    company: 'RSJ Sambang Lihum',
+    company: 'RSJ Sambang Lihum - Prov.Kalimantan Selatan',
     location: 'Kalimantan Selatan, Indonesia',
     period: 'Januari 2024 - Sekarang',
     description: 'Pengembangan Sistem Informasi Manajemen Rumah Sakit (SIMRS) yang komprehensif',
@@ -17,8 +17,8 @@ export const experiences: Experience[] = [
   },
   {
     id: 2,
-    title: 'Rekayasa Perangkat Lunak Freelance',
-    company: 'Mandiri',
+    title: 'Software Engineer',
+    company: 'Mandiri - Freelance',
     location: 'Remote',
     period: 'Februari 2020 - Sekarang',
     description: 'Mengembangkan aplikasi web kustom untuk berbagai klien di berbagai industri',
@@ -26,7 +26,7 @@ export const experiences: Experience[] = [
     achievements: [
       'Berhasil menyelesaikan 18+ proyek tepat waktu',
       'Mempertahankan tingkat kepuasan klien 98%',
-      'Membangun solusi scalable yang melayani 10k+ pengguna'
+      'Membangun solusi yang melayani 10k+ pengguna'
     ]
   }
 ];

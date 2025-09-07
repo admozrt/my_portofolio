@@ -40,10 +40,10 @@ export const HeroSection: React.FC = () => {
             </p>
           </div>
           
-          <p className="text-lg text-gray-600 dark:text-gray-300 max-w-3xl mx-auto mb-8 leading-relaxed">
-            Memberikan solusi inovatif dengan teknologi modern. 
-            Berspecialisasi membangun aplikasi scalable dan ramah pengguna yang mendorong pertumbuhan bisnis.
-          </p>
+            <p className="text-lg text-gray-600 dark:text-gray-300 max-w-3xl mx-auto mb-8 leading-relaxed">
+            Menghadirkan solusi inovatif dengan teknologi terkini. 
+            Berfokus pada pengembangan aplikasi yang efisien dan mudah digunakan untuk mendukung pertumbuhan bisnis Anda.
+            </p>
           
           <div className="flex flex-wrap justify-center gap-4">
             <button 

@@ -16,15 +16,10 @@ export const AboutSection: React.FC = () => {
           <div>
             <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">Gambaran Profesional</h3>
             <p className="text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">
-              Saya adalah Pengembang Full Stack yang bersemangat dengan lebih dari 4 tahun pengalaman dalam 
-              menciptakan aplikasi web yang robust dan scalable. Keahlian saya mencakup teknologi web modern, 
-              dengan fokus khusus pada ekosistem Laravel dan React.
+              Saya adalah seorang Software Engineer berpengalaman lebih dari 4 tahun dalam mengembangkan aplikasi web yang tangguh dan skalabel. Saya menguasai berbagai teknologi web modern, dengan keahlian utama pada ekosistem Laravel dan React.
             </p>
             <p className="text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">
-              Saya percaya dalam menulis kode yang bersih dan mudah dipelihara serta menciptakan pengalaman 
-              pengguna yang tidak hanya tampak hebat tetapi juga berkinerja luar biasa. Pendekatan saya 
-              menggabungkan keunggulan teknis dengan pemecahan masalah kreatif untuk memberikan solusi 
-              yang melampaui harapan.
+              Saya berkomitmen untuk menulis kode yang bersih, efisien, dan mudah dipelihara, serta menciptakan pengalaman pengguna yang intuitif dan berkinerja tinggi. Dengan perpaduan keunggulan teknis dan pemikiran kreatif, saya selalu berusaha menghadirkan solusi inovatif dalam penyelesaian masalah pada sistem.
             </p>
             
             <div id="kontak" className="bg-gray-50 dark:bg-gray-800 p-6 rounded-xl">

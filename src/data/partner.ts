@@ -19,7 +19,7 @@ export const partners: Partner[] = [
   },
   {
     id: 3,
-    name: 'Disporabudpar Banjarbaru',
+    name: 'Disporabudpar Kota Banjarbaru',
     description: 'Dinas pariwisata dan kebudayaan pemerintah daerah',
     website: 'https://siparba.dinara-sanur.biz.id',
     category: 'klien',
@@ -32,14 +32,6 @@ export const partners: Partner[] = [
     website: '#',
     category: 'klien',
     relationship: 'Pembuat - Sistem Penggajian Guru Militer'
-  },
-  {
-    id: 5,
-    name: 'MTS Hidayatullah',
-    description: 'Institusi pendidikan Islam',
-    website: '#',
-    category: 'klien',
-    relationship: 'Pengembang Sistem - Platform Manajemen Sekolah'
   },
   {
     id: 6,

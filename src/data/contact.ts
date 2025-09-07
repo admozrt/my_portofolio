@@ -5,7 +5,7 @@ import type { ContactInfo } from '../types';
 export const contactInfo: ContactInfo[] = [
   {
     icon: React.createElement(Mail, { className: "w-5 h-5 text-blue-500" }),
-    text: 'admozart996@gmail.com',
+    text: 'adrakhmat996@gmail.com',
     href: 'mailto:admozart996@gmail.com',
     label: 'Email'
   },
