@@ -28,9 +28,9 @@ export const ProjectsSection: React.FC = () => {
       <div className="container mx-auto px-6 max-w-8xl">
         <div className="text-center mb-16">
           <h2 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">Projek</h2>
-          <p className="text-xl text-gray-600 dark:text-gray-300 mb-8">
+          {/* <p className="text-xl text-gray-600 dark:text-gray-300 mb-8">
             Showcase terbaru dan kontribusi saya
-          </p>
+          </p> */}
           
           <div className="flex flex-wrap justify-center gap-2 mb-8">
             {filterButtons.map((button) => (

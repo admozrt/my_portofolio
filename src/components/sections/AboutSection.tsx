@@ -14,7 +14,7 @@ export const AboutSection: React.FC = () => {
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">
           <div>
-            <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">Gambaran Profesional</h3>
+            <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">Gambaran</h3>
             <p className="text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">
               Saya adalah seorang Software Engineer berpengalaman lebih dari 4 tahun dalam mengembangkan aplikasi web yang tangguh dan skalabel. Saya menguasai berbagai teknologi web modern, dengan keahlian utama pada ekosistem Laravel dan React.
             </p>
@@ -57,7 +57,7 @@ export const AboutSection: React.FC = () => {
           </div>
 
           <div>
-            <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">Keahlian Teknis</h3>
+            <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">Keahlian</h3>
             <div className="space-y-4">
               {['Frontend', 'Backend', 'Database', 'Tools'].map((category) => (
                 <div key={category} className="bg-gray-50 dark:bg-gray-800 p-6 rounded-xl">

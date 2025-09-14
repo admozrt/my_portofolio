@@ -7,8 +7,8 @@ export const ExperienceSection: React.FC = () => {
     <section id="pengalaman" className="py-20 bg-gray-50 dark:bg-gray-800">
       <div className="container mx-auto px-6 max-w-8xl">
         <div className="text-center mb-16">
-          <h2 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">Pengalaman Profesional</h2>
-          <p className="text-xl text-gray-600 dark:text-gray-300">Perjalanan saya dalam pengembangan perangkat lunak digital</p>
+          <h2 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">Pengalaman</h2>
+          <p className="text-xl text-gray-600 dark:text-gray-300">Perjalanan saya sebagai sofware engineer</p>
         </div>
 
         <div className="space-y-8">
@@ -32,7 +32,7 @@ export const ExperienceSection: React.FC = () => {
                   <p className="text-gray-700 dark:text-gray-300 mb-4 text-lg">{exp.description}</p>
                   
                   <div className="mb-4">
-                    <h5 className="text-sm font-semibold text-gray-900 dark:text-white mb-2 uppercase tracking-wide">Pencapaian Utama</h5>
+                    <h5 className="text-sm font-semibold text-gray-900 dark:text-white mb-2 uppercase tracking-wide">Pencapaian</h5>
                     <ul className="space-y-2">
                       {exp.achievements.map((achievement, idx) => (
                         <li key={idx} className="flex items-start gap-2 text-gray-600 dark:text-gray-300">
