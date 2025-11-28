@@ -16,16 +16,16 @@ export const projects: Project[] = [
     title: 'SIPARBA - Sistem Informasi Pariwisata Banjarbaru',
     description: 'Sistem informasi pariwisata berbasis web yang menyediakan data destinasi komprehensif, acara budaya, dan promosi potensi pariwisata daerah Kota Banjarbaru.',
     technologies: ['Laravel', 'React', 'React Native', 'Inertia.js', 'MySQL'],
-    link: 'https://siparba.dinara-sanur.biz.id',
+    link: 'https://siparba.banjarbarukota.go.id',
     gradient: 'from-orange-500 via-orange-600 to-red-600',
     featured: true,
-    status: 'sedang_berjalan'
+    status: 'selesai'
   },
   {
     id: 3,
     title: 'Sistem Penggajian Guru Militer',
     description: 'Sistem manajemen penggajian canggih untuk personel militer dengan kalkulasi otomatis, pelaporan keuangan, dan integrasi database kepegawaian.',
-    technologies: ['Laravel', 'Bootstrap', 'MySQL', 'Generasi PDF'],
+    technologies: ['Laravel', 'Bootstrap', 'MySQL', 'Cetak PDF'],
     link: '#',
     gradient: 'from-green-500 via-green-600 to-emerald-600',
     icon: 'fas fa-shield-alt',
