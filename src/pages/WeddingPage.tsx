@@ -1375,7 +1375,7 @@ export const WeddingPage: React.FC = () => {
           <OrnamentSVG width={100} />
           <div className="cover-title" style={{ marginTop: 24 }}>The Wedding Of</div>
           <div className="cover-names">
-            {GROOM} & {BRIDE}
+            <h1>{GROOM} & {BRIDE}</h1>
           </div>
           <div className="cover-ornament" />
           <div className="cover-to">Kepada Yth.</div>
