@@ -1762,29 +1762,12 @@ export const WeddingPageAjie: React.FC = () => {
               </div>
             ))}
           </div>
+          
 
           <div className="scroll-indicator">
             <span>Scroll</span>
             <div className="scroll-chevron" />
           </div>
-        </section>
-
-        
-        {/* ── 3. Quote + Stacking Photos ── */}
-        <section className="quote-section" ref={quoteRef}>
-          <Petals />
-          <OrnamentSVG width={60} className="quote-ornament-top" />
-          
-          {/* Bismillah Arab */}
-          <p className={`quote-bismillah visible`}>
-            بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ
-          </p>
-          <p className={`quote-text visible`}>
-            "Dan segala sesuatu Kami ciptakan berpasang-pasangan, supaya kamu mengingat kebesaran Allah SWT."
-          </p>
-          <p className={`quote-source visible`}>
-            — QS. Az-Dzariyyat : 49
-          </p>
         </section>
 
         {/* ── 2. Profile Mempelai ── */}
@@ -1836,17 +1819,6 @@ export const WeddingPageAjie: React.FC = () => {
         </section>
 
         {/* ── 3. Quote + Stacking Photos ── */}
-        <section className="quote-section" ref={quoteRef}>
-          <Petals />
-          <OrnamentSVG width={60} className="quote-ornament-top" />
-          <p className={`quote-text ${quoteVisible ? "visible" : ""}`}>
-            "Dan di antara tanda-tanda kekuasaan-Nya ialah Dia menciptakan untukmu pasangan hidup dari jenismu sendiri, supaya kamu merasa tenteram kepadanya."
-          </p>
-          <p className={`quote-source ${quoteVisible ? "visible" : ""}`}>
-            — QS. Ar-Rum : 21
-          </p>
-        </section>
-
         <div
           className="stack-scroll-area"
           ref={stackAreaRef}
@@ -1908,6 +1880,17 @@ export const WeddingPageAjie: React.FC = () => {
             </div>
           </div>
         </div>
+        
+        <section className="quote-section" ref={quoteRef}>
+          <Petals />
+          <OrnamentSVG width={60} className="quote-ornament-top" />
+          <p className={`quote-text}`}>
+            "Dan di antara tanda-tanda kekuasaan-Nya ialah Dia menciptakan untukmu pasangan hidup dari jenismu sendiri, supaya kamu merasa tenteram kepadanya."
+          </p>
+          <p className={`quote-source}`}>
+            — QS. Ar-Rum : 21
+          </p>
+        </section>
 
         {/* ── 3. Countdown ── */}
         <section className="countdown-section" ref={countdownRef}>
