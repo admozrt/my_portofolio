@@ -593,13 +593,13 @@ body {
 
 /* ── Compact quote (bismillah + Az-Dzariyyat) ───── */
 .quote-bismillah-ar {
-  font-size: clamp(18px, 4.5vw, 26px);
+  font-size: clamp(46px, 9.5vw, 38px);
   color: var(--brown-400);
-  margin-bottom: 18px;
+  margin-bottom: 2px;
   font-family: 'Cormorant Garamond', serif;
   direction: rtl;
-  opacity: 0.8;
-  line-height: 1.6;
+  opacity: 1.2;
+  line-height: 1.2;
 }
 
 /* Stacking photos + Love Story — scroll-driven */
