@@ -206,6 +206,11 @@ body {
 .cover-bg-img.loaded {
   opacity: 1;
 }
+@media (min-width: 768px) {
+  .cover-bg-img {
+    object-position: center center;
+  }
+}
 
 /* Dark gradient overlay on photo */
 .cover-bg-overlay {
@@ -727,7 +732,7 @@ body {
   position: relative;
   width: 100%;
   max-width: 320px;
-  min-height: 90px;
+  min-height: 170px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -768,6 +773,24 @@ body {
   letter-spacing: 3px;
   color: var(--brown-400);
   white-space: nowrap;
+  /* hidden on mobile — use stack-counter-row instead */
+  display: none;
+}
+@media (min-width: 768px) {
+  .stack-counter { display: block; }
+}
+
+/* Counter row between photo and story on mobile */
+.stack-counter-row {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 13px;
+  letter-spacing: 3px;
+  color: var(--brown-400);
+  text-align: center;
+  flex-shrink: 0;
+}
+@media (min-width: 768px) {
+  .stack-counter-row { display: none; }
 }
 
 .stack-photo {
@@ -1730,14 +1753,13 @@ export const WeddingPageAjie: React.FC = () => {
         <div
           className="stack-scroll-area"
           ref={stackAreaRef}
-          style={{ height: `${PHOTOS.length * 55 + 100}vh` }}
+          style={{ height: `${PHOTOS.length * 28 + 40}vh` }}
         >
           <div className="stack-sticky">
             <div className="stack-layout">
               {/* Photo Stack */}
               <div className="stack-photo-col">
                 {PHOTOS.map((src, i) => {
-                  // First photo enters immediately when section is visible; others on scroll
                   const threshold = (i + 1) / (PHOTOS.length + 1);
                   const isEntered = stackVisible && (i === 0 || stackProgress >= threshold);
                   const isActive = isEntered && (i === PHOTOS.length - 1 || stackProgress < (i + 2) / (PHOTOS.length + 1));
@@ -1751,9 +1773,15 @@ export const WeddingPageAjie: React.FC = () => {
                     </div>
                   );
                 })}
+                {/* Desktop counter — sits below photo */}
                 <div className="stack-counter">
                   {stackVisible ? Math.min(PHOTOS.length, Math.max(1, Math.floor(stackProgress * (PHOTOS.length + 1)))) : 0} / {PHOTOS.length}
                 </div>
+              </div>
+
+              {/* Mobile counter — between photo col and story col */}
+              <div className="stack-counter-row">
+                {stackVisible ? Math.min(PHOTOS.length, Math.max(1, Math.floor(stackProgress * (PHOTOS.length + 1)))) : 0} / {PHOTOS.length}
               </div>
 
               {/* Love Story Text */}
