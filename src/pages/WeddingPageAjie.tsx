@@ -302,23 +302,37 @@ export const WeddingPageAjie: React.FC = () => {
           </span>
         </button>
 
-        {/* ── Cover Overlay ── */}
-        <div className={`cover-overlay ${isOpen ? "hidden" : ""}`}>
-          {/* Shimmer while loading */}
-          <div className={`cover-loading-shimmer ${coverImageLoaded ? "hidden" : ""}`} />
+        {/* ── Cover Book (split open animation) ── */}
+        <div className={`cover-book ${isOpen ? "open" : ""}`}>
 
-          {/* Background photo */}
-          <img
-            className={`cover-bg-img ${coverImageLoaded ? "loaded" : ""}`}
-            src={COVER_PHOTO}
-            alt=""
-            aria-hidden="true"
-          />
+          {/* Left panel — shows left half of cover photo */}
+          <div className="cover-panel cover-panel-left">
+            <div className={`cover-loading-shimmer ${coverImageLoaded ? "hidden" : ""}`} />
+            <img
+              className={`cover-bg-img ${coverImageLoaded ? "loaded" : ""}`}
+              src={COVER_PHOTO}
+              alt=""
+              aria-hidden="true"
+            />
+            <div className="cover-bg-overlay" />
+          </div>
 
-          {/* Dark gradient overlay */}
-          <div className="cover-bg-overlay" />
+          {/* Right panel — shows right half of cover photo */}
+          <div className="cover-panel cover-panel-right">
+            <div className={`cover-loading-shimmer ${coverImageLoaded ? "hidden" : ""}`} />
+            <img
+              className={`cover-bg-img ${coverImageLoaded ? "loaded" : ""}`}
+              src={COVER_PHOTO}
+              alt=""
+              aria-hidden="true"
+            />
+            <div className="cover-bg-overlay" />
+          </div>
 
-          {/* Content */}
+          {/* Center spine line */}
+          <div className="cover-spine" />
+
+          {/* Content — centered above both panels */}
           <div className="cover-content">
             <OrnamentSVG width={100} />
             <div className="cover-title" style={{ marginTop: 20 }}>The Wedding Of</div>
@@ -335,7 +349,6 @@ export const WeddingPageAjie: React.FC = () => {
             <div className="cover-to">Kepada Yth.</div>
             <div className="cover-visitor">{visitorName}</div>
 
-            {/* Loading dots shown while image loading */}
             <div className={`cover-loading-dots ${coverImageLoaded ? "hidden" : ""}`}>
               <div className="cover-loading-dot" />
               <div className="cover-loading-dot" />
@@ -349,6 +362,7 @@ export const WeddingPageAjie: React.FC = () => {
               Buka Undangan
             </button>
           </div>
+
           <a className="cover-credit"
             href="https://admoz.pages.dev"
             target="_blank"

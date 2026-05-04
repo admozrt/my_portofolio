@@ -32,31 +32,61 @@ body {
   position: relative;
 }
 
-/* ── Cover ─────────────────────────────────────── */
-.cover-overlay {
+/* ── Cover Book ─────────────────────────────────── */
+.cover-book {
   position: fixed;
   inset: 0;
   z-index: 9999;
-  background: #1a0f0a;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  transition: opacity 0.8s ease, transform 0.8s ease;
-  overflow: hidden;
+  /* perspective for 3D page-turn on children */
+  perspective: 2200px;
+  perspective-origin: center center;
 }
-.cover-overlay.hidden {
-  opacity: 0;
+.cover-book.open {
   pointer-events: none;
-  transform: scale(1.05);
 }
 
-/* Cover background photo */
-.cover-bg-img {
+/* Left and right page panels */
+.cover-panel {
   position: absolute;
-  inset: 0;
-  width: 100%;
+  top: 0;
   height: 100%;
+  width: 50%;
+  overflow: hidden;
+  will-change: transform;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+.cover-panel-left {
+  left: 0;
+  transform-origin: right center;
+  transition: transform 1.1s cubic-bezier(0.4, 0, 0.2, 1) 0.12s,
+              box-shadow 1.1s ease 0.12s;
+  box-shadow: inset -6px 0 20px rgba(0,0,0,0.45);
+}
+.cover-panel-right {
+  right: 0;
+  transform-origin: left center;
+  transition: transform 1.1s cubic-bezier(0.4, 0, 0.2, 1) 0.12s,
+              box-shadow 1.1s ease 0.12s;
+  box-shadow: inset 6px 0 20px rgba(0,0,0,0.45);
+}
+
+/* Book opens: left panel rotates left, right panel rotates right */
+.cover-book.open .cover-panel-left {
+  transform: rotateY(-108deg);
+  box-shadow: none;
+}
+.cover-book.open .cover-panel-right {
+  transform: rotateY(108deg);
+  box-shadow: none;
+}
+
+/* Background photo — spans full viewport width inside each clipped panel */
+.cover-panel .cover-bg-img {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  width: 100vw;
   object-fit: cover;
   object-position: center top;
   opacity: 0;
@@ -64,30 +94,50 @@ body {
   will-change: opacity;
   z-index: 0;
 }
-.cover-bg-img.loaded {
-  opacity: 1;
-}
+.cover-panel-left .cover-bg-img { left: 0; }
+.cover-panel-right .cover-bg-img { right: 0; }
+.cover-bg-img.loaded { opacity: 1; }
+
 @media (min-width: 768px) {
-  .cover-bg-img {
-    object-position: center center;
-  }
+  .cover-panel .cover-bg-img { object-position: center center; }
 }
 
-/* Dark gradient overlay on photo */
+/* Dark gradient overlay inside each panel */
 .cover-bg-overlay {
   position: absolute;
   inset: 0;
   background: linear-gradient(
     to bottom,
-    rgba(20, 10, 6, 0.35) 0%,
-    rgba(20, 10, 6, 0.45) 40%,
-    rgba(20, 10, 6, 0.75) 80%,
-    rgba(20, 10, 6, 0.90) 100%
+    rgba(20, 10, 6, 0.32) 0%,
+    rgba(20, 10, 6, 0.42) 40%,
+    rgba(20, 10, 6, 0.72) 80%,
+    rgba(20, 10, 6, 0.88) 100%
   );
   z-index: 1;
 }
 
-/* Loading shimmer when photo not yet loaded */
+/* Subtle center spine / seam */
+.cover-spine {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 2px;
+  height: 100%;
+  background: linear-gradient(
+    to bottom,
+    rgba(196,167,125,0.0) 0%,
+    rgba(196,167,125,0.5) 30%,
+    rgba(196,167,125,0.5) 70%,
+    rgba(196,167,125,0.0) 100%
+  );
+  z-index: 5;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+.cover-book.open .cover-spine { opacity: 0; }
+
+/* Loading shimmer inside each panel */
 .cover-loading-shimmer {
   position: absolute;
   inset: 0;
@@ -122,9 +172,7 @@ body {
   margin-top: 12px;
   transition: opacity 0.4s ease;
 }
-.cover-loading-dots.hidden {
-  opacity: 0;
-}
+.cover-loading-dots.hidden { opacity: 0; }
 .cover-loading-dot {
   width: 5px;
   height: 5px;
@@ -140,10 +188,11 @@ body {
   50% { opacity: 1; transform: scale(1); }
 }
 
-/* Cover content sits above photo */
+/* Cover content — centered above both panels */
 .cover-content {
-  position: relative;
-  z-index: 2;
+  position: absolute;
+  inset: 0;
+  z-index: 10;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -151,6 +200,11 @@ body {
   text-align: center;
   padding: 0 24px;
   width: 100%;
+  transition: opacity 0.25s ease;
+}
+.cover-book.open .cover-content {
+  opacity: 0;
+  pointer-events: none;
 }
 
 .cover-ornament {
@@ -170,7 +224,7 @@ body {
 }
 
 .cover-logo {
-  width: clamp(195px, 21vw, 180px);
+  width: clamp(160px, 40vw, 220px);
   height: auto;
   object-fit: contain;
   margin: 3px auto 2px;
@@ -1313,7 +1367,7 @@ body {
   bottom: 28px;
   left: 50%;
   transform: translateX(-50%);
-  z-index: 3;
+  z-index: 10;
   font-family: 'Cormorant Garamond', serif;
   font-size: 11px;
   letter-spacing: 3px;
@@ -1326,9 +1380,13 @@ body {
   background: rgba(20, 10, 6, 0.3);
   border: 1px solid rgba(196, 167, 125, 0.3);
   animation: creditPulseBlur 2.8s ease-in-out infinite;
-  transition: color 0.3s ease, background 0.3s ease, border-color 0.3s ease;
+  transition: opacity 0.25s ease, color 0.3s ease, background 0.3s ease, border-color 0.3s ease;
   cursor: pointer;
   white-space: nowrap;
+}
+.cover-book.open .cover-credit {
+  opacity: 0;
+  pointer-events: none;
 }
 .cover-credit:hover {
   color: #fff;
