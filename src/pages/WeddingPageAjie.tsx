@@ -867,8 +867,34 @@ body {
 /* ── Wedding Gift ──────────────────────────────── */
 .gift-section {
   padding: 80px 20px;
-  background: linear-gradient(180deg, var(--cream-100) 0%, var(--cream-50) 100%);
   text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.gift-bg-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  z-index: 0;
+}
+.gift-bg-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 248, 240, 0.93) 0%,
+    rgba(255, 253, 249, 0.91) 50%,
+    rgba(255, 248, 240, 0.93) 100%
+  );
+  z-index: 1;
+}
+.gift-content {
+  position: relative;
+  z-index: 2;
 }
 
 .gift-intro {
@@ -1162,10 +1188,34 @@ body {
 /* ── Closing ───────────────────────────────────── */
 .closing-section {
   padding: 100px 24px;
-  background: linear-gradient(180deg, var(--cream-100) 0%, var(--cream-200) 50%, var(--cream-100) 100%);
   text-align: center;
   position: relative;
   overflow: hidden;
+}
+
+.closing-bg-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  z-index: 0;
+}
+.closing-bg-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(245, 230, 211, 0.90) 0%,
+    rgba(232, 213, 188, 0.87) 50%,
+    rgba(245, 230, 211, 0.90) 100%
+  );
+  z-index: 1;
+}
+.closing-content {
+  position: relative;
+  z-index: 2;
 }
 
 .closing-script {
@@ -1456,10 +1506,13 @@ export const WeddingPageAjie: React.FC = () => {
   const heroScale = Math.max(1, 1.15 - (scrollY / 600) * 0.15);
   const heroOpacity = Math.max(0, 1 - scrollY / 800);
 
-  const activeStoryIdx = Math.min(
-    LOVE_STORIES.length - 1,
-    Math.floor(stackProgress * (PHOTOS.length + 1)) - 1
-  );
+  // Saat section pertama kali terlihat, langsung tampilkan story ke-0 dan foto ke-1
+  const activeStoryIdx = stackVisible
+    ? Math.min(
+        LOVE_STORIES.length - 1,
+        Math.max(0, Math.floor(stackProgress * (PHOTOS.length + 1)) - 1)
+      )
+    : -1;
 
   const handleOpen = useCallback(() => {
     setIsOpen(true);
@@ -1701,7 +1754,7 @@ export const WeddingPageAjie: React.FC = () => {
                   );
                 })}
                 <div className="stack-counter">
-                  {Math.min(PHOTOS.length, Math.max(0, Math.floor(stackProgress * (PHOTOS.length + 1))))} / {PHOTOS.length}
+                  {stackVisible ? Math.min(PHOTOS.length, Math.max(1, Math.floor(stackProgress * (PHOTOS.length + 1)))) : 0} / {PHOTOS.length}
                 </div>
               </div>
 
@@ -1799,6 +1852,9 @@ export const WeddingPageAjie: React.FC = () => {
 
         {/* ── 5. Wedding Gift ── */}
         <section className="gift-section" ref={giftRef}>
+          <img className="gift-bg-img" src="/ajie/HZM07032.jpg" alt="" aria-hidden="true" loading="lazy" />
+          <div className="gift-bg-overlay" />
+          <div className="gift-content">
           <div className={`animate-fade-in ${giftVisible ? "visible" : ""}`}>
             <div className="section-label">Hadiah Pernikahan</div>
             <div className="section-heading">Wedding Gift</div>
@@ -1861,25 +1917,30 @@ export const WeddingPageAjie: React.FC = () => {
               </button>
             </div>
           </div>
+          </div>
         </section>
 
         {/* ── 6. Closing ── */}
         <section className="closing-section" ref={closingRef}>
+          <img className="closing-bg-img" src="/ajie/MAL08632.jpg" alt="" aria-hidden="true" loading="lazy" />
+          <div className="closing-bg-overlay" />
           <Petals />
-          <div className={`animate-fade-in ${closingVisible ? "visible" : ""}`}>
-            <div className="closing-script">Terima Kasih</div>
-            <div className="closing-body">
-              Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila
-              Bapak/Ibu/Saudara/i berkenan hadir untuk memberikan doa restu
-              kepada kami.
-            </div>
-            <div className="closing-ornament" />
-            <OrnamentSVG width={80} />
-            <div className="closing-body" style={{ marginTop: 24, fontSize: 15, fontStyle: "italic" }}>
-              "Atas kehadiran dan doa restunya, kami mengucapkan terima kasih."
-            </div>
-            <div className="closing-names" style={{ marginTop: 24 }}>
-              {GROOM} & {BRIDE}
+          <div className="closing-content">
+            <div className={`animate-fade-in ${closingVisible ? "visible" : ""}`}>
+              <div className="closing-script">Terima Kasih</div>
+              <div className="closing-body">
+                Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila
+                Bapak/Ibu/Saudara/i berkenan hadir untuk memberikan doa restu
+                kepada kami.
+              </div>
+              <div className="closing-ornament" />
+              <OrnamentSVG width={80} />
+              <div className="closing-body" style={{ marginTop: 24, fontSize: 15, fontStyle: "italic" }}>
+                "Atas kehadiran dan doa restunya, kami mengucapkan terima kasih."
+              </div>
+              <div className="closing-names" style={{ marginTop: 24 }}>
+                {GROOM} & {BRIDE}
+              </div>
             </div>
           </div>
         </section>
