@@ -1357,6 +1357,69 @@ body {
   90% { opacity: 0.15; }
   100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
 }
+  /* ── Made by Credit on Cover ─────────────────── */
+.cover-credit {
+  position: absolute;
+  bottom: 28px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 3;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 11px;
+  letter-spacing: 3px;
+  color: rgba(232, 201, 160, 0.9);
+  text-decoration: none;
+  padding: 7px 18px;
+  border-radius: 20px;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  background: rgba(20, 10, 6, 0.3);
+  border: 1px solid rgba(196, 167, 125, 0.3);
+  animation: creditPulseBlur 2.8s ease-in-out infinite;
+  transition: color 0.3s ease, background 0.3s ease, border-color 0.3s ease;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.cover-credit:hover {
+  color: #fff;
+  background: rgba(196, 167, 125, 0.25);
+  border-color: rgba(232, 201, 160, 0.7);
+  animation-play-state: paused;
+}
+.cover-credit strong {
+  font-weight: 600;
+  color: rgba(255, 248, 240, 0.95);
+  font-family: 'Playfair Display', serif;
+  letter-spacing: 1.5px;
+  margin-left: 4px;
+}
+
+@keyframes creditPulseBlur {
+  0%, 100% {
+    box-shadow: 0 0 0 rgba(196, 167, 125, 0);
+    text-shadow: 0 0 0 rgba(232, 201, 160, 0);
+    filter: blur(0);
+  }
+  50% {
+    box-shadow: 0 0 28px rgba(196, 167, 125, 0.5);
+    text-shadow: 0 0 10px rgba(232, 201, 160, 0.7);
+    filter: blur(0.3px);
+  }
+}
+
+/* ── Footer Link ─────────────────────────────── */
+.footer-link {
+  color: var(--gold-light);
+  text-decoration: none;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  transition: color 0.3s ease;
+  border-bottom: 1px solid transparent;
+}
+.footer-link:hover {
+  color: #fff;
+  border-bottom-color: var(--gold-light);
+}
 
 /* ── Music Button ──────────────────────────────── */
 .music-btn {
@@ -1646,6 +1709,13 @@ export const WeddingPageAjie: React.FC = () => {
               Buka Undangan
             </button>
           </div>
+          <a className="cover-credit"
+            href="https://admoz.pages.dev"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Made by <strong>Dirakhmat</strong>
+          </a>
         </div>
 
         {/* ── 1. Hero Section ── */}
@@ -1973,7 +2043,16 @@ export const WeddingPageAjie: React.FC = () => {
 
         {/* ── Footer ── */}
         <footer className="wedding-footer">
-          Made with by Admoz for {GROOM} & {BRIDE}
+          Made with ♥ by{" "}
+          
+            <a className="footer-link"
+            href="https://admoz.pages.dev"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Dirakhmat
+          </a>
+          {" "}for {GROOM} & {BRIDE}
         </footer>
       </div>
     </>
