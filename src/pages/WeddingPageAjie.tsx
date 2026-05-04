@@ -451,14 +451,14 @@ body {
 .hero-names-script {
   font-family: 'Great Vibes', cursive;
   font-size: clamp(48px, 12vw, 80px);
-  color: var(--brown-800);
+  color: var(--brown-900);
   line-height: 1;
 }
 
 .hero-names-ampersand {
   font-family: 'Playfair Display', serif;
   font-size: clamp(24px, 5vw, 36px);
-  color: var(--brown-400);
+  color: var(--brown-700);
   margin: 0 12px;
   font-style: italic;
 }
@@ -468,7 +468,7 @@ body {
   font-size: clamp(13px, 2.5vw, 16px);
   letter-spacing: 6px;
   text-transform: uppercase;
-  color: var(--brown-500);
+  color: var(--brown-800);
   margin-top: 12px;
 }
 
@@ -677,6 +677,16 @@ body {
 .quote-text.visible {
   opacity: 1;
   transform: translateY(0);
+}
+
+.quote-bismillah {
+  font-size: 18px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--brown-400);
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 1s ease 0.3s;
 }
 
 .quote-source {
@@ -1325,7 +1335,7 @@ body {
   font-size: 10px;
   letter-spacing: 3px;
   text-transform: uppercase;
-  color: var(--brown-500);
+  color: var(--brown-900);
 }
 .scroll-chevron {
   width: 20px;
@@ -1759,37 +1769,31 @@ export const WeddingPageAjie: React.FC = () => {
           </div>
         </section>
 
+        
+        {/* ── 3. Quote + Stacking Photos ── */}
+        <section className="quote-section" ref={quoteRef}>
+          <Petals />
+          <OrnamentSVG width={60} className="quote-ornament-top" />
+          
+          {/* Bismillah Arab */}
+          <p className={`quote-bismillah visible`}>
+            بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ
+          </p>
+          <p className={`quote-text visible`}>
+            "Dan segala sesuatu Kami ciptakan berpasang-pasangan, supaya kamu mengingat kebesaran Allah SWT."
+          </p>
+          <p className={`quote-source visible`}>
+            — QS. Az-Dzariyyat : 49
+          </p>
+        </section>
+
         {/* ── 2. Profile Mempelai ── */}
         <section className="profile-section" ref={profileRef}>
-          <div className="section-label">Mempelai</div>
-          <div className="section-heading">Insya Allah</div>
+          {/* <div className="section-label">Bride & Groom</div> */}
+          <div className="section-heading">Bride & Groom</div>
           <OrnamentSVG width={80} className="quote-ornament-top" />
 
           <div className="profile-grid" style={{ marginTop: 40 }}>
-            {/* Mempelai Wanita */}
-            <div className={`profile-card ${profileVisible ? "visible" : ""}`}>
-              <div className="profile-photo">
-                <img src={BRIDE_PHOTO} alt="Alya Norhidayati" loading="lazy" />
-              </div>
-              <div className="profile-label">Mempelai Wanita</div>
-              <div className="profile-name">Alya Norhidayati</div>
-              <div className="profile-title">S.M</div>
-              <div className="profile-divider" />
-              <div className="profile-parents">
-                Putri Bungsu dari<br />
-                Bapak Riduansyah <em>(alm)</em><br />
-                & Ibu Hj. Salasiah
-              </div>
-            </div>
-
-            {/* Ampersand desktop */}
-            <div className="profile-ampersand-row">
-              <span className="profile-ampersand">&</span>
-            </div>
-
-            {/* Ampersand mobile */}
-            <div className="profile-ampersand-mobile">&</div>
-
             {/* Mempelai Pria */}
             <div className={`profile-card ${profileVisible ? "visible" : ""}`}>
               <div className="profile-photo">
@@ -1803,6 +1807,29 @@ export const WeddingPageAjie: React.FC = () => {
                 Putra Pertama dari<br />
                 Bapak Rudiansyah<br />
                 & Ibu Eko Adhie Sulistyaningsih
+              </div>
+            </div>
+            
+            {/* Ampersand desktop */}
+            <div className="profile-ampersand-row">
+              <span className="profile-ampersand">&</span>
+            </div>
+
+            {/* Ampersand mobile */}
+            <div className="profile-ampersand-mobile">&</div>
+            {/* Mempelai Wanita */}
+            <div className={`profile-card ${profileVisible ? "visible" : ""}`}>
+              <div className="profile-photo">
+                <img src={BRIDE_PHOTO} alt="Alya Norhidayati" loading="lazy" />
+              </div>
+              <div className="profile-label">Mempelai Wanita</div>
+              <div className="profile-name">Alya Norhidayati</div>
+              <div className="profile-title">S.M</div>
+              <div className="profile-divider" />
+              <div className="profile-parents">
+                Putri Bungsu dari<br />
+                Bapak Riduansyah <em>(alm)</em><br />
+                & Ibu Hj. Salasiah
               </div>
             </div>
           </div>
