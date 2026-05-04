@@ -32,31 +32,52 @@ body {
   position: relative;
 }
 
-/* ── Cover ─────────────────────────────────────── */
-.cover-overlay {
+/* ── Cover Book (split-slide curtain) ─────────────── */
+.cover-book {
   position: fixed;
   inset: 0;
   z-index: 9999;
-  background: #1a0f0a;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  transition: opacity 0.8s ease, transform 0.8s ease;
-  overflow: hidden;
 }
-.cover-overlay.hidden {
-  opacity: 0;
+.cover-book.open {
   pointer-events: none;
-  transform: scale(1.05);
 }
 
-/* Cover background photo */
-.cover-bg-img {
+/* Left & right curtain panels — each 50% wide, overflow hidden */
+.cover-panel {
   position: absolute;
-  inset: 0;
-  width: 100%;
+  top: 0;
   height: 100%;
+  width: 50%;
+  overflow: hidden;
+  will-change: transform;
+}
+.cover-panel-left {
+  left: 0;
+  transition: transform 0.95s cubic-bezier(0.76, 0, 0.24, 1) 0.1s;
+}
+.cover-panel-right {
+  right: 0;
+  transition: transform 0.95s cubic-bezier(0.76, 0, 0.24, 1) 0.1s;
+}
+
+/* Slide panels off-screen when open */
+.cover-book.open .cover-panel-left  { transform: translateX(-100%); }
+.cover-book.open .cover-panel-right { transform: translateX(100%); }
+
+/*
+ * KEY FIX: image inside each panel is 100vw wide so it matches
+ * the full cover photo. Overflow:hidden clips each panel to its
+ * half — left panel shows left half, right panel shows right half.
+ *
+ * Left panel  → left: 0      → image fills from viewport-left
+ * Right panel → left: -100%  → -100% of parent(50vw) = -50vw,
+ *               image starts at viewport-left, clipped to right half
+ */
+.cover-panel .cover-bg-img {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  width: 100vw;
   object-fit: cover;
   object-position: center top;
   opacity: 0;
@@ -64,30 +85,50 @@ body {
   will-change: opacity;
   z-index: 0;
 }
-.cover-bg-img.loaded {
-  opacity: 1;
-}
+.cover-panel-left  .cover-bg-img { left: 0; }
+.cover-panel-right .cover-bg-img { left: -100%; }
+.cover-bg-img.loaded { opacity: 1; }
+
 @media (min-width: 768px) {
-  .cover-bg-img {
-    object-position: center center;
-  }
+  .cover-panel .cover-bg-img { object-position: center center; }
 }
 
-/* Dark gradient overlay on photo */
+/* Dark gradient overlay inside each panel */
 .cover-bg-overlay {
   position: absolute;
   inset: 0;
   background: linear-gradient(
     to bottom,
-    rgba(20, 10, 6, 0.35) 0%,
-    rgba(20, 10, 6, 0.45) 40%,
-    rgba(20, 10, 6, 0.75) 80%,
-    rgba(20, 10, 6, 0.90) 100%
+    rgba(20, 10, 6, 0.32) 0%,
+    rgba(20, 10, 6, 0.42) 40%,
+    rgba(20, 10, 6, 0.72) 80%,
+    rgba(20, 10, 6, 0.88) 100%
   );
   z-index: 1;
 }
 
-/* Loading shimmer when photo not yet loaded */
+/* Thin center seam line */
+.cover-spine {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 1px;
+  height: 100%;
+  background: linear-gradient(
+    to bottom,
+    rgba(196,167,125,0.0) 0%,
+    rgba(196,167,125,0.4) 25%,
+    rgba(196,167,125,0.4) 75%,
+    rgba(196,167,125,0.0) 100%
+  );
+  z-index: 5;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+.cover-book.open .cover-spine { opacity: 0; }
+
+/* Loading shimmer inside each panel */
 .cover-loading-shimmer {
   position: absolute;
   inset: 0;
@@ -122,9 +163,7 @@ body {
   margin-top: 12px;
   transition: opacity 0.4s ease;
 }
-.cover-loading-dots.hidden {
-  opacity: 0;
-}
+.cover-loading-dots.hidden { opacity: 0; }
 .cover-loading-dot {
   width: 5px;
   height: 5px;
@@ -140,10 +179,11 @@ body {
   50% { opacity: 1; transform: scale(1); }
 }
 
-/* Cover content sits above photo */
+/* Cover content — centered above both panels */
 .cover-content {
-  position: relative;
-  z-index: 2;
+  position: absolute;
+  inset: 0;
+  z-index: 10;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -151,6 +191,11 @@ body {
   text-align: center;
   padding: 0 24px;
   width: 100%;
+  transition: opacity 0.25s ease;
+}
+.cover-book.open .cover-content {
+  opacity: 0;
+  pointer-events: none;
 }
 
 .cover-ornament {
@@ -170,7 +215,7 @@ body {
 }
 
 .cover-logo {
-  width: clamp(195px, 21vw, 180px);
+  width: clamp(160px, 40vw, 220px);
   height: auto;
   object-fit: contain;
   margin: 3px auto 2px;
@@ -1313,7 +1358,7 @@ body {
   bottom: 28px;
   left: 50%;
   transform: translateX(-50%);
-  z-index: 3;
+  z-index: 10;
   font-family: 'Cormorant Garamond', serif;
   font-size: 11px;
   letter-spacing: 3px;
@@ -1326,9 +1371,13 @@ body {
   background: rgba(20, 10, 6, 0.3);
   border: 1px solid rgba(196, 167, 125, 0.3);
   animation: creditPulseBlur 2.8s ease-in-out infinite;
-  transition: color 0.3s ease, background 0.3s ease, border-color 0.3s ease;
+  transition: opacity 0.25s ease, color 0.3s ease, background 0.3s ease, border-color 0.3s ease;
   cursor: pointer;
   white-space: nowrap;
+}
+.cover-book.open .cover-credit {
+  opacity: 0;
+  pointer-events: none;
 }
 .cover-credit:hover {
   color: #fff;
