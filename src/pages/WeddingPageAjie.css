@@ -213,10 +213,10 @@ body {
 }
 
 .cover-btn {
-  margin-top: 20px;
-  padding: 14px 48px;
+  margin-top: 10px;
+  padding: 10px 43px;
   font-family: 'Cormorant Garamond', serif;
-  font-size: 16px;
+  font-size: 12px;
   font-weight: 600;
   letter-spacing: 4px;
   text-transform: uppercase;
@@ -609,7 +609,7 @@ body {
 
 /* ── Compact quote (bismillah + Az-Dzariyyat) ───── */
 .quote-bismillah-ar {
-  font-size: clamp(46px, 9.5vw, 38px);
+  font-size: clamp(34px, 8.5vw, 32px);
   color: var(--brown-400);
   margin-bottom: 2px;
   font-family: 'Cormorant Garamond', serif;
