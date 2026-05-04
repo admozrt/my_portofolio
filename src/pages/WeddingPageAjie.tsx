@@ -11,7 +11,7 @@ const MAP_LAT = -2.9464181;
 const MAP_LNG = 115.1427701;
 const MAP_EMBED_URL = `https://www.google.com/maps?q=${MAP_LAT},${MAP_LNG}&z=16&output=embed`;
 
-const COVER_PHOTO = "/ajie/MAL08420.jpg";
+const COVER_PHOTO = "/ajie/MAL08420-1.jpg";
 const BRIDE_PHOTO = "/ajie/CEWE_SENDIRI.jpg";
 const GROOM_PHOTO = "/ajie/COWO_SENDIRI.jpg";
 const LOCATION_BG_PHOTO = "/ajie/HZM06896_1.jpg";
