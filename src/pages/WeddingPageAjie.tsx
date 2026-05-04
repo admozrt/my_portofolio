@@ -322,6 +322,12 @@ export const WeddingPageAjie: React.FC = () => {
           <div className="cover-content">
             <OrnamentSVG width={100} />
             <div className="cover-title" style={{ marginTop: 20 }}>The Wedding Of</div>
+            <img
+              src="/ajie/logo-bg.png"
+              alt="Wedding Logo"
+              className="cover-logo"
+              aria-hidden="true"
+            />
             <div className="cover-names">
               <h1>{GROOM} & {BRIDE}</h1>
             </div>

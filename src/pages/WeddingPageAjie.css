@@ -169,6 +169,16 @@ body {
   margin-bottom: 8px;
 }
 
+.cover-logo {
+  width: clamp(72px, 18vw, 110px);
+  height: auto;
+  object-fit: contain;
+  margin: 10px auto 4px;
+  display: block;
+  filter: drop-shadow(0 2px 8px rgba(0,0,0,0.35));
+  opacity: 0.92;
+}
+
 .cover-names {
   font-family: 'Great Vibes', cursive;
   font-size: clamp(46px, 11vw, 78px);
