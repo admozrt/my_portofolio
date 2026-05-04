@@ -11,7 +11,7 @@ const App: React.FC = () => {
         <Route path="/" element={<PortfolioPage />} />
 
         {/* Undangan Pernikahan: /ajie&alya?to=NamaPengunjung */}
-        <Route path="/ajie&alya" element={<WeddingPageAjie />} />
+        <Route path="/ajie-alya" element={<WeddingPageAjie />} />
       </Routes>
     </Router>
   );
