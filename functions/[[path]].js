@@ -17,9 +17,9 @@ const ROUTES = {
     title: "Undangan Pernikahan Ajie & Alya 💍",
     description:
       "Dengan penuh rasa syukur, kami mengundang Anda untuk hadir menyaksikan pernikahan kami. Ahad, 7 Juni 2026 · Tapin, Kalimantan Selatan",
-    image: BASE + "/ajie/MAL08420.jpg",
-    imageW: "3072",
-    imageH: "4608",
+    image: BASE + "/ajie/Preview.jpeg",
+    imageW: "1185",
+    imageH: "1600",
     url: BASE + "/ajie&alya",
     siteName: "Undangan Pernikahan",
   },
