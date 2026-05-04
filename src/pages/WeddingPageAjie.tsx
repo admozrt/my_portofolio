@@ -15,8 +15,6 @@ const COVER_PHOTO = "/ajie/MAL08420.jpg";
 const BRIDE_PHOTO = "/ajie/CEWE_SENDIRI.jpg";
 const GROOM_PHOTO = "/ajie/COWO_SENDIRI.jpg";
 const LOCATION_BG_PHOTO = "/ajie/HZM06896_1.jpg";
-const GIFT_BG_PHOTO = "/ajie/MAL08270.jpg";
-const CLOSE_BG_PHOTO = "/ajie/MAL08420.jpg";
 
 const PHOTOS = [
   "/ajie/BOP_9294.jpg",
