@@ -1973,7 +1973,7 @@ export const WeddingPageAjie: React.FC = () => {
 
         {/* ── Footer ── */}
         <footer className="wedding-footer">
-          Made with ♡ for {GROOM} & {BRIDE}
+          Made with by Admoz for {GROOM} & {BRIDE}
         </footer>
       </div>
     </>
