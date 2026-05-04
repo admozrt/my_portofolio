@@ -12,18 +12,19 @@ const MAP_LNG = 115.1427701;
 const MAP_EMBED_URL = `https://www.google.com/maps?q=${MAP_LAT},${MAP_LNG}&z=16&output=embed`;
 
 const PHOTOS = [
-  "https://images.unsplash.com/photo-1519741497674-611481863552?w=800&q=80",
-  "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=800&q=80",
-  "https://images.unsplash.com/photo-1606800052052-a08af7148866?w=800&q=80",
-  "https://images.unsplash.com/photo-1583939003579-730e3918a45a?w=800&q=80",
-  "https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?w=800&q=80",
+  "/ajie/BOP_9294.jpg",
+  "/ajie/HZM06806.jpg",
+  "/ajie/HZM07032.jpg",
+  "/ajie/MAL08133.jpg",
+  "/ajie/MAL08632.jpg",
 ];
 
-const HERO_PHOTO = "https://images.unsplash.com/photo-1522673607200-164d1b6ce486?w=1200&q=80";
+const HERO_PHOTO = "/ajie/MAL08270.jpg";
+
 const SIDE_PHOTOS = [
-  "https://images.unsplash.com/photo-1591604466107-ec97de577aff?w=400&q=80",
-  "https://images.unsplash.com/photo-1529636798458-92182e662485?w=400&q=80",
-  "https://images.unsplash.com/photo-1544078751-58fee2d8a03b?w=400&q=80",
+  "/ajie/BOP_9306.jpg",
+  "/ajie/HZM06896.jpg",
+  "/ajie/BOP_9321.jpg",
 ];
 
 const LOVE_STORIES = [
@@ -1348,7 +1349,7 @@ export const WeddingPage: React.FC = () => {
         {/* ── Background Music ── */}
         <audio
           ref={audioRef}
-          src="/audio/akad.mp3"
+          src="/audio/bgaudio.mp3"
           loop
           preload="auto"
         />
@@ -1366,7 +1367,7 @@ export const WeddingPage: React.FC = () => {
             <div className="music-eq-bar" style={{ height: 11 }} />
           </div>
           <span className="music-label">
-            {isPlaying ? "Payung Teduh — Akad" : "Putar Musik"}
+            {isPlaying ? "Paul Aro, Andi Rianto — The Way You Look At Me" : "Putar Musik"}
           </span>
         </button>
 
