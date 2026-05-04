@@ -20,7 +20,7 @@ const ROUTES = {
     image: BASE + "/ajie/Preview.jpeg",
     imageW: "1185",
     imageH: "1600",
-    url: BASE + "/ajie&alya",
+    url: BASE + "/ajie-alya",
     siteName: "Undangan Pernikahan",
   },
   portfolio: {
@@ -37,8 +37,7 @@ const ROUTES = {
 };
 
 const BOT_PATTERN =
-  /facebookexternalhit|facebookcatalog|WhatsApp|Twitterbot|TelegramBot|Slackbot|LinkedInBot|Discordbot|Googlebot|Bingbot|DuckDuckBot|AhrefsBot|SemrushBot|MJ12bot|curl|python-requests|Scrapy/i;
-
+  /facebookexternalhit|facebookcatalog|Instagram|WhatsApp|Twitterbot|TelegramBot|Slackbot|LinkedInBot|Discordbot|Googlebot|Bingbot|DuckDuckBot|AhrefsBot|SemrushBot|MJ12bot|curl|python-requests|Scrapy/i;
 const ASSET_EXT =
   /\.(js|css|png|jpe?g|gif|svg|ico|webp|woff2?|ttf|otf|eot|mp3|wav|ogg|mp4|webm|pdf|json|xml|txt|map|wasm)$/i;
 
@@ -85,14 +84,15 @@ export async function onRequest(context) {
   // Determine route meta
   const path = decodeURIComponent(url.pathname);
   const route =
-    Object.values(ROUTES).find((r) => r !== ROUTES.portfolio && r.match(path)) ||
-    ROUTES.portfolio;
+    Object.values(ROUTES).find(
+      (r) => r !== ROUTES.portfolio && r.match(path),
+    ) || ROUTES.portfolio;
 
   // Fetch the index.html from Pages assets
   let htmlRes;
   try {
     htmlRes = await env.ASSETS.fetch(
-      new Request(url.origin + "/index.html", { method: "GET" })
+      new Request(url.origin + "/index.html", { method: "GET" }),
     );
   } catch {
     return next();
