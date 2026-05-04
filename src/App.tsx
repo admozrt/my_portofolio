@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { PortfolioPage } from './pages/PortfolioPage';
-import { WeddingPage } from './pages/WeddingPage';
+import { WeddingPageAjie } from './pages/WeddingPageAjie';
 
 const App: React.FC = () => {
   return (
@@ -10,8 +10,8 @@ const App: React.FC = () => {
         {/* Portfolio (halaman utama) */}
         <Route path="/" element={<PortfolioPage />} />
 
-        {/* Undangan Pernikahan: /ajie&alyato?to=NamaPengunjung */}
-        <Route path="/ajie&alya" element={<WeddingPage />} />
+        {/* Undangan Pernikahan: /ajie&alya?to=NamaPengunjung */}
+        <Route path="/ajie&alya" element={<WeddingPageAjie />} />
       </Routes>
     </Router>
   );
