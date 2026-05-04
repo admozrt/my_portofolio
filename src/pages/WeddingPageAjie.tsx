@@ -302,37 +302,20 @@ export const WeddingPageAjie: React.FC = () => {
           </span>
         </button>
 
-        {/* ── Cover Book (split open animation) ── */}
+        {/* ── Cover (slide to left) ── */}
         <div className={`cover-book ${isOpen ? "open" : ""}`}>
 
-          {/* Left panel — shows left half of cover photo */}
-          <div className="cover-panel cover-panel-left">
-            <div className={`cover-loading-shimmer ${coverImageLoaded ? "hidden" : ""}`} />
-            <img
-              className={`cover-bg-img ${coverImageLoaded ? "loaded" : ""}`}
-              src={COVER_PHOTO}
-              alt=""
-              aria-hidden="true"
-            />
-            <div className="cover-bg-overlay" />
-          </div>
+          {/* Background */}
+          <div className={`cover-loading-shimmer ${coverImageLoaded ? "hidden" : ""}`} />
+          <img
+            className={`cover-bg-img ${coverImageLoaded ? "loaded" : ""}`}
+            src={COVER_PHOTO}
+            alt=""
+            aria-hidden="true"
+          />
+          <div className="cover-bg-overlay" />
 
-          {/* Right panel — shows right half of cover photo */}
-          <div className="cover-panel cover-panel-right">
-            <div className={`cover-loading-shimmer ${coverImageLoaded ? "hidden" : ""}`} />
-            <img
-              className={`cover-bg-img ${coverImageLoaded ? "loaded" : ""}`}
-              src={COVER_PHOTO}
-              alt=""
-              aria-hidden="true"
-            />
-            <div className="cover-bg-overlay" />
-          </div>
-
-          {/* Center spine line */}
-          <div className="cover-spine" />
-
-          {/* Content — centered above both panels */}
+          {/* Content */}
           <div className="cover-content">
             <OrnamentSVG width={100} />
             <div className="cover-title" style={{ marginTop: 20 }}>The Wedding Of</div>
