@@ -4,8 +4,8 @@ import "./WeddingPageBahranFatimatul.css";
 
 // ─── CONFIG ────────────────────────────────────────────────────────
 const WEDDING_DATE = new Date("2026-08-15T10:00:00+08:00");
-const GROOM_FIRST = "Bahran";
-const BRIDE_FIRST = "Fatimatul";
+const GROOM_FIRST = "Ilmi";
+const BRIDE_FIRST = "Zahro";
 const DATE_LABEL = "Sabtu, 15 Agustus 2026";
 
 const MAP_EMBED_URL =
@@ -439,11 +439,11 @@ export const WeddingPageBahranFatimatul: React.FC = () => {
           <OrnDivider width={220} />
 
           <p className="bfwed-cover-names-h1" style={{ marginTop: 24 }}>
-            {BRIDE_FIRST}
+            {GROOM_FIRST}
           </p>
           <span className="bfwed-cover-amp">&amp;</span>
           <p className="bfwed-cover-names-h1" style={{ marginBottom: 0 }}>
-            {GROOM_FIRST}
+            {BRIDE_FIRST}
           </p>
 
           <OrnDivider width={220} />
