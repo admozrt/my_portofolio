@@ -2,15 +2,15 @@
 
 /* ── Theme variables (scoped to .bfwed-root) ─────────────────── */
 .bfwed-root {
-  --bf-cream:   #F2F7FC;
-  --bf-cream-2: #E6EFF8;
-  --bf-ink:     #0D2B4E;
-  --bf-ink-2:   #3B5775;
-  --bf-sage:    #2196F3;
-  --bf-sage-2:  #6FB7F5;
-  --bf-gold:    #1976D2;
-  --bf-line:    rgba(33, 150, 243, 0.22);
-  --bf-shadow:  0 30px 80px -30px rgba(13, 43, 78, 0.25);
+  --bf-cream:   #218df3;
+  --bf-cream-2: #1a78d6;
+  --bf-ink:     #ffffff;
+  --bf-ink-2:   #e6eff8;
+  --bf-sage:    #ffffff;
+  --bf-sage-2:  #cfe4fb;
+  --bf-gold:    #ffffff;
+  --bf-line:    rgba(255, 255, 255, 0.32);
+  --bf-shadow:  0 30px 80px -30px rgba(0, 0, 0, 0.35);
 
   font-family: 'Manrope', system-ui, sans-serif;
   background: var(--bf-cream);
@@ -333,9 +333,9 @@
   inset: 0;
   background: linear-gradient(
     180deg,
-    rgba(242,247,252,0.55) 0%,
-    rgba(242,247,252,0.78) 55%,
-    rgba(242,247,252,0.96) 100%
+    rgba(33,141,243,0.55) 0%,
+    rgba(33,141,243,0.78) 55%,
+    rgba(33,141,243,0.96) 100%
   );
   pointer-events: none;
 }
@@ -1029,7 +1029,7 @@
   color: var(--bf-ink);
   white-space: nowrap;
   padding: 5px 12px;
-  background: rgba(242,247,252,0.88);
+  background: rgba(33,141,243,0.88);
   backdrop-filter: blur(10px);
   border: 1px solid var(--bf-line);
   border-radius: 999px;
