@@ -1,0 +1,850 @@
+import React, { useState, useEffect, useRef, useCallback } from "react";
+import { useSearchParams } from "react-router-dom";
+import "./WeddingPageBahranFatimatul.css";
+
+// ─── CONFIG ────────────────────────────────────────────────────────
+const WEDDING_DATE = new Date("2026-08-15T10:00:00+08:00");
+const GROOM_FIRST = "Bahran";
+const BRIDE_FIRST = "Fatimatul";
+const DATE_LABEL = "Sabtu, 15 Agustus 2026";
+
+const MAP_EMBED_URL =
+  "https://www.google.com/maps?q=Banjarbaru,Kalimantan+Selatan&output=embed";
+const MAP_LINK =
+  "https://maps.google.com/?q=Banjarbaru,Kalimantan+Selatan";
+
+const COVER_PHOTO  = "/bahran/cover.jpg";
+const HERO_PHOTO   = "/bahran/hero.jpg";
+const BRIDE_PHOTO  = "/bahran/bride.jpg";
+const GROOM_PHOTO  = "/bahran/groom.jpg";
+
+const GALLERY_PHOTOS = [
+  "/bahran/gallery-1.jpg",
+  "/bahran/gallery-2.jpg",
+  "/bahran/gallery-3.jpg",
+  "/bahran/gallery-4.jpg",
+  "/bahran/gallery-5.jpg",
+  "/bahran/gallery-6.jpg",
+  "/bahran/gallery-7.jpg",
+];
+
+const GROOM = {
+  label: "Mempelai Pria",
+  name: "Bahran Ilmi",
+  order: "Putra Kedua",
+  father: "Yuseran",
+  mother: "Khadijah",
+  address: "Jl. Gubernur Soebarjo, Kec. Liang Anggang, Banjarbaru",
+  ig: "@bhrnilmi",
+  photo: GROOM_PHOTO,
+};
+
+const BRIDE = {
+  label: "Mempelai Wanita",
+  name: "Fatimatul Zahro",
+  order: "Putri Pertama",
+  father: "Rahmatullah",
+  mother: "Erna",
+  address: "Komp. Montesa Permai, Manarap Tengah",
+  ig: "@fatimatuzzaahra",
+  photo: BRIDE_PHOTO,
+};
+
+const EVENTS = [
+  {
+    tag: "Akad Nikah",
+    title: "Akad Nikah",
+    day: "Sabtu",
+    date: DATE_LABEL,
+    time: "08.00 WITA – Selesai",
+    venue: "Kediaman Mempelai Wanita",
+    address: "Komp. Montesa Permai, Manarap Tengah",
+  },
+  {
+    tag: "Resepsi",
+    title: "Walimatul 'Ursy",
+    day: "Sabtu",
+    date: DATE_LABEL,
+    time: "11.00 WITA – 14.00 WITA",
+    venue: "Gedung Mahligai Pancasila",
+    address: "Banjarbaru, Kalimantan Selatan",
+  },
+];
+
+const GIFTS = [
+  {
+    id: "bca",
+    type: "Transfer Bank",
+    name: "Bank BCA",
+    logo: "BCA",
+    number: "1234 5678 90",
+    holder: "Fatimatul Zahro",
+    bg: "linear-gradient(135deg, #2196F3, #1976D2)",
+  },
+  {
+    id: "dana",
+    type: "E-Wallet",
+    name: "DANA",
+    logo: "D",
+    number: "0812 3456 7890",
+    holder: "Bahran Ilmi",
+    bg: "linear-gradient(135deg, #118EEA, #0A6CB8)",
+  },
+];
+
+const GIFT_ADDRESS =
+  "Komp. Montesa Permai, Manarap Tengah, Banjarmasin";
+
+const NAV_SECTIONS = [
+  { id: "bf-hero",     label: "Pembuka"  },
+  { id: "bf-date",     label: "Tanggal"  },
+  { id: "bf-mempelai", label: "Mempelai" },
+  { id: "bf-galeri",   label: "Galeri"   },
+  { id: "bf-hadiah",   label: "Hadiah"   },
+  { id: "bf-penutup",  label: "Penutup"  },
+];
+
+// ─── HELPERS ───────────────────────────────────────────────────────
+
+function useScrollY() {
+  const [y, setY] = useState(0);
+  useEffect(() => {
+    const h = () => setY(window.scrollY);
+    window.addEventListener("scroll", h, { passive: true });
+    return () => window.removeEventListener("scroll", h);
+  }, []);
+  return y;
+}
+
+function useInView(
+  threshold = 0.12
+): [React.RefObject<HTMLElement | null>, boolean] {
+  const ref = useRef<HTMLElement | null>(null);
+  const [visible, setVisible] = useState(false);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(
+      ([e]) => {
+        if (e.isIntersecting) { setVisible(true); obs.disconnect(); }
+      },
+      { threshold }
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, [threshold]);
+  return [ref, visible];
+}
+
+function useCountdown(target: number) {
+  const [t, setT] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+  useEffect(() => {
+    const tick = () => {
+      const diff = Math.max(0, target - Date.now());
+      setT({
+        days:    Math.floor(diff / 86400000),
+        hours:   Math.floor((diff % 86400000) / 3600000),
+        minutes: Math.floor((diff % 3600000) / 60000),
+        seconds: Math.floor((diff % 60000) / 1000),
+      });
+    };
+    tick();
+    const id = setInterval(tick, 1000);
+    return () => clearInterval(id);
+  }, [target]);
+  return t;
+}
+
+function useImagePreload(src: string): boolean {
+  const [loaded, setLoaded] = useState(false);
+  useEffect(() => {
+    const img = new Image();
+    img.onload = () => setLoaded(true);
+    img.onerror = () => setLoaded(true);
+    img.src = src;
+  }, [src]);
+  return loaded;
+}
+
+function useParallax(speed = 0.08) {
+  const ref = useRef<HTMLDivElement | null>(null);
+  useEffect(() => {
+    let raf = 0;
+    const update = () => {
+      raf = 0;
+      const el = ref.current;
+      if (!el) return;
+      const r = el.getBoundingClientRect();
+      const center = r.top + r.height / 2 - window.innerHeight / 2;
+      el.style.transform = `translate3d(0, ${-center * speed}px, 0)`;
+    };
+    const onScroll = () => { if (!raf) raf = requestAnimationFrame(update); };
+    update();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+      if (raf) cancelAnimationFrame(raf);
+    };
+  }, [speed]);
+  return ref;
+}
+
+// ─── SVG COMPONENTS ────────────────────────────────────────────────
+
+function OrnDivider({ width = 280 }: { width?: number }) {
+  return (
+    <svg
+      className="bfwed-orn-divider"
+      width={width}
+      height="22"
+      viewBox="0 0 280 22"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="0.9"
+      strokeLinecap="round"
+    >
+      <path d="M0 11 L110 11" />
+      <path d="M170 11 L280 11" />
+      <path d="M125 11 Q140 4 155 11 Q140 18 125 11 Z" />
+      <circle cx="140" cy="11" r="1.6" fill="currentColor" />
+      <path d="M118 11 L113 8 M118 11 L113 14" />
+      <path d="M162 11 L167 8 M162 11 L167 14" />
+    </svg>
+  );
+}
+
+function IconArrow({ size = 12 }: { size?: number }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none"
+      stroke="currentColor" strokeWidth="1.6" strokeLinecap="round">
+      <path d="M5 12h14M13 6l6 6-6 6" />
+    </svg>
+  );
+}
+
+function IconMap({ size = 14 }: { size?: number }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none"
+      stroke="currentColor" strokeWidth="1.6">
+      <path d="M12 22s-7-7.5-7-13a7 7 0 0114 0c0 5.5-7 13-7 13z" />
+      <circle cx="12" cy="9" r="2.5" />
+    </svg>
+  );
+}
+
+function IconInstagram({ size = 14 }: { size?: number }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none"
+      stroke="currentColor" strokeWidth="1.6">
+      <rect x="3" y="3" width="18" height="18" rx="5" />
+      <circle cx="12" cy="12" r="4" />
+      <circle cx="17.5" cy="6.5" r="1" fill="currentColor" />
+    </svg>
+  );
+}
+
+// Diamond markers at corners of rail sections
+function RailMarks({ offset = 56 }: { offset?: number }) {
+  const m: React.CSSProperties = {
+    position: "absolute",
+    width: 7,
+    height: 7,
+    background: "var(--bf-cream)",
+    border: "1px solid var(--bf-sage)",
+    zIndex: 3,
+    pointerEvents: "none",
+  };
+  const railX = "var(--bf-rail-x, 14px)";
+  return (
+    <>
+      <span className="bfwed-rail-mark" style={{ ...m, top: offset, left: railX, transform: "translateX(-50%) rotate(45deg)" }} />
+      <span className="bfwed-rail-mark" style={{ ...m, bottom: offset, left: railX, transform: "translateX(-50%) rotate(45deg)" }} />
+      <span className="bfwed-rail-mark" style={{ ...m, top: offset, right: railX, transform: "translateX(50%) rotate(45deg)" }} />
+      <span className="bfwed-rail-mark" style={{ ...m, bottom: offset, right: railX, transform: "translateX(50%) rotate(45deg)" }} />
+    </>
+  );
+}
+
+// ─── MAIN COMPONENT ────────────────────────────────────────────────
+
+export const WeddingPageBahranFatimatul: React.FC = () => {
+  const [searchParams] = useSearchParams();
+  const visitorName = searchParams.get("to") || "Tamu Undangan";
+
+  const [isOpen, setIsOpen]       = useState(false);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [copiedId, setCopiedId]   = useState<string | null>(null);
+  const audioRef  = useRef<HTMLAudioElement | null>(null);
+  const scrollY   = useScrollY();
+  const countdown = useCountdown(WEDDING_DATE.getTime());
+
+  const coverImageLoaded = useImagePreload(COVER_PHOTO);
+  const [btnReady, setBtnReady] = useState(false);
+  useEffect(() => {
+    if (!coverImageLoaded) return;
+    const t = setTimeout(() => setBtnReady(true), 300);
+    return () => clearTimeout(t);
+  }, [coverImageLoaded]);
+
+  // Scroll lock while cover is visible
+  useEffect(() => {
+    document.body.style.overflow = isOpen ? "auto" : "hidden";
+    return () => { document.body.style.overflow = "auto"; };
+  }, [isOpen]);
+
+  // Floating section nav active index
+  const [activeNav, setActiveNav] = useState(0);
+  useEffect(() => {
+    if (!isOpen) return;
+    const compute = () => {
+      const mid = window.scrollY + window.innerHeight * 0.4;
+      let best = 0;
+      NAV_SECTIONS.forEach((s, i) => {
+        const el = document.getElementById(s.id);
+        if (el && el.offsetTop <= mid) best = i;
+      });
+      setActiveNav(best);
+    };
+    compute();
+    window.addEventListener("scroll", compute, { passive: true });
+    window.addEventListener("resize", compute);
+    return () => {
+      window.removeEventListener("scroll", compute);
+      window.removeEventListener("resize", compute);
+    };
+  }, [isOpen]);
+
+  // Parallax for hero background
+  const heroBgRef = useParallax(0.08);
+
+  // Reveal refs
+  const [heroRef,    heroVisible]    = useInView(0.1);
+  const [dateRef,    dateVisible]    = useInView(0.1);
+  const [profileRef, profileVisible] = useInView(0.1);
+  const [galleryRef, galleryVisible] = useInView(0.1);
+  const [giftRef,    giftVisible]    = useInView(0.1);
+  const [closingRef, closingVisible] = useInView(0.1);
+
+  const heroScale   = Math.max(1, 1.1 - (scrollY / 600) * 0.1);
+  const heroOpacity = Math.max(0, 1 - scrollY / 900);
+
+  const handleOpen = useCallback(() => {
+    setIsOpen(true);
+    window.scrollTo({ top: 0, behavior: "instant" });
+    if (audioRef.current) {
+      audioRef.current.play()
+        .then(() => setIsPlaying(true))
+        .catch(() => {});
+    }
+  }, []);
+
+  const toggleMusic = useCallback(() => {
+    const a = audioRef.current;
+    if (!a) return;
+    if (a.paused) {
+      a.play().then(() => setIsPlaying(true)).catch(() => {});
+    } else {
+      a.pause();
+      setIsPlaying(false);
+    }
+  }, []);
+
+  const copyNumber = useCallback((id: string, value: string) => {
+    const clean = value.replace(/\s+/g, "");
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(clean).catch(() => {});
+    } else {
+      const ta = document.createElement("textarea");
+      ta.value = clean;
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand("copy");
+      document.body.removeChild(ta);
+    }
+    setCopiedId(id);
+    setTimeout(() => setCopiedId((c) => (c === id ? null : c)), 1800);
+  }, []);
+
+  const gotoSection = (id: string) => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 12, behavior: "smooth" });
+  };
+
+  const navFillPct =
+    NAV_SECTIONS.length > 1
+      ? (activeNav / (NAV_SECTIONS.length - 1)) * 100
+      : 0;
+
+  return (
+    <div className="bfwed-root">
+      {/* ── Background Music ── */}
+      <audio ref={audioRef} src="/audio/bgaudio.mp3" loop preload="auto" />
+
+      {/* ── Music Toggle ── */}
+      <button
+        className={`bfwed-music-btn${isOpen ? " show" : ""}${isPlaying ? " playing" : ""}`}
+        onClick={toggleMusic}
+        aria-label={isPlaying ? "Pause musik" : "Putar musik"}
+      >
+        <div className="bfwed-music-eq">
+          <div className="bfwed-music-eq-bar" style={{ height: 8 }} />
+          <div className="bfwed-music-eq-bar" style={{ height: 14 }} />
+          <div className="bfwed-music-eq-bar" style={{ height: 6 }} />
+        </div>
+      </button>
+
+      {/* ── Section Nav (left floating) ── */}
+      {isOpen && (
+        <nav className="bfwed-section-nav" aria-label="Navigasi Bagian">
+          <div className="bfwed-nav-track" />
+          <div
+            className="bfwed-nav-track-fill"
+            style={{ height: `calc(${navFillPct}% + 1px)` }}
+          />
+          {NAV_SECTIONS.map((s, i) => (
+            <button
+              key={s.id}
+              className={`bfwed-nav-dot${activeNav === i ? " active" : ""}${i < activeNav ? " past" : ""}`}
+              onClick={() => gotoSection(s.id)}
+              aria-label={s.label}
+              title={s.label}
+            >
+              <span className="bfwed-nav-dot-circle" />
+              <span className="bfwed-nav-label">{s.label}</span>
+            </button>
+          ))}
+        </nav>
+      )}
+
+      {/* ══════════════════════════════════════════════════════════════
+          COVER
+      ══════════════════════════════════════════════════════════════ */}
+      <div className={`bfwed-cover${isOpen ? " slide-up" : ""}`}>
+        {/* Background photo */}
+        <div className="bfwed-cover-photo">
+          <img src={COVER_PHOTO} alt="" aria-hidden="true" />
+          <div className="bfwed-cover-photo-overlay" />
+        </div>
+
+        {/* Diamond corner markers */}
+        <RailMarks offset={32} />
+
+        {/* Cover content */}
+        <div className="bfwed-cover-inner">
+          <div className="bfwed-cover-eyebrow">The Wedding Invitation</div>
+
+          <OrnDivider width={220} />
+
+          <p className="bfwed-cover-names-h1" style={{ marginTop: 24 }}>
+            {BRIDE_FIRST}
+          </p>
+          <span className="bfwed-cover-amp">&amp;</span>
+          <p className="bfwed-cover-names-h1" style={{ marginBottom: 0 }}>
+            {GROOM_FIRST}
+          </p>
+
+          <OrnDivider width={220} />
+
+          <div className="bfwed-cover-date-label" style={{ marginTop: 28 }}>
+            Save the Date
+          </div>
+          <div className="bfwed-cover-date">{DATE_LABEL}</div>
+
+          <div className="bfwed-cover-guest-wrap">
+            <div className="bfwed-cover-guest-eyebrow">Kepada Yth.</div>
+            <div className="bfwed-cover-guest-name">{visitorName}</div>
+          </div>
+
+          <button
+            className="bfwed-btn-open"
+            onClick={handleOpen}
+            disabled={!btnReady}
+            style={{ opacity: btnReady ? 1 : 0.5 }}
+          >
+            <span>Buka Undangan</span>
+            <IconArrow size={12} />
+          </button>
+        </div>
+
+        {/* Made by credit (centered bottom) */}
+        <div className="bfwed-cover-credit">
+          <a href="https://admoz.pages.dev" target="_blank" rel="noopener noreferrer">
+            Made with <span className="heart">♥</span> by Dirakhmat
+          </a>
+        </div>
+      </div>
+
+      {/* ══════════════════════════════════════════════════════════════
+          MAIN CONTENT
+      ══════════════════════════════════════════════════════════════ */}
+      <main className={`bfwed-main${isOpen ? " revealed" : ""}`}>
+
+        {/* ── 1. Hero ── */}
+        <section
+          id="bf-hero"
+          className="bfwed-section bfwed-hero"
+          ref={heroRef as React.RefObject<HTMLElement>}
+        >
+          {/* Full-bleed background with parallax */}
+          <div className="bfwed-hero-bg" ref={heroBgRef}
+            style={{ transform: `scale(${heroScale})`, opacity: heroOpacity }}>
+            <img src={HERO_PHOTO} alt="" aria-hidden="true" loading="eager" />
+          </div>
+
+          <RailMarks />
+
+          {/* Bismillah + verse */}
+          <div className={`bfwed-hero-content bfwed-reveal${heroVisible ? " in" : ""}`}
+            style={{ maxWidth: 720, margin: "0 auto", textAlign: "center" }}>
+            <div className="bfwed-eyebrow">◆ Bismillāhirraḥmānirraḥīm ◆</div>
+            <div className="bfwed-bismillah-ar">
+              بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ
+            </div>
+            <p className="bfwed-verse">
+              "Dan di antara tanda-tanda kekuasaan-Nya ialah Dia menciptakan untukmu
+              istri-istri dari jenismu sendiri, supaya kamu cenderung dan merasa
+              tenteram kepadanya, dan dijadikan-Nya di antaramu rasa kasih dan sayang."
+            </p>
+            <div className="bfwed-eyebrow" style={{ marginTop: 12 }}>QS. Ar-Rūm : 21</div>
+          </div>
+
+          {/* Names */}
+          <div
+            className={`bfwed-hero-content bfwed-hero-names bfwed-reveal${heroVisible ? " in" : ""}`}
+            style={{ textAlign: "center", transitionDelay: "0.2s" }}
+          >
+            <div className="bfwed-hero-wedding-of">The Wedding of</div>
+            <OrnDivider width={300} />
+            <h1 className="bfwed-hero-name-big" style={{ marginTop: 36 }}>
+              {GROOM_FIRST}
+            </h1>
+            <span className="bfwed-hero-amp">&amp;</span>
+            <h1 className="bfwed-hero-name-big">{BRIDE_FIRST}</h1>
+            <OrnDivider width={300} />
+            <div className="bfwed-hero-wedding-of" style={{ marginTop: 24 }}>
+              {DATE_LABEL}
+            </div>
+          </div>
+
+          {/* Invitation text */}
+          <div
+            className={`bfwed-hero-content bfwed-hero-invitation bfwed-reveal${heroVisible ? " in" : ""}`}
+            style={{ transitionDelay: "0.4s" }}
+          >
+            <p>Assalāmu'alaikum Warahmatullāhi Wabarakātuh</p>
+            <p>
+              Dengan memohon rahmat dan ridha Allah SWT, kami bermaksud menyelenggarakan
+              pernikahan putra-putri kami. Suatu kehormatan dan kebahagiaan bagi kami
+              apabila Bapak/Ibu/Saudara/i berkenan hadir untuk memberikan doa restu.
+            </p>
+          </div>
+        </section>
+
+        {/* ── 2. Save the Date / Countdown / Location ── */}
+        <section
+          id="bf-date"
+          className="bfwed-section bfwed-date-section"
+          ref={dateRef as React.RefObject<HTMLElement>}
+        >
+          <RailMarks />
+
+          <div className={`bfwed-reveal${dateVisible ? " in" : ""}`} style={{ textAlign: "center" }}>
+            <div className="bfwed-eyebrow">◆ Save the Date ◆</div>
+            <h2 className="bfwed-section-heading">Hari Bahagia Kami</h2>
+            <div style={{ fontSize: 12, letterSpacing: "0.22em", textTransform: "uppercase",
+              color: "var(--bf-ink-2)", marginBottom: 48 }}>
+              {DATE_LABEL}
+            </div>
+          </div>
+
+          {/* Countdown */}
+          <div className={`bfwed-countdown-grid bfwed-reveal${dateVisible ? " in" : ""}`}
+            style={{ transitionDelay: "0.15s" }}>
+            {[
+              { n: countdown.days,    l: "Hari"  },
+              { n: countdown.hours,   l: "Jam"   },
+              { n: countdown.minutes, l: "Menit" },
+              { n: countdown.seconds, l: "Detik" },
+            ].map((c) => (
+              <div key={c.l} className="bfwed-cd-cell">
+                <div className="bfwed-cd-num">{String(c.n).padStart(2, "0")}</div>
+                <div className="bfwed-cd-lbl">{c.l}</div>
+              </div>
+            ))}
+          </div>
+
+          {/* Event cards */}
+          <div
+            className={`bfwed-events-grid bfwed-reveal${dateVisible ? " in" : ""}`}
+            style={{ transitionDelay: "0.3s" }}
+          >
+            {EVENTS.map((ev, i) => (
+              <div key={i} className="bfwed-event-card">
+                <div className="bfwed-event-tag">{ev.tag}</div>
+                <h3 className="bfwed-event-title">{ev.title}</h3>
+                <OrnDivider width={140} />
+                <div className="bfwed-event-info" style={{ marginTop: 18 }}>
+                  <div className="strong">{ev.day}</div>
+                  <div>{ev.date}</div>
+                  <div>{ev.time}</div>
+                  <div className="italic" style={{ marginTop: 14 }}>{ev.venue}</div>
+                  <div>{ev.address}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Map */}
+          <div className={`bfwed-reveal${dateVisible ? " in" : ""}`}
+            style={{ textAlign: "center", transitionDelay: "0.45s" }}>
+            <div className="bfwed-eyebrow">◆ Lokasi Acara ◆</div>
+            <h3 className="bfwed-section-heading" style={{ fontSize: "clamp(28px,4vw,36px)" }}>
+              Petunjuk Arah
+            </h3>
+            <div className="bfwed-map-frame">
+              <iframe
+                src={MAP_EMBED_URL}
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                title="Lokasi Acara"
+                allowFullScreen
+              />
+            </div>
+            <a
+              href={MAP_LINK}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bfwed-btn-ghost"
+            >
+              <IconMap /> Buka di Google Maps
+            </a>
+          </div>
+        </section>
+
+        {/* ── 3. Profile Mempelai ── */}
+        <section
+          id="bf-mempelai"
+          className="bfwed-section bfwed-profile-section"
+          ref={profileRef as React.RefObject<HTMLElement>}
+        >
+          <RailMarks />
+
+          <div className={`bfwed-reveal${profileVisible ? " in" : ""}`} style={{ textAlign: "center" }}>
+            <div className="bfwed-eyebrow">◆ Mempelai ◆</div>
+            <h2 className="bfwed-section-heading">Kedua Mempelai</h2>
+            <p style={{ fontSize: 14, color: "var(--bf-ink-2)", maxWidth: 480,
+              margin: "0 auto 64px", lineHeight: 1.8 }}>
+              Dengan segala kerendahan hati dan rasa syukur, izinkanlah kami memperkenalkan
+              kedua calon mempelai.
+            </p>
+          </div>
+
+          <div className="bfwed-profile-grid">
+            {[GROOM, BRIDE].map((person, idx) => (
+              <div
+                key={person.name}
+                className={`bfwed-profile-card bfwed-reveal${profileVisible ? " in" : ""}`}
+                style={{ transitionDelay: `${idx * 0.2}s` }}
+              >
+                <div className="bfwed-profile-photo-wrap">
+                  <div className="bfwed-profile-photo">
+                    <img src={person.photo} alt={person.name} loading="lazy" />
+                  </div>
+                </div>
+                <div className="bfwed-profile-label">{person.label}</div>
+                <h3 className="bfwed-profile-name">{person.name}</h3>
+                <div className="bfwed-profile-order">{person.order}</div>
+                <OrnDivider width={160} />
+                <div style={{ marginTop: 22 }}>
+                  <div className="bfwed-profile-parents-label">Putra/Putri dari</div>
+                  <div className="bfwed-profile-parents">
+                    Bapak {person.father}<br />&amp;<br />Ibu {person.mother}
+                  </div>
+                </div>
+                <div className="bfwed-profile-address">{person.address}</div>
+                <a
+                  className="bfwed-ig-link"
+                  href={`https://instagram.com/${person.ig.replace("@", "")}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <IconInstagram /> {person.ig}
+                </a>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* ── 4. Gallery ── */}
+        <section
+          id="bf-galeri"
+          className="bfwed-section bfwed-gallery-section"
+          ref={galleryRef as React.RefObject<HTMLElement>}
+        >
+          <RailMarks />
+
+          <div className={`bfwed-reveal${galleryVisible ? " in" : ""}`} style={{ textAlign: "center" }}>
+            <div className="bfwed-eyebrow">◆ Our Story ◆</div>
+            <h2 className="bfwed-section-heading">Galeri Momen</h2>
+            <p style={{ fontSize: 14, color: "var(--bf-ink-2)",
+              maxWidth: 460, margin: "0 auto 56px", lineHeight: 1.8 }}>
+              Setiap senyum, setiap langkah — kami abadikan menjelang hari yang
+              telah lama kami nantikan.
+            </p>
+          </div>
+
+          <div className={`bfwed-gallery bfwed-reveal${galleryVisible ? " in" : ""}`}
+            style={{ transitionDelay: "0.15s" }}>
+            {GALLERY_PHOTOS.map((src, i) => (
+              <div key={i} className={`g g${i + 1}`}>
+                <img src={src} alt={`Galeri ${i + 1}`} loading="lazy" />
+              </div>
+            ))}
+          </div>
+
+          <div className={`bfwed-reveal${galleryVisible ? " in" : ""}`}
+            style={{ textAlign: "center", transitionDelay: "0.3s" }}>
+            <p className="bfwed-gallery-quote">
+              "Cinta yang berlandaskan iman adalah cinta yang abadi —
+              tumbuh dalam doa, dirawat oleh kesabaran."
+            </p>
+          </div>
+        </section>
+
+        {/* ── 5. Wedding Gift ── */}
+        <section
+          id="bf-hadiah"
+          className="bfwed-section bfwed-gift-section"
+          ref={giftRef as React.RefObject<HTMLElement>}
+        >
+          <RailMarks />
+
+          <div className={`bfwed-reveal${giftVisible ? " in" : ""}`} style={{ textAlign: "center" }}>
+            <div className="bfwed-eyebrow">◆ Wedding Gift ◆</div>
+            <h2 className="bfwed-section-heading">Tanda Kasih</h2>
+            <p className="bfwed-gift-intro">
+              Doa restu adalah hadiah terindah bagi kami. Namun jika Bapak/Ibu/Saudara/i
+              berkenan memberikan tanda kasih, dapat dikirimkan melalui kanal berikut:
+            </p>
+          </div>
+
+          <div className={`bfwed-gift-cards bfwed-reveal${giftVisible ? " in" : ""}`}
+            style={{ transitionDelay: "0.15s" }}>
+            {GIFTS.map((g) => (
+              <div key={g.id} className="bfwed-gift-card">
+                <div className="bfwed-gift-logo" style={{ background: g.bg }}>
+                  {g.logo}
+                </div>
+                <div className="bfwed-gift-type">{g.type}</div>
+                <div className="bfwed-gift-name">{g.name}</div>
+                <OrnDivider width={120} />
+                <div className="bfwed-gift-num">{g.number}</div>
+                <div className="bfwed-gift-holder">a.n. {g.holder}</div>
+                <button
+                  className={`bfwed-gift-copy-btn${copiedId === g.id ? " copied" : ""}`}
+                  onClick={() => copyNumber(g.id, g.number)}
+                >
+                  {copiedId === g.id ? "✓ Tersalin" : "Salin Nomor"}
+                </button>
+              </div>
+            ))}
+          </div>
+
+          {GIFT_ADDRESS && (
+            <div className={`bfwed-gift-address-wrap bfwed-reveal${giftVisible ? " in" : ""}`}
+              style={{ transitionDelay: "0.3s" }}>
+              <div className="bfwed-eyebrow">◆ Alamat Kirim Hadiah ◆</div>
+              <div className="bfwed-gift-address-text">{GIFT_ADDRESS}</div>
+            </div>
+          )}
+
+          <p
+            className={`bfwed-reveal${giftVisible ? " in" : ""}`}
+            style={{
+              fontFamily: "'Cormorant Garamond', serif",
+              fontSize: 18, fontStyle: "italic",
+              color: "var(--bf-ink-2)",
+              maxWidth: 480, margin: "56px auto 0",
+              lineHeight: 1.6, textAlign: "center",
+              transitionDelay: "0.45s",
+            }}
+          >
+            "Terima kasih atas kemurahan hati dan doa baik dari Bapak/Ibu/Saudara/i."
+          </p>
+        </section>
+
+        {/* ── 6. Closing ── */}
+        <section
+          id="bf-penutup"
+          className="bfwed-section bfwed-closing-section"
+          ref={closingRef as React.RefObject<HTMLElement>}
+        >
+          <RailMarks />
+
+          <div className={`bfwed-reveal${closingVisible ? " in" : ""}`} style={{ textAlign: "center" }}>
+            {/* Ornamental leaf SVG */}
+            <svg width="160" height="56" viewBox="0 0 200 70" fill="none"
+              stroke="var(--bf-sage)" strokeWidth="1" strokeLinecap="round"
+              style={{ marginBottom: 36, opacity: 0.7 }}>
+              <path d="M10 35 L90 35" />
+              <path d="M110 35 L190 35" />
+              <circle cx="100" cy="35" r="3" />
+              <path d="M70 35 Q80 25 90 35 Q80 45 70 35 Z" />
+              <path d="M110 35 Q120 25 130 35 Q120 45 110 35 Z" />
+              <path d="M55 35 L50 30 M55 35 L50 40" />
+              <path d="M145 35 L150 30 M145 35 L150 40" />
+            </svg>
+
+            <p className="bfwed-closing-body">
+              Merupakan suatu kebahagiaan dan kehormatan bagi kami apabila
+              Bapak/Ibu/Saudara/i berkenan hadir dan memberikan doa restu kepada
+              kedua mempelai.
+            </p>
+
+            <div className="bfwed-closing-divider">
+              <span style={{ fontFamily: "'JetBrains Mono', monospace",
+                fontSize: 10, letterSpacing: "0.22em", textTransform: "uppercase" }}>
+                Terima Kasih
+              </span>
+            </div>
+
+            <p style={{ fontSize: 14, color: "var(--bf-ink-2)", marginBottom: 8 }}>
+              Wassalāmu'alaikum Warahmatullāhi Wabarakātuh
+            </p>
+
+            <div style={{ fontSize: 11, letterSpacing: "0.22em", textTransform: "uppercase",
+              color: "var(--bf-ink-2)", marginTop: 48, marginBottom: 24 }}>
+              Kami yang berbahagia,
+            </div>
+
+            <div className="bfwed-closing-names">
+              {GROOM_FIRST}
+              <span className="script-amp">&amp;</span>
+              {BRIDE_FIRST}
+            </div>
+            <div className="bfwed-closing-family">beserta keluarga besar</div>
+          </div>
+
+          {/* Footer */}
+          <div className="bfwed-footer">
+            <div className="bfwed-footer-copy">
+              © {new Date().getFullYear()} · Bahran &amp; Fatimatul
+            </div>
+            <a
+              href="https://admoz.pages.dev"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bfwed-footer-credit"
+            >
+              Made with <span className="heart">♥</span> by Dirakhmat
+            </a>
+          </div>
+        </section>
+
+      </main>
+    </div>
+  );
+};
