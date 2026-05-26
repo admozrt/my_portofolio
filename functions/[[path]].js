@@ -28,9 +28,9 @@ const ROUTES = {
     title: "Adi Rakhmatullah Ma’arif – Pengembang Full Stack | Laravel & React",
     description:
       "Pengembang Full Stack berpengalaman dalam Laravel, React, dan teknologi web modern. Membangun aplikasi web yang scalable, responsif, dan sistem informasi.",
-    image: BASE + "/my.jpg",
-    imageW: "997",
-    imageH: "1247",
+    image: BASE + "/my.png",
+    imageW: "1024",
+    imageH: "1278",
     url: BASE,
     siteName: "Admoz Portfolio",
   },

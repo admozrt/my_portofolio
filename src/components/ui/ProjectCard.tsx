@@ -33,7 +33,7 @@ export const ProjectCard: React.FC<{ project: Project }> = ({ project }) => {
         </div>
         <div className="w-full h-full flex items-center justify-center">
           {project.logo && !logoError ? (
-            <div className="w-28 h-28 bg-white bg-opacity-15 rounded-2xl flex items-center justify-center p-3 group-hover:scale-110 transition-transform duration-300">
+            <div className="w-36 h-36 bg-white bg-opacity-15 rounded-2xl flex items-center justify-center p-3 group-hover:scale-110 transition-transform duration-300">
               <img
                 src={project.logo}
                 alt={`${project.title} logo`}

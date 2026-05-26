@@ -3,7 +3,7 @@ import type { Project } from '../types';
 export const projects: Project[] = [
   {
     id: 1,
-    title: 'Sinergi Health Baimbai',
+    title: 'Sinergi Health Baimbai - RME',
     description: 'Sistem Rekam Medik yang memudahkan dokter dan perawat dalam mengelola pasien, rekam medis, dan administrasi klinik. dengan fitur-fitur seperti pendaftaran pasien, pemeriksaan, diagnosa, resep obat, dan pelaporan. Sistem yang dapat diakses melalui berbagai platform, termasuk web, mobile, dan desktop. dapat digunakan untuk klinik utama, klinik pratama, spesialis dan puskesmas',
     technologies: ['Laravel', 'React', 'React Native', 'MySQL', 'Redis', 'Integrasi API', 'Satu Sehat', 'BPJS', 'PACS'],
     link: 'https://sinergi.dinara-sanur.biz.id',
@@ -36,6 +36,17 @@ export const projects: Project[] = [
   },
   {
     id: 4,
+    title: 'Sistem Manajemen Indikator Mutu & Insiden Keselamatan Pasien',
+    description: 'Aplikasi ini membantu pencatatan Indikator Mutu (IM) & Insiden Keselamatan Pasien (IKP) di setiap unit/instalasi. Data realisasi harian otomatis terangkum menjadi capaian bulanan untuk monitoring dan pelaporan.',
+    technologies: ['Laravel', 'Inertia.js', 'Typescript', 'Tailwind', 'MySQL', 'Cetak PDF'],
+    link: '#',
+    gradient: 'from-orange-500 via-orange-600 to-yellow-400',
+    icon: 'fas fa-shield-alt',
+    logo: '/images/projects/logos/logo-rsj.png',
+    status: 'selesai'
+  },
+  {
+    id: 5,
     title: 'Sistem Penggajian Guru Militer',
     description: 'Sistem manajemen penggajian canggih untuk personel militer dengan kalkulasi otomatis, pelaporan keuangan, dan integrasi database kepegawaian.',
     technologies: ['Laravel', 'Bootstrap', 'MySQL', 'Cetak PDF'],
@@ -46,7 +57,7 @@ export const projects: Project[] = [
     status: 'selesai'
   },
   {
-    id: 5,
+    id: 6,
     title: 'Sistem Manajemen Sekolah',
     description: 'Platform manajemen pendidikan terintegrasi yang mencakup administrasi akademik, manajemen siswa, penjadwalan, dan pelaporan komprehensif.',
     technologies: ['PHP', 'Bootstrap', 'MySQL', 'Chart.js'],
@@ -57,7 +68,7 @@ export const projects: Project[] = [
     status: 'selesai'
   },
   {
-    id: 6,
+    id: 7,
     title: 'Sistem Absensi Digital',
     description: 'Aplikasi absensi berbasis geolokasi dengan pelacakan real-time, validasi tempat kerja, dan pelaporan analitik untuk optimisasi HR.',
     technologies: ['CodeIgniter', 'JavaScript', 'Maps API', 'MySQL'],
@@ -68,7 +79,7 @@ export const projects: Project[] = [
     status: 'selesai'
   },
   {
-    id: 7,
+    id: 8,
     title: 'Manajemen Aset Universitas Borneo Lestari',
     description: 'Sistem manajemen aset digital dan arsip dengan kategorisasi otomatis, pencarian cerdas, peminjaman aset dengan scan QR dan backup terdistribusi untuk preservasi data jangka panjang.',
     technologies: ['CodeIgniter', 'Bootstrap', 'MySQL', 'Manajemen File','Scan QR'],

@@ -3,11 +3,11 @@ import type { Experience } from '../types';
 export const experiences: Experience[] = [
   {
     id: 1,
-    title: 'Pengembang Full Stack',
+    title: 'Software Developer',
     company: 'RSJ Sambang Lihum - Prov.Kalimantan Selatan',
     location: 'Kalimantan Selatan, Indonesia',
     period: 'Januari 2024 - Sekarang',
-    description: 'Pengembangan Sistem Informasi Manajemen Rumah Sakit (SIMRS) yang komprehensif',
+    description: 'Pengembangan Sistem Informasi Manajemen Rumah Sakit (SIMRSGOS)',
     technologies: ['Laminas','Laravel', 'Ext.js', 'MySQL', 'Redis', 'Docker', 'AWS'],
     achievements: [
       'Mengimplementasikan sistem manajemen data pasien yang aman',

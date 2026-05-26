@@ -16,12 +16,12 @@ export const HeroSection: React.FC = () => {
     <section className="pt-24 pb-16 bg-gradient-to-br from-blue-50 via-white to-grey-50 dark:from-gray-900 dark:via-gray-800 dark:to-grey-900">
       <div className="container mx-auto px-6 max-w-8xl">
         <div className="text-center mb-16">
-          <div className="w-40 h-40 mx-auto mb-6 rounded-lg bg-gradient-to-br from-blue-500 to-grey-600 p-1">
+          <div className="w-44 h-54 mx-auto mb-6 rounded-lg bg-gradient-to-br from-blue-500 to-grey-600 p-1">
             <div className="w-full h-full rounded-lg bg-gray-200 dark:bg-gray-700 flex items-center justify-center">
                 <img
-                src="/my.jpg"
+                src="/my.png"
                 alt="Adi Rakhmatullah"
-                className="w-36 h-36 rounded-lg object-cover"
+                className="w-42 h-50 rounded-lg object-cover"
                 />
             </div>
           </div>
