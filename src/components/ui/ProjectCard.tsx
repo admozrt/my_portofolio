@@ -1,8 +1,9 @@
 import { Code, ExternalLink, Github, Star } from "lucide-react";
-import React from "react";
+import React, { useState } from "react";
 import { Project } from "../../types";
 
 export const ProjectCard: React.FC<{ project: Project }> = ({ project }) => {
+  const [logoError, setLogoError] = useState(false);
   const getStatusColor = (status: string) => {
     switch (status) {
       case 'selesai': return 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200';
@@ -31,7 +32,16 @@ export const ProjectCard: React.FC<{ project: Project }> = ({ project }) => {
           </span>
         </div>
         <div className="w-full h-full flex items-center justify-center">
-          {project.icon ? (
+          {project.logo && !logoError ? (
+            <div className="w-28 h-28 bg-white bg-opacity-15 rounded-2xl flex items-center justify-center p-3 group-hover:scale-110 transition-transform duration-300">
+              <img
+                src={project.logo}
+                alt={`${project.title} logo`}
+                className="w-full h-full object-contain"
+                onError={() => setLogoError(true)}
+              />
+            </div>
+          ) : project.icon ? (
             <i className={`${project.icon} text-6xl text-white opacity-80 group-hover:scale-110 transition-transform duration-300`}></i>
           ) : (
             <div className="w-20 h-20 bg-white bg-opacity-20 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">

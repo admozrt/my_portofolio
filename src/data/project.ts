@@ -8,6 +8,7 @@ export const projects: Project[] = [
     technologies: ['Laravel', 'React', 'React Native', 'MySQL', 'Redis', 'Integrasi API', 'Satu Sehat', 'BPJS', 'PACS'],
     link: 'https://sinergi.dinara-sanur.biz.id',
     gradient: 'from-green-500 via-green-600 to-emerald-400',
+    logo: '/images/projects/logos/sinergi-health.png',
     featured: true,
     status: 'sedang_berjalan'
   },
@@ -18,6 +19,7 @@ export const projects: Project[] = [
     technologies: ['Laravel', 'React', 'React Native', 'MySQL', 'Redis', 'Gateway Pembayaran', 'Integrasi API'],
     link: 'https://timurmilautama.co.id',
     gradient: 'from-blue-500 via-blue-600 to-cyan-600',
+    logo: '/images/projects/logos/tmu-ferry.png',
     featured: true,
     status: 'sedang_berjalan'
   },
@@ -28,6 +30,7 @@ export const projects: Project[] = [
     technologies: ['Laravel', 'React', 'React Native', 'Inertia.js', 'MySQL'],
     link: 'https://siparba.banjarbarukota.go.id',
     gradient: 'from-orange-500 via-orange-600 to-red-600',
+    logo: '/images/projects/logos/siparba.png',
     featured: true,
     status: 'selesai'
   },
@@ -39,6 +42,7 @@ export const projects: Project[] = [
     link: '#',
     gradient: 'from-green-500 via-green-600 to-emerald-600',
     icon: 'fas fa-shield-alt',
+    logo: '/images/projects/logos/sistem-penggajian.png',
     status: 'selesai'
   },
   {
@@ -49,6 +53,7 @@ export const projects: Project[] = [
     link: '#',
     gradient: 'from-indigo-500 via-indigo-600 to-blue-600',
     icon: 'fas fa-graduation-cap',
+    logo: '/images/projects/logos/manajemen-sekolah.png',
     status: 'selesai'
   },
   {
@@ -59,6 +64,7 @@ export const projects: Project[] = [
     link: '#',
     gradient: 'from-purple-500 via-purple-600 to-violet-600',
     icon: 'fas fa-clock',
+    logo: '/images/projects/logos/absensi-digital.png',
     status: 'selesai'
   },
   {
@@ -69,6 +75,7 @@ export const projects: Project[] = [
     link: '#',
     gradient: 'from-orange-500 via-orange-600 to-red-600',
     icon: 'fas fa-university',
+    logo: '/images/projects/logos/aset-unborle.png',
     status: 'selesai'
   }
 ];

@@ -45,6 +45,7 @@ export interface Project {
   github?: string;
   gradient: string;
   icon?: string;
+  logo?: string;
   featured?: boolean;
   status: 'selesai' | 'sedang_berjalan' | 'direncanakan';
 }
