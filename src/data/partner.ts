@@ -11,6 +11,14 @@ export const partners: Partner[] = [
   },
   {
     id: 2,
+    name: 'CV. Dinara Sanur',
+    description: 'Perusahaan penyedia perangkat keras dan software house',
+    website: '#',
+    category: 'klien',
+    relationship: 'Pengembang'
+  },
+  {
+    id: 3,
     name: 'PT. Timur Mila Utama',
     description: 'Perusahaan transportasi maritim terkemuka di Indonesia Timur',
     website: 'https://timurmilautama.co.id',
@@ -18,7 +26,7 @@ export const partners: Partner[] = [
     relationship: 'Pembuat dan Pengembang Sistem - Platform Tiket Kapal'
   },
   {
-    id: 3,
+    id: 4,
     name: 'Disporabudpar Kota Banjarbaru',
     description: 'Dinas pariwisata dan kebudayaan pemerintah daerah',
     website: 'https://siparba.dinara-sanur.biz.id',
@@ -26,7 +34,7 @@ export const partners: Partner[] = [
     relationship: 'Pembuat dan Pengembang Sistem - Platform Informasi Pariwisata'
   },
   {
-    id: 4,
+    id: 5,
     name: 'TNI AD Rindam Mulawarman',
     description: 'Komando Daerah Militer Tentara Nasional Indonesia',
     website: '#',
