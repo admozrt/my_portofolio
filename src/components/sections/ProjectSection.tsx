@@ -17,7 +17,7 @@ export const ProjectsSection: React.FC = () => {
   }, [filter]);
 
   const filterButtons = [
-    { key: 'semua', label: 'Semua Proyek', count: projects.length },
+    { key: 'semua', label: 'Semua Projek', count: projects.length },
     { key: 'unggulan', label: 'Unggulan', count: projects.filter(p => p.featured).length },
     { key: 'selesai', label: 'Selesai', count: projects.filter(p => p.status === 'selesai').length },
     { key: 'sedang_berjalan', label: 'Sedang Berjalan', count: projects.filter(p => p.status === 'sedang_berjalan').length }
