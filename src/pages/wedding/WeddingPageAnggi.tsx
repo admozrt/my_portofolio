@@ -257,7 +257,7 @@ export const WeddingPageAnggi: React.FC = () => {
 
   const Names = (
     <>
-      Anggi<span className="amp">&amp;</span>Zulfhanie
+      Anggi<span className="amp">&amp;</span>Rezza
     </>
   );
 
@@ -299,7 +299,7 @@ export const WeddingPageAnggi: React.FC = () => {
               <Ornament />
             </div>
             <div className="guest-box reveal in d2">
-              <div className="to">Kepada Yth. Bapak / Ibu / Saudara/i</div>
+              <div className="to">Kepada Yth.</div>
               <div className="guest-name">{visitorName}</div>
             </div>
             <button className="btn-open reveal in d3" onClick={handleOpen}>
