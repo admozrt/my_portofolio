@@ -1043,7 +1043,7 @@ export const WeddingPageBahranFatimatul: React.FC<WeddingPageBahranFatimatulProp
               rel="noopener noreferrer"
               className="bfwed-footer-credit"
             >
-              Made with <span className="heart">♥</span> by Dirakhmat
+              Crafted by <u> Dirakhmat </u>
             </a>
           </div>
         </section>
