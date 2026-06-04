@@ -12,7 +12,7 @@
 const BASE = "https://admoz.pages.dev";
 
 const ROUTES = {
-  wedding: {
+  weddingAjie: {
     match: (path) => /ajie/i.test(path) || /alya/i.test(path),
     title: "Undangan Pernikahan Ajie & Alya 💍",
     description:
@@ -21,6 +21,33 @@ const ROUTES = {
     imageW: "1185",
     imageH: "1600",
     url: BASE + "/ajie-alya",
+    siteName: "Undangan Pernikahan",
+  },
+  weddingAnggi: {
+    match: (path) =>
+      /anggi/i.test(path) || /rezza/i.test(path) || /zulfhanie/i.test(path),
+    title: "Undangan Pernikahan Anggi & Zulfhanie 💍",
+    description:
+      "Dengan penuh rasa syukur, kami mengundang Anda untuk hadir menyaksikan pernikahan kami. Minggu, 12 Juli 2026 · Banjarbaru, Kalimantan Selatan",
+    image: BASE + "/anggi/preview.jpg",
+    imageW: "1200",
+    imageH: "919",
+    url: BASE + "/anggi-rezza",
+    siteName: "Undangan Pernikahan",
+  },
+  weddingIlmi: {
+    match: (path) =>
+      /ilmi/i.test(path) ||
+      /zahro/i.test(path) ||
+      /bahran/i.test(path) ||
+      /fatimatul/i.test(path),
+    title: "Undangan Pernikahan Ilmi & Zahro 💍",
+    description:
+      "Dengan penuh rasa syukur, kami mengundang Anda untuk hadir menyaksikan pernikahan kami. Sabtu, 15 Agustus 2026 · Banjarbaru, Kalimantan Selatan",
+    image: BASE + "/ilmi/preview.jpg",
+    imageW: "800",
+    imageH: "1200",
+    url: BASE + "/ilmi-zahro",
     siteName: "Undangan Pernikahan",
   },
   portfolio: {
