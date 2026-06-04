@@ -15,8 +15,11 @@ const App: React.FC = () => {
         {/* Undangan Pernikahan: /ajie-alya?to=NamaPengunjung */}
         <Route path="/ajie-alya" element={<WeddingPageAjie />} />
 
-        {/* Undangan Pernikahan: /bahran-fatimatul?to=NamaPengunjung */}
-        <Route path="/ilmi-zahro" element={<WeddingPageBahranFatimatul />} />
+        {/* Undangan Pernikahan: /ilmi-zahro?to=NamaPengunjung (ayah mempelai wanita: Rahmatullah) */}
+        <Route path="/ilmi-zahro" element={<WeddingPageBahranFatimatul brideFather="Rahmatullah" />} />
+
+        {/* Undangan Pernikahan: /zahro-ilmi?to=NamaPengunjung (ayah mempelai wanita: Rohim) */}
+        <Route path="/zahro-ilmi" element={<WeddingPageBahranFatimatul brideFather="Rohim" />} />
 
         {/* Undangan Pernikahan: /anggi-rezza?to=NamaPengunjung */}
         <Route path="/anggi-rezza" element={<WeddingPageAnggi />} />

@@ -399,9 +399,19 @@ function OrchidFall() {
 
 // ─── MAIN COMPONENT ────────────────────────────────────────────────
 
-export const WeddingPageBahranFatimatul: React.FC = () => {
+interface WeddingPageBahranFatimatulProps {
+  /** Nama ayah mempelai wanita — beda per route (ilmi-zahro vs zahro-ilmi) */
+  brideFather?: string;
+}
+
+export const WeddingPageBahranFatimatul: React.FC<WeddingPageBahranFatimatulProps> = ({
+  brideFather = BRIDE.father,
+}) => {
   const [searchParams] = useSearchParams();
   const visitorName = searchParams.get("to") || "Tamu Undangan";
+
+  // Mempelai wanita dengan nama ayah sesuai route
+  const bride = { ...BRIDE, father: brideFather };
 
   const [isOpen, setIsOpen]       = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -837,7 +847,7 @@ export const WeddingPageBahranFatimatul: React.FC = () => {
           </div>
 
           <div className="bfwed-profile-grid">
-            {[GROOM, BRIDE].map((person, idx) => (
+            {[GROOM, bride].map((person, idx) => (
               <div
                 key={person.name}
                 className={`bfwed-profile-card bfwed-reveal${profileVisible ? " in" : ""}`}
