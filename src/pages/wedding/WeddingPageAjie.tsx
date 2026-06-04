@@ -351,7 +351,7 @@ export const WeddingPageAjie: React.FC = () => {
             target="_blank"
             rel="noopener noreferrer"
           >
-            Made by <strong>Dirakhmat</strong>
+            Crafted by <strong>Dirakhmat</strong>
           </a>
         </div>
 

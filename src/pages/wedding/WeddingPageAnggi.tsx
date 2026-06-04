@@ -14,24 +14,24 @@ const MAP_LINK = "https://maps.app.goo.gl/pL2p16LB1QnsHuw97";
 const AUDIO_SRC = "/audio/bgaudio.mp3";
 
 // Foto — masih placeholder. Taruh file di /public/anggi/ lalu isi path di sini.
-const BRIDE_PHOTO = "";
-const GROOM_PHOTO = "";
-const GALLERY_PHOTOS: string[] = ["", "", "", "", "", ""];
+const BRIDE_PHOTO = "/anggi/IMG_9709.PNG";
+const GROOM_PHOTO = "/anggi/IMG_9710.PNG";
+const GALLERY_PHOTOS: string[] = ["", "", "", "", ""];
 
 const BRIDE = {
   name: "Anggi Rahmi Rosalina",
   order: "Putri Pertama",
   parents: ["Putri pertama dari", "Bapak Ahmad Rosyadi", "& Ibu Mislinawati"],
-  ig: "#",
-  igHandle: "@anggi",
+  ig: "https://www.instagram.com/anggi_rahmi",
+  igHandle: "@anggi_rahmi",
   photo: BRIDE_PHOTO,
 };
 const GROOM = {
   name: "Zulfhanie Rezza Maulidin",
   order: "Putra Kedua",
   parents: ["Putra kedua dari", "Bapak Abdul Syahid", "& Ibu Saniah"],
-  ig: "#",
-  igHandle: "@zulfhanie",
+  ig: "https://www.instagram.com/mauezza_",
+  igHandle: "@mauezza_",
   photo: GROOM_PHOTO,
 };
 
@@ -41,9 +41,13 @@ const VENUE_ADDRESS = [
   "Loktabat Utara, Kalimantan Selatan",
 ];
 
-const GIFT_BANK = "Bank — a.n. Anggi Rahmi Rosalina";
-const GIFT_NUMBER = "0000 1111 2222 333";
-const GIFT_NUMBER_RAW = "00001111222233";
+const GIFT_BANK = "Bank Kalsel — a.n. Anggi Rahmi Rosalina";
+const GIFT_NUMBER = "3202531527";
+const GIFT_NUMBER_RAW = "3202531527";
+
+const GIFT_BANK2 = "Bank Kalsel — a.n. Zulfhanie Rezza Maulidin";
+const GIFT_NUMBER2 = "3203420632";
+const GIFT_NUMBER_RAW2 = "3203420632";
 
 // ─── HOOKS ─────────────────────────────────────────────────────────
 function useCountdown(target: number) {
@@ -240,6 +244,13 @@ export const WeddingPageAnggi: React.FC = () => {
 
   const copyNumber = useCallback(() => {
     navigator.clipboard?.writeText(GIFT_NUMBER_RAW).then(() => {
+      setCopied(true);
+      setTimeout(() => setCopied(false), 1600);
+    });
+  }, []);
+
+  const copyNumber2 = useCallback(() => {
+    navigator.clipboard?.writeText(GIFT_NUMBER_RAW2).then(() => {
       setCopied(true);
       setTimeout(() => setCopied(false), 1600);
     });
@@ -604,6 +615,18 @@ export const WeddingPageAnggi: React.FC = () => {
               <span className="no">{GIFT_NUMBER}</span>
               <span className="an">No. Rekening</span>
               <button className="copy-btn" onClick={copyNumber}>
+                {copied ? "Tersalin ✓" : "Salin Nomor"}
+              </button>
+            </Reveal>
+            <Reveal
+              className="gift-card"
+              d={2}
+              style={{ background: "var(--green)", borderColor: "rgba(75,184,250,.4)" }}
+            >
+              <span className="bank">{GIFT_BANK2}</span>
+              <span className="no">{GIFT_NUMBER2}</span>
+              <span className="an">No. Rekening</span>
+              <button className="copy-btn" onClick={copyNumber2}>
                 {copied ? "Tersalin ✓" : "Salin Nomor"}
               </button>
             </Reveal>
