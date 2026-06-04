@@ -18,6 +18,9 @@ const HERO_PHOTO   = "/ilmi/IMG_4266.jpeg";
 const BRIDE_PHOTO  = "/ilmi/IMG_0272(2).jpeg";
 const GROOM_PHOTO  = "/ilmi/IMG_0272(1).jpeg";
 
+// Foto yang ditunggu (preload) sebelum halaman tampil
+const PRELOAD_PHOTOS = [COVER_PHOTO, HERO_PHOTO, BRIDE_PHOTO, GROOM_PHOTO];
+
 // Ornamen bunga anggrek
 const ORCHID_FALL    = ["/ilmi/anggrek_1.png", "/ilmi/anggrek_2.png", "/ilmi/anggrek_4.png"];
 const ORCHID_LEFT    = "/ilmi/anggrek_3.png";
@@ -167,6 +170,38 @@ function useImagePreload(src: string): boolean {
     img.src = src;
   }, [src]);
   return loaded;
+}
+
+// Preload sekumpulan foto; true bila semua selesai dimuat (atau gagal)
+function useImagesReady(srcs: string[]): boolean {
+  const [ready, setReady] = useState(false);
+  useEffect(() => {
+    if (srcs.length === 0) {
+      setReady(true);
+      return;
+    }
+    let done = 0;
+    let cancelled = false;
+    const check = () => {
+      done += 1;
+      if (!cancelled && done >= srcs.length) setReady(true);
+    };
+    const imgs = srcs.map((s) => {
+      const img = new Image();
+      img.onload = check;
+      img.onerror = check;
+      img.src = s;
+      return img;
+    });
+    return () => {
+      cancelled = true;
+      imgs.forEach((img) => {
+        img.onload = null;
+        img.onerror = null;
+      });
+    };
+  }, [srcs]);
+  return ready;
 }
 
 function useParallax(speed = 0.08) {
@@ -364,9 +399,19 @@ function OrchidFall() {
 
 // ─── MAIN COMPONENT ────────────────────────────────────────────────
 
-export const WeddingPageBahranFatimatul: React.FC = () => {
+interface WeddingPageBahranFatimatulProps {
+  /** Nama ayah mempelai wanita — beda per route (ilmi-zahro vs zahro-ilmi) */
+  brideFather?: string;
+}
+
+export const WeddingPageBahranFatimatul: React.FC<WeddingPageBahranFatimatulProps> = ({
+  brideFather = BRIDE.father,
+}) => {
   const [searchParams] = useSearchParams();
   const visitorName = searchParams.get("to") || "Tamu Undangan";
+
+  // Mempelai wanita dengan nama ayah sesuai route
+  const bride = { ...BRIDE, father: brideFather };
 
   const [isOpen, setIsOpen]       = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -376,6 +421,7 @@ export const WeddingPageBahranFatimatul: React.FC = () => {
   const countdown = useCountdown(WEDDING_DATE.getTime());
 
   const coverImageLoaded = useImagePreload(COVER_PHOTO);
+  const photosReady = useImagesReady(PRELOAD_PHOTOS);
   const [btnReady, setBtnReady] = useState(false);
   useEffect(() => {
     if (!coverImageLoaded) return;
@@ -512,6 +558,13 @@ export const WeddingPageBahranFatimatul: React.FC = () => {
 
   return (
     <div className="bfwed-root">
+      {/* ── Loading (preload foto) ── */}
+      {!photosReady && (
+        <div className="bfwed-loader" role="status" aria-label="Memuat">
+          <span className="bfwed-loader-spin" />
+        </div>
+      )}
+
       {/* ── Background Music ── */}
       <audio ref={audioRef} src="/audio/bgaudio.mp3" loop preload="auto" />
 
@@ -794,7 +847,7 @@ export const WeddingPageBahranFatimatul: React.FC = () => {
           </div>
 
           <div className="bfwed-profile-grid">
-            {[GROOM, BRIDE].map((person, idx) => (
+            {[GROOM, bride].map((person, idx) => (
               <div
                 key={person.name}
                 className={`bfwed-profile-card bfwed-reveal${profileVisible ? " in" : ""}`}

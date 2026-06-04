@@ -41,6 +41,29 @@
 .bfwed-root * { box-sizing: border-box; }
 
 /* ── Cover ───────────────────────────────────────────────────── */
+.bfwed-loader {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  background: linear-gradient(180deg, #3aa3ff 0%, #218df3 55%, #1a78d6 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.bfwed-loader-spin {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-top-color: #ffffff;
+  animation: bfLoaderSpin 0.9s linear infinite;
+}
+@keyframes bfLoaderSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 .bfwed-cover {
   position: fixed;
   inset: 0;

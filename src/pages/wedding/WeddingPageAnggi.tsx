@@ -23,6 +23,9 @@ const COVER_PHOTO = "/anggi/IMG_9748.jpeg";
 const HERO_PHOTO = "/anggi/IMG_9617.jpeg";
 const CLOSING_PHOTO = "/anggi/IMG_9748.jpeg";
 
+// Foto yang ditunggu (preload) sebelum halaman tampil
+const PRELOAD_PHOTOS = [COVER_PHOTO, HERO_PHOTO, BRIDE_PHOTO, GROOM_PHOTO];
+
 const BRIDE = {
   name: "Anggi Rahmi Rosalina",
   order: "Putri Pertama",
@@ -72,6 +75,38 @@ function useCountdown(target: number) {
     return () => clearInterval(id);
   }, [target]);
   return t;
+}
+
+// Preload sekumpulan foto; true bila semua selesai dimuat (atau gagal)
+function useImagesReady(srcs: string[]): boolean {
+  const [ready, setReady] = useState(false);
+  useEffect(() => {
+    if (srcs.length === 0) {
+      setReady(true);
+      return;
+    }
+    let done = 0;
+    let cancelled = false;
+    const check = () => {
+      done += 1;
+      if (!cancelled && done >= srcs.length) setReady(true);
+    };
+    const imgs = srcs.map((s) => {
+      const img = new Image();
+      img.onload = check;
+      img.onerror = check;
+      img.src = s;
+      return img;
+    });
+    return () => {
+      cancelled = true;
+      imgs.forEach((img) => {
+        img.onload = null;
+        img.onerror = null;
+      });
+    };
+  }, [srcs]);
+  return ready;
 }
 
 function useInView<T extends HTMLElement>(
@@ -198,6 +233,8 @@ export const WeddingPageAnggi: React.FC = () => {
   const [copied, setCopied] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
+  const photosReady = useImagesReady(PRELOAD_PHOTOS);
+
   const countdown = useCountdown(WEDDING_DATE.getTime());
 
   // Daun jatuh di cover (dihitung sekali)
@@ -288,6 +325,13 @@ export const WeddingPageAnggi: React.FC = () => {
         } as React.CSSProperties
       }
     >
+      {/* ============ LOADING (preload foto) ============ */}
+      {!photosReady && (
+        <div className="loader" role="status" aria-label="Memuat">
+          <span className="loader-spin" />
+        </div>
+      )}
+
       {/* ============ COVER ============ */}
       {!coverGone && (
         <div className={`cover${isOpen ? " lift" : ""}`}>
