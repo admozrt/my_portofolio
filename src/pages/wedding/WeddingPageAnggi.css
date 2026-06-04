@@ -22,6 +22,12 @@
   --font-sans: "Jost", sans-serif;
   --photo-dim: rgba(20, 46, 92, 0.72);
 
+  /* Foto background (di-set lewat inline style di komponen agar path /public
+     tidak diproses webpack css-loader; fallback: none) */
+  --cover-photo: none; /* layar pembuka */
+  --hero-photo: none; /* section hero "The Wedding Of" */
+  --closing-photo: none; /* section penutup */
+
   font-family: var(--font-serif);
   background: var(--green-deep);
   color: var(--ink);
@@ -114,11 +120,12 @@
   z-index: 60;
   background-color: var(--green-deep);
   background-image: radial-gradient(
-    120% 80% at 50% -10%,
-    rgba(53, 104, 184, 0.82) 0%,
-    rgba(36, 82, 150, 0.88) 45%,
-    rgba(20, 46, 92, 0.94) 100%
-  );
+      120% 80% at 50% -10%,
+      rgba(36, 82, 150, 0.55) 0%,
+      rgba(29, 63, 119, 0.7) 55%,
+      rgba(20, 46, 92, 0.85) 100%
+    ),
+    var(--cover-photo);
   background-size: cover;
   background-position: center;
   display: flex;
@@ -377,10 +384,18 @@
 .anggi-wedding #opening,
 .anggi-wedding #closing {
   background-color: var(--green-deep);
-  background-image: linear-gradient(var(--photo-dim), var(--photo-dim)),
-    radial-gradient(120% 90% at 50% 0%, rgba(53, 104, 184, 0.55), transparent 60%);
   background-size: cover;
   background-position: center;
+}
+.anggi-wedding #opening {
+  background-image: linear-gradient(var(--photo-dim), var(--photo-dim)),
+    radial-gradient(120% 90% at 50% 0%, rgba(53, 104, 184, 0.55), transparent 60%),
+    var(--hero-photo);
+}
+.anggi-wedding #closing {
+  background-image: linear-gradient(var(--photo-dim), var(--photo-dim)),
+    radial-gradient(120% 90% at 50% 0%, rgba(53, 104, 184, 0.55), transparent 60%),
+    var(--closing-photo);
 }
 .anggi-wedding .bg-green .label,
 .anggi-wedding .bg-green .ornament {
@@ -616,6 +631,7 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center top;
 }
 .anggi-wedding .couple-card .nm {
   font-family: var(--font-script);
