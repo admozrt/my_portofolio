@@ -607,7 +607,7 @@ export const WeddingPageBahranFatimatul: React.FC = () => {
         {/* Made by credit (centered bottom) */}
         <div className="bfwed-cover-credit">
           <a href="https://admoz.pages.dev" target="_blank" rel="noopener noreferrer">
-            Made with <span className="heart">♥</span> by Dirakhmat
+            Crafted by <u> Dirakhmat </u>
           </a>
         </div>
       </div>

@@ -351,7 +351,7 @@ export const WeddingPageAjie: React.FC = () => {
             target="_blank"
             rel="noopener noreferrer"
           >
-            Crafted by <strong>Dirakhmat</strong>
+            Crafted by <strong><u> Dirakhmat </u></strong>
           </a>
         </div>
 
@@ -749,7 +749,7 @@ export const WeddingPageAjie: React.FC = () => {
             target="_blank"
             rel="noopener noreferrer"
           >
-            Dirakhmat
+            <u> Dirakhmat </u>
           </a>
           {" "}for {GROOM} & {BRIDE}
         </footer>
