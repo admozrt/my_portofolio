@@ -582,7 +582,7 @@ export const WeddingPageAnggi: React.FC = () => {
         </section>
 
         {/* GALLERY */}
-        <section className="band bg-ivory-2">
+        {/* <section className="band bg-ivory-2">
           <div className="inner">
             <Reveal className="label">Galeri</Reveal>
             <Reveal as="h2" className="h-script" d={1} style={{ color: "var(--gold)" }}>
@@ -604,7 +604,7 @@ export const WeddingPageAnggi: React.FC = () => {
           </div>
           <Bloom cls="b-bl" s={0.75} rot={24} pc="rgba(21,145,220,.55)" />
           <Bloom cls="b-tr" s={1} rot={-16} pc="rgba(196,226,245,.65)" />
-        </section>
+        </section> */}
 
         {/* GIFT */}
         <section className="band bg-ivory">
