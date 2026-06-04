@@ -743,7 +743,7 @@ export const WeddingPageAjie: React.FC = () => {
 
         {/* ── Footer ── */}
         <footer className="wedding-footer">
-          Made with ♥ by{" "}
+          Crafted by{" "}
             <a className="footer-link"
             href="https://admoz.pages.dev"
             target="_blank"

@@ -127,7 +127,7 @@
     ),
     var(--cover-photo);
   background-size: cover;
-  background-position: center;
+  background-position: bottom;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -202,7 +202,7 @@
   display: inline-block;
 }
 .anggi-wedding .btn-open {
-  margin-top: 0.6rem;
+  margin-top: 5.8rem;
   font-family: var(--font-sans);
   font-size: 0.78rem;
   letter-spacing: 0.22em;
@@ -210,7 +210,7 @@
   color: var(--green-deep);
   background: linear-gradient(180deg, var(--gold-light), var(--gold));
   border: none;
-  padding: 0.95rem 2.1rem;
+  padding: 0.95rem 2.8rem;
   border-radius: 40px;
   cursor: pointer;
   display: inline-flex;

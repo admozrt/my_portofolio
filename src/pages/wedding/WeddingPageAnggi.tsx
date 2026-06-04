@@ -11,12 +11,12 @@ const MAP_EMBED_URL =
 const MAP_LINK = "https://maps.app.goo.gl/pL2p16LB1QnsHuw97";
 
 // Musik latar — ganti dengan /audio/percayalah.mp3 bila file sudah tersedia.
-const AUDIO_SRC = "/audio/bgaudio.mp3";
+const AUDIO_SRC = "/anggi/audio.mp3";
 
 // Foto — masih placeholder. Taruh file di /public/anggi/ lalu isi path di sini.
 const BRIDE_PHOTO = "/anggi/IMG_9709.PNG";
 const GROOM_PHOTO = "/anggi/IMG_9710.PNG";
-const GALLERY_PHOTOS: string[] = ["", "", "", "", ""];
+// const GALLERY_PHOTOS: string[] = ["", "", "", "", ""];
 
 // Foto background section (di-set sebagai CSS variable lewat inline style)
 const COVER_PHOTO = "/anggi/IMG_9748.jpeg";
@@ -629,7 +629,7 @@ export const WeddingPageAnggi: React.FC = () => {
               <span className="no">{GIFT_NUMBER}</span>
               <span className="an">No. Rekening</span>
               <button className="copy-btn" onClick={copyNumber}>
-                {copied ? "Tersalin ✓" : "Salin Nomor"}
+                {copied ? "Tersalin ✓" : "Salin"}
               </button>
             </Reveal>
             <Reveal
@@ -641,7 +641,7 @@ export const WeddingPageAnggi: React.FC = () => {
               <span className="no">{GIFT_NUMBER2}</span>
               <span className="an">No. Rekening</span>
               <button className="copy-btn" onClick={copyNumber2}>
-                {copied ? "Tersalin ✓" : "Salin Nomor"}
+                {copied ? "Tersalin ✓" : "Salin"}
               </button>
             </Reveal>
           </div>
