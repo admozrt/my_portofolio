@@ -1142,8 +1142,109 @@
   .bfwed-parallax { display: none !important; }
 }
 
+/* ════════════════════════════════════════════════════════════════
+   Interaktif: 3D tilt + glare
+   ════════════════════════════════════════════════════════════════ */
+.bfwed-tilt {
+  transform: perspective(820px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform;
+}
+.bfwed-tilt.glare { position: relative; }
+.bfwed-tilt.glare::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    circle at var(--gx, 50%) var(--gy, 50%),
+    rgba(255, 255, 255, 0.42),
+    rgba(255, 255, 255, 0) 55%
+  );
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  pointer-events: none;
+  z-index: 5;
+  mix-blend-mode: soft-light;
+}
+.bfwed-tilt.glare:hover::after { opacity: 1; }
+
+/* ════════════════════════════════════════════════════════════════
+   Bunga anggrek berguguran (cover)
+   ════════════════════════════════════════════════════════════════ */
+.bfwed-petals {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 1;
+}
+.bfwed-petal {
+  position: absolute;
+  top: -16%;
+  will-change: transform;
+  animation: bfPetalFall linear infinite;
+}
+.bfwed-petal > i {
+  display: block;
+  width: var(--sz, 40px);
+  height: auto;
+  position: relative;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.18));
+  animation: bfPetalSway var(--sway, 4s) ease-in-out infinite alternate;
+}
+.bfwed-petal > i img {
+  display: block;
+  width: 100%;
+  height: auto;
+  opacity: var(--op, 0.85);
+}
+@keyframes bfPetalFall {
+  to { transform: translateY(122vh); }
+}
+@keyframes bfPetalSway {
+  from { transform: translateX(-16px) rotate(-22deg); }
+  to   { transform: translateX(16px) rotate(34deg); }
+}
+
+/* ════════════════════════════════════════════════════════════════
+   Ornamen anggrek samping hero (float + parallax)
+   ════════════════════════════════════════════════════════════════ */
+.bfwed-hero-orchid {
+  position: absolute;
+  top: 44%;
+  z-index: 1;
+  width: clamp(92px, 13vw, 210px);
+  pointer-events: none;
+  transition: opacity 1.3s ease; /* override transisi transform dari .bfwed-reveal */
+  will-change: transform;
+}
+.bfwed-hero-orchid.left { left: clamp(-34px, -1vw, 0px); }
+.bfwed-hero-orchid.right { right: clamp(-34px, -1vw, 0px); }
+.bfwed-hero-orchid img {
+  width: 100%;
+  height: auto;
+  display: block;
+  filter: drop-shadow(0 12px 26px rgba(20, 46, 92, 0.28));
+  animation: bfOrchidFloat 6.5s ease-in-out infinite alternate;
+}
+.bfwed-hero-orchid.right img {
+  animation-duration: 8s;
+  animation-direction: alternate-reverse;
+}
+@keyframes bfOrchidFloat {
+  from { transform: translateY(-8px) rotate(-5deg); }
+  to   { transform: translateY(8px) rotate(5deg); }
+}
+@media (max-width: 600px) {
+  .bfwed-hero-orchid { width: 76px; top: 38%; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .bfwed-root { animation: none; }
   .bfwed-reveal.in .bfwed-gallery .g img { animation: none; }
   .bfwed-gallery .g:hover img { transform: none; filter: none; }
+  .bfwed-tilt { transform: none !important; }
+  .bfwed-petal,
+  .bfwed-petal > i,
+  .bfwed-hero-orchid img { animation: none !important; }
 }
