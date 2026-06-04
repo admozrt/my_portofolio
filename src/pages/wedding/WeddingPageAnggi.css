@@ -113,6 +113,30 @@
   transition-delay: 0.54s;
 }
 
+/* ====== LOADING ====== */
+.anggi-wedding .loader {
+  position: fixed;
+  inset: 0;
+  z-index: 120;
+  background: var(--green-deep);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.anggi-wedding .loader-spin {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  border: 3px solid rgba(92, 186, 250, 0.25);
+  border-top-color: var(--gold-light);
+  animation: anggi-loader-spin 0.9s linear infinite;
+}
+@keyframes anggi-loader-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 /* ====== COVER ====== */
 .anggi-wedding .cover {
   position: fixed;
