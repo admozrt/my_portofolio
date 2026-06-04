@@ -18,6 +18,11 @@ const BRIDE_PHOTO = "/anggi/IMG_9709.PNG";
 const GROOM_PHOTO = "/anggi/IMG_9710.PNG";
 const GALLERY_PHOTOS: string[] = ["", "", "", "", ""];
 
+// Foto background section (di-set sebagai CSS variable lewat inline style)
+const COVER_PHOTO = "/anggi/IMG_9748.jpeg";
+const HERO_PHOTO = "/anggi/IMG_9617.jpeg";
+const CLOSING_PHOTO = "/anggi/IMG_9748.jpeg";
+
 const BRIDE = {
   name: "Anggi Rahmi Rosalina",
   order: "Putri Pertama",
@@ -273,7 +278,16 @@ export const WeddingPageAnggi: React.FC = () => {
   );
 
   return (
-    <div className="anggi-wedding">
+    <div
+      className="anggi-wedding"
+      style={
+        {
+          "--cover-photo": `url(${COVER_PHOTO})`,
+          "--hero-photo": `url(${HERO_PHOTO})`,
+          "--closing-photo": `url(${CLOSING_PHOTO})`,
+        } as React.CSSProperties
+      }
+    >
       {/* ============ COVER ============ */}
       {!coverGone && (
         <div className={`cover${isOpen ? " lift" : ""}`}>
