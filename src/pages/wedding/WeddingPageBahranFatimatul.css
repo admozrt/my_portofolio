@@ -95,14 +95,19 @@
   height: 100%;
   object-fit: cover;
   object-position: center top;
-  opacity: 0.35;
+  opacity: 1;
 }
 .bfwed-cover-photo-overlay {
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(ellipse 70% 50% at 50% 30%, rgba(33,150,243,0.18), transparent 70%),
-    linear-gradient(180deg, var(--bf-cream) 0%, var(--bf-cream-2) 100%);
+    radial-gradient(ellipse 75% 55% at 50% 28%, rgba(33, 150, 243, 0.1), transparent 72%),
+    linear-gradient(
+      180deg,
+      rgba(33, 141, 243, 0.38) 0%,
+      rgba(26, 120, 214, 0.6) 58%,
+      rgba(18, 84, 158, 0.8) 100%
+    );
 }
 
 /* Diamond corner markers */
@@ -140,6 +145,14 @@
   color: var(--bf-ink);
   font-weight: 300;
   margin: 0;
+  text-shadow: 0 2px 22px rgba(8, 40, 80, 0.45);
+}
+.bfwed-cover-inner .bfwed-cover-eyebrow,
+.bfwed-cover-date-label,
+.bfwed-cover-date,
+.bfwed-cover-guest-eyebrow,
+.bfwed-cover-guest-name {
+  text-shadow: 0 1px 14px rgba(8, 40, 80, 0.4);
 }
 .bfwed-cover-amp {
   font-family: 'Cormorant Garamond', serif;
