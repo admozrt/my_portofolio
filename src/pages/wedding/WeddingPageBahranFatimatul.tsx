@@ -6,12 +6,12 @@ import "./WeddingPageBahranFatimatul.css";
 const WEDDING_DATE = new Date("2026-08-15T10:00:00+08:00");
 const GROOM_FIRST = "Ilmi";
 const BRIDE_FIRST = "Zahro";
-const DATE_LABEL = "Sabtu, 15 Agustus 2026";
+const DATE_LABEL = "Minggu, 5 Juli 2026";
 
 const MAP_EMBED_URL =
-  "https://www.google.com/maps?q=Banjarbaru,Kalimantan+Selatan&output=embed";
+  "https://google.com/maps?q=JJ7X+J72+Gedung+pesona+modern+232,+Simpang+Empat,+Kec.+Kertak+Hanyar,+Kabupaten+Banjar,+Kalimantan+Selatan+70654&ftid=0x2de427c27d37593d:0x67fb1d4fcb1be126&entry=gps&shh=CAE&lucs=,94297699,100808508,94231188,94280568,47071704,94218641,94282134,100799877,94286869&g_ep=CAISEjI2LjE4LjAuOTA2NTA0NDMzMBgAIMi8BypTLDk0Mjk3Njk5LDEwMDgwODUwOCw5NDIzMTE4OCw5NDI4MDU2OCw0NzA3MTcwNCw5NDIxODY0MSw5NDI4MjEzNCwxMDA3OTk4NzcsOTQyODY4NjlCAklE&skid=b9faadbf-2c95-4952-b32e-1297c551b531&g_st=ic";
 const MAP_LINK =
-  "https://maps.google.com/?q=Banjarbaru,Kalimantan+Selatan";
+  "https://maps.app.goo.gl/UrX8eGa6gS4AEABD8?g_st=ic";
 
 const COVER_PHOTO  = "/ilmi/IMG_3617.jpeg";
 const HERO_PHOTO   = "/ilmi/IMG_4266.jpeg";
@@ -63,17 +63,17 @@ const EVENTS = [
     day: "Sabtu",
     date: DATE_LABEL,
     time: "08.00 WITA – Selesai",
-    venue: "Kediaman Mempelai Wanita",
-    address: "Komp. Montesa Permai, Manarap Tengah",
+    venue: "Gedung Pesona Modern 232",
+    address: "Komplek Pesona Modern Jl. Ahmad Yani Km. 11, Mekar Raya, Kec. Kertak Hanyar, Kab. Banjar, Provinsi Kalimantan Selatan",
   },
   {
     tag: "Resepsi",
     title: "Walimatul 'Ursy",
     day: "Sabtu",
     date: DATE_LABEL,
-    time: "11.00 WITA – 14.00 WITA",
-    venue: "Gedung Mahligai Pancasila",
-    address: "Banjarbaru, Kalimantan Selatan",
+    time: "09.00 WITA – Selsai",
+    venue: "Gedung Pesona Modern 232",
+    address: "Komplek Pesona Modern Jl. Ahmad Yani Km. 11, Mekar Raya, Kec. Kertak Hanyar, Kab. Banjar, Provinsi Kalimantan Selatan",
   },
 ];
 
