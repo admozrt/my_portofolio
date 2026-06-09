@@ -9,9 +9,9 @@ const BRIDE_FIRST = "Zahro";
 const DATE_LABEL = "Minggu, 5 Juli 2026";
 
 const MAP_EMBED_URL =
-  "https://google.com/maps?q=JJ7X+J72+Gedung+pesona+modern+232,+Simpang+Empat,+Kec.+Kertak+Hanyar,+Kabupaten+Banjar,+Kalimantan+Selatan+70654&ftid=0x2de427c27d37593d:0x67fb1d4fcb1be126&entry=gps&shh=CAE&lucs=,94297699,100808508,94231188,94280568,47071704,94218641,94282134,100799877,94286869&g_ep=CAISEjI2LjE4LjAuOTA2NTA0NDMzMBgAIMi8BypTLDk0Mjk3Njk5LDEwMDgwODUwOCw5NDIzMTE4OCw5NDI4MDU2OCw0NzA3MTcwNCw5NDIxODY0MSw5NDI4MjEzNCwxMDA3OTk4NzcsOTQyODY4NjlCAklE&skid=b9faadbf-2c95-4952-b32e-1297c551b531&g_st=ic";
+  "https://maps.google.com/maps?q=Gedung%20Pesona%20Modern%20232%20Kertak%20Hanyar&t=&z=16&ie=UTF8&iwloc=&output=embed";
 const MAP_LINK =
-  "https://maps.app.goo.gl/UrX8eGa6gS4AEABD8?g_st=ic";
+  "https://maps.app.goo.gl/opaXVvA2HyQKL6H49";
 
 const COVER_PHOTO    = "/ilmi/cover.jpeg";
 const HERO_PHOTO     = "/ilmi/hero.jpeg";
