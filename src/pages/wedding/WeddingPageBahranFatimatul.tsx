@@ -501,7 +501,7 @@ export const WeddingPageBahranFatimatul: React.FC<WeddingPageBahranFatimatulProp
   const [storyRef,   storyVisible]   = useInView(0.1);
   const [galleryRef, galleryVisible] = useInView(0.1);
   const [giftRef,    giftVisible]    = useInView(0.1);
-  const [inviteRef,  inviteVisible]  = useInView(0.1);
+  // const [inviteRef,  inviteVisible]  = useInView(0.1);
   const [closingRef, closingVisible] = useInView(0.1);
 
   const heroScale   = Math.max(1, 1.1 - (scrollY / 600) * 0.1);
