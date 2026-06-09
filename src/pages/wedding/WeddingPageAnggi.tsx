@@ -16,7 +16,7 @@ const AUDIO_SRC = "/anggi/audio.mp3";
 // Foto — masih placeholder. Taruh file di /public/anggi/ lalu isi path di sini.
 const BRIDE_PHOTO = "/anggi/IMG_9709.PNG";
 const GROOM_PHOTO = "/anggi/IMG_9710.PNG";
-// const GALLERY_PHOTOS: string[] = ["", "", "", "", ""];
+const GALLERY_PHOTOS: string[] = ["/anggi/IMG_9755.jpeg", "/anggi/IMG_9752.jpeg", "/anggi/IMG_9748(2).jpeg"];
 
 // Foto background section (di-set sebagai CSS variable lewat inline style)
 const COVER_PHOTO = "/anggi/IMG_9748.jpeg";
@@ -626,7 +626,7 @@ export const WeddingPageAnggi: React.FC = () => {
         </section>
 
         {/* GALLERY */}
-        {/* <section className="band bg-ivory-2">
+        <section className="band bg-ivory-2">
           <div className="inner">
             <Reveal className="label">Galeri</Reveal>
             <Reveal as="h2" className="h-script" d={1} style={{ color: "var(--gold)" }}>
@@ -648,7 +648,7 @@ export const WeddingPageAnggi: React.FC = () => {
           </div>
           <Bloom cls="b-bl" s={0.75} rot={24} pc="rgba(21,145,220,.55)" />
           <Bloom cls="b-tr" s={1} rot={-16} pc="rgba(196,226,245,.65)" />
-        </section> */}
+        </section>
 
         {/* GIFT */}
         <section className="band bg-ivory">
