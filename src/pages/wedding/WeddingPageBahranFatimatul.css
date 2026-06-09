@@ -172,8 +172,31 @@
 }
 /* Varian di atas eyebrow cover */
 .bfwed-flower-divider.top {
-  margin: 0 auto 12px;
+  margin: 0 auto 10px;
   width: clamp(120px, 30vw, 200px);
+}
+
+/* Monogram / logo Ilmi & Zahra */
+.bfwed-monogram {
+  display: block;
+  margin: 0 auto 14px;
+  width: clamp(70px, 16vw, 104px);
+  height: auto;
+  filter: drop-shadow(0 4px 14px rgba(0, 0, 0, 0.5));
+}
+.bfwed-hero-logo {
+  display: block;
+  margin: 0 auto 28px;
+  width: clamp(150px, 34vw, 230px);
+  height: auto;
+  filter: drop-shadow(0 6px 18px rgba(0, 0, 0, 0.55));
+}
+.bfwed-closing-logo {
+  display: block;
+  margin: 0 auto 36px;
+  width: clamp(160px, 40vw, 260px);
+  height: auto;
+  filter: drop-shadow(0 6px 18px rgba(0, 0, 0, 0.55));
 }
 
 /* Diamond corner markers */
