@@ -79,13 +79,15 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   text-align: center;
-  padding: 56px 28px 96px;
+  padding: 48px 28px 84px;
   transition: transform 1.2s cubic-bezier(0.77, 0, 0.18, 1), opacity 0.6s ease 0.7s;
   will-change: transform;
   overflow-y: auto;
 }
+/* Pusatkan vertikal saat muat, tapi tetap bisa di-scroll bila konten lebih tinggi */
+.bfwed-cover-inner { margin: auto 0; }
 .bfwed-cover.slide-up {
   transform: translateY(-101%);
   opacity: 0;
@@ -124,8 +126,11 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center top;
+  object-position: center 30%;
   opacity: 1;
+}
+@media (min-width: 720px) {
+  .bfwed-cover-photo img { object-position: center 28%; }
 }
 .bfwed-cover-photo-overlay {
   position: absolute;
@@ -157,22 +162,18 @@
   .bfwed-flower.br { width: 130px; }
 }
 
-/* Divider bunga di bawah nama mempelai */
+/* Divider bunga (ornamen) */
 .bfwed-flower-divider {
   display: block;
-  margin: 18px auto 4px;
-  width: clamp(160px, 40vw, 280px);
+  margin: 14px auto 4px;
+  width: clamp(150px, 36vw, 260px);
   height: auto;
   filter: drop-shadow(0 6px 16px rgba(0, 0, 0, 0.4));
 }
-
-/* Monogram Ilmi */
-.bfwed-monogram {
-  display: block;
-  margin: 0 auto 10px;
-  width: clamp(120px, 28vw, 180px);
-  height: auto;
-  filter: drop-shadow(0 4px 14px rgba(0, 0, 0, 0.5));
+/* Varian di atas eyebrow cover */
+.bfwed-flower-divider.top {
+  margin: 0 auto 12px;
+  width: clamp(120px, 30vw, 200px);
 }
 
 /* Diamond corner markers */
@@ -198,14 +199,14 @@
   letter-spacing: 0.3em;
   text-transform: uppercase;
   color: var(--bf-ink-2);
-  margin-bottom: 28px;
+  margin-bottom: 6px;
   font-family: 'JetBrains Mono', monospace;
 }
 
 .bfwed-cover-names-h1 {
   font-family: 'Delycost', 'Cormorant Garamond', serif;
-  font-size: clamp(56px, 13vw, 104px);
-  line-height: 1.02;
+  font-size: clamp(46px, 11vw, 84px);
+  line-height: 1.0;
   color: var(--bf-gold-box);
   font-weight: 400;
   margin: 0;
@@ -213,9 +214,9 @@
 }
 .bfwed-cover-amp {
   font-family: 'Delycost', 'Pinyon Script', cursive;
-  font-size: clamp(30px, 6vw, 44px);
+  font-size: clamp(24px, 5vw, 36px);
   color: var(--bf-sage);
-  margin: 2px 0;
+  margin: 0;
   display: block;
 }
 .bfwed-cover-date-label {
@@ -223,18 +224,18 @@
   letter-spacing: 0.22em;
   text-transform: uppercase;
   color: var(--bf-ink-2);
-  margin-bottom: 8px;
+  margin-bottom: 6px;
 }
 .bfwed-cover-date {
   font-family: 'Cormorant Garamond', serif;
-  font-size: 28px;
+  font-size: 24px;
   color: var(--bf-ink);
-  margin-bottom: 36px;
+  margin-bottom: 22px;
 }
 .bfwed-cover-guest-wrap {
   border-top: 1px solid var(--bf-line);
-  padding-top: 28px;
-  margin-bottom: 28px;
+  padding-top: 18px;
+  margin-bottom: 20px;
 }
 .bfwed-cover-guest-eyebrow {
   font-size: 10px;
@@ -274,15 +275,12 @@
 }
 
 .bfwed-cover-credit {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 38px;
+  position: relative;
+  margin-top: 28px;
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 4;
-  pointer-events: none;
 }
 .bfwed-cover-credit a {
   pointer-events: auto;

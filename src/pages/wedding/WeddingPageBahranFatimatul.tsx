@@ -26,8 +26,7 @@ const PRELOAD_PHOTOS = [COVER_PHOTO, HERO_PHOTO, BRIDE_PHOTO, GROOM_PHOTO];
 const FLOWER_TL      = "/ilmi/flower-left.png";   // cover atas-kiri
 const FLOWER_TR      = "/ilmi/flower-right.png";  // cover atas-kanan
 const FLOWER_BR      = "/ilmi/flower-br.png";     // cover bawah-kanan
-const FLOWER_DIVIDER = "/ilmi/flower-divider.png"; // divider bawah nama
-const MONOGRAM       = "/ilmi/monogram.png";
+const FLOWER_DIVIDER = "/ilmi/flower-divider.png"; // ornamen bunga
 
 const GALLERY_PHOTOS = [
   "/ilmi/g1.jpeg",
@@ -619,10 +618,10 @@ export const WeddingPageBahranFatimatul: React.FC<WeddingPageBahranFatimatulProp
 
         {/* Cover content */}
         <div className="bfwed-cover-inner">
-          <img className="bfwed-monogram" src={MONOGRAM} alt="" aria-hidden="true" />
+          <img className="bfwed-flower-divider top" src={FLOWER_DIVIDER} alt="" aria-hidden="true" />
           <div className="bfwed-cover-eyebrow">The Wedding Invitation</div>
 
-          <p className="bfwed-cover-names-h1" style={{ marginTop: 18 }}>
+          <p className="bfwed-cover-names-h1" style={{ marginTop: 10 }}>
             {GROOM_FIRST}
           </p>
           <span className="bfwed-cover-amp">&amp;</span>
@@ -630,9 +629,7 @@ export const WeddingPageBahranFatimatul: React.FC<WeddingPageBahranFatimatulProp
             {BRIDE_FIRST}
           </p>
 
-          <img className="bfwed-flower-divider" src={FLOWER_DIVIDER} alt="" aria-hidden="true" />
-
-          <div className="bfwed-cover-date-label" style={{ marginTop: 28 }}>
+          <div className="bfwed-cover-date-label" style={{ marginTop: 24 }}>
             Save the Date
           </div>
           <div className="bfwed-cover-date">{DATE_LABEL}</div>
