@@ -27,6 +27,9 @@ const FLOWER_TL      = "/ilmi/flower-left.png";   // cover atas-kiri
 const FLOWER_TR      = "/ilmi/flower-right.png";  // cover atas-kanan
 const FLOWER_BR      = "/ilmi/flower-br.png";     // cover bawah-kanan
 const FLOWER_DIVIDER = "/ilmi/flower-divider.png"; // ornamen bunga
+const MONOGRAM       = "/ilmi/monogram.png";   // icon "I | Z" (cover)
+const LOGO_HERO      = "/ilmi/logo-full.png";  // Ilmi (2): I|Z + "Ilmi & Zahra" (hero)
+const LOGO_CLOSING   = "/ilmi/logo-text.png";  // Ilmi (1): "Ilmi & Zahra" (penutup)
 
 const GALLERY_PHOTOS = [
   "/ilmi/g1.jpeg",
@@ -619,6 +622,7 @@ export const WeddingPageBahranFatimatul: React.FC<WeddingPageBahranFatimatulProp
         {/* Cover content */}
         <div className="bfwed-cover-inner">
           <img className="bfwed-flower-divider top" src={FLOWER_DIVIDER} alt="" aria-hidden="true" />
+          <img className="bfwed-monogram" src={MONOGRAM} alt="Ilmi & Zahra" />
           <div className="bfwed-cover-eyebrow">The Wedding Invitation</div>
 
           <p className="bfwed-cover-names-h1" style={{ marginTop: 10 }}>
@@ -697,6 +701,7 @@ export const WeddingPageBahranFatimatul: React.FC<WeddingPageBahranFatimatulProp
             className={`bfwed-hero-content bfwed-hero-names bfwed-reveal${heroVisible ? " in" : ""}`}
             style={{ textAlign: "center", transitionDelay: "0.2s" }}
           >
+            <img className="bfwed-hero-logo" src={LOGO_HERO} alt="Ilmi & Zahra" />
             <div className="bfwed-hero-wedding-of">The Wedding of</div>
             <h1 className="bfwed-hero-name-big" style={{ marginTop: 18 }}>
               {GROOM_FIRST}
@@ -1050,18 +1055,7 @@ export const WeddingPageBahranFatimatul: React.FC<WeddingPageBahranFatimatulProp
           <RailMarks />
 
           <div className={`bfwed-reveal${closingVisible ? " in" : ""}`} style={{ textAlign: "center" }}>
-            {/* Ornamental leaf SVG */}
-            <svg width="160" height="56" viewBox="0 0 200 70" fill="none"
-              stroke="var(--bf-sage)" strokeWidth="1" strokeLinecap="round"
-              style={{ marginBottom: 36, opacity: 0.7 }}>
-              <path d="M10 35 L90 35" />
-              <path d="M110 35 L190 35" />
-              <circle cx="100" cy="35" r="3" />
-              <path d="M70 35 Q80 25 90 35 Q80 45 70 35 Z" />
-              <path d="M110 35 Q120 25 130 35 Q120 45 110 35 Z" />
-              <path d="M55 35 L50 30 M55 35 L50 40" />
-              <path d="M145 35 L150 30 M145 35 L150 40" />
-            </svg>
+            <img className="bfwed-closing-logo" src={LOGO_CLOSING} alt="Ilmi & Zahra" />
 
             <p className="bfwed-closing-body">
               Merupakan suatu kebahagiaan dan kehormatan bagi kami apabila
