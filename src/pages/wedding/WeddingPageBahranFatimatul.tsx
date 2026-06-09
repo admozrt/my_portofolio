@@ -13,26 +13,64 @@ const MAP_EMBED_URL =
 const MAP_LINK =
   "https://maps.app.goo.gl/UrX8eGa6gS4AEABD8?g_st=ic";
 
-const COVER_PHOTO  = "/ilmi/IMG_3617.jpeg";
-const HERO_PHOTO   = "/ilmi/IMG_4266.jpeg";
-const BRIDE_PHOTO  = "/ilmi/IMG_0272(2).jpeg";
-const GROOM_PHOTO  = "/ilmi/IMG_0272(1).jpeg";
+const COVER_PHOTO    = "/ilmi/cover.jpeg";
+const HERO_PHOTO     = "/ilmi/hero.jpeg";
+const BRIDE_PHOTO    = "/ilmi/bride.jpg";
+const GROOM_PHOTO    = "/ilmi/groom.jpg";
+const OURSTORY_PHOTO = "/ilmi/ourstory.jpeg";
 
 // Foto yang ditunggu (preload) sebelum halaman tampil
 const PRELOAD_PHOTOS = [COVER_PHOTO, HERO_PHOTO, BRIDE_PHOTO, GROOM_PHOTO];
 
-// Ornamen bunga anggrek
-const ORCHID_FALL    = ["/ilmi/anggrek_1.png", "/ilmi/anggrek_2.png", "/ilmi/anggrek_4.png"];
-const ORCHID_LEFT    = "/ilmi/anggrek_3.png";
-const ORCHID_RIGHT   = "/ilmi/anggrek_5.png";
+// Ornamen bunga (PNG dari zip) — posisi sesuai nama file
+const FLOWER_TL      = "/ilmi/flower-left.png";   // cover atas-kiri
+const FLOWER_TR      = "/ilmi/flower-right.png";  // cover atas-kanan
+const FLOWER_BR      = "/ilmi/flower-br.png";     // cover bawah-kanan
+const FLOWER_DIVIDER = "/ilmi/flower-divider.png"; // divider bawah nama
+const MONOGRAM       = "/ilmi/monogram.png";
 
 const GALLERY_PHOTOS = [
-  "/ilmi/IMG_3616.jpeg",
-  "/ilmi/IMG_4192.jpeg",
-  "/ilmi/IMG_4280.jpeg",
-  "/ilmi/IMG_4319.jpeg",
-  "/ilmi/IMG_4369.jpeg",
+  "/ilmi/g1.jpeg",
+  "/ilmi/g2.jpeg",
+  "/ilmi/g3.jpeg",
+  "/ilmi/g4.jpeg",
 ];
+
+// Cerita Kami / Our Story (teks dari zip)
+const STORY: { title: string; body: string }[] = [
+  {
+    title: "The Beginning",
+    body: "Berawal dari pesan Instagram yang ternyata menjadi awal cerita ini dimulai. Kami percaya bahwa setiap detik perjalanan ini adalah bagian dari takdir indah yang telah Tuhan gariskan.",
+  },
+  {
+    title: "Growing Together",
+    body: "Sejak hari itu, kami belajar untuk saling mendewasakan dan kami tumbuh bukan hanya dengan rasa, tapi juga dalam doa serta keyakinan.",
+  },
+  {
+    title: "The Promise",
+    body: "Hingga akhirnya kami sadar, perjalanan ini harus terus berjalan berdampingan, menyatukan perbedaan menjadi satu tujuan yang pasti.",
+  },
+  {
+    title: "The Beginning Of Forever",
+    body: "Dengan penuh rasa syukur dan bahagia, kami menyempurnakan perjalanan ini dengan ikatan janji suci. Doakan agar langkah kami selalu diliputi lembutnya takdir dan keberkahan. Aamiin Yaa Rabb.",
+  },
+];
+
+// Turut Mengundang — TODO: ganti dengan nama asli keluarga
+const INVITERS: { pria: string[]; wanita: string[] } = {
+  pria: [
+    "Bapak/Ibu (Nama Keluarga)",
+    "Bapak/Ibu (Nama Keluarga)",
+    "Bapak/Ibu (Nama Keluarga)",
+    "Bapak/Ibu (Nama Keluarga)",
+  ],
+  wanita: [
+    "Bapak/Ibu (Nama Keluarga)",
+    "Bapak/Ibu (Nama Keluarga)",
+    "Bapak/Ibu (Nama Keluarga)",
+    "Bapak/Ibu (Nama Keluarga)",
+  ],
+};
 
 const GROOM = {
   label: "Mempelai Pria",
@@ -105,10 +143,28 @@ const NAV_SECTIONS = [
   { id: "bf-hero",     label: "Pembuka"  },
   { id: "bf-date",     label: "Tanggal"  },
   { id: "bf-mempelai", label: "Mempelai" },
+  { id: "bf-cerita",   label: "Cerita"   },
   { id: "bf-galeri",   label: "Galeri"   },
   { id: "bf-hadiah",   label: "Hadiah"   },
+  { id: "bf-turut",    label: "Turut"    },
   { id: "bf-penutup",  label: "Penutup"  },
 ];
+
+// Bangun link Google Calendar (acara 3 jam dari tanggal pernikahan)
+function buildCalendarUrl(title: string, location: string): string {
+  const fmt = (d: Date) =>
+    d.toISOString().replace(/[-:]/g, "").replace(/\.\d{3}/, "");
+  const start = WEDDING_DATE;
+  const end = new Date(start.getTime() + 3 * 60 * 60 * 1000);
+  const params = new URLSearchParams({
+    action: "TEMPLATE",
+    text: `${title} — ${GROOM_FIRST} & ${BRIDE_FIRST}`,
+    dates: `${fmt(start)}/${fmt(end)}`,
+    location,
+    details: `Undangan pernikahan ${GROOM_FIRST} & ${BRIDE_FIRST}`,
+  });
+  return `https://calendar.google.com/calendar/render?${params.toString()}`;
+}
 
 // ─── HELPERS ───────────────────────────────────────────────────────
 
@@ -272,6 +328,16 @@ function IconMap({ size = 14 }: { size?: number }) {
   );
 }
 
+function IconCalendar({ size = 14 }: { size?: number }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none"
+      stroke="currentColor" strokeWidth="1.6" strokeLinecap="round">
+      <rect x="3" y="4" width="18" height="17" rx="2" />
+      <path d="M3 9h18M8 2v4M16 2v4" />
+    </svg>
+  );
+}
+
 function IconInstagram({ size = 14 }: { size?: number }) {
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none"
@@ -352,47 +418,13 @@ function TiltBox({
   );
 }
 
-// Bunga anggrek berguguran di cover
-function OrchidFall() {
-  const petals = React.useMemo(() => {
-    const N = typeof window !== "undefined" && window.innerWidth < 600 ? 12 : 20;
-    return Array.from({ length: N }, () => {
-      const dur = 9 + Math.random() * 11;
-      const r = Math.random();
-      const sz = r < 0.5 ? 26 + Math.random() * 16 : r < 0.85 ? 44 + Math.random() * 22 : 66 + Math.random() * 28;
-      return {
-        left: `${Math.random() * 100}%`,
-        duration: `${dur}s`,
-        delay: `${-Math.random() * dur}s`,
-        size: `${sz}px`,
-        sway: `${3 + Math.random() * 3}s`,
-        innerDelay: `${-Math.random() * 3}s`,
-        op: (0.55 + Math.random() * 0.4).toFixed(2),
-        img: ORCHID_FALL[Math.floor(Math.random() * ORCHID_FALL.length)],
-      };
-    });
-  }, []);
+// Ornamen bunga statis di pojok cover (PNG dari zip)
+function CoverFlowers() {
   return (
-    <div className="bfwed-petals" aria-hidden="true">
-      {petals.map((p, i) => (
-        <span
-          key={i}
-          className="bfwed-petal"
-          style={
-            {
-              left: p.left,
-              animationDuration: p.duration,
-              animationDelay: p.delay,
-              "--sz": p.size,
-              "--sway": p.sway,
-            } as React.CSSProperties
-          }
-        >
-          <i style={{ "--op": p.op, animationDelay: p.innerDelay } as React.CSSProperties}>
-            <img src={p.img} alt="" />
-          </i>
-        </span>
-      ))}
+    <div aria-hidden="true">
+      <div className="bfwed-flower tl"><img src={FLOWER_TL} alt="" /></div>
+      <div className="bfwed-flower tr"><img src={FLOWER_TR} alt="" /></div>
+      <div className="bfwed-flower br"><img src={FLOWER_BR} alt="" /></div>
     </div>
   );
 }
@@ -460,49 +492,14 @@ export const WeddingPageBahranFatimatul: React.FC<WeddingPageBahranFatimatulProp
   // Parallax for hero background
   const heroBgRef = useParallax(0.08);
 
-  // Parallax bunga anggrek di hero (scroll + gerak mouse, via refs tanpa re-render)
-  const orchidLeftRef = useRef<HTMLDivElement | null>(null);
-  const orchidRightRef = useRef<HTMLDivElement | null>(null);
-  useEffect(() => {
-    if (!isOpen) return;
-    const mouse = { x: 0, y: 0 };
-    let raf = 0;
-    const apply = () => {
-      raf = 0;
-      const sy = window.scrollY;
-      if (orchidLeftRef.current) {
-        orchidLeftRef.current.style.transform =
-          `translate3d(${mouse.x * -22}px, ${sy * 0.12 + mouse.y * -16}px, 0)`;
-      }
-      if (orchidRightRef.current) {
-        orchidRightRef.current.style.transform =
-          `translate3d(${mouse.x * 22}px, ${sy * 0.2 + mouse.y * -12}px, 0)`;
-      }
-    };
-    const schedule = () => { if (!raf) raf = requestAnimationFrame(apply); };
-    const onMouse = (e: MouseEvent) => {
-      mouse.x = e.clientX / window.innerWidth - 0.5;
-      mouse.y = e.clientY / window.innerHeight - 0.5;
-      schedule();
-    };
-    apply();
-    window.addEventListener("scroll", schedule, { passive: true });
-    window.addEventListener("mousemove", onMouse, { passive: true });
-    window.addEventListener("resize", schedule);
-    return () => {
-      window.removeEventListener("scroll", schedule);
-      window.removeEventListener("mousemove", onMouse);
-      window.removeEventListener("resize", schedule);
-      if (raf) cancelAnimationFrame(raf);
-    };
-  }, [isOpen]);
-
   // Reveal refs
   const [heroRef,    heroVisible]    = useInView(0.1);
   const [dateRef,    dateVisible]    = useInView(0.1);
   const [profileRef, profileVisible] = useInView(0.1);
+  const [storyRef,   storyVisible]   = useInView(0.1);
   const [galleryRef, galleryVisible] = useInView(0.1);
   const [giftRef,    giftVisible]    = useInView(0.1);
+  const [inviteRef,  inviteVisible]  = useInView(0.1);
   const [closingRef, closingVisible] = useInView(0.1);
 
   const heroScale   = Math.max(1, 1.1 - (scrollY / 600) * 0.1);
@@ -614,19 +611,18 @@ export const WeddingPageBahranFatimatul: React.FC<WeddingPageBahranFatimatulProp
           <div className="bfwed-cover-photo-overlay" />
         </div>
 
-        {/* Bunga anggrek berguguran */}
-        <OrchidFall />
+        {/* Ornamen bunga di pojok cover */}
+        <CoverFlowers />
 
         {/* Diamond corner markers */}
         <RailMarks offset={32} />
 
         {/* Cover content */}
         <div className="bfwed-cover-inner">
+          <img className="bfwed-monogram" src={MONOGRAM} alt="" aria-hidden="true" />
           <div className="bfwed-cover-eyebrow">The Wedding Invitation</div>
 
-          <OrnDivider width={220} />
-
-          <p className="bfwed-cover-names-h1" style={{ marginTop: 24 }}>
+          <p className="bfwed-cover-names-h1" style={{ marginTop: 18 }}>
             {GROOM_FIRST}
           </p>
           <span className="bfwed-cover-amp">&amp;</span>
@@ -634,7 +630,7 @@ export const WeddingPageBahranFatimatul: React.FC<WeddingPageBahranFatimatulProp
             {BRIDE_FIRST}
           </p>
 
-          <OrnDivider width={220} />
+          <img className="bfwed-flower-divider" src={FLOWER_DIVIDER} alt="" aria-hidden="true" />
 
           <div className="bfwed-cover-date-label" style={{ marginTop: 28 }}>
             Save the Date
@@ -682,22 +678,6 @@ export const WeddingPageBahranFatimatul: React.FC<WeddingPageBahranFatimatulProp
             <img src={HERO_PHOTO} alt="" aria-hidden="true" loading="eager" />
           </div>
 
-          {/* Ornamen anggrek kiri & kanan — float + parallax */}
-          <div
-            ref={orchidLeftRef}
-            className={`bfwed-hero-orchid left bfwed-reveal${heroVisible ? " in" : ""}`}
-            aria-hidden="true"
-          >
-            <img src={ORCHID_LEFT} alt="" />
-          </div>
-          <div
-            ref={orchidRightRef}
-            className={`bfwed-hero-orchid right bfwed-reveal${heroVisible ? " in" : ""}`}
-            aria-hidden="true"
-          >
-            <img src={ORCHID_RIGHT} alt="" />
-          </div>
-
           <RailMarks />
 
           {/* Bismillah + verse */}
@@ -721,13 +701,12 @@ export const WeddingPageBahranFatimatul: React.FC<WeddingPageBahranFatimatulProp
             style={{ textAlign: "center", transitionDelay: "0.2s" }}
           >
             <div className="bfwed-hero-wedding-of">The Wedding of</div>
-            <OrnDivider width={300} />
-            <h1 className="bfwed-hero-name-big" style={{ marginTop: 36 }}>
+            <h1 className="bfwed-hero-name-big" style={{ marginTop: 18 }}>
               {GROOM_FIRST}
             </h1>
             <span className="bfwed-hero-amp">&amp;</span>
             <h1 className="bfwed-hero-name-big">{BRIDE_FIRST}</h1>
-            <OrnDivider width={300} />
+            <img className="bfwed-flower-divider" src={FLOWER_DIVIDER} alt="" aria-hidden="true" />
             <div className="bfwed-hero-wedding-of" style={{ marginTop: 24 }}>
               {DATE_LABEL}
             </div>
@@ -796,6 +775,24 @@ export const WeddingPageBahranFatimatul: React.FC<WeddingPageBahranFatimatulProp
                   <div>{ev.time}</div>
                   <div className="italic" style={{ marginTop: 14 }}>{ev.venue}</div>
                   <div>{ev.address}</div>
+                </div>
+                <div className="bfwed-event-actions">
+                  <a
+                    href={MAP_LINK}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="bfwed-btn-sm solid"
+                  >
+                    <IconMap size={13} /> Buka Maps
+                  </a>
+                  <a
+                    href={buildCalendarUrl(ev.title, ev.venue)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="bfwed-btn-sm"
+                  >
+                    <IconCalendar size={13} /> Kalender
+                  </a>
                 </div>
               </div>
             ))}
@@ -882,7 +879,36 @@ export const WeddingPageBahranFatimatul: React.FC<WeddingPageBahranFatimatulProp
           </div>
         </section>
 
-        {/* ── 4. Gallery ── */}
+        {/* ── 4. Cerita Kami / Our Story ── */}
+        <section
+          id="bf-cerita"
+          className="bfwed-section bfwed-story-section"
+          ref={storyRef as React.RefObject<HTMLElement>}
+        >
+          <RailMarks />
+
+          <div className={`bfwed-reveal${storyVisible ? " in" : ""}`} style={{ textAlign: "center" }}>
+            <div className="bfwed-eyebrow">◆ Our Story ◆</div>
+            <h2 className="bfwed-section-heading">Cerita Kami</h2>
+          </div>
+
+          <div className={`bfwed-story-photo bfwed-reveal${storyVisible ? " in" : ""}`}
+            style={{ transitionDelay: "0.1s" }}>
+            <img src={OURSTORY_PHOTO} alt="Cerita kami" loading="lazy" />
+          </div>
+
+          <div className={`bfwed-story-timeline bfwed-reveal${storyVisible ? " in" : ""}`}
+            style={{ transitionDelay: "0.2s" }}>
+            {STORY.map((s) => (
+              <div key={s.title} className="bfwed-story-item">
+                <h3 className="bfwed-story-item-title">{s.title}</h3>
+                <p className="bfwed-story-item-body">{s.body}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* ── 5. Gallery ── */}
         <section
           id="bf-galeri"
           className="bfwed-section bfwed-gallery-section"
@@ -980,7 +1006,45 @@ export const WeddingPageBahranFatimatul: React.FC<WeddingPageBahranFatimatulProp
           </p>
         </section>
 
-        {/* ── 6. Closing ── */}
+        {/* ── 7. Turut Mengundang ── */}
+        <section
+          id="bf-turut"
+          className="bfwed-section bfwed-invite-section"
+          ref={inviteRef as React.RefObject<HTMLElement>}
+        >
+          <RailMarks />
+
+          <div className={`bfwed-reveal${inviteVisible ? " in" : ""}`} style={{ textAlign: "center" }}>
+            <div className="bfwed-eyebrow">◆ Turut Mengundang ◆</div>
+            <h2 className="bfwed-section-heading">Turut Mengundang</h2>
+            <p style={{ fontSize: 14, color: "var(--bf-ink-2)", maxWidth: 480,
+              margin: "0 auto 56px", lineHeight: 1.8 }}>
+              Kami yang berbahagia, beserta seluruh keluarga besar yang turut mengundang.
+            </p>
+          </div>
+
+          <div className={`bfwed-invite-grid bfwed-reveal${inviteVisible ? " in" : ""}`}
+            style={{ transitionDelay: "0.15s" }}>
+            <div className="bfwed-invite-col">
+              <h3 className="bfwed-invite-col-title">Kel. Mempelai Pria</h3>
+              <ol className="bfwed-invite-list">
+                {INVITERS.pria.map((nm, i) => (
+                  <li key={i}>{nm}</li>
+                ))}
+              </ol>
+            </div>
+            <div className="bfwed-invite-col">
+              <h3 className="bfwed-invite-col-title">Kel. Mempelai Wanita</h3>
+              <ol className="bfwed-invite-list">
+                {INVITERS.wanita.map((nm, i) => (
+                  <li key={i}>{nm}</li>
+                ))}
+              </ol>
+            </div>
+          </div>
+        </section>
+
+        {/* ── 8. Closing ── */}
         <section
           id="bf-penutup"
           className="bfwed-section bfwed-closing-section"
