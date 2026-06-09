@@ -59,20 +59,20 @@ const STORY: { title: string; body: string }[] = [
 ];
 
 // Turut Mengundang — TODO: ganti dengan nama asli keluarga
-const INVITERS: { pria: string[]; wanita: string[] } = {
-  pria: [
-    "Bapak/Ibu (Nama Keluarga)",
-    "Bapak/Ibu (Nama Keluarga)",
-    "Bapak/Ibu (Nama Keluarga)",
-    "Bapak/Ibu (Nama Keluarga)",
-  ],
-  wanita: [
-    "Bapak/Ibu (Nama Keluarga)",
-    "Bapak/Ibu (Nama Keluarga)",
-    "Bapak/Ibu (Nama Keluarga)",
-    "Bapak/Ibu (Nama Keluarga)",
-  ],
-};
+// const INVITERS: { pria: string[]; wanita: string[] } = {
+//   pria: [
+//     "Bapak/Ibu (Nama Keluarga)",
+//     "Bapak/Ibu (Nama Keluarga)",
+//     "Bapak/Ibu (Nama Keluarga)",
+//     "Bapak/Ibu (Nama Keluarga)",
+//   ],
+//   wanita: [
+//     "Bapak/Ibu (Nama Keluarga)",
+//     "Bapak/Ibu (Nama Keluarga)",
+//     "Bapak/Ibu (Nama Keluarga)",
+//     "Bapak/Ibu (Nama Keluarga)",
+//   ],
+// };
 
 const GROOM = {
   label: "Mempelai Pria",
@@ -565,7 +565,7 @@ export const WeddingPageBahranFatimatul: React.FC<WeddingPageBahranFatimatulProp
       )}
 
       {/* ── Background Music ── */}
-      <audio ref={audioRef} src="/audio/bgaudio.mp3" loop preload="auto" />
+      <audio ref={audioRef} src="/ilmi/muara.mp3" loop preload="auto" />
 
       {/* ── Music Toggle ── */}
       <button
@@ -708,7 +708,7 @@ export const WeddingPageBahranFatimatul: React.FC<WeddingPageBahranFatimatulProp
             </h1>
             <span className="bfwed-hero-amp">&amp;</span>
             <h1 className="bfwed-hero-name-big">{BRIDE_FIRST}</h1>
-            <img className="bfwed-flower-divider" src={FLOWER_DIVIDER} alt="" aria-hidden="true" />
+            {/* <img className="bfwed-flower-divider" src={FLOWER_DIVIDER} alt="" aria-hidden="true" /> */}
             <div className="bfwed-hero-wedding-of" style={{ marginTop: 24 }}>
               {DATE_LABEL}
             </div>
@@ -1009,7 +1009,7 @@ export const WeddingPageBahranFatimatul: React.FC<WeddingPageBahranFatimatulProp
         </section>
 
         {/* ── 7. Turut Mengundang ── */}
-        <section
+        {/* <section
           id="bf-turut"
           className="bfwed-section bfwed-invite-section"
           ref={inviteRef as React.RefObject<HTMLElement>}
@@ -1044,7 +1044,7 @@ export const WeddingPageBahranFatimatul: React.FC<WeddingPageBahranFatimatulProp
               </ol>
             </div>
           </div>
-        </section>
+        </section> */}
 
         {/* ── 8. Closing ── */}
         <section

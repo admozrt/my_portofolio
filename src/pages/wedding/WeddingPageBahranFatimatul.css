@@ -295,11 +295,12 @@
   background: transparent;
   color: var(--bf-gold-box);
   letter-spacing: 0.34em;
+  margin-bottom: 10px;
 }
 
 .bfwed-cover-credit {
   position: relative;
-  margin-top: 28px;
+  margin-top: 40px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -475,6 +476,7 @@
   text-transform: uppercase;
   color: var(--bf-ink-2);
   margin-bottom: 24px;
+  margin-top: 10px;
 }
 .bfwed-hero-name-big {
   font-family: 'Delycost', 'Cormorant Garamond', serif;
@@ -484,6 +486,7 @@
   margin: 0;
   font-weight: 400;
   text-shadow: 0 4px 30px rgba(0, 0, 0, 0.6);
+  margin-bottom: 10px;
 }
 .bfwed-hero-amp {
   font-family: 'Delycost', 'Pinyon Script', cursive;
