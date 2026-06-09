@@ -565,7 +565,7 @@ export const WeddingPageBahranFatimatul: React.FC<WeddingPageBahranFatimatulProp
       )}
 
       {/* ── Background Music ── */}
-      <audio ref={audioRef} src="/ilmi/muara.mp3" loop preload="auto" />
+      <audio ref={audioRef} src="/ilmi/bgaudio.mp3" loop preload="auto" />
 
       {/* ── Music Toggle ── */}
       <button
