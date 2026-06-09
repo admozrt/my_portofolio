@@ -11,7 +11,7 @@ const MAP_EMBED_URL =
 const MAP_LINK = "https://maps.app.goo.gl/pL2p16LB1QnsHuw97";
 
 // Musik latar — ganti dengan /audio/percayalah.mp3 bila file sudah tersedia.
-const AUDIO_SRC = "/anggi/audio.mp3";
+const AUDIO_SRC = "/anggi/afgan.mpeg";
 
 // Foto — masih placeholder. Taruh file di /public/anggi/ lalu isi path di sini.
 const BRIDE_PHOTO = "/anggi/IMG_9709.PNG";
