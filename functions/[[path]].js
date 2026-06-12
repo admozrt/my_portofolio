@@ -26,7 +26,7 @@ const ROUTES = {
   weddingAnggi: {
     match: (path) =>
       /anggi/i.test(path) || /rezza/i.test(path) || /zulfhanie/i.test(path),
-    title: "Undangan Pernikahan Anggi & Zulfhanie 💍",
+    title: "Undangan Pernikahan Anggi & Rezza 💍",
     description:
       "Dengan penuh rasa syukur, kami mengundang Anda untuk hadir menyaksikan pernikahan kami. Minggu, 12 Juli 2026 · Banjarbaru, Kalimantan Selatan",
     image: BASE + "/anggi/preview.jpg",
@@ -43,7 +43,7 @@ const ROUTES = {
       /fatimatul/i.test(path),
     title: "Undangan Pernikahan Ilmi & Zahro 💍",
     description:
-      "Dengan penuh rasa syukur, kami mengundang Anda untuk hadir menyaksikan pernikahan kami. Sabtu, 15 Agustus 2026 · Banjarbaru, Kalimantan Selatan",
+      "Dengan penuh rasa syukur, kami mengundang Anda untuk hadir menyaksikan pernikahan kami. Minggu, 5 Juli 2026 · Banjarbaru, Kalimantan Selatan",
     image: BASE + "/ilmi/preview.jpg",
     imageW: "800",
     imageH: "1200",
