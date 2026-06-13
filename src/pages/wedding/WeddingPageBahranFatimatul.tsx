@@ -3,7 +3,7 @@ import { useSearchParams } from "react-router-dom";
 import "./WeddingPageBahranFatimatul.css";
 
 // ─── CONFIG ────────────────────────────────────────────────────────
-const WEDDING_DATE = new Date("2026-07-15T00:00:00+07:00");
+const WEDDING_DATE = new Date("2026-07-5T00:00:00+08:00");
 const GROOM_FIRST = "Ilmi";
 const BRIDE_FIRST = "Zahra";
 const DATE_LABEL = "Minggu, 5 Juli 2026";
@@ -103,7 +103,7 @@ const EVENTS = [
     title: "Akad Nikah",
     day: "Minggu",
     date: DATE_LABEL,
-    time: "08.00 WITA – Selesai",
+    time: "07.30 WITA – Selesai",
     venue: "Gedung Pesona Modern 232",
     address: "Komplek Pesona Modern Jl. Ahmad Yani Km. 11, Mekar Raya, Kec. Kertak Hanyar, Kab. Banjar, Provinsi Kalimantan Selatan",
   },
@@ -112,7 +112,7 @@ const EVENTS = [
     title: "Resepsi",
     day: "Minggu",
     date: DATE_LABEL,
-    time: "09.00 WITA – Selsai",
+    time: "09.30 WITA – Selsai",
     venue: "Gedung Pesona Modern 232",
     address: "Komplek Pesona Modern Jl. Ahmad Yani Km. 11, Mekar Raya, Kec. Kertak Hanyar, Kab. Banjar, Provinsi Kalimantan Selatan",
   },
