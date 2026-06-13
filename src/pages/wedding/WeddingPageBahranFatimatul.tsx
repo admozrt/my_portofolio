@@ -153,20 +153,33 @@ const NAV_SECTIONS = [
   { id: "bf-penutup",  label: "Penutup"  },
 ];
 
-// Bangun link Google Calendar (acara 3 jam dari tanggal pernikahan)
-function buildCalendarUrl(title: string, location: string): string {
+// Download file .ics agar tersimpan ke kalender lokal perangkat
+function downloadIcs(title: string, location: string): void {
   const fmt = (d: Date) =>
-    d.toISOString().replace(/[-:]/g, "").replace(/\.\d{3}/, "");
+    d.toISOString().replace(/[-:.]/g, "").slice(0, 15) + "Z";
   const start = WEDDING_DATE;
   const end = new Date(start.getTime() + 3 * 60 * 60 * 1000);
-  const params = new URLSearchParams({
-    action: "TEMPLATE",
-    text: `${title} — ${GROOM_FIRST} & ${BRIDE_FIRST}`,
-    dates: `${fmt(start)}/${fmt(end)}`,
-    location,
-    details: `Undangan pernikahan ${GROOM_FIRST} & ${BRIDE_FIRST}`,
-  });
-  return `https://calendar.google.com/calendar/render?${params.toString()}`;
+  const ics = [
+    "BEGIN:VCALENDAR",
+    "VERSION:2.0",
+    "PRODID:-//WeddingIlmiZahra//EN",
+    "BEGIN:VEVENT",
+    `DTSTART:${fmt(start)}`,
+    `DTEND:${fmt(end)}`,
+    `SUMMARY:${title} — ${GROOM_FIRST} & ${BRIDE_FIRST}`,
+    `LOCATION:${location}`,
+    `DESCRIPTION:Undangan pernikahan ${GROOM_FIRST} & ${BRIDE_FIRST}`,
+    "END:VEVENT",
+    "END:VCALENDAR",
+  ].join("\r\n");
+
+  const blob = new Blob([ics], { type: "text/calendar;charset=utf-8" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = `${GROOM_FIRST}_${BRIDE_FIRST}_wedding.ics`;
+  a.click();
+  URL.revokeObjectURL(url);
 }
 
 // ─── HELPERS ───────────────────────────────────────────────────────
@@ -788,14 +801,13 @@ export const WeddingPageBahranFatimatul: React.FC<WeddingPageBahranFatimatulProp
                   >
                     <IconMap size={13} /> Buka Maps
                   </a>
-                  <a
-                    href={buildCalendarUrl(ev.title, ev.venue)}
-                    target="_blank"
-                    rel="noopener noreferrer"
+                  <button
+                    type="button"
+                    onClick={() => downloadIcs(ev.title, ev.venue)}
                     className="bfwed-btn-sm"
                   >
                     <IconCalendar size={13} /> Kalender
-                  </a>
+                  </button>
                 </div>
               </div>
             ))}
