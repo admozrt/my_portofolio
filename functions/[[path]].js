@@ -44,7 +44,7 @@ const ROUTES = {
     title: "Undangan Pernikahan Ilmi & Zahra 💍",
     description:
       "Dengan penuh rasa syukur, kami mengundang Anda untuk hadir menyaksikan pernikahan kami. Minggu, 5 Juli 2026 · Banjarbaru, Kalimantan Selatan",
-    image: BASE + "/ilmi/preview.jpg",
+    image: BASE + "/ilmi/cover.jpeg",
     imageW: "800",
     imageH: "1200",
     url: BASE + "/ilmi-zahra",
