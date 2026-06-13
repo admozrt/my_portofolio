@@ -77,7 +77,7 @@ const STORY: { title: string; body: string }[] = [
 
 const GROOM = {
   label: "Mempelai Pria",
-  name: "Bahran Ilmi",
+  name: "Bahran Ilmi, S.Kom",
   order: "Putra Kedua",
   father: "Yuseran",
   mother: "Khadijah",
@@ -88,7 +88,7 @@ const GROOM = {
 
 const BRIDE = {
   label: "Mempelai Wanita",
-  name: "Fatimatul Zahro",
+  name: "Fatimatul Zahro, S.Pd",
   order: "Putri Pertama",
   father: "Rahmatullah",
   mother: "Erna",
