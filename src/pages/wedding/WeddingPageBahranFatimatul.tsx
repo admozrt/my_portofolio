@@ -3,7 +3,7 @@ import { useSearchParams } from "react-router-dom";
 import "./WeddingPageBahranFatimatul.css";
 
 // ─── CONFIG ────────────────────────────────────────────────────────
-const WEDDING_DATE = new Date("2026-07-5T00:00:00+08:00");
+const WEDDING_DATE = new Date("2026-07-05T00:00:00+08:00");
 const GROOM_FIRST = "Ilmi";
 const BRIDE_FIRST = "Zahra";
 const DATE_LABEL = "Minggu, 5 Juli 2026";
