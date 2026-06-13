@@ -16,7 +16,7 @@ const AUDIO_SRC = "/anggi/afgan.mpeg";
 // Foto — masih placeholder. Taruh file di /public/anggi/ lalu isi path di sini.
 const BRIDE_PHOTO = "/anggi/IMG_9709.PNG";
 const GROOM_PHOTO = "/anggi/IMG_9710.PNG";
-const GALLERY_PHOTOS: string[] = ["/anggi/IMG_9755.jpeg", "/anggi/IMG_9752.jpeg", "/anggi/IMG_9748(2).jpeg"];
+const GALLERY_PHOTOS: string[] = ["/anggi/IMG_9751.jpeg", "/anggi/IMG_9752.jpeg", "/anggi/IMG_9748(2).jpeg"];
 
 // Foto background section (di-set sebagai CSS variable lewat inline style)
 const COVER_PHOTO = "/anggi/IMG_9748.jpeg";
