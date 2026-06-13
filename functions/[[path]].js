@@ -41,13 +41,13 @@ const ROUTES = {
       /zahro/i.test(path) ||
       /bahran/i.test(path) ||
       /fatimatul/i.test(path),
-    title: "Undangan Pernikahan Ilmi & Zahro 💍",
+    title: "Undangan Pernikahan Ilmi & Zahra 💍",
     description:
       "Dengan penuh rasa syukur, kami mengundang Anda untuk hadir menyaksikan pernikahan kami. Minggu, 5 Juli 2026 · Banjarbaru, Kalimantan Selatan",
     image: BASE + "/ilmi/preview.jpg",
     imageW: "800",
     imageH: "1200",
-    url: BASE + "/ilmi-zahro",
+    url: BASE + "/ilmi-zahra",
     siteName: "Undangan Pernikahan",
   },
   portfolio: {
