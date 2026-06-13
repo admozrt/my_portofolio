@@ -27,15 +27,15 @@ const CLOSING_PHOTO = "/anggi/IMG_9748.jpeg";
 const PRELOAD_PHOTOS = [COVER_PHOTO, HERO_PHOTO, BRIDE_PHOTO, GROOM_PHOTO];
 
 const BRIDE = {
-  name: "Anggi Rahmi Rosalina",
+  name: "Anggi Rahmi Rosalina, S.Kom",
   order: "Putri Pertama",
-  parents: ["Putri pertama dari", "Bapak Ahmad Rosyadi", "& Ibu Mislinawati"],
+  parents: ["Putri pertama dari", "Bapak Ahmad Rosyadi, SE", "& Ibu Mislinawati"],
   ig: "https://www.instagram.com/anggi_rahmi",
   igHandle: "@anggi_rahmi",
   photo: BRIDE_PHOTO,
 };
 const GROOM = {
-  name: "Zulfhanie Rezza Maulidin",
+  name: "Zulfhanie Rezza Maulidin, S.Ak",
   order: "Putra Kedua",
   parents: ["Putra kedua dari", "Bapak Abdul Syahid", "& Ibu Saniah"],
   ig: "https://www.instagram.com/mauezza_",
