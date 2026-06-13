@@ -595,13 +595,13 @@
 }
 .bfwed-event-title {
   font-family: 'HelsaDisplay', 'Cormorant Garamond', serif;
-  font-size: 30px;
+  font-size: 38px;
   font-weight: 400;
   color: var(--bf-gold-box);
-  margin: 0 0 18px;
+  margin: 0 0 14px;
 }
 .bfwed-event-info {
-  font-size: 14px;
+  font-size: 16px;
   line-height: 1.8;
   color: var(--bf-ink-2);
 }
@@ -1227,6 +1227,7 @@
   flex-direction: column;
   gap: 26px;
   padding: 14px 0;
+  margin-left: 8px;
   opacity: 0;
   animation: bfNavIn 0.7s ease forwards 0.4s;
 }

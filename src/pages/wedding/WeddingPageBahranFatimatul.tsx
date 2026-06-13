@@ -3,9 +3,9 @@ import { useSearchParams } from "react-router-dom";
 import "./WeddingPageBahranFatimatul.css";
 
 // ─── CONFIG ────────────────────────────────────────────────────────
-const WEDDING_DATE = new Date("2026-08-15T10:00:00+08:00");
+const WEDDING_DATE = new Date("2026-07-15T00:00:00+07:00");
 const GROOM_FIRST = "Ilmi";
-const BRIDE_FIRST = "Zahro";
+const BRIDE_FIRST = "Zahra";
 const DATE_LABEL = "Minggu, 5 Juli 2026";
 
 const MAP_EMBED_URL =
@@ -15,8 +15,8 @@ const MAP_LINK =
 
 const COVER_PHOTO    = "/ilmi/cover.jpeg";
 const HERO_PHOTO     = "/ilmi/hero.jpeg";
-const BRIDE_PHOTO    = "/ilmi/bride.jpg";
-const GROOM_PHOTO    = "/ilmi/groom.jpg";
+const BRIDE_PHOTO    = "/ilmi/bride.jpeg";
+const GROOM_PHOTO    = "/ilmi/groom.jpeg";
 const OURSTORY_PHOTO = "/ilmi/ourstory.jpeg";
 
 // Foto yang ditunggu (preload) sebelum halaman tampil
@@ -32,10 +32,11 @@ const LOGO_HERO      = "/ilmi/logo-full.png";  // Ilmi (2): I|Z + "Ilmi & Zahra"
 const LOGO_CLOSING   = "/ilmi/logo-text.png";  // Ilmi (1): "Ilmi & Zahra" (penutup)
 
 const GALLERY_PHOTOS = [
-  "/ilmi/g1.jpeg",
+  "/ilmi/g1.jpg",
   "/ilmi/g2.jpeg",
-  "/ilmi/g3.jpeg",
-  "/ilmi/g4.jpeg",
+  "/ilmi/g3.jpg",
+  "/ilmi/g4.jpg",
+  "/ilmi/g5.jpeg",
 ];
 
 // Cerita Kami / Our Story (teks dari zip)
@@ -100,7 +101,7 @@ const EVENTS = [
   {
     tag: "Akad Nikah",
     title: "Akad Nikah",
-    day: "Sabtu",
+    day: "Minggu",
     date: DATE_LABEL,
     time: "08.00 WITA – Selesai",
     venue: "Gedung Pesona Modern 232",
@@ -108,8 +109,8 @@ const EVENTS = [
   },
   {
     tag: "Resepsi",
-    title: "Walimatul 'Ursy",
-    day: "Sabtu",
+    title: "Resepsi",
+    day: "Minggu",
     date: DATE_LABEL,
     time: "09.00 WITA – Selsai",
     venue: "Gedung Pesona Modern 232",
@@ -119,11 +120,11 @@ const EVENTS = [
 
 const GIFTS = [
   {
-    id: "bca",
+    id: "bri",
     type: "Transfer Bank",
-    name: "Bank BCA",
-    logo: "BCA",
-    number: "1234 5678 90",
+    name: "Bank BRI",
+    logo: "BRI",
+    number: "342701039372532",
     holder: "Fatimatul Zahro",
     bg: "linear-gradient(135deg, #2196F3, #1976D2)",
   },
@@ -132,7 +133,7 @@ const GIFTS = [
     type: "E-Wallet",
     name: "DANA",
     logo: "D",
-    number: "0812 3456 7890",
+    number: "082148406527",
     holder: "Bahran Ilmi",
     bg: "linear-gradient(135deg, #118EEA, #0A6CB8)",
   },
@@ -148,7 +149,7 @@ const NAV_SECTIONS = [
   { id: "bf-cerita",   label: "Cerita"   },
   { id: "bf-galeri",   label: "Galeri"   },
   { id: "bf-hadiah",   label: "Hadiah"   },
-  { id: "bf-turut",    label: "Turut"    },
+  // { id: "bf-turut",    label: "Turut"    },
   { id: "bf-penutup",  label: "Penutup"  },
 ];
 
@@ -768,11 +769,11 @@ export const WeddingPageBahranFatimatul: React.FC<WeddingPageBahranFatimatulProp
           >
             {EVENTS.map((ev, i) => (
               <div key={i} className="bfwed-event-card">
-                <div className="bfwed-event-tag">{ev.tag}</div>
+                {/* <div className="bfwed-event-tag">{ev.tag}</div> */}
                 <h3 className="bfwed-event-title">{ev.title}</h3>
                 <OrnDivider width={140} />
                 <div className="bfwed-event-info" style={{ marginTop: 18 }}>
-                  <div className="strong">{ev.day}</div>
+                  {/* <div className="strong">{ev.day}</div> */}
                   <div>{ev.date}</div>
                   <div>{ev.time}</div>
                   <div className="italic" style={{ marginTop: 14 }}>{ev.venue}</div>
@@ -1090,7 +1091,7 @@ export const WeddingPageBahranFatimatul: React.FC<WeddingPageBahranFatimatulProp
           {/* Footer */}
           <div className="bfwed-footer">
             <div className="bfwed-footer-copy">
-              © {new Date().getFullYear()} · Bahran &amp; Fatimatul
+              © {new Date().getFullYear()} · Ilmi &amp; Zahra
             </div>
             <a
               href="https://admoz.pages.dev"
