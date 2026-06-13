@@ -29,7 +29,7 @@ const FLOWER_BR      = "/ilmi/flower-br.png";     // cover bawah-kanan
 const FLOWER_DIVIDER = "/ilmi/flower-divider.png"; // ornamen bunga
 const MONOGRAM       = "/ilmi/monogram.png";   // icon "I | Z" (cover)
 const LOGO_HERO      = "/ilmi/logo-full.png";  // Ilmi (2): I|Z + "Ilmi & Zahra" (hero)
-const LOGO_CLOSING   = "/ilmi/logo-text.png";  // Ilmi (1): "Ilmi & Zahra" (penutup)
+// const LOGO_CLOSING   = "/ilmi/logo-text.png";  // Ilmi (1): "Ilmi & Zahra" (penutup)
 
 const GALLERY_PHOTOS = [
   "/ilmi/g1.jpg",
