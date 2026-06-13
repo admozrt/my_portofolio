@@ -725,7 +725,7 @@ export const WeddingPageAnggi: React.FC = () => {
         </section>
 
         <p className="credit">
-          Anggi &amp; Zulfhanie · 12 Juli 2026 · Banjarbaru
+          Anggi &amp; Rezza · 12 Juli 2026 · Banjarbaru
           <br />
           <a
             href="https://admoz.pages.dev"

@@ -132,7 +132,7 @@ const GIFTS = [
     id: "dana",
     type: "E-Wallet",
     name: "DANA",
-    logo: "D",
+    logo: "DANA",
     number: "082148406527",
     holder: "Bahran Ilmi",
     bg: "linear-gradient(135deg, #118EEA, #0A6CB8)",
@@ -1068,7 +1068,7 @@ export const WeddingPageBahranFatimatul: React.FC<WeddingPageBahranFatimatulProp
           <RailMarks />
 
           <div className={`bfwed-reveal${closingVisible ? " in" : ""}`} style={{ textAlign: "center" }}>
-            <img className="bfwed-closing-logo" src={LOGO_CLOSING} alt="Ilmi & Zahra" />
+            {/* <img className="bfwed-closing-logo" src={LOGO_CLOSING} alt="Ilmi & Zahra" /> */}
 
             <p className="bfwed-closing-body">
               Merupakan suatu kebahagiaan dan kehormatan bagi kami apabila
