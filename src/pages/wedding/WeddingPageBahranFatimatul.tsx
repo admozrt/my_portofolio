@@ -154,7 +154,7 @@ const NAV_SECTIONS = [
 ];
 
 // Download file .ics agar tersimpan ke kalender lokal perangkat
-function downloadIcs(title: string, location: string): void {
+function downloadIcs(title: string, location: string, nameA: string, nameB: string): void {
   const fmt = (d: Date) =>
     d.toISOString().replace(/[-:.]/g, "").slice(0, 15) + "Z";
   const start = WEDDING_DATE;
@@ -166,9 +166,9 @@ function downloadIcs(title: string, location: string): void {
     "BEGIN:VEVENT",
     `DTSTART:${fmt(start)}`,
     `DTEND:${fmt(end)}`,
-    `SUMMARY:${title} — ${GROOM_FIRST} & ${BRIDE_FIRST}`,
+    `SUMMARY:${title} — ${nameA} & ${nameB}`,
     `LOCATION:${location}`,
-    `DESCRIPTION:Undangan pernikahan ${GROOM_FIRST} & ${BRIDE_FIRST}`,
+    `DESCRIPTION:Undangan pernikahan ${nameA} & ${nameB}`,
     "END:VEVENT",
     "END:VCALENDAR",
   ].join("\r\n");
@@ -177,7 +177,7 @@ function downloadIcs(title: string, location: string): void {
   const url = URL.createObjectURL(blob);
   const a = document.createElement("a");
   a.href = url;
-  a.download = `${GROOM_FIRST}_${BRIDE_FIRST}_wedding.ics`;
+  a.download = `${nameA}_${nameB}_wedding.ics`;
   a.click();
   URL.revokeObjectURL(url);
 }
@@ -450,16 +450,25 @@ function CoverFlowers() {
 interface WeddingPageBahranFatimatulProps {
   /** Nama ayah mempelai wanita — beda per route (ilmi-zahro vs zahro-ilmi) */
   brideFather?: string;
+  /** Jika true, nama mempelai wanita ditampilkan lebih dulu (route zahro-ilmi) */
+  brideFirst?: boolean;
 }
 
 export const WeddingPageBahranFatimatul: React.FC<WeddingPageBahranFatimatulProps> = ({
   brideFather = BRIDE.father,
+  brideFirst = false,
 }) => {
   const [searchParams] = useSearchParams();
   const visitorName = searchParams.get("to") || "Tamu Undangan";
 
   // Mempelai wanita dengan nama ayah sesuai route
   const bride = { ...BRIDE, father: brideFather };
+
+  // Urutan nama: A tampil pertama, B tampil kedua
+  const nameA = brideFirst ? BRIDE_FIRST : GROOM_FIRST;
+  const nameB = brideFirst ? GROOM_FIRST : BRIDE_FIRST;
+  // Urutan kartu profil mempelai
+  const persons = brideFirst ? [bride, GROOM] : [GROOM, bride];
 
   const [isOpen, setIsOpen]       = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -636,15 +645,15 @@ export const WeddingPageBahranFatimatul: React.FC<WeddingPageBahranFatimatulProp
         {/* Cover content */}
         <div className="bfwed-cover-inner">
           <img className="bfwed-flower-divider top" src={FLOWER_DIVIDER} alt="" aria-hidden="true" />
-          <img className="bfwed-monogram" src={MONOGRAM} alt="Ilmi & Zahra" />
+          <img className="bfwed-monogram" src={MONOGRAM} alt={`${nameA} & ${nameB}`} />
           <div className="bfwed-cover-eyebrow">The Wedding Invitation</div>
 
           <p className="bfwed-cover-names-h1" style={{ marginTop: 10 }}>
-            {GROOM_FIRST}
+            {nameA}
           </p>
           <span className="bfwed-cover-amp">&amp;</span>
           <p className="bfwed-cover-names-h1" style={{ marginBottom: 0 }}>
-            {BRIDE_FIRST}
+            {nameB}
           </p>
 
           <div className="bfwed-cover-date-label" style={{ marginTop: 24 }}>
@@ -715,13 +724,13 @@ export const WeddingPageBahranFatimatul: React.FC<WeddingPageBahranFatimatulProp
             className={`bfwed-hero-content bfwed-hero-names bfwed-reveal${heroVisible ? " in" : ""}`}
             style={{ textAlign: "center", transitionDelay: "0.2s" }}
           >
-            <img className="bfwed-hero-logo" src={LOGO_HERO} alt="Ilmi & Zahra" />
+            <img className="bfwed-hero-logo" src={LOGO_HERO} alt={`${nameA} & ${nameB}`} />
             <div className="bfwed-hero-wedding-of">The Wedding of</div>
             <h1 className="bfwed-hero-name-big" style={{ marginTop: 18 }}>
-              {GROOM_FIRST}
+              {nameA}
             </h1>
             <span className="bfwed-hero-amp">&amp;</span>
-            <h1 className="bfwed-hero-name-big">{BRIDE_FIRST}</h1>
+            <h1 className="bfwed-hero-name-big">{nameB}</h1>
             {/* <img className="bfwed-flower-divider" src={FLOWER_DIVIDER} alt="" aria-hidden="true" /> */}
             <div className="bfwed-hero-wedding-of" style={{ marginTop: 24 }}>
               {DATE_LABEL}
@@ -803,7 +812,7 @@ export const WeddingPageBahranFatimatul: React.FC<WeddingPageBahranFatimatulProp
                   </a>
                   <button
                     type="button"
-                    onClick={() => downloadIcs(ev.title, ev.venue)}
+                    onClick={() => downloadIcs(ev.title, ev.venue, nameA, nameB)}
                     className="bfwed-btn-sm"
                   >
                     <IconCalendar size={13} /> Kalender
@@ -859,7 +868,7 @@ export const WeddingPageBahranFatimatul: React.FC<WeddingPageBahranFatimatulProp
           </div>
 
           <div className="bfwed-profile-grid">
-            {[GROOM, bride].map((person, idx) => (
+            {persons.map((person, idx) => (
               <div
                 key={person.name}
                 className={`bfwed-profile-card bfwed-reveal${profileVisible ? " in" : ""}`}
@@ -1093,9 +1102,9 @@ export const WeddingPageBahranFatimatul: React.FC<WeddingPageBahranFatimatulProp
             </div>
 
             <div className="bfwed-closing-names">
-              {GROOM_FIRST}
+              {nameA}
               <span className="script-amp">&amp;</span>
-              {BRIDE_FIRST}
+              {nameB}
             </div>
             <div className="bfwed-closing-family">beserta keluarga besar</div>
           </div>
@@ -1103,7 +1112,7 @@ export const WeddingPageBahranFatimatul: React.FC<WeddingPageBahranFatimatulProp
           {/* Footer */}
           <div className="bfwed-footer">
             <div className="bfwed-footer-copy">
-              © {new Date().getFullYear()} · Ilmi &amp; Zahra
+              © {new Date().getFullYear()} · {nameA} &amp; {nameB}
             </div>
             <a
               href="https://admoz.pages.dev"
