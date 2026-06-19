@@ -53,9 +53,9 @@ export const PortfolioPage: React.FC = () => {
         <SEOHead data={seoData} />
         <Navigation searchTerm={searchTerm} onSearchChange={setSearchTerm} />
         <HeroSection />
+        <ProjectsSection />
         <AboutSection />
         <ExperienceSection />
-        <ProjectsSection />
         <PartnersSection />
         <Footer />
       </div>

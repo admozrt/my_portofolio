@@ -8,7 +8,7 @@ import type { NavigationProps } from '../../types';
 const navItems = [
   { id: 'tentang', label: 'Tentang', icon: <Users className="w-4 h-4" /> },
   { id: 'pengalaman', label: 'Pengalaman', icon: <Briefcase className="w-4 h-4" /> },
-  { id: 'proyek', label: 'Proyek', icon: <Code className="w-4 h-4" /> },
+  { id: 'projek', label: 'Projek', icon: <Code className="w-4 h-4" /> },
   { id: 'mitra', label: 'Mitra', icon: <Award className="w-4 h-4" /> },
 ];
 

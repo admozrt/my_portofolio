@@ -5,7 +5,7 @@ import { useCountUp } from '../../hooks/useCountUp';
 
 const stats = [
   { value: 4, suffix: '+', label: 'Tahun Pengalaman', color: 'text-blue-600 dark:text-blue-400' },
-  { value: 20, suffix: '+', label: 'Proyek Diselesaikan', color: 'text-green-600 dark:text-green-400' },
+  { value: 20, suffix: '+', label: 'Projek Diselesaikan', color: 'text-green-600 dark:text-green-400' },
   { value: 6, suffix: '', label: 'Klien Senang', color: 'text-orange-600 dark:text-orange-400' },
   { value: 98, suffix: '%', label: 'Tingkat Keberhasilan', color: 'text-red-500 dark:text-red-400' },
 ];
@@ -118,7 +118,7 @@ export const HeroSection: React.FC = () => {
                 whileHover={{ scale: 1.05, boxShadow: '0 8px 25px rgba(59,130,246,0.4)' }}
                 whileTap={{ scale: 0.95 }}
                 onClick={() =>
-                  document.getElementById('proyek')?.scrollIntoView({ behavior: 'smooth' })
+                  document.getElementById('projek')?.scrollIntoView({ behavior: 'smooth' })
                 }
                 className="px-7 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-full font-medium flex items-center gap-2 shadow-lg"
               >
