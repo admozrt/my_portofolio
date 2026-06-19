@@ -3,6 +3,7 @@ import { Github, Linkedin, Mail, MessageCircle, Phone } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { skills } from '../../data/skill';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { GithubActivity } from '../ui/GithubActivity';
 
 const containerVariants = {
   hidden: {},
@@ -168,6 +169,8 @@ export const AboutSection: React.FC = () => {
             </div>
           </div>
         </div>
+
+        <GithubActivity />
       </div>
     </section>
   );
