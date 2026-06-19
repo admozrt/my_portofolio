@@ -6,7 +6,7 @@ export const Footer: React.FC = () => {
   const quickLinks = [
     { label: 'Tentang', id: 'tentang' },
     { label: 'Pengalaman', id: 'pengalaman' },
-    { label: 'Proyek', id: 'proyek' },
+    { label: 'Projek', id: 'projek' },
     { label: 'Mitra', id: 'mitra' },
   ];
 

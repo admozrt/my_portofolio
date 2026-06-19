@@ -101,7 +101,7 @@ export const ProjectsSection: React.FC = () => {
     cardsPerPage === 1 ? 'grid-cols-1' : cardsPerPage === 2 ? 'grid-cols-2' : 'grid-cols-3';
 
   return (
-    <section id="proyek" className="py-20 bg-white dark:bg-gray-900">
+    <section id="projek" className="py-20 bg-white dark:bg-gray-900">
       <div className="container mx-auto px-6 max-w-7xl">
         {/* Header + filter */}
         <motion.div

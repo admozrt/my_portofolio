@@ -24,7 +24,7 @@ export const experiences: Experience[] = [
     description: 'Mengembangkan aplikasi web kustom untuk berbagai klien di berbagai industri',
     technologies: ['Laravel', 'React', 'PHP', 'MySQL', 'JavaScript','TailwindCSS', 'Bootstrap'],
     achievements: [
-      'Berhasil menyelesaikan 18+ proyek tepat waktu',
+      'Berhasil menyelesaikan 18+ projek tepat waktu',
       'Mempertahankan tingkat kepuasan klien 98%',
       'Membangun solusi yang melayani 10k+ pengguna'
     ]
