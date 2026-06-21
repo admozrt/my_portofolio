@@ -43,7 +43,7 @@ const ROUTES = {
       /fatimatul/i.test(path),
     title: "Undangan Pernikahan Ilmi & Zahra 💍",
     description:
-      "Dengan penuh rasa syukur, kami mengundang Anda untuk hadir menyaksikan pernikahan kami. Minggu, 5 Juli 2026 · Banjarbaru, Kalimantan Selatan",
+      "Dengan penuh rasa syukur, kami mengundang Anda untuk hadir menyaksikan pernikahan kami. Minggu, 5 Juli 2026 · Kab.Banjar Kertak Hanyar, Kalimantan Selatan",
     image: BASE + "/ilmi/cover.jpeg",
     imageW: "800",
     imageH: "1200",

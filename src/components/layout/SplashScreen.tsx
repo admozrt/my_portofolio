@@ -68,7 +68,7 @@ export const SplashScreen: React.FC<SplashScreenProps> = ({ onComplete }) => {
               transition={{ duration: 0.5, delay: 0.55 }}
               className="text-blue-300 text-sm tracking-widest uppercase font-medium"
             >
-              Full Stack Developer
+              Software Engineer
             </motion.p>
 
             <motion.div
