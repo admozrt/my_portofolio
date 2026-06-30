@@ -1,85 +1,72 @@
 import React, { useEffect, useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
+import { Monogram } from '../ui/Monogram';
 
 interface SplashScreenProps {
   onComplete: () => void;
 }
 
+const EASE: [number, number, number, number] = [0.16, 1, 0.3, 1];
+
 export const SplashScreen: React.FC<SplashScreenProps> = ({ onComplete }) => {
   const [visible, setVisible] = useState(true);
+  const reduce = useReducedMotion();
 
   useEffect(() => {
+    // Shorter hold under reduced motion.
+    const hold = reduce ? 600 : 1900;
+    const exit = reduce ? 100 : 650;
     const timer = setTimeout(() => {
       setVisible(false);
-      setTimeout(onComplete, 700);
-    }, 2200);
+      setTimeout(onComplete, exit);
+    }, hold);
     return () => clearTimeout(timer);
-  }, [onComplete]);
+  }, [onComplete, reduce]);
 
   return (
     <AnimatePresence>
       {visible && (
         <motion.div
-          className="fixed inset-0 z-[9999] flex items-center justify-center overflow-hidden"
-          style={{
-            background: 'linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%)',
-          }}
+          className="font-sans fixed inset-0 z-[9999] flex items-center justify-center overflow-hidden bg-zinc-950"
           initial={{ opacity: 1 }}
-          exit={{ y: '-100%' }}
-          transition={{ duration: 0.7, ease: [0.76, 0, 0.24, 1] }}
+          exit={reduce ? { opacity: 0 } : { y: '-100%' }}
+          transition={{ duration: reduce ? 0.2 : 0.65, ease: EASE }}
         >
-          {/* Background glow */}
+          {/* Subtle accent wash, not a purple mesh. */}
           <div
-            className="absolute inset-0 opacity-30"
+            className="absolute inset-0 opacity-40"
             style={{
               background:
-                'radial-gradient(ellipse at center, rgba(96,165,250,0.3) 0%, transparent 70%)',
+                'radial-gradient(ellipse at center, rgba(37,99,235,0.18) 0%, transparent 65%)',
             }}
           />
 
-          <div className="text-center px-4 relative z-10">
-            <motion.div
-              initial={{ scale: 0.3, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              transition={{ duration: 0.6, ease: [0.34, 1.56, 0.64, 1] }}
-              className="text-9xl font-black mb-6 leading-none"
-              style={{
-                background: 'linear-gradient(135deg, #60a5fa, #a78bfa, #22d3ee)',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-                backgroundClip: 'text',
-              }}
-            >
-              AM
-            </motion.div>
+          <div className="relative z-10 flex flex-col items-center text-center px-4">
+            <Monogram size={84} draw />
 
             <motion.h2
-              initial={{ y: 30, opacity: 0 }}
+              initial={reduce ? false : { y: 20, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
-              transition={{ duration: 0.5, delay: 0.35 }}
-              className="text-white text-2xl font-semibold tracking-wide mb-2"
+              transition={{ duration: 0.5, delay: reduce ? 0 : 0.6, ease: EASE }}
+              className="mt-6 text-white text-xl font-semibold tracking-tight"
             >
               Adi Rakhmatullah Ma'arif
             </motion.h2>
 
             <motion.p
-              initial={{ y: 20, opacity: 0 }}
+              initial={reduce ? false : { y: 16, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
-              transition={{ duration: 0.5, delay: 0.55 }}
-              className="text-blue-300 text-sm tracking-widest uppercase font-medium"
+              transition={{ duration: 0.5, delay: reduce ? 0 : 0.75, ease: EASE }}
+              className="mt-1.5 text-accent-400 text-xs font-mono tracking-[0.25em] uppercase"
             >
               Software Engineer
             </motion.p>
 
             <motion.div
-              className="mt-8 mx-auto h-px rounded-full"
-              style={{
-                background:
-                  'linear-gradient(90deg, transparent, #60a5fa, #a78bfa, transparent)',
-              }}
-              initial={{ width: 0, opacity: 0 }}
-              animate={{ width: 220, opacity: 1 }}
-              transition={{ duration: 1.3, delay: 0.25, ease: 'easeInOut' }}
+              className="mt-7 h-px bg-accent-500/70"
+              initial={reduce ? { width: 180 } : { width: 0 }}
+              animate={{ width: 180 }}
+              transition={{ duration: 1, delay: reduce ? 0 : 0.4, ease: EASE }}
             />
           </div>
         </motion.div>

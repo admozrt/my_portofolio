@@ -4,6 +4,7 @@ import { SEOHead } from '../components/ui/SEOHead';
 import { Navigation } from '../components/layout/Navigation';
 import { SplashScreen } from '../components/layout/SplashScreen';
 import { HeroSection } from '../components/sections/HeroSection';
+import { TechMarquee } from '../components/ui/TechMarquee';
 import { AboutSection } from '../components/sections/AboutSection';
 import { ExperienceSection } from '../components/sections/ExperienceSection';
 import { ProjectsSection } from '../components/sections/ProjectSection';
@@ -14,20 +15,6 @@ import { seoData } from '../data/seoData';
 export const PortfolioPage: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [splashDone, setSplashDone] = useState(false);
-
-  useEffect(() => {
-    const link = document.createElement('link');
-    link.rel = 'stylesheet';
-    link.href = 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css';
-    document.head.appendChild(link);
-
-    const root = document.documentElement;
-    root.classList.add('scroll-smooth');
-
-    return () => {
-      document.head.removeChild(link);
-    };
-  }, []);
 
   useEffect(() => {
     if (searchTerm.trim() === '') return;
@@ -47,12 +34,13 @@ export const PortfolioPage: React.FC = () => {
       <SplashScreen onComplete={() => setSplashDone(true)} />
 
       <div
-        className="bg-white dark:bg-gray-900 min-h-screen transition-colors duration-200"
+        className="font-sans bg-white dark:bg-zinc-950 min-h-screen transition-colors duration-200"
         style={{ visibility: splashDone ? 'visible' : 'hidden' }}
       >
         <SEOHead data={seoData} />
         <Navigation searchTerm={searchTerm} onSearchChange={setSearchTerm} />
         <HeroSection />
+        <TechMarquee />
         <ProjectsSection />
         <AboutSection />
         <ExperienceSection />

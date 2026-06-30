@@ -1,151 +1,208 @@
 import React, { useState, useEffect } from 'react';
-import { Code, Mail } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { ArrowRight, Mail } from 'lucide-react';
+import { motion, AnimatePresence, useReducedMotion, type Variants } from 'framer-motion';
 import { useCountUp } from '../../hooks/useCountUp';
+import { useMagnetic } from '../../hooks/useMagnetic';
 
 const stats = [
-  { value: 4, suffix: '+', label: 'Tahun Pengalaman', color: 'text-blue-600 dark:text-blue-400' },
-  { value: 20, suffix: '+', label: 'Projek Diselesaikan', color: 'text-green-600 dark:text-green-400' },
-  { value: 6, suffix: '', label: 'Klien Senang', color: 'text-orange-600 dark:text-orange-400' },
-  { value: 98, suffix: '%', label: 'Tingkat Keberhasilan', color: 'text-red-500 dark:text-red-400' },
+  { value: 4, suffix: '+', label: 'Tahun Pengalaman' },
+  { value: 20, suffix: '+', label: 'Projek Diselesaikan' },
+  { value: 6, suffix: '', label: 'Klien' },
+  { value: 98, suffix: '%', label: 'Tingkat Keberhasilan' },
 ];
-
-const StatCard: React.FC<{ stat: (typeof stats)[0]; delay: number }> = ({ stat, delay }) => {
-  const { count, start } = useCountUp(stat.value, 1500);
-
-  return (
-    <motion.div
-      className="text-center p-5 bg-white dark:bg-gray-800 rounded-xl shadow-lg"
-      initial={{ opacity: 0, y: 30 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: '-50px' }}
-      transition={{ duration: 0.5, delay }}
-      onViewportEnter={start}
-      whileHover={{ y: -4, boxShadow: '0 12px 30px rgba(59,130,246,0.15)' }}
-    >
-      <div className={`text-3xl font-bold ${stat.color} mb-1`}>
-        {count}{stat.suffix}
-      </div>
-      <div className="text-sm text-gray-600 dark:text-gray-300 font-medium">{stat.label}</div>
-    </motion.div>
-  );
-};
 
 const roles = [
   'Pengembang Full Stack',
   'Spesialis Laravel',
   'Pengembang React',
   'Software Engineer',
-  'IT Konsultan',
+  'Konsultan IT',
 ];
+
+const SIGNATURE_EASE: [number, number, number, number] = [0.16, 1, 0.3, 1];
+
+// Curtain reveal: each line clips its chars rising into place.
+const lineParent: Variants = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.03, delayChildren: 0.1 } },
+};
+const charChild: Variants = {
+  hidden: { y: '110%' },
+  visible: { y: 0, transition: { duration: 0.7, ease: SIGNATURE_EASE } },
+};
+
+const KineticLine: React.FC<{ text: string; reduce: boolean }> = ({ text, reduce }) => {
+  if (reduce) {
+    return <span>{text}</span>;
+  }
+  return (
+    <motion.span
+      className="inline-block overflow-hidden align-bottom"
+      variants={lineParent}
+      style={{ paddingBottom: '0.08em' }}
+    >
+      {text.split('').map((ch, i) => (
+        <motion.span key={i} className="inline-block" variants={charChild}>
+          {ch === ' ' ? ' ' : ch}
+        </motion.span>
+      ))}
+    </motion.span>
+  );
+};
+
+const StatItem: React.FC<{ stat: (typeof stats)[0]; index: number }> = ({ stat, index }) => {
+  const { count, start } = useCountUp(stat.value, 1400);
+  return (
+    <motion.div
+      className="px-5 py-1"
+      initial={{ opacity: 0, y: 16 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: '-40px' }}
+      transition={{ duration: 0.5, delay: index * 0.08, ease: SIGNATURE_EASE }}
+      onViewportEnter={start}
+    >
+      <div className="font-mono text-3xl md:text-4xl font-semibold text-zinc-900 dark:text-white tabular-nums">
+        {count}
+        <span className="text-accent-600 dark:text-accent-400">{stat.suffix}</span>
+      </div>
+      <div className="mt-1 text-xs uppercase tracking-wide text-zinc-500 dark:text-zinc-400">
+        {stat.label}
+      </div>
+    </motion.div>
+  );
+};
 
 export const HeroSection: React.FC = () => {
   const [currentRole, setCurrentRole] = useState(0);
+  const reduce = useReducedMotion();
+  const magnet = useMagnetic(0.35);
 
   useEffect(() => {
+    if (reduce) return;
     const interval = setInterval(() => {
       setCurrentRole((prev) => (prev + 1) % roles.length);
     }, 3000);
     return () => clearInterval(interval);
-  }, []);
+  }, [reduce]);
 
   return (
-    <section className="pt-24 pb-16 bg-gradient-to-br from-blue-50 via-white to-slate-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 overflow-hidden">
-      <div className="container mx-auto px-6 max-w-7xl">
-        {/* Main hero content */}
-        <div className="flex flex-col md:flex-row items-center gap-10 mb-14">
-          {/* Profile image */}
-          <motion.div
-            className="flex-shrink-0 mx-auto md:mx-0"
-            initial={{ opacity: 0, x: -40 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6, ease: 'easeOut' }}
-          >
-            <motion.div
-              animate={{ y: [0, -10, 0] }}
-              transition={{ duration: 3.5, repeat: Infinity, ease: 'easeInOut' }}
+    <section
+      id="beranda"
+      className="relative bg-white dark:bg-zinc-950 overflow-hidden border-b border-zinc-200 dark:border-zinc-800"
+    >
+      <div className="container mx-auto px-6 max-w-7xl pt-28 pb-12 md:pt-32 md:pb-16">
+        {/* Asymmetric split: wide text column, narrower portrait. */}
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-8 items-center">
+          {/* Text */}
+          <div className="md:col-span-7 lg:col-span-8 text-center md:text-left">
+            <motion.p
+              initial={reduce ? false : { opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, ease: SIGNATURE_EASE }}
+              className="text-sm font-mono uppercase tracking-[0.2em] text-accent-600 dark:text-accent-400 mb-5"
             >
-              <div className="w-44 h-52 rounded-2xl bg-gradient-to-br from-blue-500 to-purple-600 p-1 shadow-2xl">
-                <div className="w-full h-full rounded-xl bg-gray-200 dark:bg-gray-700 overflow-hidden flex items-center justify-center">
-                  <img
-                    src="/my.png"
-                    alt="Adi Rakhmatullah"
-                    className="w-full h-full object-cover rounded-xl"
-                  />
-                </div>
-              </div>
-            </motion.div>
-          </motion.div>
+              Software Engineer
+            </motion.p>
 
-          {/* Text content */}
-          <motion.div
-            className="text-center md:text-left"
-            initial={{ opacity: 0, x: 40 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6, delay: 0.1, ease: 'easeOut' }}
-          >
-            <h1 className="text-5xl md:text-6xl font-bold mb-4 leading-tight">
-              <span className="bg-gradient-to-r from-blue-600 via-purple-600 to-cyan-600 bg-clip-text text-transparent">
-                Adi Rakhmatullah
+            <motion.h1
+              className="text-5xl md:text-6xl lg:text-7xl font-semibold tracking-tight leading-[1.05] text-zinc-900 dark:text-white"
+              variants={lineParent}
+              initial={reduce ? false : 'hidden'}
+              animate="visible"
+            >
+              <span className="block">
+                <KineticLine text="Adi Rakhmatullah" reduce={!!reduce} />
               </span>
-              <br />
-              <span className="text-gray-900 dark:text-white">Ma'arif</span>
-            </h1>
+              <span className="block">
+                <KineticLine text="Ma'arif" reduce={!!reduce} />
+              </span>
+            </motion.h1>
 
-            <div className="h-9 mb-5 overflow-hidden">
+            <div className="h-8 mt-5 mb-6 overflow-hidden">
               <AnimatePresence mode="wait">
                 <motion.p
                   key={currentRole}
-                  className="text-xl md:text-2xl text-blue-600 dark:text-blue-400 font-semibold flex items-center gap-1 justify-center md:justify-start"
-                  initial={{ y: 20, opacity: 0 }}
+                  className="text-lg md:text-xl text-zinc-600 dark:text-zinc-300 font-medium flex items-center gap-1 justify-center md:justify-start"
+                  initial={reduce ? false : { y: 18, opacity: 0 }}
                   animate={{ y: 0, opacity: 1 }}
-                  exit={{ y: -20, opacity: 0 }}
-                  transition={{ duration: 0.3 }}
+                  exit={reduce ? undefined : { y: -18, opacity: 0 }}
+                  transition={{ duration: 0.3, ease: SIGNATURE_EASE }}
                 >
                   {roles[currentRole]}
-                  <span className="animate-blink-cursor text-blue-400 dark:text-blue-500">|</span>
+                  <span className="animate-blink-cursor text-accent-500">|</span>
                 </motion.p>
               </AnimatePresence>
             </div>
 
-            <p className="text-base md:text-lg text-gray-600 dark:text-gray-300 max-w-xl mx-auto md:mx-0 mb-8 leading-relaxed">
-              Menghadirkan solusi inovatif dengan teknologi terkini. Berfokus pada pengembangan
-              aplikasi yang efisien dan mudah digunakan untuk mendukung pertumbuhan bisnis Anda.
+            <p className="text-base md:text-lg text-zinc-600 dark:text-zinc-400 max-w-xl mx-auto md:mx-0 mb-8 leading-relaxed">
+              Membangun aplikasi web yang efisien dan mudah digunakan, dengan fokus pada
+              ekosistem Laravel dan React.
             </p>
 
             <div className="flex flex-wrap gap-3 justify-center md:justify-start">
+              {/* Magnetic primary CTA */}
               <motion.button
-                whileHover={{ scale: 1.05, boxShadow: '0 8px 25px rgba(59,130,246,0.4)' }}
-                whileTap={{ scale: 0.95 }}
+                ref={magnet.ref}
+                onMouseMove={magnet.onMouseMove}
+                onMouseLeave={magnet.onMouseLeave}
+                style={{ x: magnet.x, y: magnet.y }}
                 onClick={() =>
                   document.getElementById('projek')?.scrollIntoView({ behavior: 'smooth' })
                 }
-                className="px-7 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-full font-medium flex items-center gap-2 shadow-lg"
+                whileTap={{ scale: 0.96 }}
+                className="group inline-flex items-center gap-2 px-7 py-3 bg-accent-600 hover:bg-accent-700 text-white rounded-xl font-medium transition-colors"
               >
-                <Code className="w-4 h-4" />
-                Projek
+                Lihat Projek
+                <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5" />
               </motion.button>
 
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
+              <button
                 onClick={() =>
                   document.getElementById('kontak')?.scrollIntoView({ behavior: 'smooth' })
                 }
-                className="px-7 py-3 border-2 border-blue-600 dark:border-blue-400 text-blue-600 dark:text-blue-400 rounded-full font-medium flex items-center gap-2 hover:bg-blue-600 hover:text-white dark:hover:bg-blue-400 dark:hover:text-gray-900 transition-all duration-200"
+                className="inline-flex items-center gap-2 px-7 py-3 border border-zinc-300 dark:border-zinc-700 text-zinc-700 dark:text-zinc-200 rounded-xl font-medium hover:border-accent-500 hover:text-accent-600 dark:hover:text-accent-400 transition-colors"
               >
                 <Mail className="w-4 h-4" />
                 Hubungi
-              </motion.button>
+              </button>
+            </div>
+          </div>
+
+          {/* Portrait — duotone, with an offset accent frame as signature. */}
+          <motion.div
+            className="md:col-span-5 lg:col-span-4 flex justify-center md:justify-end"
+            initial={reduce ? false : { opacity: 0, scale: 0.94 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.7, delay: 0.2, ease: SIGNATURE_EASE }}
+          >
+            <div className="relative w-56 h-72 sm:w-64 sm:h-80">
+              {/* Offset accent frame */}
+              <div className="absolute -bottom-3 -right-3 w-full h-full rounded-card border-2 border-accent-500/70" />
+              {/* Photo */}
+              <div className="relative w-full h-full rounded-card overflow-hidden bg-zinc-100 dark:bg-zinc-900">
+                <img
+                  src="/my.png"
+                  alt="Adi Rakhmatullah Ma'arif"
+                  width={256}
+                  height={320}
+                  className="duotone-portrait w-full h-full object-cover"
+                />
+                {/* Accent duotone tint over the shadows */}
+                <div className="absolute inset-0 bg-accent-600/25 mix-blend-multiply dark:mix-blend-screen" />
+              </div>
             </div>
           </motion.div>
         </div>
+      </div>
 
-        {/* Stats grid */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          {stats.map((stat, i) => (
-            <StatCard key={i} stat={stat} delay={i * 0.1} />
-          ))}
+      {/* Stats band — mono numbers, hairline dividers, no heavy cards. */}
+      <div className="border-t border-zinc-200 dark:border-zinc-800">
+        <div className="container mx-auto px-6 max-w-7xl">
+          <div className="grid grid-cols-2 md:grid-cols-4 divide-x divide-zinc-200 dark:divide-zinc-800 py-6">
+            {stats.map((stat, i) => (
+              <StatItem key={i} stat={stat} index={i} />
+            ))}
+          </div>
         </div>
       </div>
     </section>

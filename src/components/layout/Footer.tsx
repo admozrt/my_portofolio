@@ -1,6 +1,6 @@
 import React from 'react';
-import { motion } from 'framer-motion';
 import { contactInfo } from '../../data/contact';
+import { Monogram } from '../ui/Monogram';
 
 export const Footer: React.FC = () => {
   const quickLinks = [
@@ -10,85 +10,83 @@ export const Footer: React.FC = () => {
     { label: 'Mitra', id: 'mitra' },
   ];
 
-  const techs = ['Laravel', 'React', 'PHP', 'JavaScript', 'MySQL', 'Docker'];
+  const techs = ['Laravel', 'React', 'React Native', 'TypeScript', 'MySQL', 'Docker'];
 
   return (
-    <footer className="bg-gray-900 dark:bg-black text-white py-12">
+    <footer className="bg-white dark:bg-zinc-950 border-t border-zinc-200 dark:border-zinc-800 text-zinc-600 dark:text-zinc-400 py-14">
       <div className="container mx-auto px-6 max-w-7xl">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-10 mb-10">
           {/* Brand */}
           <div>
-            <h3 className="text-xl font-bold mb-3 bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
-              Adi Rakhmatullah Ma'arif
-            </h3>
-            <p className="text-gray-400 text-sm mb-5 leading-relaxed">
-              Pengembang Full Stack yang bersemangat menciptakan solusi web inovatif dengan teknologi
-              modern.
+            <div className="flex items-center gap-2.5 mb-4">
+              <Monogram size={32} />
+              <h3 className="text-base font-semibold text-zinc-900 dark:text-white">
+                Adi Rakhmatullah Ma'arif
+              </h3>
+            </div>
+            <p className="text-sm leading-relaxed mb-5 max-w-xs">
+              Software Engineer yang membangun aplikasi web dengan Laravel dan React.
             </p>
-            <div className="flex gap-3">
+            <div className="flex gap-2">
               {contactInfo.map((contact, index) => (
-                <motion.a
+                <a
                   key={index}
                   href={contact.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="p-2 bg-gray-800 rounded-lg text-gray-400 hover:text-white transition-colors"
-                  whileHover={{
-                    y: -4,
-                    boxShadow: '0 8px 20px rgba(59, 130, 246, 0.35)',
-                    backgroundColor: '#1d4ed8',
-                    color: '#fff',
-                  }}
-                  whileTap={{ scale: 0.9 }}
+                  aria-label={contact.label}
+                  className="p-2 rounded-xl border border-zinc-200 dark:border-zinc-800 text-zinc-500 dark:text-zinc-400 hover:text-accent-600 dark:hover:text-accent-400 hover:border-accent-500 transition-colors"
                 >
-                  {contact.icon}
-                </motion.a>
+                  {React.isValidElement(contact.icon)
+                    ? React.cloneElement(contact.icon as React.ReactElement<{ className?: string }>, {
+                        className: 'w-4 h-4',
+                      })
+                    : contact.icon}
+                </a>
               ))}
             </div>
           </div>
 
           {/* Quick links */}
           <div>
-            <h4 className="text-sm font-semibold uppercase tracking-wider text-gray-400 mb-4">
-              Tautan Cepat
+            <h4 className="text-xs font-semibold uppercase tracking-wider text-zinc-400 dark:text-zinc-500 mb-4">
+              Navigasi
             </h4>
-            <ul className="space-y-2">
+            <ul className="space-y-2.5">
               {quickLinks.map((link) => (
                 <li key={link.id}>
-                  <motion.button
+                  <button
                     onClick={() =>
                       document.getElementById(link.id)?.scrollIntoView({ behavior: 'smooth' })
                     }
-                    className="text-gray-400 hover:text-white text-sm transition-colors"
-                    whileHover={{ x: 4 }}
+                    className="text-sm hover:text-accent-600 dark:hover:text-accent-400 transition-colors"
                   >
                     {link.label}
-                  </motion.button>
+                  </button>
                 </li>
               ))}
             </ul>
           </div>
 
-          {/* Tech stack */}
+          {/* Tech */}
           <div>
-            <h4 className="text-sm font-semibold uppercase tracking-wider text-gray-400 mb-4">
+            <h4 className="text-xs font-semibold uppercase tracking-wider text-zinc-400 dark:text-zinc-500 mb-4">
               Teknologi
             </h4>
             <div className="flex flex-wrap gap-2">
               {techs.map((tech) => (
-                <motion.span
+                <span
                   key={tech}
-                  className="px-3 py-1 bg-gray-800 rounded-full text-xs text-gray-400"
-                  whileHover={{ scale: 1.05, color: '#93c5fd', borderColor: '#3b82f6' }}
+                  className="px-3 py-1 rounded-full text-xs font-mono border border-zinc-200 dark:border-zinc-800"
                 >
                   {tech}
-                </motion.span>
+                </span>
               ))}
             </div>
           </div>
         </div>
 
-        <div className="border-t border-gray-800 pt-6 text-center text-gray-500 text-sm">
+        <div className="border-t border-zinc-200 dark:border-zinc-800 pt-6 text-center text-sm text-zinc-400 dark:text-zinc-500">
           <p>&copy; {new Date().getFullYear()} Adi Rakhmatullah Ma'arif, S.Kom</p>
         </div>
       </div>

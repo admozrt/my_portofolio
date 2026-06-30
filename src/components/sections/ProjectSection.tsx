@@ -40,7 +40,6 @@ export const ProjectsSection: React.FC = () => {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const touchStartX = useRef(0);
 
-  // Responsive resize
   useEffect(() => {
     const update = () => setCardsPerPage(getCardsPerPage());
     window.addEventListener('resize', update);
@@ -54,13 +53,11 @@ export const ProjectsSection: React.FC = () => {
     (currentPage + 1) * cardsPerPage
   );
 
-  // Reset page on filter change
   useEffect(() => {
     setCurrentPage(0);
     setDirection(1);
   }, [filter]);
 
-  // Guard out-of-bounds page after resize
   useEffect(() => {
     if (totalPages > 0 && currentPage >= totalPages) {
       setCurrentPage(totalPages - 1);
@@ -101,58 +98,57 @@ export const ProjectsSection: React.FC = () => {
     cardsPerPage === 1 ? 'grid-cols-1' : cardsPerPage === 2 ? 'grid-cols-2' : 'grid-cols-3';
 
   return (
-    <section id="projek" className="py-20 bg-white dark:bg-gray-900">
+    <section id="projek" className="py-20 md:py-28 bg-white dark:bg-zinc-950">
       <div className="container mx-auto px-6 max-w-7xl">
-        {/* Header + filter */}
+        {/* Left-aligned header */}
         <motion.div
-          className="text-center mb-10"
+          className="flex flex-col md:flex-row md:items-end md:justify-between gap-5 mb-10"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
+          transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
         >
-          <h2 className="text-4xl font-bold text-gray-900 dark:text-white mb-6">Projek</h2>
-          <div className="flex flex-wrap justify-center gap-2">
+          <div>
+            <h2 className="text-3xl md:text-4xl font-semibold tracking-tight text-zinc-900 dark:text-white">
+              Projek Terpilih
+            </h2>
+            <p className="mt-2 text-zinc-600 dark:text-zinc-400">
+              Sistem yang saya rancang dan bangun untuk klien dan instansi.
+            </p>
+          </div>
+
+          <div className="flex flex-wrap gap-2">
             {filterButtons.map((btn) => (
-              <motion.button
+              <button
                 key={btn.key}
                 onClick={() => setFilter(btn.key)}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
+                className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
                   filter === btn.key
-                    ? 'bg-blue-600 text-white shadow-lg shadow-blue-500/30'
-                    : 'bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'
+                    ? 'bg-accent-600 text-white'
+                    : 'bg-zinc-100 dark:bg-zinc-900 text-zinc-600 dark:text-zinc-300 hover:bg-zinc-200 dark:hover:bg-zinc-800 border border-zinc-200 dark:border-zinc-800'
                 }`}
               >
-                {btn.label}{' '}
-                <span className={`ml-0.5 ${filter === btn.key ? 'opacity-80' : 'opacity-50'}`}>
-                  ({btn.count})
+                {btn.label}
+                <span className={`ml-1 ${filter === btn.key ? 'opacity-80' : 'opacity-50'}`}>
+                  {btn.count}
                 </span>
-              </motion.button>
+              </button>
             ))}
           </div>
         </motion.div>
 
         {/* Carousel */}
         <div className="relative">
-          {/* Prev button */}
-          <motion.button
+          <button
             onClick={goPrev}
             disabled={currentPage === 0}
-            className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 z-10 w-9 h-9 flex items-center justify-center rounded-full bg-white dark:bg-gray-800 shadow-lg border border-gray-200 dark:border-gray-700 disabled:opacity-30 disabled:cursor-not-allowed transition-opacity"
-            whileHover={currentPage > 0 ? { scale: 1.1 } : {}}
-            whileTap={currentPage > 0 ? { scale: 0.9 } : {}}
+            aria-label="Sebelumnya"
+            className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-3 md:-translate-x-5 z-10 w-10 h-10 flex items-center justify-center rounded-full bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 shadow-sm hover:border-accent-500 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
           >
-            <ChevronLeft className="w-4 h-4 text-gray-700 dark:text-gray-300" />
-          </motion.button>
+            <ChevronLeft className="w-4 h-4 text-zinc-700 dark:text-zinc-300" />
+          </button>
 
-          {/* Cards window */}
-          <div
-            className="overflow-hidden"
-            onTouchStart={handleTouchStart}
-            onTouchEnd={handleTouchEnd}
-          >
+          <div className="overflow-hidden" onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd}>
             <AnimatePresence custom={direction} mode="wait">
               <motion.div
                 key={`${filter}-${currentPage}`}
@@ -161,8 +157,8 @@ export const ProjectsSection: React.FC = () => {
                 initial="enter"
                 animate="center"
                 exit="exit"
-                transition={{ type: 'tween', duration: 0.32, ease: 'easeInOut' }}
-                className={`grid ${gridClass} gap-4`}
+                transition={{ type: 'tween', duration: 0.32, ease: [0.16, 1, 0.3, 1] }}
+                className={`grid ${gridClass} gap-4 items-stretch`}
               >
                 {currentCards.map((project) => (
                   <ProjectCard
@@ -175,50 +171,41 @@ export const ProjectsSection: React.FC = () => {
             </AnimatePresence>
           </div>
 
-          {/* Next button */}
-          <motion.button
+          <button
             onClick={goNext}
             disabled={currentPage >= totalPages - 1}
-            className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 z-10 w-9 h-9 flex items-center justify-center rounded-full bg-white dark:bg-gray-800 shadow-lg border border-gray-200 dark:border-gray-700 disabled:opacity-30 disabled:cursor-not-allowed transition-opacity"
-            whileHover={currentPage < totalPages - 1 ? { scale: 1.1 } : {}}
-            whileTap={currentPage < totalPages - 1 ? { scale: 0.9 } : {}}
+            aria-label="Berikutnya"
+            className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-3 md:translate-x-5 z-10 w-10 h-10 flex items-center justify-center rounded-full bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 shadow-sm hover:border-accent-500 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
           >
-            <ChevronRight className="w-4 h-4 text-gray-700 dark:text-gray-300" />
-          </motion.button>
+            <ChevronRight className="w-4 h-4 text-zinc-700 dark:text-zinc-300" />
+          </button>
         </div>
 
-        {/* Dot indicators */}
+        {/* Dots + counter */}
         {totalPages > 1 && (
-          <div className="flex justify-center items-center gap-2 mt-6">
+          <div className="flex justify-center items-center gap-2 mt-8">
             {Array.from({ length: totalPages }).map((_, i) => (
-              <motion.button
+              <button
                 key={i}
                 onClick={() => goTo(i)}
-                className={`h-2 rounded-full transition-all duration-300 ${
+                aria-label={`Halaman ${i + 1}`}
+                className={`h-1.5 rounded-full transition-all duration-300 ${
                   i === currentPage
-                    ? 'bg-blue-600 w-6'
-                    : 'bg-gray-300 dark:bg-gray-600 w-2 hover:bg-gray-400 dark:hover:bg-gray-500'
+                    ? 'bg-accent-600 w-6'
+                    : 'bg-zinc-300 dark:bg-zinc-700 w-2 hover:bg-zinc-400 dark:hover:bg-zinc-600'
                 }`}
-                whileHover={{ scale: 1.2 }}
-                whileTap={{ scale: 0.9 }}
               />
             ))}
+            <span className="ml-3 text-xs font-mono text-zinc-400 dark:text-zinc-500">
+              {String(currentPage + 1).padStart(2, '0')} / {String(totalPages).padStart(2, '0')}
+            </span>
           </div>
         )}
-
-        {/* Page counter */}
-        <p className="text-center text-xs text-gray-400 dark:text-gray-500 mt-3">
-          {currentPage + 1} / {totalPages}
-        </p>
       </div>
 
-      {/* Project detail modal */}
       <AnimatePresence>
         {selectedProject && (
-          <ProjectModal
-            project={selectedProject}
-            onClose={() => setSelectedProject(null)}
-          />
+          <ProjectModal project={selectedProject} onClose={() => setSelectedProject(null)} />
         )}
       </AnimatePresence>
     </section>
