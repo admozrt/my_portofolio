@@ -1,125 +1,102 @@
 import React from 'react';
 import { experiences } from '../../data/experience';
-import { Calendar, MapPin, Star } from 'lucide-react';
+import { Calendar, MapPin } from 'lucide-react';
 import { motion } from 'framer-motion';
+
+const EASE: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
 export const ExperienceSection: React.FC = () => {
   return (
-    <section id="pengalaman" className="py-20 bg-gray-50 dark:bg-gray-800">
+    <section id="pengalaman" className="py-20 md:py-28 bg-white dark:bg-zinc-950">
       <div className="container mx-auto px-6 max-w-7xl">
         <motion.div
-          className="text-center mb-14"
+          className="mb-12 max-w-2xl"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
+          transition={{ duration: 0.5, ease: EASE }}
         >
-          <h2 className="text-4xl font-bold text-gray-900 dark:text-white mb-3">Pengalaman</h2>
-          <p className="text-gray-600 dark:text-gray-300">Perjalanan saya sebagai software engineer</p>
+          <h2 className="text-3xl md:text-4xl font-semibold tracking-tight text-zinc-900 dark:text-white">
+            Pengalaman
+          </h2>
+          <p className="mt-2 text-zinc-600 dark:text-zinc-400">
+            Perjalanan saya sebagai software engineer.
+          </p>
         </motion.div>
 
-        {/* Timeline container */}
         <div className="relative">
-          {/* Vertical line (md+) */}
+          {/* Vertical line */}
           <motion.div
-            className="hidden md:block absolute left-8 top-6 bottom-6 w-0.5"
-            style={{
-              background: 'linear-gradient(180deg, #3b82f6 0%, #8b5cf6 50%, #06b6d4 100%)',
-            }}
+            className="absolute left-2.5 md:left-3 top-2 bottom-2 w-px bg-accent-500/60"
             initial={{ scaleY: 0, originY: 0 }}
             whileInView={{ scaleY: 1 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.8, ease: 'easeOut' }}
+            transition={{ duration: 0.8, ease: EASE }}
           />
 
-          <div className="space-y-8">
+          <div className="space-y-10">
             {experiences.map((exp, index) => (
               <motion.div
                 key={exp.id}
-                className="relative md:pl-20"
-                initial={{ opacity: 0, y: 40 }}
+                className="relative pl-10 md:pl-12"
+                initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: '-80px' }}
-                transition={{ duration: 0.5, delay: index * 0.15 }}
+                transition={{ duration: 0.5, delay: index * 0.12, ease: EASE }}
               >
-                {/* Timeline dot (md+) */}
+                {/* Dot */}
                 <motion.div
-                  className="hidden md:flex absolute left-5 top-8 w-6 h-6 rounded-full bg-blue-500 items-center justify-center ring-4 ring-gray-50 dark:ring-gray-800 z-10"
+                  className="absolute left-0 top-1.5 w-5 h-5 rounded-full bg-white dark:bg-zinc-950 border-2 border-accent-500 flex items-center justify-center"
                   initial={{ scale: 0 }}
                   whileInView={{ scale: 1 }}
                   viewport={{ once: true }}
-                  transition={{ duration: 0.3, delay: index * 0.15 + 0.2 }}
+                  transition={{ duration: 0.3, delay: index * 0.12 + 0.2, ease: EASE }}
                 >
-                  <div className="w-2 h-2 rounded-full bg-white" />
+                  <span className="w-1.5 h-1.5 rounded-full bg-accent-500" />
                 </motion.div>
 
-                {/* Card */}
-                <motion.div
-                  className="bg-white dark:bg-gray-900 p-6 md:p-8 rounded-xl shadow-lg"
-                  whileHover={{ boxShadow: '0 20px 40px rgba(0,0,0,0.12)', y: -2 }}
-                  transition={{ duration: 0.2 }}
-                >
-                  <div className="flex flex-col md:flex-row md:items-start gap-5">
-                    {/* Left: Meta */}
-                    <div className="md:w-2/5">
-                      <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-1">
-                        {exp.title}
-                      </h3>
-                      <h4 className="text-blue-600 dark:text-blue-400 font-semibold mb-3">
-                        {exp.company}
-                      </h4>
-                      <div className="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400 mb-1.5">
-                        <MapPin className="w-3.5 h-3.5 flex-shrink-0" />
-                        <span>{exp.location}</span>
-                      </div>
-                      <div className="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400">
-                        <Calendar className="w-3.5 h-3.5 flex-shrink-0" />
-                        <span>{exp.period}</span>
-                      </div>
+                <div className="flex flex-col md:flex-row md:items-start gap-x-10 gap-y-4">
+                  {/* Meta */}
+                  <div className="md:w-1/3">
+                    <h3 className="text-lg font-semibold text-zinc-900 dark:text-white">{exp.title}</h3>
+                    <p className="text-accent-600 dark:text-accent-400 text-sm font-medium mb-3">{exp.company}</p>
+                    <div className="flex items-center gap-2 text-xs text-zinc-500 dark:text-zinc-400 mb-1.5">
+                      <MapPin className="w-3.5 h-3.5 flex-shrink-0" />
+                      <span>{exp.location}</span>
                     </div>
-
-                    {/* Right: Details */}
-                    <div className="md:w-3/5">
-                      <p className="text-gray-700 dark:text-gray-300 mb-4 leading-relaxed text-sm">
-                        {exp.description}
-                      </p>
-
-                      <div className="mb-4">
-                        <h5 className="text-xs font-semibold text-gray-500 dark:text-gray-400 mb-2 uppercase tracking-wider">
-                          Pencapaian
-                        </h5>
-                        <ul className="space-y-1.5">
-                          {exp.achievements.map((achievement, idx) => (
-                            <li
-                              key={idx}
-                              className="flex items-start gap-2 text-sm text-gray-600 dark:text-gray-300"
-                            >
-                              <Star className="w-3.5 h-3.5 text-yellow-500 mt-0.5 flex-shrink-0" />
-                              <span>{achievement}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-
-                      <div>
-                        <h5 className="text-xs font-semibold text-gray-500 dark:text-gray-400 mb-2 uppercase tracking-wider">
-                          Teknologi
-                        </h5>
-                        <div className="flex flex-wrap gap-1.5">
-                          {exp.technologies.map((tech, idx) => (
-                            <motion.span
-                              key={idx}
-                              className="px-2.5 py-0.5 bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-300 rounded-full text-xs font-medium"
-                              whileHover={{ scale: 1.05 }}
-                            >
-                              {tech}
-                            </motion.span>
-                          ))}
-                        </div>
-                      </div>
+                    <div className="flex items-center gap-2 text-xs text-zinc-500 dark:text-zinc-400">
+                      <Calendar className="w-3.5 h-3.5 flex-shrink-0" />
+                      <span>{exp.period}</span>
                     </div>
                   </div>
-                </motion.div>
+
+                  {/* Details */}
+                  <div className="md:w-2/3">
+                    <p className="text-sm text-zinc-600 dark:text-zinc-300 mb-4 leading-relaxed">
+                      {exp.description}
+                    </p>
+
+                    <ul className="space-y-2 mb-5">
+                      {exp.achievements.map((achievement, idx) => (
+                        <li key={idx} className="flex items-start gap-2.5 text-sm text-zinc-600 dark:text-zinc-300">
+                          <span className="mt-1.5 w-1 h-1 rounded-full bg-accent-500 flex-shrink-0" />
+                          <span>{achievement}</span>
+                        </li>
+                      ))}
+                    </ul>
+
+                    <div className="flex flex-wrap gap-1.5">
+                      {exp.technologies.map((tech, idx) => (
+                        <span
+                          key={idx}
+                          className="px-2.5 py-0.5 bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-300 rounded-full text-xs font-medium"
+                        >
+                          {tech}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                </div>
               </motion.div>
             ))}
           </div>

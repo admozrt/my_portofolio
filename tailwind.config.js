@@ -1,13 +1,16 @@
+/** @type {import('tailwindcss').Config} */
 module.exports = {
   content: ["./src/**/*.{js,jsx,ts,tsx}", "./public/index.html"],
   darkMode: "class",
   theme: {
     extend: {
       fontFamily: {
-        sans: ["Inter", "system-ui", "sans-serif"],
+        sans: ["Geist Variable", "system-ui", "-apple-system", "sans-serif"],
+        mono: ["Geist Mono Variable", "ui-monospace", "monospace"],
       },
+      // Single locked accent (electric blue) used identically across the whole page.
       colors: {
-        primary: {
+        accent: {
           50: "#eff6ff",
           100: "#dbeafe",
           200: "#bfdbfe",
@@ -23,29 +26,26 @@ module.exports = {
       maxWidth: {
         "8xl": "88rem",
       },
+      // One radius scale: pill (full) for interactive, 2xl for containers, xl for inputs/buttons.
+      borderRadius: {
+        card: "1rem",
+      },
       animation: {
-        "fade-in": "fadeIn 0.5s ease-in-out",
-        "slide-up": "slideUp 0.5s ease-out",
-        "bounce-slow": "bounce 2s infinite",
-        "pulse-slow": "pulse 3s infinite",
-        "blink-cursor": "blinkCursor 1s step-end infinite",
+        "blink-cursor": "blinkCursor 1.1s step-end infinite",
+        marquee: "marquee 40s linear infinite",
       },
       keyframes: {
-        fadeIn: {
-          "0%": { opacity: "0", transform: "translateY(20px)" },
-          "100%": { opacity: "1", transform: "translateY(0)" },
-        },
-        slideUp: {
-          "0%": { opacity: "0", transform: "translateY(30px)" },
-          "100%": { opacity: "1", transform: "translateY(0)" },
-        },
         blinkCursor: {
           "0%, 100%": { opacity: "1" },
           "50%": { opacity: "0" },
         },
+        marquee: {
+          "0%": { transform: "translateX(0)" },
+          "100%": { transform: "translateX(-50%)" },
+        },
       },
-      backdropBlur: {
-        xs: "2px",
+      transitionTimingFunction: {
+        signature: "cubic-bezier(0.16, 1, 0.3, 1)",
       },
     },
   },
