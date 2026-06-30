@@ -5,9 +5,9 @@ import { useCountUp } from '../../hooks/useCountUp';
 import { useMagnetic } from '../../hooks/useMagnetic';
 
 const stats = [
-  { value: 4, suffix: '+', label: 'Tahun Pengalaman' },
+  { value: 6, suffix: '+', label: 'Tahun Pengalaman' },
   { value: 20, suffix: '+', label: 'Projek Diselesaikan' },
-  { value: 6, suffix: '', label: 'Klien' },
+  { value: 8, suffix: '+', label: 'Klien' },
   { value: 98, suffix: '%', label: 'Tingkat Keberhasilan' },
 ];
 
@@ -105,7 +105,7 @@ export const HeroSection: React.FC = () => {
             </motion.p>
 
             <motion.h1
-              className="text-5xl md:text-6xl lg:text-7xl font-semibold tracking-tight leading-[1.05] text-zinc-900 dark:text-white"
+              className="text-3xl md:text-6xl lg:text-7xl font-semibold tracking-tight leading-[1.05] text-zinc-900 dark:text-white"
               variants={lineParent}
               initial={reduce ? false : 'hidden'}
               animate="visible"
@@ -185,7 +185,7 @@ export const HeroSection: React.FC = () => {
                   alt="Adi Rakhmatullah Ma'arif"
                   width={256}
                   height={320}
-                  className="duotone-portrait w-full h-full object-cover"
+                  className="portrait w-full h-full object-cover"
                 />
                 {/* Accent duotone tint over the shadows */}
                 <div className="absolute inset-0 bg-accent-600/25 mix-blend-multiply dark:mix-blend-screen" />

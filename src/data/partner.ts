@@ -27,14 +27,22 @@ export const partners: Partner[] = [
   },
   {
     id: 4,
+    name: 'BPPRD Kota Banjarbaru',
+    description: 'Badan Pengelola Pajak dan Retribusi Daerah Kota Banjarbaru',
+    website: '#',
+    category: 'klien',
+    relationship: 'Pengembang Sistem'
+  },
+  {
+    id: 5,
     name: 'Disporabudpar Kota Banjarbaru',
-    description: 'Dinas pariwisata dan kebudayaan pemerintah daerah',
+    description: 'Dinas Pemuda, Olahraga, Kebudayaan, dan Pariwisata Kota Banjarbaru',
     website: 'https://siparba.dinara-sanur.biz.id',
     category: 'klien',
     relationship: 'Pembuat dan Pengembang Sistem - Platform Informasi Pariwisata'
   },
   {
-    id: 5,
+    id: 6,
     name: 'TNI AD Rindam Mulawarman',
     description: 'Komando Daerah Militer Tentara Nasional Indonesia',
     website: '#',
@@ -42,7 +50,7 @@ export const partners: Partner[] = [
     relationship: 'Pembuat - Sistem Penggajian Guru Militer'
   },
   {
-    id: 6,
+    id: 7,
     name: 'Komunitas Laravel',
     description: 'Kontributor aktif ekosistem dan komunitas Laravel',
     website: '#',
