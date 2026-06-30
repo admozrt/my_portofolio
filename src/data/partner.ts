@@ -15,7 +15,7 @@ export const partners: Partner[] = [
     description: 'Perusahaan penyedia perangkat keras dan software house',
     website: '#',
     category: 'klien',
-    relationship: 'Pengembang'
+    relationship: 'Pembuat dan Pengembang Sistem'
   },
   {
     id: 3,
