@@ -158,7 +158,7 @@ export const ProjectsSection: React.FC = () => {
                 animate="center"
                 exit="exit"
                 transition={{ type: 'tween', duration: 0.32, ease: [0.16, 1, 0.3, 1] }}
-                className={`grid ${gridClass} gap-4 items-stretch`}
+                className={`grid ${gridClass} gap-4 items-stretch mt-4`}
               >
                 {currentCards.map((project) => (
                   <ProjectCard

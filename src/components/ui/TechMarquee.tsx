@@ -13,12 +13,14 @@ import {
 
 // The stack, de-duplicated to the names worth showing as social proof.
 const techs = [
+  'PHP',
+  'Golang',
   'Laravel',
   'React',
   'React Native',
   'TypeScript',
-  'PHP',
   'MySQL',
+  'Postgree',
   'TailwindCSS',
   'Inertia.js',
   'Docker',

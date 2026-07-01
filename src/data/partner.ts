@@ -20,7 +20,7 @@ export const partners: Partner[] = [
   {
     id: 3,
     name: 'PT. Timur Mila Utama',
-    description: 'Perusahaan transportasi maritim terkemuka di Indonesia Timur',
+    description: 'PT. Timur Mila Utama bergerak di bidang pelayaran dan transportasi laut. Perusahaan Penyedia layanan penyeberangan menggunakan kapal ferry atau Roll-On/Roll-Off (RoRo) untuk perjalanan penumpang',
     website: 'https://timurmilautama.co.id',
     category: 'klien',
     relationship: 'Pembuat dan Pengembang Sistem - Platform Tiket Kapal'
@@ -43,6 +43,14 @@ export const partners: Partner[] = [
   },
   {
     id: 6,
+    name: 'PT. Bahtera Setia',
+    description: 'Perusahaan yang bergerak di bidang jasa muat dan bongkar di pelabuhan Gresik untuk menunjang kegiatan perusahaan Pelayaran Nasional',
+    website: '#',
+    category: 'klien',
+    relationship: 'Pengembang Sistem'
+  },
+  {
+    id: 7,
     name: 'TNI AD Rindam Mulawarman',
     description: 'Komando Daerah Militer Tentara Nasional Indonesia',
     website: '#',
@@ -50,7 +58,7 @@ export const partners: Partner[] = [
     relationship: 'Pembuat - Sistem Penggajian Guru Militer'
   },
   {
-    id: 7,
+    id: 8,
     name: 'Komunitas Laravel',
     description: 'Kontributor aktif ekosistem dan komunitas Laravel',
     website: '#',

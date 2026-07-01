@@ -8,7 +8,7 @@ export const experiences: Experience[] = [
     location: 'Kalimantan Selatan, Indonesia',
     period: 'Januari 2024 - Sekarang',
     description: 'Pengembangan Sistem Informasi Manajemen Rumah Sakit (SIMRSGOS)',
-    technologies: ['Laminas','Laravel', 'Ext.js', 'MySQL', 'Redis', 'Docker', 'AWS'],
+    technologies: ['Laminas','Laravel', 'Ext.js', 'MySQL', 'Redis', 'Docker'],
     achievements: [
       'Mengimplementasikan sistem manajemen data pasien yang aman',
       'Mengoptimalkan query database yang meningkatkan waktu respon',
@@ -22,7 +22,7 @@ export const experiences: Experience[] = [
     location: 'Remote',
     period: 'Februari 2020 - Sekarang',
     description: 'Mengembangkan aplikasi web kustom untuk berbagai klien di berbagai industri',
-    technologies: ['Laravel', 'React', 'PHP', 'MySQL', 'JavaScript','TailwindCSS', 'Bootstrap'],
+    technologies: ['PHP', 'Laravel', 'Golang', 'React', 'MySQL', 'Postgree', 'JavaScript','TailwindCSS', 'Bootstrap'],
     achievements: [
       'Berhasil menyelesaikan 18+ projek tepat waktu',
       'Mempertahankan tingkat kepuasan klien 98%',
