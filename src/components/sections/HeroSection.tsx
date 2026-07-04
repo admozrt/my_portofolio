@@ -12,11 +12,10 @@ const stats = [
 ];
 
 const roles = [
-  'Pengembang Full Stack',
-  'Spesialis Laravel',
-  'Pengembang React',
   'Software Engineer',
-  'Konsultan IT',
+  'Pemecah Masalah Teknis',
+  'Pembangun Produk Digital',
+  'Konsultan Solusi IT',
 ];
 
 const SIGNATURE_EASE: [number, number, number, number] = [0.16, 1, 0.3, 1];
@@ -135,8 +134,7 @@ export const HeroSection: React.FC = () => {
             </div>
 
             <p className="text-base md:text-lg text-zinc-600 dark:text-zinc-400 max-w-xl mx-auto md:mx-0 mb-8 leading-relaxed">
-              Membangun aplikasi web yang efisien dan mudah digunakan, dengan fokus pada
-              ekosistem Laravel dan React.
+              Menerjemahkan masalah bisnis jadi solusi digital yang benar-benar terpakai
             </p>
 
             <div className="flex flex-wrap gap-3 justify-center md:justify-start">

@@ -55,12 +55,13 @@ export const AboutSection: React.FC = () => {
             viewport={{ once: true, margin: '-80px' }}
           >
             <motion.p variants={itemVariants} className="text-zinc-600 dark:text-zinc-300 mb-4 leading-relaxed">
-              Saya Software Engineer dengan pengalaman lebih dari 4 tahun membangun aplikasi web
-              yang tangguh dan skalabel, dengan keahlian utama pada ekosistem Laravel dan React.
+              Lebih dari 6 tahun saya bekerja sebagai Software Engineer, membantu tim dan klien
+              mengubah masalah teknis maupun kebutuhan bisnis menjadi solusi digital yang benar-benar jalan.
             </motion.p>
             <motion.p variants={itemVariants} className="text-zinc-600 dark:text-zinc-300 mb-8 leading-relaxed">
-              Saya berkomitmen menulis kode yang bersih dan mudah dipelihara, serta menciptakan
-              pengalaman pengguna yang intuitif dan berkinerja tinggi.
+              Saya tidak terpaku pada satu tools tertentu — fokus saya adalah memilih pendekatan
+              yang paling masuk akal untuk setiap masalah, lalu membangunnya dengan kode yang rapi
+              dan mudah dirawat dalam jangka panjang.
             </motion.p>
 
             <motion.div variants={itemVariants} id="kontak" className="border-t border-zinc-200 dark:border-zinc-800 divide-y divide-zinc-200 dark:divide-zinc-800">

@@ -25,7 +25,7 @@ export const Footer: React.FC = () => {
               </h3>
             </div>
             <p className="text-sm leading-relaxed mb-5 max-w-xs">
-              Software Engineer yang membangun aplikasi web dengan Laravel dan React.
+              Software Engineer yang fokus mengubah masalah jadi solusi digital yang berjalan baik.
             </p>
             <div className="flex gap-2">
               {contactInfo.map((contact, index) => (
