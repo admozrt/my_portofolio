@@ -10,7 +10,7 @@ export const Footer: React.FC = () => {
     { label: 'Mitra', id: 'mitra' },
   ];
 
-  const techs = ['Laravel', 'React', 'React Native', 'TypeScript', 'MySQL', 'Docker'];
+  const techs = ['PHP','JavaScript', 'Golang', 'Laravel', 'React', 'React Native', 'TypeScript', 'MySQL', 'Postgree', 'Docker'];
 
   return (
     <footer className="bg-white dark:bg-zinc-950 border-t border-zinc-200 dark:border-zinc-800 text-zinc-600 dark:text-zinc-400 py-14">
