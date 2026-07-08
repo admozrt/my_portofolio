@@ -50,6 +50,17 @@ const ROUTES = {
     url: BASE + "/ilmi-zahra",
     siteName: "Undangan Pernikahan",
   },
+  weddingTito: {
+    match: (path) => /tito/i.test(path) || /wina/i.test(path),
+    title: "Undangan Pernikahan Tito & Wina 💍",
+    description:
+      "Dengan penuh rasa syukur, kami mengundang Anda untuk hadir menyaksikan pernikahan kami. Minggu, 13 September 2026 · Masjid Hajjah Nuriyah Loktabat, Banjarbaru, Kalimantan Selatan",
+    image: BASE + "/tito/preview.jpg",
+    imageW: "1200",
+    imageH: "1802",
+    url: BASE + "/tito-wina",
+    siteName: "Undangan Pernikahan",
+  },
   portfolio: {
     match: () => true, // default
     title: "Adi Rakhmatullah Ma’arif – Pengembang Full Stack | Laravel & React",
