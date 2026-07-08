@@ -184,21 +184,37 @@
     );
 }
 
-/* ── Ornamen dekoratif (inline SVG, bukan file gambar) ─────────── */
+/* ── Ornamen bunga (foto asli, /tito/flower1.png) ──────────────── */
 .titowed-flower {
   position: absolute;
   pointer-events: none;
   z-index: 2;
-  color: var(--tw-accent-2);
-  opacity: 0.85;
+  opacity: 0.92;
+  filter: drop-shadow(0 8px 18px rgba(0, 0, 0, 0.45));
 }
-.titowed-flower.tl { top: 6px; left: 6px; width: clamp(70px, 20vw, 130px); }
-.titowed-flower.tr { top: 6px; right: 6px; width: clamp(64px, 18vw, 120px); }
+.titowed-flower img {
+  display: block;
+  width: 100%;
+  height: auto;
+  animation: twWindSway 6s ease-in-out infinite;
+  transform-origin: 70% 20%;
+}
+/* Tangkai selalu mengarah keluar layar sesuai pojoknya */
+.titowed-flower.tl { top: 6px; left: 6px; width: clamp(70px, 20vw, 130px); transform: rotate(180deg); }
+.titowed-flower.tr { top: 6px; right: 6px; width: clamp(64px, 18vw, 120px); transform: scaleY(-1); }
 .titowed-flower.br { bottom: 6px; right: 6px; width: clamp(70px, 20vw, 130px); }
+.titowed-flower.tl img { animation-delay: -1.5s; }
+.titowed-flower.tr img { animation-delay: -3.2s; }
+.titowed-flower.br img { animation-delay: 0s; }
 @media (max-width: 480px) {
   .titowed-flower.tl { width: 80px; }
   .titowed-flower.tr { width: 74px; }
   .titowed-flower.br { width: 80px; }
+}
+
+@keyframes twWindSway {
+  0%, 100% { transform: rotate(-2.5deg) translateY(0); }
+  50% { transform: rotate(2.5deg) translateY(-3px); }
 }
 
 /* Lockup teks "T & W" (pengganti monogram gambar) */
@@ -215,18 +231,6 @@
   color: var(--tw-accent-2);
   margin: 0 auto 20px;
   line-height: 1;
-}
-
-/* Diamond corner markers */
-.titowed-rail-mark {
-  position: absolute;
-  width: 7px;
-  height: 7px;
-  background: var(--tw-accent-2);
-  border: 1px solid var(--tw-accent);
-  transform: rotate(45deg);
-  z-index: 3;
-  pointer-events: none;
 }
 
 .titowed-cover-eyebrow {
@@ -525,7 +529,7 @@
     var(--tw-panel);
   text-align: center;
   padding-top: 130px;
-  padding-bottom: 130px;
+  padding-bottom: 0;
 }
 .titowed-countdown-grid {
   display: grid;
@@ -678,7 +682,7 @@
 /* ── Profile — stacked full-bleed photo blocks ────────────────── */
 .titowed-profile-section {
   text-align: center;
-  padding-top: 130px;
+  padding-top: 56px;
   padding-bottom: 130px;
 }
 .titowed-profile-stack {
@@ -715,6 +719,14 @@
     rgba(20, 19, 22, 0.9) 100%
   );
 }
+.titowed-profile-block-overlay.top {
+  background: linear-gradient(
+    180deg,
+    rgba(20, 19, 22, 0.9) 0%,
+    rgba(20, 19, 22, 0.55) 40%,
+    rgba(20, 19, 22, 0.05) 100%
+  );
+}
 .titowed-profile-block-content {
   position: absolute;
   left: 0;
@@ -723,31 +735,47 @@
   padding: 28px 28px 36px;
   text-align: left;
 }
+.titowed-profile-block-content.top {
+  bottom: auto;
+  top: 0;
+  padding: 36px 28px 28px;
+}
+.titowed-profile-block-content.right {
+  left: auto;
+  right: 0;
+  text-align: right;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
 @media (min-width: 720px) {
   .titowed-profile-block-content { padding: 40px 56px 52px; max-width: 640px; }
+  .titowed-profile-block-content.top { padding: 52px 56px 40px; }
+  .titowed-profile-block-content.right { margin-left: auto; }
 }
 .titowed-profile-ig-row {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
-  font-size: 13px;
+  gap: clamp(6px, 2vw, 10px);
+  font-size: clamp(11px, 3vw, 13px);
   color: var(--tw-on-accent);
   text-decoration: none;
-  margin-bottom: 14px;
+  margin-bottom: clamp(8px, 3vw, 14px);
 }
+.titowed-profile-ig-row.reverse { flex-direction: row-reverse; }
 .titowed-profile-ig-icon {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 26px;
-  height: 26px;
+  width: clamp(20px, 5vw, 26px);
+  height: clamp(20px, 5vw, 26px);
   border: 1px solid rgba(244, 241, 236, 0.6);
   border-radius: 8px;
   color: var(--tw-on-accent);
 }
 .titowed-profile-overlay-name {
   font-family: 'Playfair Display', serif;
-  font-size: clamp(24px, 5vw, 38px);
+  font-size: clamp(15px, 4.2vw, 20px);
   font-weight: 700;
   text-transform: uppercase;
   color: var(--tw-on-accent);
@@ -755,7 +783,7 @@
   line-height: 1.15;
 }
 .titowed-profile-overlay-parents {
-  font-size: 14px;
+  font-size: clamp(11px, 3vw, 14px);
   color: var(--tw-on-accent);
   opacity: 0.85;
   margin: 0;
@@ -960,7 +988,10 @@
   margin-right: -50vw;
   width: 100vw;
   background: var(--tw-accent);
-  padding: 70px 24px 80px;
+  padding: 70px 24px 48px;
+}
+@media (max-width: 480px) {
+  .titowed-event-venue-block { padding: 48px 20px 32px; }
 }
 .titowed-event-venue-block .titowed-event-card {
   background: rgba(0, 0, 0, 0.18);
@@ -977,7 +1008,7 @@
   opacity: 0.9;
 }
 @media (min-width: 720px) {
-  .titowed-event-venue-block { padding: 90px 48px 100px; }
+  .titowed-event-venue-block { padding: 90px 48px 56px; }
 }
 
 /* ── Lightbox ────────────────────────────────────────────────── */

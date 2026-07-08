@@ -17,8 +17,9 @@ const HERO_PHOTO     = "/tito/hero.svg";
 const BRIDE_PHOTO    = "/tito/bride.svg";
 const GROOM_PHOTO    = "/tito/groom.svg";
 const OURSTORY_PHOTO = "/tito/ourstory.svg";
+const FLOWER_PHOTO   = "/tito/flower1.png";
 
-const PRELOAD_PHOTOS = [COVER_PHOTO, HERO_PHOTO, BRIDE_PHOTO, GROOM_PHOTO];
+const PRELOAD_PHOTOS = [COVER_PHOTO, HERO_PHOTO, BRIDE_PHOTO, GROOM_PHOTO, FLOWER_PHOTO];
 
 const GALLERY_PHOTOS = [
   "/tito/g1.svg",
@@ -318,48 +319,14 @@ function IconInstagram({ size = 14 }: { size?: number }) {
   );
 }
 
-// Ornamen bunga sederhana (line-art), pengganti file gambar
-function OrnSprig({ size = 100 }: { size?: number }) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 100 100" fill="none"
-      stroke="currentColor" strokeWidth="1.4" strokeLinecap="round">
-      <path d="M50 90 C 45 65, 45 40, 50 15" />
-      <path d="M50 60 C 35 55, 25 45, 20 30" />
-      <path d="M50 60 C 65 55, 75 45, 80 30" />
-      <path d="M50 40 C 38 36, 30 28, 26 16" />
-      <path d="M50 40 C 62 36, 70 28, 74 16" />
-      <circle cx="50" cy="15" r="4" fill="currentColor" stroke="none" />
-    </svg>
-  );
-}
-
-function RailMarks({ offset = 56 }: { offset?: number }) {
-  const m: React.CSSProperties = {
-    position: "absolute",
-    width: 7,
-    height: 7,
-    background: "var(--tw-accent-2)",
-    border: "1px solid var(--tw-accent)",
-    zIndex: 3,
-    pointerEvents: "none",
-  };
-  const railX = "var(--tw-rail-x, 14px)";
-  return (
-    <>
-      <span className="titowed-rail-mark" style={{ ...m, top: offset, left: railX, transform: "translateX(-50%) rotate(45deg)" }} />
-      <span className="titowed-rail-mark" style={{ ...m, bottom: offset, left: railX, transform: "translateX(-50%) rotate(45deg)" }} />
-      <span className="titowed-rail-mark" style={{ ...m, top: offset, right: railX, transform: "translateX(50%) rotate(45deg)" }} />
-      <span className="titowed-rail-mark" style={{ ...m, bottom: offset, right: railX, transform: "translateX(50%) rotate(45deg)" }} />
-    </>
-  );
-}
-
-function CoverFlowers() {
+function CornerFlowers({ corners }: { corners: Array<"tl" | "tr" | "br"> }) {
   return (
     <div aria-hidden="true">
-      <div className="titowed-flower tl"><OrnSprig size={100} /></div>
-      <div className="titowed-flower tr"><OrnSprig size={90} /></div>
-      <div className="titowed-flower br"><OrnSprig size={100} /></div>
+      {corners.map((corner) => (
+        <div key={corner} className={`titowed-flower ${corner}`}>
+          <img src={FLOWER_PHOTO} alt="" loading="lazy" />
+        </div>
+      ))}
     </div>
   );
 }
@@ -496,8 +463,7 @@ export const WeddingPageTito: React.FC = () => {
           <div className="titowed-cover-photo-overlay" />
         </div>
 
-        <CoverFlowers />
-        <RailMarks offset={32} />
+        <CornerFlowers corners={["tl", "tr", "br"]} />
 
         <div className="titowed-cover-inner">
           <div className="titowed-mini-mono">{nameA[0]} &amp; {nameB[0]}</div>
@@ -555,7 +521,8 @@ export const WeddingPageTito: React.FC = () => {
             <img src={HERO_PHOTO} alt="" aria-hidden="true" loading="eager" />
           </div>
 
-          <RailMarks />
+          <CornerFlowers corners={["tl", "tr"]} />
+
 
           <div className={`titowed-hero-content titowed-reveal${heroVisible ? " in" : ""}`}
             style={{ maxWidth: 720, margin: "0 auto", textAlign: "center" }}>
@@ -606,7 +573,6 @@ export const WeddingPageTito: React.FC = () => {
           className="titowed-section titowed-date-section"
           ref={dateRef as React.RefObject<HTMLElement>}
         >
-          <RailMarks />
 
           <div className={`titowed-reveal${dateVisible ? " in" : ""}`} style={{ textAlign: "center" }}>
             <div className="titowed-eyebrow">◆ Save the Date ◆</div>
@@ -701,7 +667,6 @@ export const WeddingPageTito: React.FC = () => {
           className="titowed-section titowed-profile-section"
           ref={profileRef as React.RefObject<HTMLElement>}
         >
-          <RailMarks />
 
           <div className={`titowed-reveal${profileVisible ? " in" : ""}`} style={{ textAlign: "center" }}>
             <div className="titowed-eyebrow">◆ Mempelai ◆</div>
@@ -723,10 +688,10 @@ export const WeddingPageTito: React.FC = () => {
                   style={{ transitionDelay: `${idx * 0.15}s` }}
                 >
                   <img src={person.photo} alt={person.name} loading="lazy" />
-                  <div className="titowed-profile-block-overlay" />
-                  <div className="titowed-profile-block-content">
+                  <div className={`titowed-profile-block-overlay${idx === 1 ? " top" : ""}`} />
+                  <div className={`titowed-profile-block-content${idx === 1 ? " top right" : ""}`}>
                     <a
-                      className="titowed-profile-ig-row"
+                      className={`titowed-profile-ig-row${idx === 1 ? " reverse" : ""}`}
                       href={`https://instagram.com/${person.ig.replace("@", "")}`}
                       target="_blank"
                       rel="noopener noreferrer"
@@ -752,7 +717,6 @@ export const WeddingPageTito: React.FC = () => {
           className="titowed-section titowed-story-section"
           ref={storyRef as React.RefObject<HTMLElement>}
         >
-          <RailMarks />
 
           <div className={`titowed-reveal${storyVisible ? " in" : ""}`} style={{ textAlign: "center" }}>
             <div className="titowed-eyebrow">◆ Our Story ◆</div>
@@ -826,7 +790,6 @@ export const WeddingPageTito: React.FC = () => {
           className="titowed-section titowed-gallery-section"
           ref={galleryRef as React.RefObject<HTMLElement>}
         >
-          <RailMarks />
 
           <div className={`titowed-reveal${galleryVisible ? " in" : ""}`} style={{ textAlign: "center" }}>
             <div className="titowed-eyebrow">◆ Gallery ◆</div>
@@ -868,7 +831,6 @@ export const WeddingPageTito: React.FC = () => {
           className="titowed-section titowed-gift-section"
           ref={giftRef as React.RefObject<HTMLElement>}
         >
-          <RailMarks />
 
           <div className={`titowed-reveal${giftVisible ? " in" : ""}`} style={{ textAlign: "center" }}>
             <div className="titowed-eyebrow">◆ Wedding Gift ◆</div>
@@ -952,7 +914,6 @@ export const WeddingPageTito: React.FC = () => {
             <img src={HERO_PHOTO} alt="" loading="lazy" />
           </div>
 
-          <RailMarks />
 
           <div className={`titowed-reveal${closingVisible ? " in" : ""}`} style={{ textAlign: "center" }}>
             <p className="titowed-closing-body">
