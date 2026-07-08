@@ -351,7 +351,7 @@ export const WeddingPageAjie: React.FC = () => {
             target="_blank"
             rel="noopener noreferrer"
           >
-            Crafted by <strong><u> Dirakhmat </u></strong>
+            by <strong><u> Dirakhmat </u></strong>
           </a>
         </div>
 
@@ -743,7 +743,7 @@ export const WeddingPageAjie: React.FC = () => {
 
         {/* ── Footer ── */}
         <footer className="wedding-footer">
-          Crafted by{" "}
+          by{" "}
             <a className="footer-link"
             href="https://admoz.pages.dev"
             target="_blank"

@@ -12,21 +12,23 @@ const MAP_EMBED_URL =
   "https://maps.google.com/maps?q=Masjid%20Hajjah%20Nuriyah%20Loktabat&t=&z=16&ie=UTF8&iwloc=&output=embed";
 const MAP_LINK = "https://maps.app.goo.gl/Jp7UaCJ8strw4Ciz6?g_st=ic";
 
-const COVER_PHOTO    = "/tito/cover.svg";
-const HERO_PHOTO     = "/tito/hero.svg";
-const BRIDE_PHOTO    = "/tito/bride.svg";
-const GROOM_PHOTO    = "/tito/groom.svg";
-const OURSTORY_PHOTO = "/tito/ourstory.svg";
+const COVER_PHOTO    = "/tito/NGS_3748.webp";
+const HERO_PHOTO     = "/tito/NGS_3765.webp";
+const BRIDE_PHOTO    = "/tito/NGS_4305.webp";
+const GROOM_PHOTO    = "/tito/NGS_6041.webp";
+const OURSTORY_PHOTO = "/tito/NGS_4137.webp";
 const FLOWER_PHOTO   = "/tito/flower1.png";
+const CLOSER_PHOTO    = "/tito/NGS_3923.webp";
+const BG_AUDIO        = "/tito/Gunslinger.mp3";
 
 const PRELOAD_PHOTOS = [COVER_PHOTO, HERO_PHOTO, BRIDE_PHOTO, GROOM_PHOTO, FLOWER_PHOTO];
 
 const GALLERY_PHOTOS = [
-  "/tito/g1.svg",
-  "/tito/g2.svg",
-  "/tito/g3.svg",
-  "/tito/g4.svg",
-  "/tito/g5.svg",
+  "/tito/NGS_4144.webp",
+  "/tito/NGS_3923.webp",
+  "/tito/NGS_4190.webp",
+  "/tito/NGS_3754.webp",
+  "/tito/NGS_3780.webp",
 ];
 
 // Cerita Kami / Our Story — draf generik, silakan sunting sesuai cerita asli
@@ -377,9 +379,29 @@ export const WeddingPageTito: React.FC = () => {
   const heroScale   = Math.max(1, 1.1 - (scrollY / 600) * 0.1);
   const heroOpacity = Math.max(0, 1 - scrollY / 900);
 
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+  const [isPlaying, setIsPlaying] = useState(false);
+
   const handleOpen = useCallback(() => {
     setIsOpen(true);
     window.scrollTo({ top: 0, behavior: "instant" });
+    const audio = audioRef.current;
+    if (audio) {
+      audio.play()
+        .then(() => setIsPlaying(true))
+        .catch(() => setIsPlaying(false));
+    }
+  }, []);
+
+  const toggleMusic = useCallback(() => {
+    const audio = audioRef.current;
+    if (!audio) return;
+    if (audio.paused) {
+      audio.play().then(() => setIsPlaying(true)).catch(() => {});
+    } else {
+      audio.pause();
+      setIsPlaying(false);
+    }
   }, []);
 
   const copyNumber = useCallback((id: string, value: string) => {
@@ -440,10 +462,25 @@ export const WeddingPageTito: React.FC = () => {
 
   return (
     <div className="titowed-root">
+      <audio ref={audioRef} src={BG_AUDIO} loop preload="none" />
+
       <div className={`titowed-loader${photosReady ? " fade-out" : ""}`} role="status" aria-label="Memuat">
         <div className="titowed-loader-logo">{nameA[0]} &amp; {nameB[0]}</div>
         <span className="titowed-loader-spin" />
       </div>
+
+      {isOpen && (
+        <button
+          className={`titowed-music-btn${isPlaying ? " playing" : ""}`}
+          onClick={toggleMusic}
+          aria-label={isPlaying ? "Jeda musik" : "Putar musik"}
+          title={isPlaying ? "Jeda musik" : "Putar musik"}
+        >
+          <span className="titowed-music-bar" />
+          <span className="titowed-music-bar" />
+          <span className="titowed-music-bar" />
+        </button>
+      )}
 
       <header className={`titowed-sticky-header${showStickyHeader ? " show" : ""}`}>
         <span className="titowed-sticky-header-mono">{nameA[0]} &amp; {nameB[0]}</span>
@@ -460,7 +497,7 @@ export const WeddingPageTito: React.FC = () => {
       <div className={`titowed-cover${isOpen ? " slide-up" : ""}`}>
         <div className="titowed-cover-photo">
           <img src={COVER_PHOTO} alt="" aria-hidden="true" />
-          <div className="titowed-cover-photo-overlay" />
+          {/* <div className="titowed-cover-photo-overlay" /> */}
         </div>
 
         <CornerFlowers corners={["tl", "tr", "br"]} />
@@ -500,7 +537,7 @@ export const WeddingPageTito: React.FC = () => {
 
         <div className="titowed-cover-credit">
           <a href="https://admoz.pages.dev" target="_blank" rel="noopener noreferrer">
-            Crafted by <u> Dirakhmat </u>
+            by <u> Dirakhmat </u>
           </a>
         </div>
       </div>
@@ -670,7 +707,7 @@ export const WeddingPageTito: React.FC = () => {
 
           <div className={`titowed-reveal${profileVisible ? " in" : ""}`} style={{ textAlign: "center" }}>
             <div className="titowed-eyebrow">◆ Mempelai ◆</div>
-            <h2 className="titowed-section-heading">Kedua Mempelai</h2>
+            <h2 className="titowed-section-heading">Groom & Bride</h2>
             <p style={{ fontSize: 14, color: "var(--tw-ink-2)", maxWidth: 480,
               margin: "0 auto 64px", lineHeight: 1.8 }}>
               Dengan segala kerendahan hati dan rasa syukur, izinkanlah kami memperkenalkan
@@ -911,7 +948,7 @@ export const WeddingPageTito: React.FC = () => {
           ref={closingRef as React.RefObject<HTMLElement>}
         >
           <div className="titowed-closing-bg" aria-hidden="true">
-            <img src={HERO_PHOTO} alt="" loading="lazy" />
+            <img src={CLOSER_PHOTO} alt="" loading="lazy" />
           </div>
 
 
@@ -956,7 +993,7 @@ export const WeddingPageTito: React.FC = () => {
               rel="noopener noreferrer"
               className="titowed-footer-credit"
             >
-              Crafted by <u> Dirakhmat </u>
+              by <u> Dirakhmat </u>
             </a>
           </div>
         </section>

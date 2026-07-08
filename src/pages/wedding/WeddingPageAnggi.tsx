@@ -384,7 +384,7 @@ export const WeddingPageAnggi: React.FC = () => {
               target="_blank"
               rel="noopener noreferrer"
             >
-              Crafted by <u> Dirakhmat </u>
+              by <u> Dirakhmat </u>
             </a>
           </div>
         </div>
@@ -733,7 +733,7 @@ export const WeddingPageAnggi: React.FC = () => {
             rel="noopener noreferrer"
             className="crafted-foot"
           >
-            Crafted by <u> Dirakhmat </u>
+            by <u> Dirakhmat </u>
           </a>
         </p>
       </main>
