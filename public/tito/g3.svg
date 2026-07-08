@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="800" viewBox="0 0 800 800">
+  <rect width="800" height="800" fill="#6F5C59"/>
+  <rect x="16" y="16" width="768" height="768" fill="none" stroke="#D8DEDE" stroke-width="3" stroke-dasharray="10 8" opacity="0.5"/>
+  <text x="400" y="385" text-anchor="middle" font-family="Georgia, serif" font-size="26" fill="#D8DEDE">Galeri 3</text>
+  <text x="400" y="425" text-anchor="middle" font-family="Georgia, serif" font-size="16" fill="#38363F">/public/tito/g3.svg</text>
+</svg>

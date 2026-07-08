@@ -4,6 +4,7 @@ import { PortfolioPage } from './pages/PortfolioPage';
 import { WeddingPageAjie } from './pages/wedding/WeddingPageAjie';
 import { WeddingPageBahranFatimatul } from './pages/wedding/WeddingPageBahranFatimatul';
 import { WeddingPageAnggi } from './pages/wedding/WeddingPageAnggi';
+import { WeddingPageTito } from './pages/wedding/WeddingPageTito';
 
 const App: React.FC = () => {
   return (
@@ -23,6 +24,9 @@ const App: React.FC = () => {
 
         {/* Undangan Pernikahan: /anggi-rezza?to=NamaPengunjung */}
         <Route path="/anggi-rezza" element={<WeddingPageAnggi />} />
+
+        {/* Undangan Pernikahan: /tito-wina?to=NamaPengunjung */}
+        <Route path="/tito-wina" element={<WeddingPageTito />} />
       </Routes>
     </Router>
   );

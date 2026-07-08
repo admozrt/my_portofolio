@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="1000" viewBox="0 0 800 1000">
+  <rect width="800" height="1000" fill="#46454C"/>
+  <rect x="18" y="18" width="764" height="964" fill="none" stroke="#D8DEDE" stroke-width="3" stroke-dasharray="10 8" opacity="0.5"/>
+  <text x="400" y="480" text-anchor="middle" font-family="Georgia, serif" font-size="30" fill="#D8DEDE">Foto Mempelai Pria</text>
+  <text x="400" y="525" text-anchor="middle" font-family="Georgia, serif" font-size="18" fill="#D8DEDE">Ganti file: /public/tito/groom.svg</text>
+  <text x="400" y="558" text-anchor="middle" font-family="Georgia, serif" font-size="15" fill="#6F5C59">disarankan: potret, 800x1000</text>
+</svg>
