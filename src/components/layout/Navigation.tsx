@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Search, Menu, X, Users, Briefcase, Code, Award } from 'lucide-react';
+import { Search, Menu, X, Monitor, Cpu, Terminal, Radio, Send } from 'lucide-react';
 import { motion, AnimatePresence, useScroll, useSpring } from 'framer-motion';
 import { ThemeToggle } from './ThemeToggle';
 import { Monogram } from '../ui/Monogram';
@@ -7,10 +7,11 @@ import { useActiveSection } from '../../hooks/useActiveSection';
 import type { NavigationProps } from '../../types';
 
 const navItems = [
-  { id: 'tentang', label: 'Tentang', icon: <Users className="w-4 h-4" /> },
-  { id: 'pengalaman', label: 'Pengalaman', icon: <Briefcase className="w-4 h-4" /> },
-  { id: 'projek', label: 'Projek', icon: <Code className="w-4 h-4" /> },
-  { id: 'mitra', label: 'Mitra', icon: <Award className="w-4 h-4" /> },
+  { id: 'monitor', label: 'Monitor', icon: <Monitor className="w-4 h-4" /> },
+  { id: 'stack', label: 'Stack', icon: <Cpu className="w-4 h-4" /> },
+  { id: 'log', label: 'Log', icon: <Terminal className="w-4 h-4" /> },
+  { id: 'transmisi', label: 'Transmisi', icon: <Radio className="w-4 h-4" /> },
+  { id: 'kontak', label: 'Kontak', icon: <Send className="w-4 h-4" /> },
 ];
 
 const sectionIds = navItems.map((n) => n.id);
@@ -30,10 +31,10 @@ export const Navigation: React.FC<NavigationProps> = ({ searchTerm, onSearchChan
   };
 
   return (
-    <nav className="bg-white/80 dark:bg-zinc-950/80 backdrop-blur-md text-zinc-900 dark:text-white fixed w-full z-50 top-0 border-b border-zinc-200/70 dark:border-zinc-800/70">
+    <nav className="bg-white/80 dark:bg-zinc-950/80 backdrop-blur-md text-zinc-900 dark:text-zinc-100 fixed w-full z-50 top-0 border-b border-zinc-200/70 dark:border-zinc-800/70">
       {/* Scroll progress */}
       <motion.div
-        className="absolute bottom-0 left-0 right-0 h-0.5 origin-left bg-accent-500 z-10"
+        className="absolute bottom-0 left-0 right-0 h-0.5 origin-left bg-ops-600 dark:bg-ops-500 z-10"
         style={{ scaleX }}
       />
 
@@ -43,8 +44,8 @@ export const Navigation: React.FC<NavigationProps> = ({ searchTerm, onSearchChan
           className="flex items-center gap-2.5"
           aria-label="Ke beranda"
         >
-          <Monogram size={34} />
-          <span className="hidden sm:block text-sm font-semibold tracking-tight text-zinc-900 dark:text-white">
+          <Monogram size={34} strokeClassName="stroke-ops-600 dark:stroke-ops-500" />
+          <span className="hidden sm:block font-mono text-sm font-semibold tracking-tight text-zinc-900 dark:text-zinc-100">
             Adi R. Ma'arif
           </span>
         </button>
@@ -78,18 +79,18 @@ export const Navigation: React.FC<NavigationProps> = ({ searchTerm, onSearchChan
                 <button
                   key={item.id}
                   onClick={() => scrollToSection(item.id)}
-                  className={`relative px-3.5 py-2 rounded-xl text-sm font-medium transition-colors flex items-center gap-2 ${
+                  className={`relative px-3.5 py-2 rounded-xl font-mono text-xs uppercase tracking-wide transition-colors flex items-center gap-2 ${
                     isActive
-                      ? 'text-accent-600 dark:text-accent-400'
-                      : 'text-zinc-600 dark:text-zinc-300 hover:text-zinc-900 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-zinc-800'
+                      ? 'text-ops-600 dark:text-ops-400'
+                      : 'text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 hover:bg-zinc-100 dark:hover:bg-zinc-800'
                   }`}
                   aria-label={`Navigasi ke ${item.label}`}
                 >
-                  <span className={isActive ? 'text-accent-500' : 'text-zinc-400'}>{item.icon}</span>
+                  <span className={isActive ? 'text-ops-600 dark:text-ops-500' : 'text-zinc-400 dark:text-zinc-500'}>{item.icon}</span>
                   {item.label}
                   {isActive && (
                     <motion.div
-                      className="absolute bottom-0 left-3 right-3 h-0.5 bg-accent-500 rounded-full"
+                      className="absolute bottom-0 left-3 right-3 h-0.5 bg-ops-600 dark:bg-ops-500 rounded-full"
                       layoutId="activeIndicator"
                       transition={{ type: 'spring', stiffness: 300, damping: 30 }}
                     />
@@ -104,12 +105,12 @@ export const Navigation: React.FC<NavigationProps> = ({ searchTerm, onSearchChan
               <input
                 type="text"
                 placeholder="Cari..."
-                className="px-4 py-2 pr-10 text-sm text-zinc-900 dark:text-zinc-100 bg-zinc-100 dark:bg-zinc-800 rounded-xl focus:outline-none focus:ring-2 focus:ring-accent-500 w-40 transition-all placeholder:text-zinc-400"
+                className="px-4 py-2 pr-10 font-mono text-xs text-zinc-900 dark:text-zinc-100 bg-zinc-100 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl focus:outline-none focus:ring-1 focus:ring-ops-500 w-36 transition-all placeholder:text-zinc-400 dark:placeholder:text-zinc-600"
                 value={searchTerm}
                 onChange={(e) => onSearchChange(e.target.value)}
                 aria-label="Pencarian konten"
               />
-              <Search className="absolute right-3 top-2.5 w-4 h-4 text-zinc-400 pointer-events-none" />
+              <Search className="absolute right-3 top-2.5 w-4 h-4 text-zinc-400 dark:text-zinc-600 pointer-events-none" />
             </div>
             <ThemeToggle />
           </div>
@@ -133,10 +134,10 @@ export const Navigation: React.FC<NavigationProps> = ({ searchTerm, onSearchChan
                   <button
                     key={item.id}
                     onClick={() => scrollToSection(item.id)}
-                    className={`px-4 py-3 rounded-xl text-left flex items-center gap-3 text-sm font-medium transition-colors ${
+                    className={`px-4 py-3 rounded-xl text-left flex items-center gap-3 font-mono text-xs uppercase tracking-wide transition-colors ${
                       isActive
-                        ? 'bg-accent-50 dark:bg-accent-500/10 text-accent-600 dark:text-accent-400'
-                        : 'hover:bg-zinc-100 dark:hover:bg-zinc-800 text-zinc-700 dark:text-zinc-300'
+                        ? 'bg-ops-600/10 dark:bg-ops-500/10 text-ops-600 dark:text-ops-400'
+                        : 'hover:bg-zinc-100 dark:hover:bg-zinc-800 text-zinc-500 dark:text-zinc-400'
                     }`}
                     aria-label={`Navigasi ke ${item.label}`}
                   >
@@ -149,7 +150,7 @@ export const Navigation: React.FC<NavigationProps> = ({ searchTerm, onSearchChan
                 <input
                   type="text"
                   placeholder="Cari..."
-                  className="flex-1 px-4 py-2 text-sm text-zinc-900 dark:text-zinc-100 bg-zinc-100 dark:bg-zinc-800 rounded-xl placeholder:text-zinc-400"
+                  className="flex-1 px-4 py-2 font-mono text-xs text-zinc-900 dark:text-zinc-100 bg-zinc-100 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl placeholder:text-zinc-400 dark:placeholder:text-zinc-600"
                   value={searchTerm}
                   onChange={(e) => onSearchChange(e.target.value)}
                   aria-label="Pencarian konten mobile"

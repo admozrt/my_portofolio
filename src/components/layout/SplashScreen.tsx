@@ -27,7 +27,7 @@ export const SplashScreen: React.FC<SplashScreenProps> = ({ onComplete }) => {
     <AnimatePresence>
       {visible && (
         <motion.div
-          className="font-sans fixed inset-0 z-[9999] flex items-center justify-center overflow-hidden bg-zinc-950"
+          className="font-sans fixed inset-0 z-[9999] flex items-center justify-center overflow-hidden bg-zinc-50 dark:bg-zinc-950"
           initial={{ opacity: 1 }}
           exit={reduce ? { opacity: 0 } : { y: '-100%' }}
           transition={{ duration: reduce ? 0.2 : 0.65, ease: EASE }}
@@ -37,18 +37,18 @@ export const SplashScreen: React.FC<SplashScreenProps> = ({ onComplete }) => {
             className="absolute inset-0 opacity-40"
             style={{
               background:
-                'radial-gradient(ellipse at center, rgba(37,99,235,0.18) 0%, transparent 65%)',
+                'radial-gradient(ellipse at center, rgba(22,163,74,0.18) 0%, transparent 65%)',
             }}
           />
 
           <div className="relative z-10 flex flex-col items-center text-center px-4">
-            <Monogram size={84} draw />
+            <Monogram size={84} draw strokeClassName="stroke-ops-600 dark:stroke-ops-500" />
 
             <motion.h2
               initial={reduce ? false : { y: 20, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ duration: 0.5, delay: reduce ? 0 : 0.6, ease: EASE }}
-              className="mt-6 text-white text-xl font-semibold tracking-tight"
+              className="mt-6 text-zinc-900 dark:text-white text-xl font-semibold tracking-tight"
             >
               Adi Rakhmatullah Ma'arif
             </motion.h2>
@@ -57,13 +57,13 @@ export const SplashScreen: React.FC<SplashScreenProps> = ({ onComplete }) => {
               initial={reduce ? false : { y: 16, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ duration: 0.5, delay: reduce ? 0 : 0.75, ease: EASE }}
-              className="mt-1.5 text-accent-400 text-xs font-mono tracking-[0.25em] uppercase"
+              className="mt-1.5 text-ops-600 dark:text-ops-400 text-xs font-mono tracking-[0.25em] uppercase"
             >
               Software Engineer
             </motion.p>
 
             <motion.div
-              className="mt-7 h-px bg-accent-500/70"
+              className="mt-7 h-px bg-ops-600/70 dark:bg-ops-500/70"
               initial={reduce ? { width: 180 } : { width: 0 }}
               animate={{ width: 180 }}
               transition={{ duration: 1, delay: reduce ? 0 : 0.4, ease: EASE }}

@@ -9,6 +9,8 @@ interface MonogramProps {
   className?: string;
   /** Stroke color; defaults to the accent via currentColor. */
   title?: string;
+  /** Tailwind class controlling the stroke color; defaults to the site accent (blue). */
+  strokeClassName?: string;
 }
 
 /**
@@ -22,6 +24,7 @@ export const Monogram: React.FC<MonogramProps> = ({
   draw = false,
   className = '',
   title = 'Adi Rakhmatullah Maarif',
+  strokeClassName = 'stroke-accent-500',
 }) => {
   const reduce = useReducedMotion();
   const shouldDraw = draw && !reduce;
@@ -59,7 +62,7 @@ export const Monogram: React.FC<MonogramProps> = ({
       />
       {/* Strokes drawn in the accent so the mark reads on the dark/light tile */}
       <g
-        className="stroke-accent-500"
+        className={strokeClassName}
         strokeWidth={2.4}
         strokeLinecap="round"
         strokeLinejoin="round"

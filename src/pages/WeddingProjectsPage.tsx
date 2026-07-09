@@ -108,7 +108,7 @@ const WeddingCard: React.FC<{ entry: WeddingEntry; offset: boolean }> = ({ entry
       <span
         className={`absolute left-4 top-4 rounded-full px-3 py-1 text-[11px] font-medium backdrop-blur-md ${
           status.upcoming
-            ? 'bg-accent-500/90 text-white'
+            ? 'bg-ops-600/90 dark:bg-ops-500/90 text-white'
             : 'bg-white/85 text-zinc-700 dark:bg-zinc-950/70 dark:text-zinc-200'
         }`}
       >
@@ -164,15 +164,15 @@ export const WeddingProjectsPage: React.FC = () => {
         <header className="sticky top-0 z-50 border-b border-zinc-200/70 bg-white/80 backdrop-blur-md dark:border-zinc-800/70 dark:bg-zinc-950/80">
           <div className="container mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6">
             <Link to="/" className="flex items-center gap-2.5">
-              <Monogram size={32} />
-              <span className="hidden text-sm font-semibold tracking-tight sm:block">
+              <Monogram size={32} strokeClassName="stroke-ops-600 dark:stroke-ops-500" />
+              <span className="hidden font-mono text-sm font-semibold tracking-tight sm:block">
                 Adi R. Ma'arif
               </span>
             </Link>
             <div className="flex items-center gap-3">
               <Link
                 to="/"
-                className="inline-flex items-center gap-1.5 text-sm font-medium text-zinc-600 hover:text-accent-600 dark:text-zinc-300 dark:hover:text-accent-400"
+                className="inline-flex items-center gap-1.5 text-sm font-medium text-zinc-600 hover:text-ops-600 dark:text-zinc-300 dark:hover:text-ops-400"
               >
                 <ArrowLeft className="h-4 w-4" />
                 Kembali ke Portofolio
@@ -189,6 +189,10 @@ export const WeddingProjectsPage: React.FC = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: EASE }}
           >
+            <p className="mb-2 font-mono text-xs uppercase tracking-[0.25em] text-ops-600 dark:text-ops-500">
+              <span className="inline-block h-1.5 w-1.5 rounded-full bg-ops-600 dark:bg-ops-500 mr-2 align-middle" />
+              Modul Terpisah
+            </p>
             <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">
               Undangan Pernikahan Digital
             </h1>

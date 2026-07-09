@@ -48,6 +48,10 @@ export interface Project {
   logo?: string;
   featured?: boolean;
   status: 'selesai' | 'sedang_berjalan' | 'direncanakan';
+  domain: string;
+  monitorStatus: 'LIVE' | 'OPERATIONAL' | 'STANDBY';
+  metrics: { label: string; value: string }[];
+  logEntries: { timestamp: string; message: string }[];
 }
 
 // Partner-related types
