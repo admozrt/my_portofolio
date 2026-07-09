@@ -17,7 +17,7 @@ const itemVariants: Variants = {
 };
 
 const contactItems = [
-  { icon: <Mail className="w-4 h-4" />, text: 'admozart996@gmail.com', href: 'mailto:admozart996@gmail.com', label: 'Email' },
+  { icon: <Mail className="w-4 h-4" />, text: 'adrakhmat996@gmail.com', href: 'mailto:adrakhmat996@gmail.com', label: 'Email' },
   { icon: <Phone className="w-4 h-4" />, text: '+62 895-3622-60101', href: 'https://wa.me/62895362260101', label: 'WhatsApp' },
   { icon: <Linkedin className="w-4 h-4" />, text: "Adi Rakhmatullah Ma'arif", href: 'https://www.linkedin.com/in/adi-rakhmatullah-ma-arif-145b3723b', label: 'LinkedIn' },
   { icon: <Github className="w-4 h-4" />, text: 'admozart', href: 'https://github.com/admozrt', label: 'GitHub' },

@@ -12,7 +12,7 @@ export const ProposalContact: React.FC = () => {
     const body = encodeURIComponent(
       `Nama: ${name}\nInstansi: ${institution}\n\nKebutuhan Proyek:\n${need}`
     );
-    window.location.href = `mailto:admozart996@gmail.com?subject=${subject}&body=${body}`;
+    window.location.href = `mailto:adrakhmat996@gmail.com?subject=${subject}&body=${body}`;
   };
 
   return (

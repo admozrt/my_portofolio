@@ -47,7 +47,7 @@ export const SEOHead: React.FC<SEOHeadProps> = ({ data }) => {
       "jobTitle": "Pengembang Full Stack",
       "url": data.url,
       "image": data.image,
-      "email": "admozart996@gmail.com",
+      "email": "adrakhmat996@gmail.com",
       "telephone": "+62895362260101",
       "address": {
         "@type": "PostalAddress",
