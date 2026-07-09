@@ -12,8 +12,9 @@ import {
   faBootstrap,
   faJsSquare,
   faGithub,
+  faGolang,
 } from '@fortawesome/free-brands-svg-icons';
-import { faDatabase } from '@fortawesome/free-solid-svg-icons';
+import { faDatabase, faLayerGroup } from '@fortawesome/free-solid-svg-icons';
 import { Skill } from '../types';
 
 const TypeScriptIcon: React.FC<{ className?: string }> = ({ className = "" }) => (
@@ -59,6 +60,8 @@ export const skills: Skill[] = [
   { icon: faPhp, name: 'PHP', color: 'text-indigo-500', level: 95, category: 'Backend' },
   { icon: faPhp, name: 'Laminas', color: 'text-orange-500', level: 80, category: 'Backend' },
   { icon: faPhp, name: 'CodeIgniter', color: 'text-green-500', level: 80, category: 'Backend' },
+  { icon: faGolang, name: 'Golang', color: 'text-cyan-600', level: 70, category: 'Backend' },
+  { icon: faLayerGroup, name: 'Goravel', color: 'text-red-500', level: 65, category: 'Backend' },
 
   { icon: faDatabase, name: 'MySQL', color: 'text-blue-700', level: 95, category: 'Database' },
   { icon: faDatabase, name: 'Oracle', color: 'text-orange-600', level: 70, category: 'Database' },
