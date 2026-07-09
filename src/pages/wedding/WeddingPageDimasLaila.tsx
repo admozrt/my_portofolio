@@ -16,7 +16,7 @@ const MAP_EMBED_URL =
 const MAP_LINK = "https://maps.app.goo.gl/";
 
 // Kontak (dipakai dock "Kontak" → buka WhatsApp)
-const CONTACT_WA = "https://wa.me/6281234567890";
+// const CONTACT_WA = "https://wa.me/6281234567890";
 
 // Spotify playlist embed (placeholder — ganti dengan link playlist kalian)
 const SPOTIFY_EMBED_URL =
@@ -108,22 +108,22 @@ const EVENTS = [
   },
 ];
 
-const GIFTS = [
-  {
-    id: "bank",
-    type: "Transfer Bank",
-    name: "Bank BCA",
-    number: "1234567890",
-    holder: "Laila Ramadhani",
-  },
-  {
-    id: "ewallet",
-    type: "E-Wallet",
-    name: "DANA",
-    number: "081234567890",
-    holder: "Laila Ramadhani",
-  },
-];
+// const GIFTS = [
+//   {
+//     id: "bank",
+//     type: "Transfer Bank",
+//     name: "Bank BCA",
+//     number: "1234567890",
+//     holder: "Laila Ramadhani",
+//   },
+//   {
+//     id: "ewallet",
+//     type: "E-Wallet",
+//     name: "DANA",
+//     number: "081234567890",
+//     holder: "Laila Ramadhani",
+//   },
+// ];
 
 // Notifikasi yang muncul di lock screen (nama tamu disisipkan saat runtime)
 const NOTIFICATIONS = [
