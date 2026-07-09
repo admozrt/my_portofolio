@@ -16,7 +16,7 @@ export const ControlRoomFooter: React.FC = () => {
     { label: 'Log', id: 'log' },
     { label: 'Transmisi', id: 'transmisi' },
     { label: 'Kontak', id: 'kontak' },
-    { label: 'Solusi Instansi', href: '/solusi-digital' },
+    { label: 'Solusi Digital', href: '/solusi-digital' },
   ];
 
   const techs = ['PHP', 'JavaScript', 'Golang', 'Laravel', 'React', 'React Native', 'TypeScript', 'MySQL', 'Postgree', 'Docker'];

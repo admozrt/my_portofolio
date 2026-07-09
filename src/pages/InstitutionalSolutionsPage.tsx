@@ -20,7 +20,7 @@ export const InstitutionalSolutionsPage: React.FC = () => {
           title: "Solusi Digital untuk Instansi - Adi Rakhmatullah Ma'arif",
           description:
             'Sistem digital yang terukur, aman, dan bisa dipertanggungjawabkan untuk instansi pemerintah, kesehatan, dan logistik.',
-          keywords: ['Solusi Instansi', 'Sistem Pemerintahan', 'Sistem Kesehatan', 'Software Engineer'],
+          keywords: ['Solusi Produk Digital', 'Sistem Pemerintahan', 'Sistem Kesehatan', 'Software Engineer'],
           author: "Adi Rakhmatullah Ma'arif",
           url: 'https://admoz.pages.dev/solusi-instansi',
           image: 'https://admoz.pages.dev/my.png',
