@@ -88,5 +88,16 @@ export const projects: Project[] = [
     icon: 'fas fa-university',
     logo: '/images/projects/logos/aset-unborle.png',
     status: 'selesai'
+  },
+  {
+    id: 9,
+    title: 'Undangan Pernikahan Digital',
+    description: 'Kumpulan microsite undangan pernikahan yang dibangun sebagai proyek personal, masing-masing dengan tema visual, animasi, dan interaksi (countdown, galeri, e-gift) yang dirancang khusus per pasangan.',
+    technologies: ['React', 'TypeScript', 'Framer Motion', 'CSS Kustom'],
+    link: '/project-wedding',
+    gradient: 'from-rose-500 via-pink-600 to-fuchsia-600',
+    logo: '/tito/preview.jpg',
+    featured: true,
+    status: 'sedang_berjalan'
   }
 ];
