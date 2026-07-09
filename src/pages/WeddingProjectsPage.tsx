@@ -67,6 +67,17 @@ const weddings: WeddingEntry[] = [
     accent: '#6F5C59',
     theme: 'Mauve Gelap',
   },
+  {
+    id: 'dimas-laila',
+    names: 'Dimas & Laila',
+    date: new Date('2026-12-12T08:00:00+07:00'),
+    dateLabel: '12 Desember 2026',
+    location: 'Jakarta',
+    cover: '/dimas/preview.svg',
+    href: '/dimas-laila',
+    accent: '#4F46E5',
+    theme: 'Smartphone Simulation',
+  },
 ];
 
 const containerVariants: Variants = {
