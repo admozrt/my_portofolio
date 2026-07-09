@@ -6,6 +6,7 @@ import { WeddingPageBahranFatimatul } from './pages/wedding/WeddingPageBahranFat
 import { WeddingPageAnggi } from './pages/wedding/WeddingPageAnggi';
 import { WeddingPageTito } from './pages/wedding/WeddingPageTito';
 import { WeddingProjectsPage } from './pages/WeddingProjectsPage';
+import { InstitutionalSolutionsPage } from './pages/InstitutionalSolutionsPage';
 
 const App: React.FC = () => {
   return (
@@ -31,6 +32,9 @@ const App: React.FC = () => {
 
         {/* Showcase proyek undangan pernikahan */}
         <Route path="/project-wedding" element={<WeddingProjectsPage />} />
+
+        {/* Halaman solusi untuk klien institusional */}
+        <Route path="/solusi-digital" element={<InstitutionalSolutionsPage />} />
       </Routes>
     </Router>
   );

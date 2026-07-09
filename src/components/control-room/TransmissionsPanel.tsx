@@ -1,6 +1,7 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Radio, ExternalLink } from 'lucide-react';
+import { Radio, ExternalLink, ArrowRight } from 'lucide-react';
 import { partners } from '../../data/partner';
 
 export const TransmissionsPanel: React.FC = () => {
@@ -48,6 +49,25 @@ export const TransmissionsPanel: React.FC = () => {
             </motion.div>
           ))}
         </div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-40px' }}
+          transition={{ duration: 0.5, delay: partners.length * 0.05 }}
+          className="mt-6 rounded-lg border border-dashed border-ops-600/40 dark:border-ops-500/40 bg-ops-50 dark:bg-ops-500/5 p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-3"
+        >
+          <p className="text-sm text-zinc-600 dark:text-zinc-300">
+            Mewakili instansi pemerintah, kesehatan, atau perusahaan?
+          </p>
+          <Link
+            to="/solusi-digital"
+            className="inline-flex items-center gap-1.5 shrink-0 font-mono text-xs uppercase tracking-wide text-ops-600 dark:text-ops-400 hover:text-ops-700 dark:hover:text-ops-300 transition-colors"
+          >
+            Lihat Solusi Khusus
+            <ArrowRight className="w-3.5 h-3.5" />
+          </Link>
+        </motion.div>
       </div>
     </section>
   );

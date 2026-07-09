@@ -59,6 +59,14 @@ export const partners: Partner[] = [
   },
   {
     id: 8,
+    name: 'Nagios Story',
+    description: 'Pengembang produk undangan digital',
+    website: '#',
+    category: 'teknologi',
+    relationship: 'Kontributor'
+  },
+  {
+    id: 9,
     name: 'Komunitas Laravel',
     description: 'Kontributor aktif ekosistem dan komunitas Laravel',
     website: '#',

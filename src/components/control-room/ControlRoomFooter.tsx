@@ -1,14 +1,22 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { contactInfo } from '../../data/contact';
 import { Monogram } from '../ui/Monogram';
 
+interface QuickLink {
+  label: string;
+  id?: string;
+  href?: string;
+}
+
 export const ControlRoomFooter: React.FC = () => {
-  const quickLinks = [
+  const quickLinks: QuickLink[] = [
     { label: 'Monitor', id: 'monitor' },
     { label: 'Stack', id: 'stack' },
     { label: 'Log', id: 'log' },
     { label: 'Transmisi', id: 'transmisi' },
     { label: 'Kontak', id: 'kontak' },
+    { label: 'Solusi Instansi', href: '/solusi-digital' },
   ];
 
   const techs = ['PHP', 'JavaScript', 'Golang', 'Laravel', 'React', 'React Native', 'TypeScript', 'MySQL', 'Postgree', 'Docker'];
@@ -53,15 +61,24 @@ export const ControlRoomFooter: React.FC = () => {
             </h4>
             <ul className="space-y-2.5">
               {quickLinks.map((link) => (
-                <li key={link.id}>
-                  <button
-                    onClick={() =>
-                      document.getElementById(link.id)?.scrollIntoView({ behavior: 'smooth' })
-                    }
-                    className="font-mono text-sm text-zinc-500 dark:text-zinc-400 hover:text-ops-600 dark:hover:text-ops-400 transition-colors"
-                  >
-                    {link.label}
-                  </button>
+                <li key={link.label}>
+                  {link.href ? (
+                    <Link
+                      to={link.href}
+                      className="font-mono text-sm text-zinc-500 dark:text-zinc-400 hover:text-ops-600 dark:hover:text-ops-400 transition-colors"
+                    >
+                      {link.label}
+                    </Link>
+                  ) : (
+                    <button
+                      onClick={() =>
+                        document.getElementById(link.id!)?.scrollIntoView({ behavior: 'smooth' })
+                      }
+                      className="font-mono text-sm text-zinc-500 dark:text-zinc-400 hover:text-ops-600 dark:hover:text-ops-400 transition-colors"
+                    >
+                      {link.label}
+                    </button>
+                  )}
                 </li>
               ))}
             </ul>
