@@ -100,6 +100,17 @@ const weddings: WeddingEntry[] = [
     accent: '#FF0000',
     theme: 'Duo Content Creator',
   },
+  {
+    id: 'bagas-nadira',
+    names: 'Bagas & Nadira',
+    date: new Date('2027-11-06T09:00:00+07:00'),
+    dateLabel: '6 November 2027',
+    location: 'Surabaya',
+    cover: '/bagas/preview.svg',
+    href: '/bagas-nadira',
+    accent: '#B8A98A',
+    theme: 'Digital Heirloom',
+  },
 ];
 
 const containerVariants: Variants = {

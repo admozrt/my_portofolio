@@ -8,6 +8,7 @@ import { WeddingPageTito } from './pages/wedding/WeddingPageTito';
 import { WeddingPageDimasLaila } from './pages/wedding/WeddingPageDimasLaila';
 import { WeddingPageAryaSekar } from './pages/wedding/WeddingPageAryaSekar';
 import { WeddingPageRezaKirana } from './pages/wedding/WeddingPageRezaKirana';
+import { WeddingPageBagasNadira } from './pages/wedding/WeddingPageBagasNadira';
 import { WeddingProjectsPage } from './pages/WeddingProjectsPage';
 import { InstitutionalSolutionsPage } from './pages/InstitutionalSolutionsPage';
 
@@ -41,6 +42,9 @@ const App: React.FC = () => {
 
         {/* Undangan Pernikahan (Duo Content Creator): /reza-kirana?to=NamaPengunjung */}
         <Route path="/reza-kirana" element={<WeddingPageRezaKirana />} />
+
+        {/* Undangan Pernikahan (Digital Heirloom): /bagas-nadira?to=NamaPengunjung */}
+        <Route path="/bagas-nadira" element={<WeddingPageBagasNadira />} />
 
         {/* Showcase proyek undangan pernikahan */}
         <Route path="/project-wedding" element={<WeddingProjectsPage />} />

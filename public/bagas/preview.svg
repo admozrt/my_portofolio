@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="900" viewBox="0 0 1200 900">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f6f4ef"/>
+      <stop offset="1" stop-color="#e6e0d2"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="900" fill="url(#g)"/>
+  <rect x="10" y="10" width="1180" height="880" fill="none" stroke="#c9c2b4" stroke-width="1.5" opacity="0.6"/>
+  <text x="50%" y="47%" font-family="Georgia, serif" font-size="70" font-style="italic" fill="#8a8272" text-anchor="middle" opacity="0.85">B & N</text>
+  <text x="50%" y="57%" font-family="Georgia, serif" font-size="22" letter-spacing="5" fill="#a39c8c" text-anchor="middle" opacity="0.8">BAGAS & NADIRA</text>
+</svg>

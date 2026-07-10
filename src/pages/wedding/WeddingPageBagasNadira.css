@@ -1,0 +1,210 @@
+@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=EB+Garamond:ital@0;1&family=Manrope:wght@300;400;500;600&display=swap");
+
+/* ─── THEME: Pearl White ────────────────────────────────── */
+.bnwed-root {
+  --bn-pearl: #faf8f4;
+  --bn-pearl-2: #f1ede4;
+  --bn-glass: rgba(255, 255, 255, 0.55);
+  --bn-glass-line: rgba(180, 170, 150, 0.35);
+  --bn-silver: #b8ae98;
+  --bn-ink: #33302a;
+  --bn-ink-dim: #726c5e;
+  --bn-line: rgba(120, 110, 90, 0.18);
+  --bn-night: #0c0c10;
+
+  font-family: "Manrope", system-ui, sans-serif;
+  font-weight: 300;
+  color: var(--bn-ink);
+  background: var(--bn-pearl);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+.bnwed-root *, .bnwed-root *::before, .bnwed-root *::after { box-sizing: border-box; }
+.bnwed-root button { font-family: inherit; cursor: pointer; border: none; background: none; color: inherit; }
+.bnwed-root a { color: inherit; }
+
+.bnwed-eyebrow { font-family: "EB Garamond", serif; font-style: italic; font-size: 15px; letter-spacing: 3px; text-transform: uppercase; color: var(--bn-silver); margin: 0 0 14px; }
+.bnwed-eyebrow.center { text-align: center; }
+.bnwed-eyebrow.light { color: rgba(255, 255, 255, 0.75); }
+.bnwed-amp { font-family: "Cormorant Garamond", serif; font-style: italic; color: var(--bn-silver); }
+
+.bnwed-reveal { opacity: 0; transform: translateY(22px); transition: opacity 0.9s ease, transform 0.9s cubic-bezier(0.16, 1, 0.3, 1); }
+.bnwed-reveal.in { opacity: 1; transform: none; }
+
+.bnwed-btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 44px; padding: 12px 24px; border-radius: 999px; font-size: 13.5px; font-weight: 500; letter-spacing: 0.4px; text-decoration: none; transition: transform 0.15s ease; }
+.bnwed-btn:active { transform: scale(0.97); }
+.bnwed-btn.primary { background: var(--bn-ink); color: var(--bn-pearl); }
+.bnwed-btn.ghost { background: transparent; color: var(--bn-ink); border: 1px solid var(--bn-glass-line); }
+.bnwed-btn.block { width: 100%; }
+.bnwed-btn:disabled { opacity: 0.6; }
+
+.bnwed-section { padding: 70px 20px; max-width: 720px; margin: 0 auto; }
+
+/* ─── GLASSMORPHISM UTILITY ─────────────────────────────── */
+.bnwed-glass {
+  background: var(--bn-glass);
+  border: 1px solid var(--bn-glass-line);
+  border-radius: 18px;
+  backdrop-filter: blur(20px) saturate(160%);
+  -webkit-backdrop-filter: blur(20px) saturate(160%);
+  box-shadow: 0 20px 60px -30px rgba(80, 70, 50, 0.35);
+}
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .bnwed-glass { background: rgba(255, 255, 255, 0.92); }
+}
+
+/* ─── OPENING LIGHT ─────────────────────────────────────── */
+.bnwed-opening {
+  position: fixed; inset: 0; z-index: 100;
+  background: var(--bn-night);
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  cursor: pointer; overflow: hidden;
+}
+.bnwed-opening-particles { position: absolute; inset: 0; width: 100%; height: 100%; }
+.bnwed-light-dot { width: 8px; height: 8px; border-radius: 50%; background: radial-gradient(circle, #fff, #e8e2d3 60%, transparent 75%); box-shadow: 0 0 40px 12px rgba(232, 226, 211, 0.5); }
+.bnwed-opening-names { position: absolute; display: flex; align-items: baseline; gap: 16px; font-family: "Cormorant Garamond", serif; font-weight: 400; font-size: clamp(34px, 9vw, 58px); color: #f5f1e6; letter-spacing: 1px; }
+.bnwed-opening-amp { font-style: italic; color: var(--bn-silver); font-size: 0.7em; }
+.bnwed-opening-hint { position: absolute; bottom: 60px; color: rgba(245, 241, 230, 0.55); font-size: 12px; letter-spacing: 3px; text-transform: uppercase; }
+
+/* ─── HERO ──────────────────────────────────────────────── */
+.bnwed-content { position: relative; }
+.bnwed-hero { position: relative; min-height: 92vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 40px 20px; overflow: hidden; }
+.bnwed-hero-gradient {
+  position: absolute; inset: -10%;
+  background: radial-gradient(700px 500px at 30% 20%, rgba(216, 205, 176, 0.5), transparent 60%),
+    radial-gradient(600px 500px at 75% 80%, rgba(198, 209, 210, 0.45), transparent 60%),
+    var(--bn-pearl);
+  animation: bnwed-ambient 22s ease-in-out infinite alternate;
+  z-index: 0;
+}
+@keyframes bnwed-ambient {
+  0% { background-position: 0% 0%, 100% 100%; }
+  100% { background-position: 15% 10%, 85% 90%; }
+}
+.bnwed-hero-card {
+  position: relative; z-index: 1;
+  max-width: 460px; width: 100%;
+  padding: 48px 32px;
+  text-align: center;
+  transform-style: preserve-3d;
+  transition: transform 0.15s ease-out;
+  will-change: transform;
+}
+.bnwed-hero-names { font-family: "Cormorant Garamond", serif; font-weight: 500; font-size: clamp(36px, 8vw, 56px); margin: 4px 0 10px; }
+.bnwed-hero-date { font-family: "EB Garamond", serif; font-style: italic; font-size: 17px; color: var(--bn-ink-dim); margin-bottom: 20px; }
+.bnwed-hero-poetry { font-family: "Cormorant Garamond", serif; font-style: italic; font-size: 18px; color: var(--bn-ink-dim); }
+
+/* ─── OUR STORY (GSAP scroll-linked) ────────────────────── */
+.bnwed-story-wrap { max-width: 760px; }
+.bnwed-story-item { position: relative; padding: 70px 0; display: grid; gap: 24px; }
+.bnwed-story-deco { position: absolute; left: 0; top: 0; bottom: 0; width: 2px; background: linear-gradient(180deg, transparent, var(--bn-silver), transparent); opacity: 0.5; }
+.bnwed-story-photo {
+  aspect-ratio: 16/9; border-radius: 14px; background-size: cover; background-position: center;
+  box-shadow: 0 24px 50px -28px rgba(80, 70, 50, 0.4);
+}
+.bnwed-story-text { padding: 0 4px; }
+.bnwed-story-num { font-family: "Cormorant Garamond", serif; font-size: 14px; letter-spacing: 3px; color: var(--bn-silver); }
+.bnwed-story-text h3 { font-family: "Cormorant Garamond", serif; font-size: clamp(24px, 5vw, 32px); font-weight: 500; margin: 4px 0 10px; }
+.bnwed-story-text p { font-family: "EB Garamond", serif; font-size: 17px; line-height: 1.7; color: var(--bn-ink-dim); }
+.bnwed-story-item.bnwed-static .bnwed-story-photo,
+.bnwed-story-item.bnwed-static .bnwed-story-text { opacity: 1; clip-path: none; filter: none; transform: none; }
+
+/* ─── COUPLE PROFILE GLASS ──────────────────────────────── */
+.bnwed-profile-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+.bnwed-profile { padding: 26px 22px; text-align: center; }
+.bnwed-profile-photo { width: 100%; aspect-ratio: 3/4; border-radius: 10px; overflow: hidden; margin-bottom: 14px; filter: blur(14px); opacity: 0; transition: filter 0.9s ease, opacity 0.9s ease; }
+.bnwed-profile-photo.in { filter: blur(0); opacity: 1; }
+.bnwed-profile-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.bnwed-profile-name { font-family: "Cormorant Garamond", serif; font-size: 18px; font-weight: 500; margin: 0; }
+.bnwed-profile-nick { font-family: "EB Garamond", serif; font-style: italic; font-size: 15px; color: var(--bn-silver); margin: 2px 0 10px; }
+.bnwed-profile-desc { font-size: 12.5px; line-height: 1.7; color: var(--bn-ink-dim); margin-bottom: 10px; }
+.bnwed-profile-parents { font-size: 11px; color: var(--bn-ink-dim); opacity: 0.85; margin-bottom: 12px; }
+.bnwed-ig { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; text-decoration: none; border: 1px solid var(--bn-glass-line); padding: 6px 14px; border-radius: 999px; min-height: 34px; transition: box-shadow 0.25s ease; }
+.bnwed-ig:hover { box-shadow: 0 0 14px 2px rgba(184, 174, 152, 0.55); }
+
+/* ─── HOLOGRAM / COUNTDOWN ──────────────────────────────── */
+.bnwed-countdown-row { display: flex; justify-content: center; gap: 16px; margin: 6px 0 34px; }
+.bnwed-countdown-cell { display: flex; flex-direction: column; align-items: center; min-width: 56px; }
+.bnwed-countdown-value { display: block; font-family: "Cormorant Garamond", serif; font-weight: 400; font-size: 34px; }
+.bnwed-countdown-label { font-family: "EB Garamond", serif; font-style: italic; font-size: 12px; color: var(--bn-ink-dim); margin-top: 4px; }
+.bnwed-hologram-card { position: relative; padding: 22px 24px; margin-bottom: 16px; color: var(--bn-ink-dim); }
+.bnwed-hologram-svg { position: absolute; inset: 0; width: 100%; height: 100%; color: var(--bn-silver); }
+.bnwed-hologram-content { position: relative; text-align: left; }
+.bnwed-hologram-content h4 { font-family: "Cormorant Garamond", serif; font-size: 19px; font-weight: 500; color: var(--bn-ink); margin: 0 0 6px; }
+.bnwed-hologram-content p { font-size: 13.5px; margin: 3px 0; }
+.bnwed-event-actions { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin: 22px 0; }
+.bnwed-map { border-radius: 14px; overflow: hidden; border: 1px solid var(--bn-glass-line); }
+.bnwed-map iframe { width: 100%; height: 200px; border: 0; display: block; filter: saturate(0.7) brightness(1.02); }
+
+/* ─── GIFT (glass + ripple) ─────────────────────────────── */
+.bnwed-gift-intro { text-align: center; font-family: "EB Garamond", serif; font-size: 17px; line-height: 1.7; color: var(--bn-ink-dim); max-width: 480px; margin: 0 auto 24px; }
+.bnwed-gift-list { display: flex; flex-direction: column; gap: 14px; max-width: 400px; margin: 0 auto; }
+.bnwed-gift-card { padding: 20px; text-align: center; }
+.bnwed-gift-type { font-family: "EB Garamond", serif; font-style: italic; letter-spacing: 1px; font-size: 12px; color: var(--bn-silver); }
+.bnwed-gift-name { font-family: "Cormorant Garamond", serif; font-size: 19px; font-weight: 500; margin: 4px 0 8px; }
+.bnwed-gift-number { font-size: 19px; letter-spacing: 1.5px; }
+.bnwed-gift-holder { font-size: 12px; color: var(--bn-ink-dim); margin: 4px 0 14px; }
+.bnwed-copy { position: relative; overflow: hidden; display: inline-flex; align-items: center; gap: 6px; min-height: 40px; padding: 8px 20px; border-radius: 999px; border: 1px solid var(--bn-glass-line); font-size: 12.5px; }
+.bnwed-copy.done { background: #7a9c7a; color: #fff; border-color: #7a9c7a; }
+.bnwed-ripple { position: absolute; width: 10px; height: 10px; margin: -5px 0 0 -5px; border-radius: 50%; background: rgba(184, 174, 152, 0.55); transform: scale(0); animation: bnwed-ripple 0.65s ease-out forwards; pointer-events: none; }
+@keyframes bnwed-ripple { to { transform: scale(9); opacity: 0; } }
+.bnwed-gift-shiplink { display: block; margin: 22px auto 0; text-align: center; font-family: "EB Garamond", serif; font-style: italic; font-size: 15px; color: var(--bn-ink-dim); text-decoration: underline; }
+.bnwed-gift-addr { overflow: hidden; max-width: 400px; margin: 0 auto; }
+.bnwed-gift-addr p { margin: 12px 0 0; font-size: 13px; line-height: 1.6; color: var(--bn-ink-dim); background: var(--bn-glass); border: 1px solid var(--bn-glass-line); border-radius: 10px; padding: 14px; }
+
+/* ─── CONSTELLATION WALL ────────────────────────────────── */
+.bnwed-constellation-section { max-width: 100%; padding: 0; }
+.bnwed-constellation-section .bnwed-eyebrow.light,
+.bnwed-constellation-section .bnwed-constellation-hint { padding: 0 20px; }
+.bnwed-constellation-section .bnwed-reveal:first-child { padding: 60px 20px 0; background: var(--bn-night); }
+.bnwed-constellation-hint { text-align: center; font-family: "EB Garamond", serif; font-style: italic; color: rgba(255, 255, 255, 0.6); font-size: 14px; margin: 0 0 30px; }
+.bnwed-constellation-canvas { position: relative; height: 420px; background: var(--bn-night); overflow: hidden; }
+.bnwed-constellation-bg { position: absolute; inset: 0; width: 100%; height: 100%; }
+.bnwed-star { position: absolute; width: 44px; height: 44px; margin: -22px 0 0 -22px; display: grid; place-items: center; }
+.bnwed-star-dot { width: 6px; height: 6px; border-radius: 50%; background: #fff; box-shadow: 0 0 10px 3px rgba(255, 255, 255, 0.5); animation: bnwed-twinkle 2.6s ease-in-out infinite; }
+@keyframes bnwed-twinkle { 0%, 100% { opacity: 0.5; } 50% { opacity: 1; } }
+.bnwed-star:hover .bnwed-star-dot, .bnwed-star:focus-visible .bnwed-star-dot { box-shadow: 0 0 16px 5px rgba(255, 255, 255, 0.8); }
+
+.bnwed-modal-backdrop { position: fixed; inset: 0; z-index: 90; background: rgba(0, 0, 0, 0.65); display: flex; align-items: center; justify-content: center; padding: 20px; }
+.bnwed-star-modal { position: relative; max-width: 380px; width: 100%; padding: 28px 24px; text-align: center; }
+.bnwed-modal-close { position: absolute; top: 12px; right: 12px; width: 34px; height: 34px; border-radius: 50%; background: rgba(0, 0, 0, 0.08); display: grid; place-items: center; }
+.bnwed-star-modal-msg { font-family: "Cormorant Garamond", serif; font-style: italic; font-size: 20px; line-height: 1.5; margin: 6px 0 14px; }
+.bnwed-star-modal-meta { font-family: "EB Garamond", serif; font-size: 13px; color: var(--bn-ink-dim); }
+
+.bnwed-form { max-width: 460px; margin: 34px auto 0; padding: 28px 24px 32px; background: var(--bn-pearl); }
+.bnwed-form-title { font-family: "Cormorant Garamond", serif; font-size: 20px; font-weight: 500; text-align: center; margin: 0 0 20px; }
+.bnwed-field { display: block; margin-bottom: 16px; }
+.bnwed-field > span { display: block; font-family: "EB Garamond", serif; font-style: italic; font-size: 14px; color: var(--bn-ink-dim); margin-bottom: 7px; }
+.bnwed-field input, .bnwed-field textarea { width: 100%; background: #fff; border: 1px solid var(--bn-glass-line); color: var(--bn-ink); border-radius: 8px; padding: 12px 14px; font-size: 14px; font-family: inherit; outline: none; }
+.bnwed-field input:focus, .bnwed-field textarea:focus { border-color: var(--bn-silver); }
+.bnwed-field textarea { resize: none; }
+.bnwed-choices { display: flex; gap: 8px; flex-wrap: wrap; }
+.bnwed-choices button { flex: 1; min-width: 96px; min-height: 44px; padding: 10px; border-radius: 8px; border: 1px solid var(--bn-glass-line); font-size: 12.5px; color: var(--bn-ink-dim); background: #fff; transition: all 0.2s ease; }
+.bnwed-choices button.on { background: var(--bn-ink); color: var(--bn-pearl); border-color: var(--bn-ink); }
+.bnwed-stepper { display: inline-flex; align-items: center; gap: 16px; background: #fff; border: 1px solid var(--bn-glass-line); border-radius: 8px; padding: 6px 14px; }
+.bnwed-stepper button { width: 32px; height: 32px; border-radius: 6px; background: var(--bn-pearl-2); font-size: 18px; }
+.bnwed-stepper b { font-size: 16px; min-width: 20px; text-align: center; }
+
+/* ─── CLOSING ───────────────────────────────────────────── */
+.bnwed-closing { text-align: center; padding: 100px 20px 0; background: var(--bn-night); color: #f5f1e6; }
+.bnwed-closing-dot { width: 8px; height: 8px; margin: 0 auto 30px; border-radius: 50%; background: radial-gradient(circle, #fff, #e8e2d3 60%, transparent 75%); box-shadow: 0 0 40px 12px rgba(232, 226, 211, 0.4); }
+.bnwed-closing-text { font-family: "EB Garamond", serif; font-style: italic; font-size: 16px; line-height: 1.8; color: rgba(245, 241, 230, 0.75); max-width: 440px; margin: 0 auto 26px; }
+.bnwed-signature { font-family: "Cormorant Garamond", serif; font-size: 36px; margin-bottom: 30px; }
+.bnwed-footer { padding: 26px 0 40px; border-top: 1px solid rgba(255, 255, 255, 0.12); display: flex; flex-direction: column; align-items: center; gap: 8px; font-size: 11.5px; letter-spacing: 0.5px; color: rgba(245, 241, 230, 0.5); }
+.bnwed-footer-credit { font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(245, 241, 230, 0.55); text-decoration: none; }
+.bnwed-footer-credit:hover { color: #fff; }
+
+/* ─── MOBILE ─────────────────────────────────────────────── */
+@media (max-width: 640px) {
+  .bnwed-profile-grid { grid-template-columns: 1fr; }
+  .bnwed-story-item { padding: 50px 0; }
+}
+
+/* ─── REDUCED MOTION ─────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .bnwed-reveal { transition: none; opacity: 1; transform: none; }
+  .bnwed-hero-gradient { animation: none; }
+  .bnwed-star-dot { animation: none; }
+  .bnwed-hero-card { transform: none !important; transition: none; }
+  .bnwed-profile-photo { transition: none; filter: none; opacity: 1; }
+}
