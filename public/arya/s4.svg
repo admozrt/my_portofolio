@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f2e6cf"/>
+      <stop offset="1" stop-color="#e7d3a6"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="800" fill="url(#g)"/>
+  <rect x="14" y="14" width="1172" height="772" fill="none" stroke="#C9A24B" stroke-width="2" opacity="0.55"/>
+  <text x="50%" y="47%" font-family="Georgia, 'Times New Roman', serif" font-size="86" fill="#8a6d2f" text-anchor="middle" opacity="0.9" font-style="italic">04</text>
+  <text x="50%" y="57%" font-family="Georgia, serif" font-size="26" letter-spacing="4" fill="#6b5836" text-anchor="middle" opacity="0.8">BABAK BARU</text>
+</svg>

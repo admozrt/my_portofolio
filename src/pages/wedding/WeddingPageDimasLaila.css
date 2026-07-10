@@ -86,6 +86,20 @@
 .dlwed-home-indicator.dark { background: rgba(255, 255, 255, 0.35); }
 .dlwed-home-indicator.tappable { cursor: pointer; flex: 0 0 auto; }
 
+/* ─── CREDIT ────────────────────────────────────────────── */
+.dlwed-credit {
+  display: block;
+  text-align: center;
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.65);
+  text-decoration: none;
+  margin: 10px 0 2px;
+}
+.dlwed-credit:hover { color: #fff; }
+.dlwed-credit.light { margin: 6px 0 2px; }
+
 /* ─── LOADER ────────────────────────────────────────────── */
 .dlwed-loader {
   position: absolute; inset: 0; z-index: 60;

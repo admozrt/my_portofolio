@@ -393,6 +393,15 @@ const LockScreen: React.FC<{ now: Date; guest: string; onUnlock: () => void }> =
           <span className="dlwed-lock-chevron">︿</span>
           Geser ke atas untuk membuka
         </div>
+        <a
+          className="dlwed-credit"
+          href="https://admoz.pages.dev"
+          target="_blank"
+          rel="noopener noreferrer"
+          onClick={(e) => e.stopPropagation()}
+        >
+          by <u>Dirakhmat</u>
+        </a>
         <div className="dlwed-home-indicator" />
       </div>
     </div>
@@ -449,6 +458,9 @@ const HomeScreen: React.FC<{ onOpen: (id: AppId) => void; ucapanCount: number }>
           );
         })}
       </div>
+      <a className="dlwed-credit light" href="https://admoz.pages.dev" target="_blank" rel="noopener noreferrer">
+        by <u>Dirakhmat</u>
+      </a>
       <div className="dlwed-home-indicator light" />
     </div>
   );

@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="562" viewBox="0 0 1000 562">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#141414"/>
+      <stop offset="1" stop-color="#2b0000"/>
+    </linearGradient>
+  </defs>
+  <rect width="1000" height="562" fill="url(#g)"/>
+  <text x="50%" y="47%" font-family="Arial, sans-serif" font-weight="800" font-size="90" fill="#ffffff" text-anchor="middle" opacity="0.92">01</text>
+  <text x="50%" y="57%" font-family="Arial, sans-serif" font-size="26" letter-spacing="5" fill="#ff4d4d" text-anchor="middle" opacity="0.9">EP 01 · KETEMU</text>
+</svg>

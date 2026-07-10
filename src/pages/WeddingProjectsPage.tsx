@@ -78,6 +78,28 @@ const weddings: WeddingEntry[] = [
     accent: '#4F46E5',
     theme: 'Smartphone Simulation',
   },
+  {
+    id: 'arya-sekar',
+    names: 'Arya & Sekar',
+    date: new Date('2027-05-15T08:00:00+07:00'),
+    dateLabel: '15 Mei 2027',
+    location: 'Yogyakarta',
+    cover: '/arya/preview.svg',
+    href: '/arya-sekar',
+    accent: '#C9A24B',
+    theme: 'Elegan & Personal',
+  },
+  {
+    id: 'reza-kirana',
+    names: 'Reza & Kirana',
+    date: new Date('2027-08-21T09:00:00+07:00'),
+    dateLabel: '21 Agustus 2027',
+    location: 'Bandung',
+    cover: '/reza/preview.svg',
+    href: '/reza-kirana',
+    accent: '#FF0000',
+    theme: 'Duo Content Creator',
+  },
 ];
 
 const containerVariants: Variants = {
