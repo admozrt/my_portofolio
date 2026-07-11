@@ -111,6 +111,17 @@ const weddings: WeddingEntry[] = [
     accent: '#B8A98A',
     theme: 'Digital Heirloom',
   },
+  {
+    id: 'wisnu-ratih',
+    names: 'Wisnu & Ratih',
+    date: new Date('2027-07-24T08:00:00+07:00'),
+    dateLabel: '24 Juli 2027',
+    location: 'Yogyakarta',
+    cover: '/wisnu/preview.svg',
+    href: '/wisnu-ratih',
+    accent: '#8A7048',
+    theme: 'Kidung Jawi',
+  },
 ];
 
 const containerVariants: Variants = {

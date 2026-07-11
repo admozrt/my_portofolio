@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 900" fill="none" preserveAspectRatio="xMidYMid slice">
+  <!-- Bingkai ganda -->
+  <rect x="12" y="12" width="276" height="876" stroke="#8A7048" stroke-width="2" opacity="0.85"/>
+  <rect x="26" y="26" width="248" height="848" stroke="#8A7048" stroke-width="1" opacity="0.5"/>
+
+  <!-- Finial atas (kuncup bunga/lotus) -->
+  <path d="M150,34 C137,54 137,78 150,96 C163,78 163,54 150,34 Z" fill="#8A7048" opacity="0.85"/>
+  <circle cx="150" cy="32" r="4" fill="#8A7048" opacity="0.85"/>
+  <path d="M120,96 C130,86 140,84 150,96" stroke="#8A7048" stroke-width="1.5" opacity="0.6"/>
+  <path d="M180,96 C170,86 160,84 150,96" stroke="#8A7048" stroke-width="1.5" opacity="0.6"/>
+
+  <!-- Bilah pengaku atas + motif kawung -->
+  <line x1="26" y1="230" x2="274" y2="230" stroke="#8A7048" stroke-width="1.5" opacity="0.7"/>
+  <path d="M150,213 L167,230 L150,247 L133,230 Z" stroke="#8A7048" stroke-width="1.5" opacity="0.85"/>
+  <circle cx="150" cy="230" r="5" fill="#8A7048" opacity="0.7"/>
+
+  <!-- Motif sulur (vine) vertikal -->
+  <path
+    d="M150,270 C176,300 124,330 150,360 C176,390 124,420 150,450
+       C176,480 124,510 150,540 C176,570 124,600 150,630"
+    stroke="#8A7048" stroke-width="2" opacity="0.85"
+  />
+  <ellipse cx="180" cy="300" rx="11" ry="5" fill="#8A7048" opacity="0.6" transform="rotate(35 180 300)"/>
+  <ellipse cx="120" cy="360" rx="11" ry="5" fill="#8A7048" opacity="0.6" transform="rotate(-35 120 360)"/>
+  <ellipse cx="180" cy="420" rx="11" ry="5" fill="#8A7048" opacity="0.6" transform="rotate(35 180 420)"/>
+  <ellipse cx="120" cy="480" rx="11" ry="5" fill="#8A7048" opacity="0.6" transform="rotate(-35 120 480)"/>
+  <ellipse cx="180" cy="540" rx="11" ry="5" fill="#8A7048" opacity="0.6" transform="rotate(35 180 540)"/>
+  <ellipse cx="120" cy="600" rx="11" ry="5" fill="#8A7048" opacity="0.6" transform="rotate(-35 120 600)"/>
+
+  <!-- Bilah pengaku bawah + motif kawung -->
+  <line x1="26" y1="670" x2="274" y2="670" stroke="#8A7048" stroke-width="1.5" opacity="0.7"/>
+  <path d="M150,653 L167,670 L150,687 L133,670 Z" stroke="#8A7048" stroke-width="1.5" opacity="0.85"/>
+  <circle cx="150" cy="670" r="5" fill="#8A7048" opacity="0.7"/>
+
+  <!-- Finial bawah (cermin dari atas) -->
+  <path d="M120,804 C130,814 140,816 150,804" stroke="#8A7048" stroke-width="1.5" opacity="0.6"/>
+  <path d="M180,804 C170,814 160,816 150,804" stroke="#8A7048" stroke-width="1.5" opacity="0.6"/>
+  <path d="M150,866 C137,846 137,822 150,804 C163,822 163,846 150,866 Z" fill="#8A7048" opacity="0.85"/>
+  <circle cx="150" cy="868" r="4" fill="#8A7048" opacity="0.85"/>
+
+  <!-- Engsel dekoratif di tepi dalam -->
+  <rect x="256" y="150" width="10" height="26" rx="2" fill="#8A7048" opacity="0.55"/>
+  <rect x="256" y="724" width="10" height="26" rx="2" fill="#8A7048" opacity="0.55"/>
+</svg>

@@ -9,6 +9,7 @@ import { WeddingPageDimasLaila } from './pages/wedding/WeddingPageDimasLaila';
 import { WeddingPageAryaSekar } from './pages/wedding/WeddingPageAryaSekar';
 import { WeddingPageRezaKirana } from './pages/wedding/WeddingPageRezaKirana';
 import { WeddingPageBagasNadira } from './pages/wedding/WeddingPageBagasNadira';
+import { WeddingPageWisnuRatih } from './pages/wedding/WeddingPageWisnuRatih';
 import { WeddingProjectsPage } from './pages/WeddingProjectsPage';
 import { InstitutionalSolutionsPage } from './pages/InstitutionalSolutionsPage';
 
@@ -24,9 +25,6 @@ const App: React.FC = () => {
 
         {/* Undangan Pernikahan: /ilmi-zahro?to=NamaPengunjung (ayah mempelai wanita: Rahmatullah) */}
         <Route path="/ilmi-zahra" element={<WeddingPageBahranFatimatul brideFather="Rohim" />} />
-
-        {/* Undangan Pernikahan: /zahra-ilmi?to=NamaPengunjung (ayah mempelai wanita: Rohim) */}
-        <Route path="/zahra-ilmi" element={<WeddingPageBahranFatimatul brideFather="Rohim" brideFirst />} />
 
         {/* Undangan Pernikahan: /anggi-rezza?to=NamaPengunjung */}
         <Route path="/anggi-rezza" element={<WeddingPageAnggi />} />
@@ -45,6 +43,9 @@ const App: React.FC = () => {
 
         {/* Undangan Pernikahan (Digital Heirloom): /bagas-nadira?to=NamaPengunjung */}
         <Route path="/bagas-nadira" element={<WeddingPageBagasNadira />} />
+
+        {/* Undangan Pernikahan (Kidung Jawi - Jawa Dark & Moody): /wisnu-ratih?to=NamaPengunjung */}
+        <Route path="/wisnu-ratih" element={<WeddingPageWisnuRatih />} />
 
         {/* Showcase proyek undangan pernikahan */}
         <Route path="/project-wedding" element={<WeddingProjectsPage />} />
