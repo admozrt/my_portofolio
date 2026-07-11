@@ -249,6 +249,13 @@ const IconVolumeOn = () => (
     <path d="M11 5 6 9H2v6h4l5 4V5Z" /><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07" />
   </svg>
 );
+const IconCornerOrnament = () => (
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" aria-hidden>
+    <path d="M2 9 V4 Q2 2 4 2 H9" />
+    <path d="M2 14 Q9 14 9 21" opacity="0.75" />
+    <circle cx="9" cy="21" r="1.3" fill="currentColor" stroke="none" opacity="0.85" />
+  </svg>
+);
 
 // ─── REVEAL ────────────────────────────────────────────────────────
 const Reveal: React.FC<{ children: React.ReactNode; className?: string }> = ({ children, className }) => {
@@ -294,7 +301,14 @@ const OpeningGapura: React.FC<{ guest: string; reduced: boolean; onEnter: () => 
           {/* )} */}
         </AnimatePresence>
         {!opened && (
-          <button className="wrwed-gapura-btn" onClick={handleOpen}>Buka Undangan</button>
+          <button className="wrwed-gapura-btn" onClick={handleOpen}>
+            <span className="wrwed-gapura-btn-pattern" style={{ backgroundImage: `url(${GAPURA_DOOR})` }} aria-hidden="true" />
+            <span className="wrwed-gapura-btn-corner tl"><IconCornerOrnament /></span>
+            <span className="wrwed-gapura-btn-corner tr"><IconCornerOrnament /></span>
+            <span className="wrwed-gapura-btn-corner bl"><IconCornerOrnament /></span>
+            <span className="wrwed-gapura-btn-corner br"><IconCornerOrnament /></span>
+            <span className="wrwed-gapura-btn-label">Buka Undangan</span>
+          </button>
         )}
       </div>
       {opened && (

@@ -4,7 +4,7 @@
 .wrwed-root {
   --wr-black: #0A0A0A;
   --wr-black-2: #121212;
-  --wr-army: #1A2420;
+  --wr-navy: #152238;
   --wr-teal: #134E4A;
   --wr-teal-deep: #0D3B36;
   --wr-gold: #8A7048;
@@ -42,24 +42,40 @@
 /* ─── OPENING GAPURA ─────────────────────────────────────── */
 .wrwed-opening { position: fixed; inset: 0; z-index: 100; background: var(--wr-black); overflow: hidden; display: flex; align-items: center; justify-content: center; }
 .wrwed-opening-bg { position: absolute; inset: 0; background-size: cover; background-position: center; filter: grayscale(0.3) brightness(0.5); }
-.wrwed-gapura-panel { position: absolute; top: 0; bottom: 0; width: 50%; background: var(--wr-army); z-index: 2; overflow: hidden; }
+.wrwed-gapura-panel { position: absolute; top: 0; bottom: 0; width: 50%; background: var(--wr-navy); z-index: 2; overflow: hidden; }
 .wrwed-gapura-panel.left { left: 0; border-right: 1px solid var(--wr-line); box-shadow: 6px 0 30px rgba(0, 0, 0, 0.6); }
 .wrwed-gapura-panel.right { right: 0; border-left: 1px solid var(--wr-line); box-shadow: -6px 0 30px rgba(0, 0, 0, 0.6); }
 .wrwed-gapura-door { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.92; }
 .wrwed-gapura-door.mirror { transform: scaleX(-1); }
 .wrwed-opening-content { position: relative; z-index: 3; text-align: center; padding: 20px; }
-.wrwed-opening-mono { font-family: "Marcellus", serif; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--wr-gold); opacity: 0.8; margin: 0 0 18px; }
-.wrwed-opening-guest { font-family: "Marcellus", serif; font-size: 13px; letter-spacing: 2px; text-transform: uppercase; color: var(--wr-ink-dim); margin-bottom: 10px; }
+.wrwed-opening-mono { font-family: "Marcellus", serif; font-size: 16px; letter-spacing: 2px; text-transform: uppercase; color: var(--wr-ink); opacity: 0.8; margin: 0 0 18px; }
+.wrwed-opening-guest { font-family: "Marcellus", serif; font-size: 16px; letter-spacing: 2px; text-transform: uppercase; color: var(--wr-ink); margin-bottom: 10px; }
 .wrwed-opening-names { font-family: "Cormorant", serif; font-weight: 500; font-size: clamp(34px, 8vw, 56px); color: var(--wr-ink); }
-.wrwed-opening-savedate { font-family: "Marcellus", serif; font-size: 12px; letter-spacing: 1.5px; color: var(--wr-gold); margin-top: 10px; }
-.wrwed-gapura-btn { font-family: "Marcellus", serif; font-size: 13px; letter-spacing: 2px; text-transform: uppercase; color: var(--wr-gold); border: 1px solid var(--wr-gold); padding: 14px 30px; border-radius: 2px; min-height: 44px; background: rgba(138, 112, 72, 0.08); }
+.wrwed-opening-savedate { font-family: "Marcellus", serif; font-size: 18px; letter-spacing: 1.5px; color: var(--wr-ink); margin-top: 10px; }
+.wrwed-gapura-btn {
+  position: relative; overflow: visible;
+  font-family: "Marcellus", serif; font-size: 13px; letter-spacing: 2px; text-transform: uppercase;
+  color: var(--wr-gold); border: 1px solid var(--wr-gold); padding: 22px 56px; margin-top: 28px; border-radius: 2px;
+  min-height: 44px; background: rgba(138, 112, 72, 0.1);
+}
+.wrwed-gapura-btn-pattern {
+  position: absolute; inset: 0; border-radius: inherit;
+  background-size: 70px auto; background-repeat: repeat;
+  opacity: 0.16; pointer-events: none; z-index: 0;
+}
+.wrwed-gapura-btn-label { position: relative; z-index: 1; }
+.wrwed-gapura-btn-corner { position: absolute; z-index: 1; width: 18px; height: 18px; color: var(--wr-gold); opacity: 0.85; pointer-events: none; }
+.wrwed-gapura-btn-corner.tl { top: -9px; left: -9px; }
+.wrwed-gapura-btn-corner.tr { top: -9px; right: -9px; transform: scaleX(-1); }
+.wrwed-gapura-btn-corner.bl { bottom: -9px; left: -9px; transform: scaleY(-1); }
+.wrwed-gapura-btn-corner.br { bottom: -9px; right: -9px; transform: scale(-1, -1); }
 .wrwed-opening-credit { position: absolute; left: 0; right: 0; bottom: 20px; z-index: 3; text-align: center; }
 .wrwed-opening-credit a { font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--wr-ink-dim); text-decoration: none; }
 .wrwed-opening-credit a:hover { color: var(--wr-gold); }
 
 /* ─── HERO / VIDEO ───────────────────────────────────────── */
 .wrwed-content { position: relative; }
-.wrwed-hero { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 40px 20px; background: linear-gradient(180deg, var(--wr-black), var(--wr-army) 130%); }
+.wrwed-hero { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 40px 20px; background: linear-gradient(180deg, var(--wr-black), var(--wr-navy) 130%); }
 .wrwed-hero-intro { text-align: center; max-width: 460px; margin-bottom: 22px; }
 .wrwed-hero-mono { font-family: "Marcellus", serif; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--wr-gold); opacity: 0.85; margin: 0 0 6px; }
 .wrwed-hero-names { font-family: "Cormorant", serif; font-weight: 500; font-size: clamp(24px, 5vw, 34px); color: var(--wr-ink); margin: 0 0 10px; }
@@ -91,7 +107,7 @@
 
 /* ─── OUR STORY (slider/carousel) ───────────────────────── */
 .wrwed-story-slider { position: relative; overflow: hidden; }
-.wrwed-story-leaf { padding: 14px; border: 1px solid var(--wr-line); border-radius: 4px; background: rgba(26, 36, 32, 0.35); }
+.wrwed-story-leaf { padding: 14px; border: 1px solid var(--wr-line); border-radius: 4px; background: rgba(21, 34, 56, 0.35); }
 .wrwed-story-photo { aspect-ratio: 16/9; border-radius: 3px; background-size: cover; background-position: center; filter: grayscale(0.2) contrast(1.05); margin-bottom: 14px; }
 .wrwed-story-num { font-family: "Cormorant", serif; font-size: 13px; letter-spacing: 3px; color: var(--wr-gold); }
 .wrwed-story-text h3 { font-family: "Cormorant", serif; font-size: clamp(20px, 4vw, 26px); font-weight: 500; margin: 2px 0 6px; color: var(--wr-ink); }
@@ -115,7 +131,7 @@
 
 /* ─── COUPLE PROFILE ─────────────────────────────────────── */
 .wrwed-profile-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-.wrwed-profile { text-align: center; padding: 16px; border: 1px solid var(--wr-line); border-radius: 4px; background: rgba(26, 36, 32, 0.3); }
+.wrwed-profile { text-align: center; padding: 16px; border: 1px solid var(--wr-line); border-radius: 4px; background: rgba(21, 34, 56, 0.3); }
 .wrwed-profile-photo { width: 100%; aspect-ratio: 3/4; border-radius: 3px; overflow: hidden; margin-bottom: 14px; filter: grayscale(0.2) contrast(1.05); }
 .wrwed-profile-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .wrwed-profile-name { font-family: "Cormorant", serif; font-size: 18px; font-weight: 500; margin: 0; }
@@ -129,7 +145,7 @@
 .wrwed-countdown-row > div { display: flex; flex-direction: column; align-items: center; min-width: 54px; }
 .wrwed-countdown-row b { font-family: "Cormorant", serif; font-weight: 400; font-size: 32px; color: var(--wr-gold); }
 .wrwed-countdown-row span { font-size: 11px; letter-spacing: 0.5px; text-transform: uppercase; color: var(--wr-ink-dim); margin-top: 4px; }
-.wrwed-event-card { background: var(--wr-army); border: 1px solid var(--wr-line); border-radius: 4px; padding: 16px; margin-bottom: 10px; }
+.wrwed-event-card { background: var(--wr-navy); border: 1px solid var(--wr-line); border-radius: 4px; padding: 16px; margin-bottom: 10px; }
 .wrwed-event-card h4 { font-family: "Cormorant", serif; font-size: 19px; font-weight: 500; color: var(--wr-gold); margin: 0 0 8px; }
 .wrwed-event-card p { font-size: 13.5px; color: var(--wr-ink-dim); margin: 3px 0; }
 .wrwed-event-actions { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin: 14px 0; }
@@ -139,7 +155,7 @@
 /* ─── GIFT SECTION ───────────────────────────────────────── */
 .wrwed-gift-intro { text-align: center; font-family: "Cormorant", serif; font-style: italic; font-size: 17px; line-height: 1.7; color: var(--wr-ink-dim); max-width: 480px; margin: 0 auto 16px; }
 .wrwed-gift-list { display: flex; flex-direction: column; gap: 10px; max-width: 400px; margin: 0 auto; }
-.wrwed-gift-card { background: var(--wr-army); border: 1px solid var(--wr-line); border-radius: 4px; padding: 14px; text-align: center; }
+.wrwed-gift-card { background: var(--wr-navy); border: 1px solid var(--wr-line); border-radius: 4px; padding: 14px; text-align: center; }
 .wrwed-gift-type { font-family: "Marcellus", serif; letter-spacing: 1px; font-size: 11.5px; color: var(--wr-gold); text-transform: uppercase; }
 .wrwed-gift-name { font-family: "Cormorant", serif; font-size: 19px; font-weight: 500; margin: 4px 0 8px; color: var(--wr-ink); }
 .wrwed-gift-number { font-size: 19px; letter-spacing: 1.5px; color: var(--wr-ink); font-weight: 500; }
@@ -149,7 +165,7 @@
 .wrwed-copy.done { background: #4b7a5f; color: #fff; border-color: #4b7a5f; }
 .wrwed-gift-shiplink { display: block; margin: 22px auto 0; text-align: center; font-family: "Cormorant", serif; font-style: italic; font-size: 15px; color: var(--wr-ink-dim); text-decoration: underline; }
 .wrwed-gift-addr { overflow: hidden; max-width: 400px; margin: 0 auto; }
-.wrwed-gift-addr p { margin: 12px 0 0; font-size: 13px; line-height: 1.6; color: var(--wr-ink-dim); background: var(--wr-army); border: 1px solid var(--wr-line); border-radius: 4px; padding: 14px; }
+.wrwed-gift-addr p { margin: 12px 0 0; font-size: 13px; line-height: 1.6; color: var(--wr-ink-dim); background: var(--wr-navy); border: 1px solid var(--wr-line); border-radius: 4px; padding: 14px; }
 
 /* ─── GUEST BOOK ─────────────────────────────────────────── */
 .wrwed-form { max-width: 460px; margin: 0 auto 20px; }
@@ -180,7 +196,7 @@
 .wrwed-footer { padding: 22px 0 0; border-top: 1px solid var(--wr-line); display: flex; flex-direction: column; align-items: center; gap: 8px; font-size: 11px; letter-spacing: 0.5px; color: var(--wr-ink-dim); }
 .wrwed-footer-credit { font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--wr-ink-dim); text-decoration: none; }
 .wrwed-footer-credit:hover { color: var(--wr-gold); }
-.wrwed-gapura-panel.closing { position: absolute; width: 14%; z-index: 1; opacity: 0.9; background: var(--wr-army); overflow: hidden; }
+.wrwed-gapura-panel.closing { position: absolute; width: 14%; z-index: 1; opacity: 0.9; background: var(--wr-navy); overflow: hidden; }
 .wrwed-gapura-panel.closing.left { left: 0; border-right: 1px solid var(--wr-line); }
 .wrwed-gapura-panel.closing.right { right: 0; border-left: 1px solid var(--wr-line); }
 
