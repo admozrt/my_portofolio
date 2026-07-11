@@ -63,14 +63,14 @@ const ROUTES = {
   },
   portfolio: {
     match: () => true, // default
-    title: "Adi Rakhmatullah Ma’arif – Pengembang Full Stack | Laravel & React",
+    title: "Adi Rakhmatullah Ma’arif – Software Engineer & Software Developer",
     description:
-      "Pengembang Full Stack berpengalaman dalam Laravel, React, dan teknologi web modern. Membangun aplikasi web yang scalable, responsif, dan sistem informasi.",
+      "Software Engineer & Software Developer. Menerjemahkan masalah bisnis jadi solusi digital yang benar-benar terpakai",
     image: BASE + "/my.png",
     imageW: "1024",
     imageH: "1278",
     url: BASE,
-    siteName: "Admoz Portfolio",
+    siteName: "Adi Rakhmatullah Ma’arif - Portfolio",
   },
 };
 
