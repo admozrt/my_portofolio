@@ -159,23 +159,16 @@ function sectionHeading(doc, title) {
   doc.moveDown(0.8);
 }
 
-function drawSquarePhoto(doc, x, y, size) {
+function drawPhoto(doc, x, y, width, height) {
   if (!fs.existsSync(PHOTO_FILE)) return;
-  const drawWidth = size;
-  const drawHeight = size * (1120 / 846); // cover, source is portrait
-  const cx = x + size / 2;
-  const cy = y + size / 2;
 
   doc.save();
-  doc.rect(x, y, size, size).clip();
-  doc.image(PHOTO_FILE, cx - drawWidth / 2, cy - drawHeight / 2, {
-    width: drawWidth,
-    height: drawHeight,
-  });
+  doc.rect(x, y, width, height).clip();
+  doc.image(PHOTO_FILE, x, y, { width, height });
   doc.restore();
 
   doc
-    .rect(x, y, size, size)
+    .rect(x, y, width, height)
     .lineWidth(1.5)
     .strokeColor(COLORS.accent)
     .stroke();
@@ -244,11 +237,12 @@ function generate() {
   doc.pipe(fs.createWriteStream(OUT_FILE));
 
   // ---------- Header ----------
-  const photoSize = 90;
-  drawSquarePhoto(doc, PAGE_MARGIN, PAGE_MARGIN, photoSize);
+  const photoWidth = 90;
+  const photoHeight = photoWidth * (1120 / 846); // matches source aspect ratio, no cropping
+  drawPhoto(doc, PAGE_MARGIN, PAGE_MARGIN, photoWidth, photoHeight);
 
-  const textX = PAGE_MARGIN + photoSize + 22;
-  const textWidth = CONTENT_WIDTH - (photoSize + 22);
+  const textX = PAGE_MARGIN + photoWidth + 22;
+  const textWidth = CONTENT_WIDTH - (photoWidth + 22);
 
   doc
     .font('Helvetica-Bold')
@@ -272,7 +266,7 @@ function generate() {
   const contactLine = contact.map((c) => `${c.label}: ${c.text}`).join('    |    ');
   doc.text(contactLine, textX, doc.y + 8, { width: textWidth });
 
-  doc.y = Math.max(doc.y, PAGE_MARGIN + photoSize) + 10;
+  doc.y = Math.max(doc.y, PAGE_MARGIN + photoHeight) + 10;
   divider(doc, doc.y);
   doc.moveDown(1);
 
