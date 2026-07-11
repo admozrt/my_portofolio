@@ -17,7 +17,7 @@ export const InstitutionalSolutionsPage: React.FC = () => {
     <div className="font-sans min-h-screen">
       <SEOHead
         data={{
-          title: "Solusi Digital untuk Instansi - Adi Rakhmatullah Ma'arif",
+          title: "Solusi Digital - Adi Rakhmatullah Ma'arif",
           description:
             'Sistem digital yang terukur, aman, dan bisa dipertanggungjawabkan untuk instansi pemerintah, kesehatan, dan logistik.',
           keywords: ['Solusi Produk Digital', 'Sistem Pemerintahan', 'Sistem Kesehatan', 'Software Engineer'],

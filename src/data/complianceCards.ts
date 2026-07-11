@@ -34,4 +34,13 @@ export const complianceCards: ComplianceCard[] = [
       'Akses administratif ke server menggunakan jalur privat (mis. VPN/Tailscale), bukan expose port publik langsung, untuk mengurangi permukaan serangan.',
     referenceNumber: 'DOC-2026-03',
   },
+  {
+    title: 'Integrasi Payment Gateway',
+    stampLabel: 'IMPLEMENTED',
+    shortDescription:
+      'Transaksi pembayaran diproses melalui payment gateway berlisensi, bukan penanganan dana secara manual.',
+    detailDescription:
+      'Pada proyek TMU Ferry (PT. Timur Mila Utama), pembayaran tiket kapal terintegrasi dengan Midtrans, Xendit, dan Bank BCA. Pada proyek BPPRD Kota Banjarbaru, pembayaran pajak/retribusi daerah terintegrasi dengan Bank Kalsel.',
+    referenceNumber: 'DOC-2026-04',
+  },
 ];
