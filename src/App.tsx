@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { PortfolioPage } from './pages/PortfolioPage';
 import { WeddingPageAjie } from './pages/wedding/WeddingPageAjie';
-import { WeddingPageBahranFatimatul } from './pages/wedding/WeddingPageBahranFatimatul';
+// import { WeddingPageBahranFatimatul } from './pages/wedding/WeddingPageBahranFatimatul';
 import { WeddingPageAnggi } from './pages/wedding/WeddingPageAnggi';
 import { WeddingPageTito } from './pages/wedding/WeddingPageTito';
 import { WeddingPageDimasLaila } from './pages/wedding/WeddingPageDimasLaila';
