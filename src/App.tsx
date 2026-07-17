@@ -1,5 +1,5 @@
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { PortfolioPage } from './pages/PortfolioPage';
 import { WeddingPageAjie } from './pages/wedding/WeddingPageAjie';
 import { WeddingPageBahranFatimatul } from './pages/wedding/WeddingPageBahranFatimatul';
@@ -13,9 +13,21 @@ import { WeddingPageWisnuRatih } from './pages/wedding/WeddingPageWisnuRatih';
 import { WeddingProjectsPage } from './pages/WeddingProjectsPage';
 import { InstitutionalSolutionsPage } from './pages/InstitutionalSolutionsPage';
 
+const ScrollToTop: React.FC = () => {
+  const { pathname, hash } = useLocation();
+
+  useEffect(() => {
+    if (hash) return;
+    window.scrollTo(0, 0);
+  }, [pathname, hash]);
+
+  return null;
+};
+
 const App: React.FC = () => {
   return (
     <Router>
+      <ScrollToTop />
       <Routes>
         {/* Portfolio (halaman utama) */}
         <Route path="/" element={<PortfolioPage />} />

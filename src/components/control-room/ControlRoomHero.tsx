@@ -60,7 +60,7 @@ export const ControlRoomHero: React.FC = () => {
           transition={{ duration: 0.8, ease: EASE, delay: 0.5 }}
           className="mt-5 font-mono text-sm text-zinc-600 dark:text-zinc-400"
         >
-          Adi Rakhmatullah Ma'arif — Software Engineer. Scroll untuk menyalakan ruang monitor.
+          Adi Rakhmatullah Ma'arif — Software Engineer.
         </motion.p>
       </div>
 
