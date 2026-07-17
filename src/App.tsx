@@ -24,7 +24,7 @@ const App: React.FC = () => {
         <Route path="/ajie-alya" element={<WeddingPageAjie />} />
 
         {/* Undangan Pernikahan: /ilmi-zahro?to=NamaPengunjung (ayah mempelai wanita: Rahmatullah) */}
-        <Route path="/ilmi-zahra" element={<WeddingPageBahranFatimatul brideFather="Rohim" />} />
+        {/* <Route path="/ilmi-zahra" element={<WeddingPageBahranFatimatul brideFather="Rohim" />} /> */}
 
         {/* Undangan Pernikahan: /anggi-rezza?to=NamaPengunjung */}
         <Route path="/anggi-rezza" element={<WeddingPageAnggi />} />
