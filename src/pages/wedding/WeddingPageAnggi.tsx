@@ -380,7 +380,7 @@ export const WeddingPageAnggi: React.FC = () => {
             </button>
             <a
               className="crafted reveal in d4"
-              href="https://admoz.pages.dev"
+              href="https://dirakhmat.app"
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -728,7 +728,7 @@ export const WeddingPageAnggi: React.FC = () => {
           Anggi &amp; Rezza · 12 Juli 2026 · Banjarbaru
           <br />
           <a
-            href="https://admoz.pages.dev"
+            href="https://dirakhmat.app"
             target="_blank"
             rel="noopener noreferrer"
             className="crafted-foot"

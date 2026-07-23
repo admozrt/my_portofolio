@@ -395,7 +395,7 @@ const LockScreen: React.FC<{ now: Date; guest: string; onUnlock: () => void }> =
         </div>
         <a
           className="dlwed-credit"
-          href="https://admoz.pages.dev"
+          href="https://dirakhmat.app"
           target="_blank"
           rel="noopener noreferrer"
           onClick={(e) => e.stopPropagation()}
@@ -458,7 +458,7 @@ const HomeScreen: React.FC<{ onOpen: (id: AppId) => void; ucapanCount: number }>
           );
         })}
       </div>
-      <a className="dlwed-credit light" href="https://admoz.pages.dev" target="_blank" rel="noopener noreferrer">
+      <a className="dlwed-credit light" href="https://dirakhmat.app" target="_blank" rel="noopener noreferrer">
         by <u>Dirakhmat</u>
       </a>
       <div className="dlwed-home-indicator light" />

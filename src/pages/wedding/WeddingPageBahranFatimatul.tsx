@@ -679,7 +679,7 @@ export const WeddingPageBahranFatimatul: React.FC<WeddingPageBahranFatimatulProp
 
         {/* Made by credit (centered bottom) */}
         <div className="bfwed-cover-credit">
-          <a href="https://admoz.pages.dev" target="_blank" rel="noopener noreferrer">
+          <a href="https://dirakhmat.app" target="_blank" rel="noopener noreferrer">
             by <u> Dirakhmat </u>
           </a>
         </div>
@@ -1115,7 +1115,7 @@ export const WeddingPageBahranFatimatul: React.FC<WeddingPageBahranFatimatulProp
               © {new Date().getFullYear()} · {nameA} &amp; {nameB}
             </div>
             <a
-              href="https://admoz.pages.dev"
+              href="https://dirakhmat.app"
               target="_blank"
               rel="noopener noreferrer"
               className="bfwed-footer-credit"

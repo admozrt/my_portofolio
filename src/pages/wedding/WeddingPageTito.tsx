@@ -536,7 +536,7 @@ export const WeddingPageTito: React.FC = () => {
         </div>
 
         <div className="titowed-cover-credit">
-          <a href="https://admoz.pages.dev" target="_blank" rel="noopener noreferrer">
+          <a href="https://dirakhmat.app" target="_blank" rel="noopener noreferrer">
             by <u> Dirakhmat </u>
           </a>
         </div>
@@ -988,7 +988,7 @@ export const WeddingPageTito: React.FC = () => {
               © {new Date().getFullYear()} · {nameA} &amp; {nameB}
             </div>
             <a
-              href="https://admoz.pages.dev"
+              href="https://dirakhmat.app"
               target="_blank"
               rel="noopener noreferrer"
               className="titowed-footer-credit"

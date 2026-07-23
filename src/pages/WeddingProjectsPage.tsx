@@ -209,8 +209,8 @@ export const WeddingProjectsPage: React.FC = () => {
             'Kumpulan microsite undangan pernikahan digital yang dibangun sebagai proyek portofolio, masing-masing dengan tema dan interaksi tersendiri.',
           keywords: ['Undangan Pernikahan Digital', 'Wedding Invitation', 'React', 'Portofolio'],
           author: "Adi Rakhmatullah Ma'arif",
-          url: 'https://admoz.pages.dev/project-wedding',
-          image: 'https://admoz.pages.dev/tito/preview.jpg',
+          url: 'https://dirakhmat.app/project-wedding',
+          image: 'https://dirakhmat.app/tito/preview.jpg',
           type: 'website',
         }}
       />

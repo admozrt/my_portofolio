@@ -347,7 +347,7 @@ export const WeddingPageAjie: React.FC = () => {
           </div>
 
           <a className="cover-credit"
-            href="https://admoz.pages.dev"
+            href="https://dirakhmat.app"
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -745,7 +745,7 @@ export const WeddingPageAjie: React.FC = () => {
         <footer className="wedding-footer">
           by{" "}
             <a className="footer-link"
-            href="https://admoz.pages.dev"
+            href="https://dirakhmat.app"
             target="_blank"
             rel="noopener noreferrer"
           >

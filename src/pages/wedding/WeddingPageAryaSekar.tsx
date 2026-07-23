@@ -604,7 +604,7 @@ export const WeddingPageAryaSekar: React.FC = () => {
           <Closing />
           <footer className="aswed-footer">
             <div>Dibuat dengan ♥ · {GROOM_FIRST} &amp; {BRIDE_FIRST}</div>
-            <a className="aswed-footer-credit" href="https://admoz.pages.dev" target="_blank" rel="noopener noreferrer">
+            <a className="aswed-footer-credit" href="https://dirakhmat.app" target="_blank" rel="noopener noreferrer">
               by <u>Dirakhmat</u>
             </a>
           </footer>

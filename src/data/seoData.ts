@@ -5,7 +5,7 @@ export const seoData: SEOData = {
   description: "Software Engineer berpengalaman lebih dari 6 tahun mengubah masalah bisnis menjadi solusi digital yang scalable dan mudah digunakan.",
   keywords: ["Software Engineer", "Solusi Digital", "Pengembang Laravel", "Pengembang React", "PHP", "JavaScript", "Pengembangan Web", "Indonesia"],
   author: "Adi Rakhmatullah Ma'arif",
-  url: "https://admoz.pages.dev",
-  image: "https://admoz.pages.dev/my.png",
+  url: "https://dirakhmat.app",
+  image: "https://dirakhmat.app/my.png",
   type: "website"
 };

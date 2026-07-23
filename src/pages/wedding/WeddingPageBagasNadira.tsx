@@ -758,7 +758,7 @@ const ClosingLight: React.FC = () => (
       <div className="bnwed-signature">{GROOM_FIRST} &amp; {BRIDE_FIRST}</div>
       <footer className="bnwed-footer">
         <div>© {new Date().getFullYear()} · {GROOM_FIRST} &amp; {BRIDE_FIRST}</div>
-        <a className="bnwed-footer-credit" href="https://admoz.pages.dev" target="_blank" rel="noopener noreferrer">
+        <a className="bnwed-footer-credit" href="https://dirakhmat.app" target="_blank" rel="noopener noreferrer">
           by <u>Dirakhmat</u>
         </a>
       </footer>

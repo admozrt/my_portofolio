@@ -313,7 +313,7 @@ const OpeningGapura: React.FC<{ guest: string; reduced: boolean; onEnter: () => 
       </div>
       {opened && (
         <div className="wrwed-opening-credit">
-          <a href="https://admoz.pages.dev" target="_blank" rel="noopener noreferrer">
+          <a href="https://dirakhmat.app" target="_blank" rel="noopener noreferrer">
             by <u>Dirakhmat</u>
           </a>
         </div>
@@ -700,7 +700,7 @@ const ClosingGapura: React.FC = () => (
       <div className="wrwed-signature">{GROOM_FIRST} &amp; {BRIDE_FIRST}</div>
       <footer className="wrwed-footer">
         <div>© {new Date().getFullYear()} · {GROOM_FIRST} &amp; {BRIDE_FIRST}</div>
-        <a className="wrwed-footer-credit" href="https://admoz.pages.dev" target="_blank" rel="noopener noreferrer">
+        <a className="wrwed-footer-credit" href="https://dirakhmat.app" target="_blank" rel="noopener noreferrer">
           by <u>Dirakhmat</u>
         </a>
       </footer>

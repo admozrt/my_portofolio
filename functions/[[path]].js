@@ -9,7 +9,7 @@
  * sit alongside static serving and never replace it for normal users.
  */
 
-const BASE = "https://admoz.pages.dev";
+const BASE = "https://dirakhmat.app";
 
 const ROUTES = {
   weddingAjie: {
@@ -102,9 +102,19 @@ function buildMetaTags(meta) {
   ].join("\n    ");
 }
 
+const OLD_HOST = "admoz.pages.dev";
+const NEW_HOST = "dirakhmat.app";
+
 export async function onRequest(context) {
   const { request, next, env } = context;
   const url = new URL(request.url);
+
+  // Old domain → permanently redirect to the new domain, same path/query
+  if (url.hostname === OLD_HOST) {
+    url.hostname = NEW_HOST;
+    url.protocol = "https:";
+    return Response.redirect(url.toString(), 301);
+  }
 
   // Pass through static asset requests immediately
   if (ASSET_EXT.test(url.pathname)) {

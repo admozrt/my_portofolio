@@ -606,7 +606,7 @@ const ClosingOutro: React.FC = () => {
         </button>
         <footer className="rkwed-footer">
           <div>© {new Date().getFullYear()} · {GROOM_FIRST} &amp; {BRIDE_FIRST} Official</div>
-          <a className="rkwed-footer-credit" href="https://admoz.pages.dev" target="_blank" rel="noopener noreferrer">
+          <a className="rkwed-footer-credit" href="https://dirakhmat.app" target="_blank" rel="noopener noreferrer">
             by <u>Dirakhmat</u>
           </a>
         </footer>

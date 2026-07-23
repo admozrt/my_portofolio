@@ -22,8 +22,8 @@ export const InstitutionalSolutionsPage: React.FC = () => {
             'Sistem digital yang terukur, aman, dan bisa dipertanggungjawabkan untuk instansi pemerintah, kesehatan, dan logistik.',
           keywords: ['Solusi Produk Digital', 'Sistem Pemerintahan', 'Sistem Kesehatan', 'Software Engineer'],
           author: "Adi Rakhmatullah Ma'arif",
-          url: 'https://admoz.pages.dev/solusi-instansi',
-          image: 'https://admoz.pages.dev/my.png',
+          url: 'https://dirakhmat.app/solusi-digital',
+          image: 'https://dirakhmat.app/my.png',
           type: 'website',
         }}
       />
