@@ -165,35 +165,35 @@ export const CorePOSPage: React.FC = () => {
           scrolled ? 'border-corepos-line bg-corepos-cream/85 backdrop-blur-md' : 'border-transparent bg-transparent'
         }`}
       >
-        <div className="mx-auto flex h-[72px] max-w-7xl items-center justify-between px-6">
-          <Link to="/" className="flex items-center gap-2.5">
+        <div className="mx-auto flex min-h-[60px] max-w-7xl items-center justify-between gap-2 px-4 py-2 sm:h-[72px] sm:gap-0 sm:px-6 sm:py-0">
+          <Link to="/" className="flex shrink-0 items-center gap-1.5">
             <ArrowLeft className="h-4 w-4 text-corepos-ink-soft" />
             <span className="hidden text-[13px] font-semibold text-corepos-ink-soft sm:block">Portofolio</span>
           </Link>
-          <div className="flex items-center gap-2.5">
-            <LogoMark boxClass="flex h-10 w-10 items-center justify-center rounded-[8px]" />
-            <span className="font-serif text-lg tracking-tight">{BRAND.name}</span>
+          <div className="flex min-w-0 items-center gap-2 sm:gap-2.5">
+            <LogoMark boxClass="flex h-8 w-8 shrink-0 items-center justify-center rounded-[8px] sm:h-10 sm:w-10" />
+            <span className="hidden truncate font-serif text-lg tracking-tight sm:block">{BRAND.name}</span>
           </div>
-          <div className="flex items-center gap-3">
+          <div className="flex shrink-0 items-center gap-3">
             <nav className="hidden items-center gap-6 md:flex">
               <a href="#fitur" className="text-[13.5px] font-semibold text-corepos-ink-soft transition-colors hover:text-corepos-ink">Fitur</a>
               <a href="#sektor" className="text-[13.5px] font-semibold text-corepos-ink-soft transition-colors hover:text-corepos-ink">Sektor</a>
               <a href="#faq" className="text-[13.5px] font-semibold text-corepos-ink-soft transition-colors hover:text-corepos-ink">FAQ</a>
             </nav>
-            {primaryCta('inline-flex items-center gap-1.5 rounded-full bg-corepos-ink px-4 py-2 text-[13px] font-semibold text-corepos-gold transition-transform hover:scale-105', false)}
+            {primaryCta('inline-flex items-center gap-1.5 whitespace-nowrap rounded-full bg-corepos-ink px-3 py-1.5 text-[11.5px] font-semibold text-corepos-gold transition-transform hover:scale-105 sm:px-4 sm:py-2 sm:text-[13px]', false)}
           </div>
         </div>
       </header>
 
       {/* ---------------- Hero ---------------- */}
-      <section className="relative overflow-hidden bg-corepos-ink pb-28 pt-40 text-corepos-cream">
+      <section className="relative overflow-hidden bg-corepos-ink pb-16 pt-24 text-corepos-cream sm:pb-28 sm:pt-40">
         <div aria-hidden className="pointer-events-none absolute -left-32 top-10 h-[420px] w-[420px] rounded-full bg-corepos-accent opacity-40 blur-[110px]" />
         <div aria-hidden className="pointer-events-none absolute -right-24 top-40 h-[360px] w-[360px] rounded-full bg-corepos-gold opacity-30 blur-[100px]" />
 
-        <div className="relative mx-auto flex max-w-7xl flex-col items-center px-6 text-center">
-          <div className="flex items-center gap-2.5">
-            <LogoMark boxClass="flex h-16 w-16 items-center justify-center" />
-            <span className="font-serif text-2xl tracking-tight">{BRAND.name}</span>
+        <div className="relative mx-auto flex max-w-7xl flex-col items-center px-4 text-center sm:px-6">
+          <div className="flex flex-col items-center gap-1.5 sm:flex-row sm:gap-2.5">
+            <LogoMark boxClass="flex h-12 w-12 items-center justify-center sm:h-16 sm:w-16" />
+            <span className="font-serif text-lg tracking-tight sm:text-2xl">{BRAND.name}</span>
           </div>
 
           <Reveal className="mt-6 inline-flex items-center gap-2 rounded-full border border-corepos-gold/20 bg-white/5 px-4 py-1.5 text-[12.5px] font-semibold text-corepos-gold/80 backdrop-blur">
@@ -405,7 +405,7 @@ export const CorePOSPage: React.FC = () => {
             <p className="max-w-xs text-[13px] leading-relaxed">{BRAND.tagline} — dikonfigurasi bukan dibangun ulang.</p>
           </div>
 
-          <div className="flex gap-14">
+          <div className="flex gap-10 sm:gap-14">
             <div className="flex flex-col gap-2.5 text-[13px]">
               <span className="font-bold text-corepos-gold">Produk</span>
               <a href="#katalog" className="hover:text-corepos-gold">Katalog Menu</a>
@@ -447,14 +447,14 @@ function PosMockup() {
   ];
 
   return (
-    <div className="mx-auto max-w-4xl rounded-[22px] border border-white/10 bg-white/[0.04] p-2.5 shadow-[0_60px_120px_-40px_rgba(0,0,0,0.6)] backdrop-blur">
+    <div className="mx-auto max-w-4xl rounded-[16px] border border-white/10 bg-white/[0.04] p-1.5 shadow-[0_60px_120px_-40px_rgba(0,0,0,0.6)] backdrop-blur sm:rounded-[22px] sm:p-2.5">
       <div className="flex items-center gap-1.5 px-2 pb-2.5 pt-1">
         <span className="h-2.5 w-2.5 rounded-full bg-corepos-danger/60" />
         <span className="h-2.5 w-2.5 rounded-full bg-corepos-gold/50" />
         <span className="h-2.5 w-2.5 rounded-full bg-corepos-success/60" />
       </div>
-      <div className="grid grid-cols-[1fr_260px] overflow-hidden rounded-2xl bg-corepos-cream-soft text-left">
-        <div className="p-5">
+      <div className="grid grid-cols-1 overflow-hidden rounded-xl bg-corepos-cream-soft text-left sm:grid-cols-[1fr_260px] sm:rounded-2xl">
+        <div className="p-4 sm:p-5">
           <div className="mb-4 flex items-center justify-between">
             <span className="text-[12px] font-extrabold text-corepos-ink">Espresso Based</span>
             <span className="text-[10.5px] font-semibold text-corepos-muted">Kasir · Rani</span>
@@ -471,7 +471,7 @@ function PosMockup() {
             ))}
           </div>
         </div>
-        <div className="flex flex-col border-l border-corepos-line-soft bg-corepos-surface p-4">
+        <div className="flex flex-col border-t border-corepos-line-soft bg-corepos-surface p-4 sm:border-l sm:border-t-0">
           <div className="text-[11px] font-extrabold text-corepos-ink">Open Bill #204</div>
           <div className="mt-3 flex-1 space-y-2.5">
             {cart.map((c) => (
