@@ -49,6 +49,56 @@
   50% { opacity: 0; }
 }
 
+/* Monitor Wall card (Control Room) — scanline sweep, signal-trace draw, chip stagger. */
+.monitor-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(100deg, transparent 40%, rgba(34, 197, 94, 0.08) 50%, transparent 60%);
+  background-size: 220% 100%;
+  background-position: 150% 0;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+.monitor-card:hover::before {
+  opacity: 1;
+  animation: monitorCardSweep 1.3s ease forwards;
+}
+@keyframes monitorCardSweep {
+  from { background-position: 150% 0; }
+  to { background-position: -50% 0; }
+}
+
+.monitor-card-trace {
+  stroke-dasharray: 520;
+  stroke-dashoffset: 520;
+  animation: monitorCardDraw 1.6s linear infinite;
+  animation-play-state: paused;
+}
+.monitor-card:hover .monitor-card-trace {
+  animation-play-state: running;
+}
+@keyframes monitorCardDraw {
+  0% { stroke-dashoffset: 520; }
+  60% { stroke-dashoffset: 0; }
+  100% { stroke-dashoffset: -520; }
+}
+
+.monitor-card-chip {
+  transform: translateY(6px);
+  opacity: 0;
+  animation: monitorCardChipIn 0.4s ease forwards;
+  animation-play-state: paused;
+}
+.monitor-card:hover .monitor-card-chip,
+.monitor-card[aria-expanded="true"] .monitor-card-chip {
+  animation-play-state: running;
+}
+@keyframes monitorCardChipIn {
+  to { transform: translateY(0); opacity: 1; }
+}
+
 /* Global scrollbar — neutral, single accent thumb. */
 ::-webkit-scrollbar {
   width: 8px;

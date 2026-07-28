@@ -35,6 +35,25 @@ module.exports = {
           800: "#166534",
           900: "#14532d",
         },
+        // Locked palette for the "Core POS" product landing (/corepos) only —
+        // mirrors the product's own brand identity, kept isolated from the
+        // portfolio's accent/ops scales.
+        corepos: {
+          accent: "#3b7ab5",
+          ink: "#2d3b4e",
+          "ink-soft": "#535e6e",
+          gold: "#F3D9B8",
+          cream: "#dadeec",
+          "cream-soft": "#ebedf5",
+          surface: "#fafafa",
+          "surface-2": "#f8f9fc",
+          muted: "#707f89",
+          "muted-soft": "#8a969e",
+          line: "#d2d8e9",
+          "line-soft": "#e6eaf3",
+          success: "#2E7D57",
+          danger: "#cb1a1a",
+        },
       },
       maxWidth: {
         "8xl": "88rem",

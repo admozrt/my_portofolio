@@ -73,26 +73,26 @@ export const projects: Project[] = [
     ]
   },
   {
-    id: 4,
-    title: 'Sistem Manajemen Indikator Mutu & Insiden Keselamatan Pasien',
-    description: 'Aplikasi ini membantu pencatatan Indikator Mutu (IM) & Insiden Keselamatan Pasien (IKP) di setiap unit/instalasi. Data realisasi harian otomatis terangkum menjadi capaian bulanan untuk monitoring dan pelaporan.',
-    technologies: ['Laravel', 'Inertia.js', 'Typescript', 'Tailwind', 'MySQL', 'Cetak PDF'],
-    link: '#',
-    gradient: 'from-orange-500 via-orange-600 to-yellow-400',
-    icon: 'fas fa-shield-alt',
-    logo: '/images/projects/logos/logo-rsj.png',
-    status: 'selesai',
-    domain: 'Kesehatan',
-    monitorStatus: 'OPERATIONAL',
+    id: 10,
+    title: 'Core POS by Dirakhmat',
+    description: 'Sistem kasir dinamis multi-sektor — satu platform yang dikonfigurasi (bukan dibangun ulang) untuk Retail, F&B, Jasa, Apotek, dan Koperasi. RBAC granular, stok FEFO, struk digital, dan dashboard real-time.',
+    technologies: ['Laravel', 'React', 'TypeScript', 'Tailwind', 'MySQL'],
+    link: '/corepos',
+    gradient: 'from-sky-500 via-blue-600 to-indigo-600',
+    logo: '/corepos/icon.png',
+    featured: true,
+    status: 'sedang_berjalan',
+    domain: 'Retail & UMKM Multi-Sektor',
+    monitorStatus: 'LIVE',
     metrics: [
-      { label: 'Uptime', value: '99.6%' },
-      { label: 'Unit Terhubung', value: '12+' },
-      { label: 'Laporan Bulanan', value: '30+' }
+      { label: 'Peran Akses', value: '6' },
+      { label: 'Template Sektor', value: '5' },
+      { label: 'Konfigurasi Tanpa Kode', value: '100%' }
     ],
     logEntries: [
-      { timestamp: '07:45', message: 'Insiden baru dicatat' },
-      { timestamp: '07:50', message: 'Indikator mutu direkap' },
-      { timestamp: '08:00', message: 'Laporan bulanan digenerate' }
+      { timestamp: '09:15', message: 'Transaksi kasir tercatat' },
+      { timestamp: '09:20', message: 'Stok FEFO diperbarui' },
+      { timestamp: '09:25', message: 'Struk digital dikirim' }
     ]
   },
   {
@@ -116,6 +116,29 @@ export const projects: Project[] = [
       { timestamp: '11:00', message: 'Undangan baru dipublikasikan' },
       { timestamp: '11:05', message: 'RSVP tamu masuk' },
       { timestamp: '11:10', message: 'Ucapan dikirim' }
+    ]
+  },
+  {
+    id: 4,
+    title: 'Sistem Manajemen Indikator Mutu & Insiden Keselamatan Pasien',
+    description: 'Aplikasi ini membantu pencatatan Indikator Mutu (IM) & Insiden Keselamatan Pasien (IKP) di setiap unit/instalasi. Data realisasi harian otomatis terangkum menjadi capaian bulanan untuk monitoring dan pelaporan.',
+    technologies: ['Laravel', 'Inertia.js', 'Typescript', 'Tailwind', 'MySQL', 'Cetak PDF'],
+    link: '#',
+    gradient: 'from-orange-500 via-orange-600 to-yellow-400',
+    icon: 'fas fa-shield-alt',
+    logo: '/images/projects/logos/logo-rsj.png',
+    status: 'selesai',
+    domain: 'Kesehatan',
+    monitorStatus: 'OPERATIONAL',
+    metrics: [
+      { label: 'Uptime', value: '99.6%' },
+      { label: 'Unit Terhubung', value: '12+' },
+      { label: 'Laporan Bulanan', value: '30+' }
+    ],
+    logEntries: [
+      { timestamp: '07:45', message: 'Insiden baru dicatat' },
+      { timestamp: '07:50', message: 'Indikator mutu direkap' },
+      { timestamp: '08:00', message: 'Laporan bulanan digenerate' }
     ]
   },
   {

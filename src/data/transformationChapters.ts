@@ -81,4 +81,17 @@ export const transformationChapters: TransformationChapter[] = [
     ],
     isConfidential: false,
   },
+  {
+    id: 'corepos',
+    projectId: 10,
+    beforeProblem: 'Usaha lintas sektor terjebak pakai kasir generik yang dipaksakan',
+    beforeDescription:
+      'Retail, F&B, jasa, apotek, dan koperasi masing-masing punya alur transaksi berbeda — kebanyakan sistem kasir off-the-shelf memaksa semua sektor memakai satu alur yang sama, atau mahal untuk dikustomisasi ulang.',
+    afterMetrics: [
+      { label: 'Template Sektor Siap Pakai', value: 5 },
+      { label: 'Peran Akses Granular', value: 6 },
+      { label: 'Konfigurasi Tanpa Kode', value: 100, suffix: '%' },
+    ],
+    isConfidential: false,
+  },
 ];

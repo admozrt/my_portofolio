@@ -151,7 +151,7 @@ export const MonitorWall: React.FC = () => {
           </p>
         ) : (
           <div className="relative">
-            <div className="overflow-hidden">
+            <div className="overflow-hidden p-2">
               <AnimatePresence mode="wait" custom={direction} initial={false}>
                 <motion.div
                   key={`${clampedPage}-${search}-${domain}`}
@@ -161,7 +161,7 @@ export const MonitorWall: React.FC = () => {
                   animate="center"
                   exit="exit"
                   transition={{ duration: 0.4, ease: EASE }}
-                  className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"
+                  className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 items-start"
                 >
                   {pageItems.map((project, i) => (
                     <MonitorCard key={project.id} project={project} index={i} />

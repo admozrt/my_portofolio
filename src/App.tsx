@@ -12,6 +12,7 @@ import { WeddingPageBagasNadira } from './pages/wedding/WeddingPageBagasNadira';
 import { WeddingPageWisnuRatih } from './pages/wedding/WeddingPageWisnuRatih';
 import { WeddingProjectsPage } from './pages/WeddingProjectsPage';
 import { InstitutionalSolutionsPage } from './pages/InstitutionalSolutionsPage';
+import { CorePOSPage } from './pages/CorePOSPage';
 
 const ScrollToTop: React.FC = () => {
   const { pathname, hash } = useLocation();
@@ -64,6 +65,9 @@ const App: React.FC = () => {
 
         {/* Halaman solusi untuk klien institusional */}
         <Route path="/solusi-digital" element={<InstitutionalSolutionsPage />} />
+
+        {/* Landing produk Core POS (Sistem Kasir Dinamis Multi-Sektor) */}
+        <Route path="/corepos" element={<CorePOSPage />} />
       </Routes>
     </Router>
   );
