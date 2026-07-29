@@ -66,6 +66,8 @@ export interface Partner {
 }
 
 // SEO-related types
+export type SEOSchemaType = 'Person' | 'SoftwareApplication' | 'Service';
+
 export interface SEOData {
   title: string;
   description: string;
@@ -74,6 +76,8 @@ export interface SEOData {
   url: string;
   image: string;
   type: string;
+  /** JSON-LD schema.org @type — defaults to 'Person' if omitted */
+  schemaType?: SEOSchemaType;
 }
 
 // Component prop types

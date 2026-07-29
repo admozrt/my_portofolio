@@ -17,14 +17,26 @@ export const InstitutionalSolutionsPage: React.FC = () => {
     <div className="font-sans min-h-screen">
       <SEOHead
         data={{
-          title: "Solusi Digital - Adi Rakhmatullah Ma'arif",
+          title: "Solusi Digital Institusional — Adi Rakhmatullah Ma'arif",
           description:
-            'Sistem digital yang terukur, aman, dan bisa dipertanggungjawabkan untuk instansi pemerintah, kesehatan, dan logistik.',
-          keywords: ['Solusi Produk Digital', 'Sistem Pemerintahan', 'Sistem Kesehatan', 'Software Engineer'],
+            'Sistem digital yang terukur, aman, dan dapat dipertanggungjawabkan untuk instansi pemerintah, layanan kesehatan, dan logistik. Dibangun dengan Laravel, React, dan teknologi modern.',
+          keywords: [
+            'Solusi Digital',
+            'Sistem Informasi Pemerintahan',
+            'Sistem Informasi Kesehatan',
+            'Sistem Manajemen Logistik',
+            'Software Custom',
+            'Pengembangan Sistem',
+            'Laravel',
+            'React',
+            'Software Engineer Indonesia',
+            'Digital Transformation',
+          ],
           author: "Adi Rakhmatullah Ma'arif",
           url: 'https://dirakhmat.app/solusi-digital',
           image: 'https://dirakhmat.app/my.png',
           type: 'website',
+          schemaType: 'Service',
         }}
       />
 

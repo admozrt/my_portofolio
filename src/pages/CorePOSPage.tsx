@@ -151,11 +151,25 @@ export const CorePOSPage: React.FC = () => {
           title: 'Core POS by Dirakhmat — Sistem Kasir Dinamis Multi-Sektor',
           description:
             'Satu platform kasir untuk Retail, F&B, Jasa, Apotek, dan Koperasi — dikonfigurasi bukan dibangun ulang. RBAC granular, stok FEFO, struk digital, dan dashboard real-time.',
-          keywords: ['Core POS', 'Sistem Kasir', 'Aplikasi POS', 'Software Kasir Multi-Sektor', 'Dirakhmat'],
+          keywords: [
+            'Core POS',
+            'Sistem Kasir',
+            'Aplikasi POS',
+            'Software Kasir',
+            'Point of Sale',
+            'Kasir Multi-Sektor',
+            'Kasir Retail',
+            'Kasir F&B',
+            'Kasir Apotek',
+            'Kasir Koperasi',
+            'Software Kasir Indonesia',
+            'Dirakhmat',
+          ],
           author: "Adi Rakhmatullah Ma'arif",
           url: 'https://dirakhmat.app/corepos',
           image: 'https://dirakhmat.app/corepos/icon.png',
           type: 'website',
+          schemaType: 'SoftwareApplication',
         }}
       />
 

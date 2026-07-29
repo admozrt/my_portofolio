@@ -61,6 +61,28 @@ const ROUTES = {
     url: BASE + "/tito-wina",
     siteName: "Undangan Pernikahan",
   },
+  corepos: {
+    match: (path) => /corepos/i.test(path),
+    title: "Core POS by Dirakhmat — Sistem Kasir Dinamis Multi-Sektor",
+    description:
+      "Satu platform kasir untuk Retail, F&B, Jasa, Apotek, dan Koperasi — dikonfigurasi bukan dibangun ulang. RBAC granular, stok FEFO, struk digital, dan dashboard real-time.",
+    image: BASE + "/corepos/icon.png",
+    imageW: "512",
+    imageH: "512",
+    url: BASE + "/corepos",
+    siteName: "Core POS by Dirakhmat",
+  },
+  solusiDigital: {
+    match: (path) => /solusi-digital/i.test(path),
+    title: "Solusi Digital Institusional — Adi Rakhmatullah Ma'arif",
+    description:
+      "Sistem digital yang terukur, aman, dan dapat dipertanggungjawabkan untuk instansi pemerintah, layanan kesehatan, dan logistik.",
+    image: BASE + "/my.png",
+    imageW: "997",
+    imageH: "1247",
+    url: BASE + "/solusi-digital",
+    siteName: "Adi Rakhmatullah Ma'arif - Portfolio",
+  },
   portfolio: {
     match: () => true, // default
     title: "Adi Rakhmatullah Ma’arif – Software Engineer & Software Developer",
@@ -90,7 +112,7 @@ function buildMetaTags(meta) {
     `<meta property="og:description" content="${meta.description}" />`,
     `<meta property="og:image" content="${meta.image}" />`,
     `<meta property="og:image:secure_url" content="${meta.image}" />`,
-    `<meta property="og:image:type" content="image/jpeg" />`,
+    `<meta property="og:image:type" content="${/\.png$/i.test(meta.image) ? 'image/png' : 'image/jpeg'}" />`,
     `<meta property="og:image:width" content="${meta.imageW}" />`,
     `<meta property="og:image:height" content="${meta.imageH}" />`,
     `<meta property="og:url" content="${meta.url}" />`,

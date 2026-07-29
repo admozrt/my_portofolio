@@ -1,6 +1,7 @@
 {
-  "short_name": "Admoz",
-  "name": "Create React App Sample",
+  "short_name": "Dirakhmat",
+  "name": "Adi Rakhmatullah Ma'arif - Portfolio",
+  "description": "Software Engineer & Developer — Laravel, React, PHP, JavaScript",
   "icons": [
     {
       "src": "favicon.ico",
@@ -18,8 +19,8 @@
       "sizes": "512x512"
     }
   ],
-  "start_url": ".",
+  "start_url": "/",
   "display": "standalone",
-  "theme_color": "#000000",
-  "background_color": "#ffffff"
+  "theme_color": "#09090b",
+  "background_color": "#09090b"
 }
