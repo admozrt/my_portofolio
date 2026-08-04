@@ -28,7 +28,27 @@ const GALLERY_PHOTOS = [
   "/tito/NGS_3923.webp",
   "/tito/NGS_4190.webp",
   "/tito/NGS_3754.webp",
-  "/tito/NGS_3780.webp",
+  "/tito/NGS_1.webp",
+  "/tito/NGS_2.webp",
+  "/tito/NGS_3.webp",
+  "/tito/NGS_4.webp",
+  "/tito/NGS_5.webp",
+  "/tito/NGS_6.webp",
+  "/tito/NGS_7.webp",
+  "/tito/NGS_8.webp",
+  "/tito/NGS_9.webp",
+  "/tito/NGS_10.webp",
+  "/tito/NGS_11.webp",
+];
+
+// Endpoint Google Apps Script Web App untuk RSVP & Ucapan.
+// Kosongkan ("") untuk mode demo (data hanya tersimpan sementara di layar).
+// Cara setup: lihat public/tito/README-google-sheets.md
+const SHEETS_ENDPOINT = "https://script.google.com/macros/s/AKfycbwnP4xRBXaqhWv8aZjNKSEUb3kQvs1cRzQPCvQ0AKkkmhEIPe-Zj6G6VHrM08ODRd4Mdg/exec";
+
+const UCAPAN_SEED: UcapanItem[] = [
+  { nama: "Keluarga Besar", pesan: "Barakallahu lakuma wa baraka alaikuma. Semoga menjadi keluarga sakinah, mawaddah, warahmah.", time: Date.now() - 1000 * 60 * 35 },
+  { nama: "Sahabat", pesan: "Selamat menempuh hidup baru Tito & Wina! Bahagia selalu untuk kalian berdua.", time: Date.now() - 1000 * 60 * 95 },
 ];
 
 // Cerita Kami / Our Story — draf generik, silakan sunting sesuai cerita asli
@@ -113,6 +133,60 @@ const GIFTS = [
 ];
 
 const GIFT_ADDRESS = "Jl. Sempati Komp. Asabri RT/RW 045/009";
+
+// ─── TYPES ─────────────────────────────────────────────────────────
+interface UcapanItem {
+  nama: string;
+  pesan: string;
+  time: number;
+}
+type Kehadiran = "Hadir" | "Tidak Hadir" | "Masih Ragu";
+
+const KEHADIRAN_OPTIONS: Kehadiran[] = ["Hadir", "Tidak Hadir", "Masih Ragu"];
+const PESAN_MAX = 200;
+const UCAPAN_PREVIEW = 5;
+
+// ─── RSVP / UCAPAN (Google Apps Script) ────────────────────────────
+async function submitToSheet(payload: Record<string, string>): Promise<boolean> {
+  if (!SHEETS_ENDPOINT) return true; // mode demo: anggap sukses
+  try {
+    await fetch(SHEETS_ENDPOINT, {
+      method: "POST",
+      mode: "no-cors",
+      headers: { "Content-Type": "text/plain;charset=utf-8" },
+      body: JSON.stringify(payload),
+    });
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+async function fetchUcapan(): Promise<UcapanItem[] | null> {
+  if (!SHEETS_ENDPOINT) return null; // mode demo → pakai seed
+  try {
+    const res = await fetch(SHEETS_ENDPOINT, { method: "GET" });
+    const data = await res.json();
+    if (!data || !Array.isArray(data.ucapan)) return null;
+    return data.ucapan.map((u: { nama: string; pesan: string; time: string }) => ({
+      nama: u.nama,
+      pesan: u.pesan,
+      time: new Date(u.time).getTime() || Date.now(),
+    }));
+  } catch {
+    return null;
+  }
+}
+
+function relativeTime(ts: number): string {
+  const diff = Date.now() - ts;
+  const min = Math.floor(diff / 60000);
+  if (min < 1) return "baru saja";
+  if (min < 60) return `${min} menit lalu`;
+  const hr = Math.floor(min / 60);
+  if (hr < 24) return `${hr} jam lalu`;
+  return `${Math.floor(hr / 24)} hari lalu`;
+}
 
 function downloadIcs(title: string, location: string, nameA: string, nameB: string): void {
   const fmt = (d: Date) => d.toISOString().replace(/[-:.]/g, "").slice(0, 15) + "Z";
@@ -333,6 +407,131 @@ function CornerFlowers({ corners }: { corners: Array<"tl" | "tr" | "br"> }) {
   );
 }
 
+// ─── RSVP FORM ─────────────────────────────────────────────────────
+function RsvpForm({ guest, onAdd }: { guest: string; onAdd: (u: UcapanItem) => void }) {
+  const [nama, setNama] = useState(guest === "Tamu Undangan" ? "" : guest);
+  const [kehadiran, setKehadiran] = useState<Kehadiran>("Hadir");
+  const [jumlah, setJumlah] = useState(1);
+  const [pesan, setPesan] = useState("");
+  const [state, setState] = useState<"idle" | "sending" | "done">("idle");
+
+  const submit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!nama.trim() || !pesan.trim() || state === "sending") return;
+    setState("sending");
+    const item: UcapanItem = { nama: nama.trim(), pesan: pesan.trim(), time: Date.now() };
+    await Promise.all([
+      submitToSheet({
+        type: "rsvp",
+        nama: item.nama,
+        kehadiran,
+        jumlah: kehadiran === "Tidak Hadir" ? "0" : String(jumlah),
+        pesan: item.pesan,
+      }),
+      submitToSheet({ type: "ucapan", nama: item.nama, pesan: item.pesan }),
+    ]);
+    onAdd(item);
+    setState("done");
+  };
+
+  if (state === "done") {
+    return (
+      <div className="titowed-rsvp-success">
+        <svg className="titowed-rsvp-check" viewBox="0 0 52 52" aria-hidden="true">
+          <circle cx="26" cy="26" r="24" />
+          <path d="M15 27 L23 35 L38 19" />
+        </svg>
+        <h3>Terima kasih, {nama}!</h3>
+        <p>
+          {kehadiran === "Hadir"
+            ? "Konfirmasi kehadiranmu sudah kami terima. Sampai jumpa di hari bahagia kami."
+            : kehadiran === "Masih Ragu"
+              ? "Terima kasih atas kabarnya. Kami tetap menantikan kehadiranmu."
+              : "Terima kasih atas doa dan ucapannya. Restumu sudah lebih dari cukup bagi kami."}
+        </p>
+        <button
+          type="button"
+          className="titowed-rsvp-again"
+          onClick={() => { setPesan(""); setState("idle"); }}
+        >
+          Kirim Ucapan Lagi
+        </button>
+      </div>
+    );
+  }
+
+  const activeIdx = KEHADIRAN_OPTIONS.indexOf(kehadiran);
+
+  return (
+    <form className="titowed-rsvp-form" onSubmit={submit}>
+      <label className="titowed-rsvp-field">
+        <span>Nama</span>
+        <input
+          value={nama}
+          onChange={(e) => setNama(e.target.value)}
+          placeholder="Nama Anda"
+          autoComplete="name"
+          required
+        />
+      </label>
+
+      <div className="titowed-rsvp-field">
+        <span>Konfirmasi Kehadiran</span>
+        <div
+          className="titowed-rsvp-choices"
+          style={{ ["--active-idx" as string]: activeIdx }}
+          role="radiogroup"
+          aria-label="Konfirmasi kehadiran"
+        >
+          <span className="titowed-rsvp-choices-pill" aria-hidden="true" />
+          {KEHADIRAN_OPTIONS.map((k) => (
+            <button
+              key={k}
+              type="button"
+              role="radio"
+              aria-checked={kehadiran === k}
+              className={kehadiran === k ? "on" : ""}
+              onClick={() => setKehadiran(k)}
+            >
+              {k}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <div className={`titowed-rsvp-guests${kehadiran === "Tidak Hadir" ? " hidden" : ""}`}>
+        <div className="titowed-rsvp-field">
+          <span>Jumlah Tamu</span>
+          <div className="titowed-rsvp-stepper">
+            <button type="button" onClick={() => setJumlah((n) => Math.max(1, n - 1))} disabled={jumlah <= 1} aria-label="Kurangi">−</button>
+            <b>{jumlah}</b>
+            <button type="button" onClick={() => setJumlah((n) => Math.min(10, n + 1))} disabled={jumlah >= 10} aria-label="Tambah">+</button>
+          </div>
+        </div>
+      </div>
+
+      <label className="titowed-rsvp-field">
+        <span>
+          Ucapan &amp; Doa
+          <em className={pesan.length > PESAN_MAX - 30 ? "near" : ""}>{pesan.length}/{PESAN_MAX}</em>
+        </span>
+        <textarea
+          value={pesan}
+          onChange={(e) => setPesan(e.target.value.slice(0, PESAN_MAX))}
+          rows={3}
+          placeholder="Tuliskan ucapan & doa untuk kami…"
+          required
+        />
+      </label>
+
+      <button className="titowed-rsvp-submit" type="submit" disabled={state === "sending"}>
+        {state === "sending" ? "Mengirim…" : "Kirim Ucapan"}
+        {state !== "sending" && <IconArrow size={12} />}
+      </button>
+    </form>
+  );
+}
+
 // ─── MAIN COMPONENT ────────────────────────────────────────────────
 
 export const WeddingPageTito: React.FC = () => {
@@ -348,6 +547,12 @@ export const WeddingPageTito: React.FC = () => {
   const [storyStep, setStoryStep] = useState(0);
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
   const [giftTab, setGiftTab] = useState<"angpao" | "gift">("angpao");
+  const [galleryIndex, setGalleryIndex] = useState(0);
+  const [ucapanList, setUcapanList] = useState<UcapanItem[]>(UCAPAN_SEED);
+  const [showAllUcapan, setShowAllUcapan] = useState(false);
+  const galleryTrackRef = useRef<HTMLDivElement | null>(null);
+  const visibleUcapan = showAllUcapan ? ucapanList : ucapanList.slice(0, UCAPAN_PREVIEW);
+  const hadirCount = ucapanList.length;
   const scrollY = useScrollY();
   const countdown = useCountdown(WEDDING_DATE.getTime());
   const showStickyHeader = isOpen && scrollY > 480;
@@ -374,6 +579,7 @@ export const WeddingPageTito: React.FC = () => {
   const [storyRef,   storyVisible]   = useInView(0.1);
   const [galleryRef, galleryVisible] = useInView(0.1);
   const [giftRef,    giftVisible]    = useInView(0.1);
+  const [rsvpRef,    rsvpVisible]    = useInView(0.1);
   const [closingRef, closingVisible] = useInView(0.1);
 
   const heroScale   = Math.max(1, 1.1 - (scrollY / 600) * 0.1);
@@ -460,6 +666,37 @@ export const WeddingPageTito: React.FC = () => {
     window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 12, behavior: "smooth" });
   };
 
+  // ── Galeri slider ──
+  const onGalleryScroll = useCallback(() => {
+    const el = galleryTrackRef.current;
+    if (!el) return;
+    const card = el.querySelector<HTMLElement>(".g");
+    if (!card) return;
+    const step = card.offsetWidth + 12; // lebar kartu + gap
+    setGalleryIndex(Math.min(GALLERY_PHOTOS.length - 1, Math.max(0, Math.round(el.scrollLeft / step))));
+  }, []);
+
+  const scrollGallery = useCallback((dir: 1 | -1) => {
+    const el = galleryTrackRef.current;
+    if (!el) return;
+    const card = el.querySelector<HTMLElement>(".g");
+    if (!card) return;
+    el.scrollBy({ left: dir * (card.offsetWidth + 12), behavior: "smooth" });
+  }, []);
+
+  // ── Ucapan: ambil dari Google Sheets bila endpoint diisi ──
+  useEffect(() => {
+    let alive = true;
+    fetchUcapan().then((data) => {
+      if (alive && data && data.length) setUcapanList(data);
+    });
+    return () => { alive = false; };
+  }, []);
+
+  const addUcapan = useCallback((u: UcapanItem) => {
+    setUcapanList((prev) => [u, ...prev]);
+  }, []);
+
   return (
     <div className="titowed-root">
       <audio ref={audioRef} src={BG_AUDIO} loop preload="none" />
@@ -487,6 +724,7 @@ export const WeddingPageTito: React.FC = () => {
         <nav className="titowed-sticky-header-links">
           <button onClick={() => gotoSection("tw-lokasi")}>Lokasi</button>
           <button onClick={() => gotoSection("tw-hadiah")}>Hadiah</button>
+          <button onClick={() => gotoSection("tw-rsvp")}>RSVP</button>
           <button onClick={() => gotoSection("tw-penutup")}>Penutup</button>
         </nav>
       </header>
@@ -838,19 +1076,49 @@ export const WeddingPageTito: React.FC = () => {
             </p>
           </div>
 
-          <div className={`titowed-gallery titowed-reveal${galleryVisible ? " in" : ""}`}
+          <div className={`titowed-gallery-wrap titowed-reveal${galleryVisible ? " in" : ""}`}
             style={{ transitionDelay: "0.15s" }}>
-            {GALLERY_PHOTOS.map((src, i) => (
-              <button
-                key={i}
-                type="button"
-                className={`g g${i + 1}`}
-                onClick={() => openLightbox(i)}
-                aria-label={`Buka foto galeri ${i + 1}`}
-              >
-                <img src={src} alt={`Galeri ${i + 1}`} loading="lazy" />
-              </button>
-            ))}
+            <div
+              className="titowed-gallery"
+              ref={galleryTrackRef}
+              onScroll={onGalleryScroll}
+            >
+              {GALLERY_PHOTOS.map((src, i) => (
+                <button
+                  key={i}
+                  type="button"
+                  className="g"
+                  onClick={() => openLightbox(i)}
+                  aria-label={`Buka foto galeri ${i + 1}`}
+                >
+                  <img src={src} alt={`Galeri ${i + 1}`} loading="lazy" decoding="async" />
+                </button>
+              ))}
+            </div>
+
+            <button
+              type="button"
+              className="titowed-gallery-arrow prev"
+              onClick={() => scrollGallery(-1)}
+              disabled={galleryIndex === 0}
+              aria-label="Foto sebelumnya"
+            >
+              <IconArrow size={12} />
+            </button>
+            <button
+              type="button"
+              className="titowed-gallery-arrow next"
+              onClick={() => scrollGallery(1)}
+              disabled={galleryIndex >= GALLERY_PHOTOS.length - 1}
+              aria-label="Foto berikutnya"
+            >
+              <IconArrow size={12} />
+            </button>
+
+            <div className="titowed-gallery-counter">
+              {String(galleryIndex + 1).padStart(2, "0")} / {String(GALLERY_PHOTOS.length).padStart(2, "0")}
+              <span className="titowed-gallery-hint">geser untuk melihat</span>
+            </div>
           </div>
 
           <div className={`titowed-reveal${galleryVisible ? " in" : ""}`}
@@ -941,7 +1209,59 @@ export const WeddingPageTito: React.FC = () => {
           </p>
         </section>
 
-        {/* ── 7. Closing ── */}
+        {/* ── 7. RSVP & Ucapan ── */}
+        <section
+          id="tw-rsvp"
+          className="titowed-section titowed-rsvp-section"
+          ref={rsvpRef as React.RefObject<HTMLElement>}
+        >
+          <div className={`titowed-reveal${rsvpVisible ? " in" : ""}`} style={{ textAlign: "center" }}>
+            <div className="titowed-eyebrow">◆ RSVP ◆</div>
+            <h2 className="titowed-section-heading">Konfirmasi &amp; Ucapan</h2>
+            <OrnDivider width={140} />
+            <p style={{ fontSize: 14, color: "var(--tw-ink-2)",
+              maxWidth: 460, margin: "18px auto 0", lineHeight: 1.8 }}>
+              Doa restu Bapak/Ibu/Saudara/i adalah hadiah terindah bagi kami.
+              Mohon konfirmasi kehadiran melalui formulir di bawah ini.
+            </p>
+            {hadirCount > 0 && (
+              <p className="titowed-rsvp-summary">
+                {hadirCount} ucapan telah kami terima
+              </p>
+            )}
+          </div>
+
+          <div className={`titowed-rsvp-body titowed-reveal${rsvpVisible ? " in" : ""}`}
+            style={{ transitionDelay: "0.15s" }}>
+            <RsvpForm guest={visitorName} onAdd={addUcapan} />
+
+            <div className="titowed-rsvp-list">
+              {visibleUcapan.map((u, i) => (
+                <article key={`${u.time}-${i}`} className="titowed-rsvp-card">
+                  <header>
+                    <span className="titowed-rsvp-card-name">{u.nama}</span>
+                    <span className="titowed-rsvp-card-time">{relativeTime(u.time)}</span>
+                  </header>
+                  <p>{u.pesan}</p>
+                </article>
+              ))}
+
+              {ucapanList.length > UCAPAN_PREVIEW && (
+                <button
+                  type="button"
+                  className="titowed-rsvp-more"
+                  onClick={() => setShowAllUcapan((v) => !v)}
+                >
+                  {showAllUcapan
+                    ? "Tampilkan Lebih Sedikit"
+                    : `Lihat Semua Ucapan (${ucapanList.length})`}
+                </button>
+              )}
+            </div>
+          </div>
+        </section>
+
+        {/* ── 8. Closing ── */}
         <section
           id="tw-penutup"
           className="titowed-section titowed-closing-section"

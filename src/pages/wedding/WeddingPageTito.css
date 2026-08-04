@@ -963,14 +963,26 @@
   padding-top: 20px;
   padding-bottom: 20px;
 }
-.titowed-gallery {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: auto auto auto;
-  gap: 12px;
+/* ── Galeri: slider peek scroll-snap (mobile-first) ─────────── */
+.titowed-gallery-wrap {
+  position: relative;
   max-width: 900px;
   margin: 0 auto 26px;
 }
+.titowed-gallery {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: contain;
+  padding: 0 18px 4px;          /* padding samping = ruang "peek" */
+  scroll-padding-inline: 18px;
+  scrollbar-width: none;
+}
+.titowed-gallery::-webkit-scrollbar { display: none; }
 .titowed-gallery .g {
   appearance: none;
   border: 0;
@@ -981,12 +993,58 @@
   cursor: pointer;
   border-radius: 6px;
   display: block;
+  flex: 0 0 78%;                /* mobile: foto berikutnya mengintip */
+  aspect-ratio: 3 / 4;
+  scroll-snap-align: center;
 }
-.titowed-gallery .g1 { grid-column: 1; grid-row: 1; aspect-ratio: 3 / 4; }
-.titowed-gallery .g2 { grid-column: 2; grid-row: 1; aspect-ratio: 3 / 4; }
-.titowed-gallery .g3 { grid-column: 1; grid-row: 2; aspect-ratio: 2 / 3; }
-.titowed-gallery .g4 { grid-column: 2; grid-row: 2; aspect-ratio: 2 / 3; }
-.titowed-gallery .g5 { grid-column: 1/3; grid-row: 3; aspect-ratio: auto; }
+/* Panah navigasi — desktop saja, mobile pakai swipe */
+.titowed-gallery-arrow {
+  display: none;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 2;
+  appearance: none;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid var(--tw-line);
+  background: rgba(20, 19, 22, 0.72);
+  color: var(--tw-ink);
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.25s ease, opacity 0.25s ease, color 0.25s ease;
+}
+.titowed-gallery-arrow:hover:not(:disabled) { background: rgba(20, 19, 22, 0.92); color: var(--tw-accent-2); }
+.titowed-gallery-arrow:disabled { opacity: 0.25; cursor: default; }
+.titowed-gallery-arrow.prev { left: 4px; }
+.titowed-gallery-arrow.prev svg { transform: rotate(180deg); }
+.titowed-gallery-arrow.next { right: 4px; }
+.titowed-gallery-counter {
+  margin-top: 14px;
+  text-align: center;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  color: var(--tw-ink-2);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+.titowed-gallery-hint {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 12.5px;
+  letter-spacing: 0.04em;
+  opacity: 0.6;
+}
+@media (min-width: 720px) {
+  .titowed-gallery .g { flex-basis: 32%; }
+  .titowed-gallery-arrow { display: flex; }
+  .titowed-gallery-hint { display: none; }
+}
 .titowed-gallery .g img {
   width: 100%;
   height: 100%;
@@ -1399,9 +1457,327 @@
 }
 .titowed-tilt.glare:hover::after { opacity: 1; }
 
+/* ════════════════════════════════════════════════════════════════
+   RSVP & Ucapan
+   ════════════════════════════════════════════════════════════════ */
+.titowed-rsvp-section {
+  background:
+    radial-gradient(ellipse 70% 50% at 50% 0%, rgba(111, 92, 89, 0.16), transparent 70%),
+    var(--tw-bg);
+  text-align: center;
+}
+.titowed-rsvp-summary {
+  margin: 16px auto 0;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--tw-accent-2);
+}
+.titowed-rsvp-body {
+  max-width: 520px;
+  margin: 40px auto 0;
+  text-align: left;
+}
+
+/* ── Form ──────────────────────────────────────────────────── */
+.titowed-rsvp-form {
+  background: var(--tw-panel);
+  border: 1px solid var(--tw-line);
+  border-radius: 10px;
+  padding: 26px 20px;
+}
+.titowed-rsvp-field { display: block; margin-bottom: 20px; }
+.titowed-rsvp-field > span {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10.5px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--tw-ink-2);
+  margin-bottom: 9px;
+}
+.titowed-rsvp-field > span em {
+  font-family: 'JetBrains Mono', monospace;
+  font-style: normal;
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  opacity: 0.6;
+  transition: color 0.25s ease, opacity 0.25s ease;
+}
+.titowed-rsvp-field > span em.near { color: var(--tw-accent-2); opacity: 1; }
+.titowed-rsvp-field input,
+.titowed-rsvp-field textarea {
+  width: 100%;
+  background: var(--tw-panel-2);
+  border: 1px solid var(--tw-line);
+  border-radius: 6px;
+  padding: 13px 14px;
+  color: var(--tw-ink);
+  font-family: inherit;
+  font-size: 16px;          /* ≥16px: cegah iOS Safari auto-zoom saat fokus */
+  line-height: 1.5;
+  outline: none;
+  transition: border-color 0.25s ease, background 0.25s ease;
+}
+.titowed-rsvp-field textarea { resize: none; }
+.titowed-rsvp-field input:focus,
+.titowed-rsvp-field textarea:focus {
+  border-color: var(--tw-accent-2);
+  background: rgba(81, 79, 88, 0.75);
+}
+.titowed-rsvp-field input::placeholder,
+.titowed-rsvp-field textarea::placeholder { color: var(--tw-ink-2); opacity: 0.5; }
+
+/* ── Segmented control kehadiran ───────────────────────────── */
+.titowed-rsvp-choices {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+  background: var(--tw-panel-2);
+  border: 1px solid var(--tw-line);
+  border-radius: 8px;
+  padding: 4px;
+  isolation: isolate;
+}
+.titowed-rsvp-choices-pill {
+  position: absolute;
+  top: 4px;
+  bottom: 4px;
+  left: 4px;
+  width: calc((100% - 8px) / 3);
+  border-radius: 6px;
+  background: var(--tw-accent);
+  transform: translateX(calc(var(--active-idx, 0) * 100%));
+  transition: transform 0.32s cubic-bezier(0.32, 0.72, 0, 1);
+  z-index: -1;
+}
+.titowed-rsvp-choices button {
+  appearance: none;
+  border: 0;
+  background: none;
+  min-height: 44px;
+  padding: 10px 4px;
+  font-family: inherit;
+  font-size: 12.5px;
+  letter-spacing: 0.02em;
+  color: var(--tw-ink-2);
+  cursor: pointer;
+  border-radius: 6px;
+  transition: color 0.25s ease;
+}
+.titowed-rsvp-choices button.on { color: var(--tw-on-accent); }
+
+/* ── Jumlah tamu (muncul/hilang halus) ─────────────────────── */
+.titowed-rsvp-guests {
+  display: grid;
+  grid-template-rows: 1fr;
+  opacity: 1;
+  transition: grid-template-rows 0.35s ease, opacity 0.25s ease, margin 0.35s ease;
+}
+.titowed-rsvp-guests > .titowed-rsvp-field { overflow: hidden; min-height: 0; }
+.titowed-rsvp-guests.hidden {
+  grid-template-rows: 0fr;
+  opacity: 0;
+  margin-bottom: -20px;
+  pointer-events: none;
+}
+.titowed-rsvp-stepper {
+  display: inline-flex;
+  align-items: center;
+  gap: 18px;
+  background: var(--tw-panel-2);
+  border: 1px solid var(--tw-line);
+  border-radius: 8px;
+  padding: 5px 16px;
+}
+.titowed-rsvp-stepper button {
+  appearance: none;
+  border: 0;
+  width: 38px;
+  height: 38px;
+  border-radius: 6px;
+  background: rgba(216, 222, 222, 0.06);
+  color: var(--tw-ink);
+  font-size: 19px;
+  line-height: 1;
+  cursor: pointer;
+  transition: transform 0.12s ease, background 0.25s ease, opacity 0.25s ease;
+}
+.titowed-rsvp-stepper button:active:not(:disabled) { transform: scale(0.94); }
+.titowed-rsvp-stepper button:disabled { opacity: 0.3; cursor: default; }
+.titowed-rsvp-stepper b {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 21px;
+  min-width: 26px;
+  text-align: center;
+  color: var(--tw-ink);
+}
+
+/* ── Submit ────────────────────────────────────────────────── */
+.titowed-rsvp-submit {
+  width: 100%;
+  min-height: 50px;
+  appearance: none;
+  border: 1px solid var(--tw-accent-2);
+  border-radius: 8px;
+  background: var(--tw-accent);
+  color: var(--tw-on-accent);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  transition: background 0.25s ease, transform 0.12s ease, opacity 0.25s ease;
+}
+.titowed-rsvp-submit:hover:not(:disabled) { background: var(--tw-accent-2); }
+.titowed-rsvp-submit:active:not(:disabled) { transform: scale(0.985); }
+.titowed-rsvp-submit:disabled { opacity: 0.6; cursor: default; }
+
+/* ── Kartu sukses + checkmark tergambar ────────────────────── */
+.titowed-rsvp-success {
+  background: var(--tw-panel);
+  border: 1px solid var(--tw-line);
+  border-radius: 10px;
+  padding: 38px 24px 30px;
+  text-align: center;
+}
+.titowed-rsvp-check { width: 62px; height: 62px; margin-bottom: 16px; }
+.titowed-rsvp-check circle,
+.titowed-rsvp-check path {
+  fill: none;
+  stroke: var(--tw-accent-2);
+  stroke-width: 2.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.titowed-rsvp-check circle {
+  stroke-dasharray: 151;
+  stroke-dashoffset: 151;
+  animation: twCheckCircle 0.65s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+}
+.titowed-rsvp-check path {
+  stroke-dasharray: 40;
+  stroke-dashoffset: 40;
+  animation: twCheckMark 0.4s cubic-bezier(0.65, 0, 0.35, 1) 0.5s forwards;
+}
+@keyframes twCheckCircle { to { stroke-dashoffset: 0; } }
+@keyframes twCheckMark   { to { stroke-dashoffset: 0; } }
+.titowed-rsvp-success h3 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 25px;
+  font-weight: 500;
+  color: var(--tw-ink);
+  margin: 0 0 10px;
+}
+.titowed-rsvp-success p {
+  font-size: 14px;
+  line-height: 1.75;
+  color: var(--tw-ink-2);
+  max-width: 340px;
+  margin: 0 auto 22px;
+}
+.titowed-rsvp-again {
+  appearance: none;
+  background: none;
+  border: 1px solid var(--tw-line);
+  border-radius: 999px;
+  min-height: 44px;
+  padding: 11px 26px;
+  color: var(--tw-ink-2);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10.5px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: color 0.25s ease, border-color 0.25s ease;
+}
+.titowed-rsvp-again:hover { color: var(--tw-accent-2); border-color: var(--tw-accent-2); }
+
+/* ── Daftar ucapan ─────────────────────────────────────────── */
+.titowed-rsvp-list {
+  margin-top: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.titowed-rsvp-card {
+  background: var(--tw-panel-2);
+  border: 1px solid var(--tw-line);
+  border-left: 2px solid var(--tw-accent);
+  border-radius: 8px;
+  padding: 16px 18px;
+  animation: twUcapanIn 0.5s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+@keyframes twUcapanIn {
+  from { opacity: 0; transform: translateY(-8px); }
+  to   { opacity: 1; transform: none; }
+}
+.titowed-rsvp-card header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 7px;
+}
+.titowed-rsvp-card-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 18px;
+  color: var(--tw-ink);
+}
+.titowed-rsvp-card-time {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  color: var(--tw-ink-2);
+  opacity: 0.7;
+  white-space: nowrap;
+}
+.titowed-rsvp-card p {
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--tw-ink-2);
+  margin: 0;
+  word-break: break-word;
+}
+.titowed-rsvp-more {
+  appearance: none;
+  background: none;
+  border: 1px dashed var(--tw-line);
+  border-radius: 8px;
+  min-height: 46px;
+  padding: 12px;
+  color: var(--tw-ink-2);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10.5px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: color 0.25s ease, border-color 0.25s ease;
+}
+.titowed-rsvp-more:hover { color: var(--tw-accent-2); border-color: var(--tw-accent-2); }
+
+@media (min-width: 720px) {
+  .titowed-rsvp-form { padding: 30px 28px; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .titowed-root { animation: none; }
   .titowed-reveal.in .titowed-gallery .g img { animation: none; }
   .titowed-gallery .g:hover img { transform: none; filter: none; }
   .titowed-tilt { transform: none !important; }
+  .titowed-gallery { scroll-behavior: auto; }
+  .titowed-rsvp-choices-pill { transition: none; }
+  .titowed-rsvp-guests { transition: none; }
+  .titowed-rsvp-card { animation: none; }
+  .titowed-rsvp-check circle,
+  .titowed-rsvp-check path { animation: none; stroke-dashoffset: 0; }
 }
