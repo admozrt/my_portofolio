@@ -1650,7 +1650,12 @@
   padding: 38px 24px 30px;
   text-align: center;
 }
-.titowed-rsvp-check { width: 62px; height: 62px; margin-bottom: 16px; }
+.titowed-rsvp-check {
+  display: block;
+  width: 62px;
+  height: 62px;
+  margin: 0 auto 16px;
+}
 .titowed-rsvp-check circle,
 .titowed-rsvp-check path {
   fill: none;
@@ -1709,6 +1714,32 @@
   flex-direction: column;
   gap: 12px;
 }
+/* Daftar ucapan: jadi area scroll sendiri saat semua ditampilkan */
+.titowed-rsvp-scroll {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.titowed-rsvp-scroll.expanded {
+  max-height: 62vh;
+  overflow-y: auto;
+  padding-right: 8px;
+  /* cegah scroll "bocor" ke halaman saat daftar sudah mentok */
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+  /* isyarat visual bahwa masih ada isi di bawah */
+  -webkit-mask-image: linear-gradient(to bottom, #000 calc(100% - 28px), transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 calc(100% - 28px), transparent 100%);
+  scrollbar-width: thin;
+  scrollbar-color: var(--tw-accent) transparent;
+}
+.titowed-rsvp-scroll.expanded::-webkit-scrollbar { width: 5px; }
+.titowed-rsvp-scroll.expanded::-webkit-scrollbar-track { background: transparent; }
+.titowed-rsvp-scroll.expanded::-webkit-scrollbar-thumb {
+  background: var(--tw-accent);
+  border-radius: 999px;
+}
+.titowed-rsvp-scroll.expanded::-webkit-scrollbar-thumb:hover { background: var(--tw-accent-2); }
 .titowed-rsvp-card {
   background: var(--tw-panel-2);
   border: 1px solid var(--tw-line);

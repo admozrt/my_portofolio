@@ -1236,15 +1236,17 @@ export const WeddingPageTito: React.FC = () => {
             <RsvpForm guest={visitorName} onAdd={addUcapan} />
 
             <div className="titowed-rsvp-list">
-              {visibleUcapan.map((u, i) => (
-                <article key={`${u.time}-${i}`} className="titowed-rsvp-card">
-                  <header>
-                    <span className="titowed-rsvp-card-name">{u.nama}</span>
-                    <span className="titowed-rsvp-card-time">{relativeTime(u.time)}</span>
-                  </header>
-                  <p>{u.pesan}</p>
-                </article>
-              ))}
+              <div className={`titowed-rsvp-scroll${showAllUcapan ? " expanded" : ""}`}>
+                {visibleUcapan.map((u, i) => (
+                  <article key={`${u.time}-${i}`} className="titowed-rsvp-card">
+                    <header>
+                      <span className="titowed-rsvp-card-name">{u.nama}</span>
+                      <span className="titowed-rsvp-card-time">{relativeTime(u.time)}</span>
+                    </header>
+                    <p>{u.pesan}</p>
+                  </article>
+                ))}
+              </div>
 
               {ucapanList.length > UCAPAN_PREVIEW && (
                 <button
