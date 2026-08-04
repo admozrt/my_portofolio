@@ -44,7 +44,7 @@ const GALLERY_PHOTOS = [
 // Endpoint Google Apps Script Web App untuk RSVP & Ucapan.
 // Kosongkan ("") untuk mode demo (data hanya tersimpan sementara di layar).
 // Cara setup: lihat public/tito/README-google-sheets.md
-const SHEETS_ENDPOINT = "https://script.google.com/macros/s/AKfycbwnP4xRBXaqhWv8aZjNKSEUb3kQvs1cRzQPCvQ0AKkkmhEIPe-Zj6G6VHrM08ODRd4Mdg/exec";
+const SHEETS_ENDPOINT = "https://script.google.com/macros/s/AKfycbyeef-HqTwDrfEp-ToieXQLH11l7Q-l6QYm_Vgxzay4rMGE18PqQFCVOsADbsAodX1sRA/exec";
 
 const UCAPAN_SEED: UcapanItem[] = [
   { nama: "Keluarga Besar", pesan: "Barakallahu lakuma wa baraka alaikuma. Semoga menjadi keluarga sakinah, mawaddah, warahmah.", time: Date.now() - 1000 * 60 * 35 },
