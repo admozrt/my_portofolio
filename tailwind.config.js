@@ -35,6 +35,26 @@ module.exports = {
           800: "#166534",
           900: "#14532d",
         },
+        // Locked palette for the "zine / scrapbook" portfolio concept (/newport) only.
+        // Paper + ballpoint-ink world; `pen` is the single accent, while tape/pin
+        // are materials rather than a second accent.
+        zine: {
+          paper: "#ece9e1",
+          "paper-dark": "#1e1c19",
+          card: "#fffdf7",
+          "card-dark": "#2a2723",
+          ink: "#1f1e1c",
+          "ink-dark": "#eae5da",
+          "ink-soft": "#63605a",
+          "ink-soft-dark": "#a7a297",
+          pen: "#2f4bd8",
+          "pen-dark": "#8fa8f5",
+          rule: "#d8d2c2",
+          "rule-dark": "#403b32",
+          "tape-warm": "#e6cf7d",
+          "tape-cool": "#b9d4c4",
+          pin: "#d94f30",
+        },
         // Locked palette for the "Core POS" product landing (/corepos) only —
         // mirrors the product's own brand identity, kept isolated from the
         // portfolio's accent/ops scales.

@@ -7,11 +7,12 @@ export const Footer: React.FC = () => {
   // Anchors on the main portfolio ("/") — this Footer is rendered on sub-pages
   // (e.g. /project-wedding), so links must navigate back to "/" first, not
   // just scrollIntoView an id that doesn't exist on the current page.
+  // These ids track the zine homepage's sections, not the retired Control Room's.
   const quickLinks = [
-    { label: 'Monitor', id: 'monitor' },
-    { label: 'Stack', id: 'stack' },
+    { label: 'Projek', id: 'projek' },
+    { label: 'Skill', id: 'skill' },
+    { label: 'Cara Kerja', id: 'softskill' },
     { label: 'Pengalaman', id: 'pengalaman' },
-    { label: 'Transmisi', id: 'transmisi' },
     { label: 'Kontak', id: 'kontak' },
   ];
 

@@ -120,7 +120,7 @@ export const projects: Project[] = [
   },
   {
     id: 4,
-    title: 'Sistem Manajemen Indikator Mutu & Insiden Keselamatan Pasien',
+    title: 'Sistem Manajemen Indikator Mutu',
     description: 'Aplikasi ini membantu pencatatan Indikator Mutu (IM) & Insiden Keselamatan Pasien (IKP) di setiap unit/instalasi. Data realisasi harian otomatis terangkum menjadi capaian bulanan untuk monitoring dan pelaporan.',
     technologies: ['Laravel', 'Inertia.js', 'Typescript', 'Tailwind', 'MySQL', 'Cetak PDF'],
     link: '#',

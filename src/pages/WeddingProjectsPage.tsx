@@ -1,12 +1,14 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { motion, type Variants } from 'framer-motion';
+import { motion, useReducedMotion, type Variants } from 'framer-motion';
 import { ArrowLeft, ArrowUpRight, Calendar, MapPin } from 'lucide-react';
 import { ThemeProvider } from '../components/providers/Theme';
 import { ThemeToggle } from '../components/layout/ThemeToggle';
 import { Monogram } from '../components/ui/Monogram';
-import { Footer } from '../components/layout/Footer';
+import { ZineFooter } from '../components/newport/ZineFooter';
+import { LIFT } from '../components/newport/motion';
 import { SEOHead } from '../components/ui/SEOHead';
+import './NewPortPage.css';
 
 const EASE: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
@@ -138,64 +140,71 @@ function getStatus(date: Date): { label: string; upcoming: boolean } {
   return { label: upcoming ? 'Akan Datang' : 'Sudah Berlangsung', upcoming };
 }
 
-const WeddingCard: React.FC<{ entry: WeddingEntry; offset: boolean }> = ({ entry, offset }) => {
+/** Fixed per position so the wall looks pinned up by hand, not auto-arranged. */
+const TILT = [-2, 1.5, -1.2, 1.8, -1.6, 1.1, -0.9, 2, -1.4];
+
+const WeddingCard: React.FC<{ entry: WeddingEntry; index: number }> = ({ entry, index }) => {
   const status = getStatus(entry.date);
+  const reduce = useReducedMotion();
+
   return (
-    <motion.a
-      href={entry.href}
-      target="_blank"
-      rel="noopener noreferrer"
-      variants={itemVariants}
-      className={`group relative block overflow-hidden rounded-card bg-zinc-100 dark:bg-zinc-900 ${offset ? 'md:mt-10' : ''}`}
-      whileHover={{ y: -4 }}
-      transition={{ duration: 0.3, ease: EASE }}
-    >
-      <div className="aspect-[4/5] w-full overflow-hidden">
-        <img
-          src={entry.cover}
-          alt={`Foto undangan ${entry.names}`}
-          loading="lazy"
-          className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-        />
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent" />
-      </div>
-
-      <span
-        className={`absolute left-4 top-4 rounded-full px-3 py-1 text-[11px] font-medium backdrop-blur-md ${
-          status.upcoming
-            ? 'bg-ops-600/90 dark:bg-ops-500/90 text-white'
-            : 'bg-white/85 text-zinc-700 dark:bg-zinc-950/70 dark:text-zinc-200'
-        }`}
+    <motion.div variants={itemVariants} className="h-full">
+      <motion.a
+        href={entry.href}
+        target="_blank"
+        rel="noopener noreferrer"
+        animate={{ rotate: reduce ? 0 : TILT[index % TILT.length] }}
+        whileHover={reduce ? undefined : { rotate: 0, scale: 1.03 }}
+        transition={LIFT}
+        className="relative flex h-full flex-col border border-zine-rule bg-zine-card px-2.5 pb-3 pt-4 no-underline shadow-[0_3px_0_rgba(31,30,28,0.06)] transition-shadow duration-500 hover:shadow-[0_14px_28px_-16px_rgba(31,30,28,0.55)] dark:border-zine-rule-dark dark:bg-zine-card-dark dark:shadow-[0_3px_0_rgba(0,0,0,0.25)]"
       >
-        {status.label}
-      </span>
+        <span className={`np-tape ${index % 2 === 1 ? 'np-tape--cool' : ''}`} aria-hidden="true" />
+        {index % 3 === 0 && <span className="np-pin" aria-hidden="true" />}
 
-      <div className="absolute inset-x-0 bottom-0 p-5">
-        <div className="mb-2 flex items-center gap-2">
+        <span className="block overflow-hidden">
+          <img
+            src={entry.cover}
+            alt={`Undangan ${entry.names}`}
+            loading="lazy"
+            draggable={false}
+            className="block aspect-[4/5] w-full object-cover"
+          />
+        </span>
+
+        <span className="np-hand mt-2.5 block text-[17px] text-zine-ink dark:text-zine-ink-dark sm:text-[19px]">
+          {entry.names}
+        </span>
+
+        <span className="mt-1 flex items-center gap-1.5">
           <span
-            className="h-2.5 w-2.5 rounded-full ring-1 ring-white/40"
+            className="h-2 w-2 shrink-0 ring-1 ring-black/10"
             style={{ backgroundColor: entry.accent }}
             aria-hidden="true"
           />
-          <span className="text-xs text-white/70">{entry.theme}</span>
-        </div>
-        <h3 className="text-xl font-semibold text-white">{entry.names}</h3>
-        <div className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-white/80">
-          <span className="inline-flex items-center gap-1.5">
-            <Calendar className="h-3.5 w-3.5" />
+          <span className="truncate text-[11.5px] text-zine-ink-soft dark:text-zine-ink-soft-dark">
+            {entry.theme}
+          </span>
+        </span>
+
+        <span className="mt-2 block space-y-1 text-[11.5px] text-zine-ink-soft dark:text-zine-ink-soft-dark">
+          <span className="flex items-center gap-1.5">
+            <Calendar className="h-3 w-3 shrink-0" />
             {entry.dateLabel}
           </span>
-          <span className="inline-flex items-center gap-1.5">
-            <MapPin className="h-3.5 w-3.5" />
-            {entry.location}
+          <span className="flex items-center gap-1.5">
+            <MapPin className="h-3 w-3 shrink-0" />
+            <span className="truncate">{entry.location}</span>
           </span>
-        </div>
-        <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-white">
-          Buka Undangan
-          <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
         </span>
-      </div>
-    </motion.a>
+
+        <span className="mt-auto flex items-center justify-between border-t border-dashed border-zine-rule pt-2.5 dark:border-zine-rule-dark">
+          <span className="font-mono text-[10px] uppercase tracking-[0.06em] text-zine-ink-soft dark:text-zine-ink-soft-dark">
+            {status.label}
+          </span>
+          <ArrowUpRight className="h-3.5 w-3.5 text-zine-pen dark:text-zine-pen-dark" />
+        </span>
+      </motion.a>
+    </motion.div>
   );
 };
 
@@ -215,62 +224,57 @@ export const WeddingProjectsPage: React.FC = () => {
         }}
       />
 
-      <div className="min-h-screen bg-white font-sans text-zinc-900 transition-colors duration-200 dark:bg-zinc-950 dark:text-white">
-        <header className="sticky top-0 z-50 border-b border-zinc-200/70 bg-white/80 backdrop-blur-md dark:border-zinc-800/70 dark:bg-zinc-950/80">
-          <div className="container mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6">
+      <div className="np-paper min-h-[100dvh] overflow-x-hidden bg-zine-paper font-sans text-zine-ink transition-colors duration-200 dark:bg-zine-paper-dark dark:text-zine-ink-dark">
+        <header className="sticky top-0 z-40 border-b border-zine-rule/70 bg-zine-paper/85 backdrop-blur-md dark:border-zine-rule-dark/70 dark:bg-zine-paper-dark/85">
+          <div className="mx-auto flex h-14 max-w-5xl items-center justify-between px-5 sm:h-16">
             <Link to="/" className="flex items-center gap-2.5">
-              <Monogram size={32} strokeClassName="stroke-ops-600 dark:stroke-ops-500" />
-              <span className="hidden font-mono text-sm font-semibold tracking-tight sm:block">
-                Adi R. Ma'arif
-              </span>
+              <Monogram size={30} strokeClassName="stroke-zine-paper dark:stroke-zine-paper-dark" />
+              <span className="hidden text-[13px] font-medium sm:block">Adi R. Ma'arif</span>
             </Link>
             <div className="flex items-center gap-3">
               <Link
                 to="/"
-                className="inline-flex items-center gap-1.5 text-sm font-medium text-zinc-600 hover:text-ops-600 dark:text-zinc-300 dark:hover:text-ops-400"
+                className="inline-flex items-center gap-1.5 text-[13px] font-medium text-zine-ink-soft transition-colors hover:text-zine-pen dark:text-zine-ink-soft-dark dark:hover:text-zine-pen-dark"
               >
                 <ArrowLeft className="h-4 w-4" />
-                Kembali ke Portofolio
+                <span className="hidden sm:inline">Kembali ke Portofolio</span>
+                <span className="sm:hidden">Kembali</span>
               </Link>
               <ThemeToggle />
             </div>
           </div>
         </header>
 
-        <main className="container mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-24">
+        <main className="mx-auto max-w-5xl px-5 py-12 sm:py-20">
           <motion.div
-            className="mb-14 max-w-2xl"
+            className="mb-10 max-w-2xl"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease: EASE }}
+            transition={{ duration: 0.7, ease: EASE }}
           >
-            <p className="mb-2 font-mono text-xs uppercase tracking-[0.25em] text-ops-600 dark:text-ops-500">
-              <span className="inline-block h-1.5 w-1.5 rounded-full bg-ops-600 dark:bg-ops-500 mr-2 align-middle" />
-              Modul Terpisah
-            </p>
-            <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">
+            <h1 className="np-hand text-[30px] leading-tight text-zine-ink dark:text-zine-ink-dark sm:text-[44px]">
               Undangan Pernikahan Digital
             </h1>
-            <p className="mt-3 text-zinc-600 dark:text-zinc-400">
+            <p className="mt-3 text-[13.5px] leading-relaxed text-zine-ink-soft dark:text-zine-ink-soft-dark sm:text-[14.5px]">
               Setiap pasangan mendapat microsite dengan tema, warna, dan interaksi yang dirancang
               khusus untuk cerita mereka sendiri, bukan template yang dipakai ulang.
             </p>
           </motion.div>
 
           <motion.div
-            className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4"
+            className="grid grid-cols-2 gap-x-4 gap-y-8 sm:grid-cols-3 lg:grid-cols-4"
             variants={containerVariants}
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: '-60px' }}
           >
             {weddings.map((entry, i) => (
-              <WeddingCard key={entry.id} entry={entry} offset={i % 2 === 1} />
+              <WeddingCard key={entry.id} entry={entry} index={i} />
             ))}
           </motion.div>
         </main>
 
-        <Footer />
+        <ZineFooter />
       </div>
     </ThemeProvider>
   );

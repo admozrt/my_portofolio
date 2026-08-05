@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
-import { PortfolioPage } from './pages/PortfolioPage';
+// Konsep lama "Control Room" — route-nya dimatikan, file-nya tetap ada.
+// import { PortfolioPage } from './pages/PortfolioPage';
 import { WeddingPageAjie } from './pages/wedding/WeddingPageAjie';
 // import { WeddingPageBahranFatimatul } from './pages/wedding/WeddingPageBahranFatimatul';
 import { WeddingPageAnggi } from './pages/wedding/WeddingPageAnggi';
@@ -13,6 +14,7 @@ import { WeddingPageWisnuRatih } from './pages/wedding/WeddingPageWisnuRatih';
 import { WeddingProjectsPage } from './pages/WeddingProjectsPage';
 import { InstitutionalSolutionsPage } from './pages/InstitutionalSolutionsPage';
 import { CorePOSPage } from './pages/CorePOSPage';
+import { NewPortPage } from './pages/NewPortPage';
 
 const ScrollToTop: React.FC = () => {
   const { pathname, hash } = useLocation();
@@ -30,8 +32,14 @@ const App: React.FC = () => {
     <Router>
       <ScrollToTop />
       <Routes>
-        {/* Portfolio (halaman utama) */}
-        <Route path="/" element={<PortfolioPage />} />
+        {/* Portfolio (halaman utama) — konsep zine */}
+        <Route path="/" element={<NewPortPage />} />
+        {/* Alias, supaya tautan lama ke /newport tidak mati */}
+        <Route path="/newport" element={<NewPortPage />} />
+
+        {/* Konsep lama "Control Room". Route dimatikan atas permintaan,
+            komponennya sengaja tidak dihapus supaya bisa dinyalakan lagi. */}
+        {/* <Route path="/control-room" element={<PortfolioPage />} /> */}
 
         {/* Undangan Pernikahan: /ajie-alya?to=NamaPengunjung */}
         <Route path="/ajie-alya" element={<WeddingPageAjie />} />
@@ -68,6 +76,7 @@ const App: React.FC = () => {
 
         {/* Landing produk Core POS (Sistem Kasir Dinamis Multi-Sektor) */}
         <Route path="/corepos" element={<CorePOSPage />} />
+
       </Routes>
     </Router>
   );

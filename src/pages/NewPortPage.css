@@ -1,0 +1,134 @@
+/**
+ * Zine / scrapbook concept (/newport).
+ *
+ * Only holds the physical "materials" that Tailwind utilities cannot express:
+ * paper grain, tape strips, push pins, luggage-tag cutouts, and ruled paper.
+ * Everything else (spacing, type scale, color) stays on Tailwind `zine-*` tokens.
+ */
+
+.np-hand {
+  font-family: 'Shantell Sans', 'Segoe Print', 'Bradley Hand', cursive;
+  /* Handwriting descenders need room; never let leading clip them. */
+  line-height: 1.15;
+}
+
+/* Paper grain: a faint dot field over the base color, not a texture image. */
+.np-paper {
+  background-image: radial-gradient(rgba(31, 30, 28, 0.045) 1px, transparent 1px);
+  background-size: 13px 13px;
+}
+.dark .np-paper {
+  background-image: radial-gradient(rgba(234, 229, 218, 0.05) 1px, transparent 1px);
+}
+
+/**
+ * Notebook margin rule. Horizontal rules were tried first and abandoned: a
+ * fixed 32px rhythm can never line up with text that changes size per element,
+ * so the lines always cut through a descender somewhere. A single vertical
+ * margin reads as notebook paper without ever touching the type.
+ */
+.np-margin-rule {
+  position: relative;
+}
+.np-margin-rule::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 2.5rem;
+  width: 1px;
+  background: rgba(217, 79, 48, 0.3);
+}
+.dark .np-margin-rule::before {
+  background: rgba(217, 79, 48, 0.32);
+}
+@media (max-width: 639px) {
+  /* The margin would eat too much width on a phone. */
+  .np-margin-rule::before {
+    display: none;
+  }
+}
+
+/* Horizontal slider track: snap per card, no visible scrollbar. */
+.np-track {
+  scroll-snap-type: x mandatory;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  overscroll-behavior-x: contain;
+}
+.np-track::-webkit-scrollbar {
+  display: none;
+}
+.np-snap {
+  scroll-snap-align: start;
+}
+
+/* Tape strip. Slightly translucent so the paper underneath still reads. */
+.np-tape {
+  position: absolute;
+  top: -11px;
+  left: 50%;
+  width: 58px;
+  height: 19px;
+  transform: translateX(-50%) rotate(-2.5deg);
+  background: rgba(230, 207, 125, 0.82);
+  box-shadow: inset 0 0 0 1px rgba(31, 30, 28, 0.06);
+}
+.np-tape--cool {
+  background: rgba(185, 212, 196, 0.82);
+  transform: translateX(-50%) rotate(2.5deg);
+}
+.dark .np-tape {
+  background: rgba(230, 207, 125, 0.42);
+}
+.dark .np-tape--cool {
+  background: rgba(185, 212, 196, 0.4);
+}
+
+/* Push pin: a small domed disc, drawn with a highlight rather than an image. */
+.np-pin {
+  position: absolute;
+  top: -6px;
+  right: 13px;
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: #d94f30;
+  box-shadow:
+    inset 0 1.5px 1px rgba(255, 255, 255, 0.55),
+    0 1px 3px rgba(31, 30, 28, 0.4);
+}
+
+/* Luggage tag: rounded top with an eyelet and a short string above it. */
+.np-tag {
+  position: relative;
+  border-radius: 7px 7px 3px 3px;
+}
+.np-tag::before {
+  content: '';
+  position: absolute;
+  top: 7px;
+  left: 50%;
+  width: 7px;
+  height: 7px;
+  margin-left: -3.5px;
+  border-radius: 50%;
+  border: 1.5px solid currentColor;
+  opacity: 0.45;
+}
+.np-tag::after {
+  content: '';
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  width: 1px;
+  height: 10px;
+  background: currentColor;
+  opacity: 0.35;
+}
+
+/* Postage stamp: perforated edge via a dashed rule inset from the card. */
+.np-stamp {
+  border: 2px dashed currentColor;
+}
+
