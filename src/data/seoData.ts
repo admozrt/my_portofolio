@@ -1,8 +1,8 @@
 import type { SEOData } from '../types';
 
 export const seoData: SEOData = {
-  title: "Adi Rakhmatullah Ma'arif — Software Engineer & Developer",
-  description: "Software Engineer berpengalaman mengubah masalah bisnis menjadi solusi digital yang scalable, aman, dan mudah digunakan. Spesialis Laravel & React.",
+  title: "Adi Rakhmatullah Ma'arif - Software Engineer",
+  description: "Software engineer yang membangun sistem untuk kesehatan, pemerintahan, dan usaha ritel. Memilih pendekatan yang paling masuk akal per masalah, bukan terpaku pada satu tools.",
   keywords: [
     "Software Engineer",
     "Full Stack Developer",

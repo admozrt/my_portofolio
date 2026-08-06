@@ -61,6 +61,17 @@ const ROUTES = {
     url: BASE + "/tito-wina",
     siteName: "Undangan Pernikahan",
   },
+  projectWedding: {
+    match: (path) => /project-wedding/i.test(path),
+    title: "Undangan Pernikahan Digital — Projek Adi Rakhmatullah Ma'arif",
+    description:
+      "Kumpulan microsite undangan pernikahan digital, masing-masing dengan tema, warna, dan interaksi yang dirancang khusus per pasangan.",
+    image: BASE + "/tito/preview.jpg",
+    imageW: "1200",
+    imageH: "1802",
+    url: BASE + "/project-wedding",
+    siteName: "Adi Rakhmatullah Ma'arif - Portfolio",
+  },
   corepos: {
     match: (path) => /corepos/i.test(path),
     title: "Core POS by Dirakhmat — Sistem Kasir Dinamis Multi-Sektor",
@@ -85,14 +96,14 @@ const ROUTES = {
   },
   portfolio: {
     match: () => true, // default
-    title: "Adi Rakhmatullah Ma’arif – Software Engineer & Software Developer",
+    title: "Adi Rakhmatullah Ma'arif - Software Engineer",
     description:
-      "Software Engineer & Software Developer. Menerjemahkan masalah bisnis jadi solusi digital yang benar-benar terpakai",
+      "Kumpulan projek dan pengalaman Adi Rakhmatullah Ma'arif, software engineer yang membangun sistem untuk kesehatan, pemerintahan, dan usaha ritel.",
     image: BASE + "/my.png",
-    imageW: "1024",
-    imageH: "1278",
+    imageW: "997",
+    imageH: "1247",
     url: BASE,
-    siteName: "Adi Rakhmatullah Ma’arif - Portfolio",
+    siteName: "Adi Rakhmatullah Ma'arif - Portfolio",
   },
 };
 
@@ -117,7 +128,9 @@ function buildMetaTags(meta) {
     `<meta property="og:image:height" content="${meta.imageH}" />`,
     `<meta property="og:url" content="${meta.url}" />`,
     `<meta property="og:locale" content="id_ID" />`,
-    `<meta name="twitter:card" content="summary_large_image" />`,
+    // "summary", not "summary_large_image": every image this site ships is
+    // portrait or square, which a large card crops or pillarboxes.
+    `<meta name="twitter:card" content="summary" />`,
     `<meta name="twitter:title" content="${meta.title}" />`,
     `<meta name="twitter:description" content="${meta.description}" />`,
     `<meta name="twitter:image" content="${meta.image}" />`,

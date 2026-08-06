@@ -1,7 +1,7 @@
 {
   "short_name": "Dirakhmat",
   "name": "Adi Rakhmatullah Ma'arif - Portfolio",
-  "description": "Software Engineer & Developer — Laravel, React, PHP, JavaScript",
+  "description": "Software engineer yang membangun sistem untuk kesehatan, pemerintahan, dan usaha ritel.",
   "icons": [
     {
       "src": "favicon.ico",
@@ -21,6 +21,6 @@
   ],
   "start_url": "/",
   "display": "standalone",
-  "theme_color": "#09090b",
-  "background_color": "#09090b"
+  "theme_color": "#ece9e1",
+  "background_color": "#ece9e1"
 }
