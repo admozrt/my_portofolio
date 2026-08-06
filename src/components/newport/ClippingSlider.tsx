@@ -81,8 +81,10 @@ export const ClippingSlider: React.FC<ClippingSliderProps> = ({
       <div
         ref={trackRef}
         onScroll={sync}
+        // Negative margin cancels the section padding so slides can bleed to
+        // the screen edge, then the same padding is re-applied inside the track.
         // Scroll state comes from this element, never a window scroll listener.
-        className="np-track -mx-5 flex gap-4 overflow-x-auto px-5 pb-2 pt-3"
+        className="np-track -mx-5 flex gap-4 overflow-x-auto px-5 pb-2 pt-3 sm:-mx-8 sm:px-8 lg:-mx-12 lg:px-12"
         role="group"
         aria-label={label}
       >

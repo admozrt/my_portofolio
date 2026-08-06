@@ -12,7 +12,7 @@ export const NotebookExperience: React.FC = () => {
   const reduce = useReducedMotion();
 
   return (
-    <section id="pengalaman" className="mx-auto max-w-5xl px-5 py-14 sm:py-20">
+    <section id="pengalaman" className="px-5 sm:px-8 lg:px-12 py-14 sm:py-20">
       <motion.h2
         initial={reduce ? false : { opacity: 0, y: 16 }}
         whileInView={{ opacity: 1, y: 0 }}

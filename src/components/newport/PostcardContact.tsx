@@ -9,7 +9,7 @@ export const PostcardContact: React.FC = () => {
   const reduce = useReducedMotion();
 
   return (
-    <section id="kontak" className="mx-auto max-w-5xl px-5 py-14 sm:py-20">
+    <section id="kontak" className="px-5 sm:px-8 lg:px-12 py-14 sm:py-20">
       <motion.div
         initial={reduce ? false : { opacity: 0, y: 22 }}
         whileInView={{ opacity: 1, y: 0 }}

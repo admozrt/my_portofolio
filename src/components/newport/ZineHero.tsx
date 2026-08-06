@@ -19,10 +19,10 @@ export const ZineHero: React.FC<{ projectCount: number; skillCount: number }> = 
   });
 
   return (
-    <section className="mx-auto max-w-5xl px-5 pb-12 pt-12 sm:pb-20 sm:pt-24">
+    <section className="px-5 sm:px-8 lg:px-12 pb-12 pt-12 sm:pb-20 sm:pt-24">
       <motion.p
         {...rise(0)}
-        className="font-mono text-[11px] uppercase tracking-[0.18em] text-zine-ink-soft dark:text-zine-ink-soft-dark"
+        className="font-mono text-[12px] uppercase tracking-[0.18em] text-zine-ink-soft dark:text-zine-ink-soft-dark"
       >
         Adi Rakhmatullah Ma'arif
       </motion.p>

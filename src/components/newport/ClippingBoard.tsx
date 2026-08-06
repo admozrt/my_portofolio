@@ -19,7 +19,7 @@ export const ClippingBoard: React.FC = () => {
   const rest = projects.filter((p) => !p.featured);
 
   return (
-    <section id="projek" className="mx-auto max-w-5xl px-5 py-14 sm:py-20">
+    <section id="projek" className="px-5 sm:px-8 lg:px-12 py-14 sm:py-20">
       <motion.div
         initial={reduce ? false : { opacity: 0, y: 16 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -38,7 +38,7 @@ export const ClippingBoard: React.FC = () => {
 
       <ClippingSlider
         label="Projek utama"
-        slideClassName="w-[82%] sm:w-[48%] lg:w-[32%]"
+        slideClassName="w-[70%] sm:w-[40%] md:w-[31%] lg:w-[24%] xl:w-[20%] p-4"
       >
         {featured.map((project, i) => (
           <ClippingCard
@@ -64,7 +64,7 @@ export const ClippingBoard: React.FC = () => {
 
       <ClippingSlider
         label="Projek lain"
-        slideClassName="w-[48%] sm:w-[31%] lg:w-[20%]"
+        slideClassName="w-[48%] sm:w-[31%] lg:w-[20%] p-2"
       >
         {rest.map((project, i) => (
           <ClippingCard

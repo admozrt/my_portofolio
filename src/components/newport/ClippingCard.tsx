@@ -100,7 +100,7 @@ export const ClippingCard: React.FC<ClippingCardProps> = ({
           */}
           <span
             className={`np-hand mt-2.5 line-clamp-3 text-zine-ink dark:text-zine-ink-dark ${
-              isLarge ? 'min-h-[3.6rem] text-[16px] sm:text-[19px]' : 'min-h-[3.6rem] text-[14px] sm:text-[16px]'
+              isLarge ? 'min-h-[3.6rem] text-[14px] sm:text-[16px]' : 'min-h-[3.6rem] text-[14px] sm:text-[16px]'
             }`}
           >
             {project.title}

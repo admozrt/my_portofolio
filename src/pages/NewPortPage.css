@@ -6,6 +6,11 @@
  * Everything else (spacing, type scale, color) stays on Tailwind `zine-*` tokens.
  */
 
+/* Keep anchored sections clear of the fixed header when scrolled to. */
+.np-paper section[id] {
+  scroll-margin-top: 4.5rem;
+}
+
 .np-hand {
   font-family: 'Shantell Sans', 'Segoe Print', 'Bradley Hand', cursive;
   /* Handwriting descenders need room; never let leading clip them. */
@@ -46,6 +51,32 @@
   /* The margin would eat too much width on a phone. */
   .np-margin-rule::before {
     display: none;
+  }
+}
+
+/**
+ * Frosted header. Kept in CSS rather than utilities so the transparency can be
+ * dropped for people who ask for less of it, where a blurred panel is exactly
+ * what hurts legibility.
+ */
+.np-glass {
+  background: rgba(236, 233, 225, 0.62);
+  backdrop-filter: blur(18px) saturate(180%);
+  -webkit-backdrop-filter: blur(18px) saturate(180%);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.55);
+}
+.dark .np-glass {
+  background: rgba(30, 28, 25, 0.6);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+@media (prefers-reduced-transparency: reduce) {
+  .np-glass {
+    background: #ece9e1;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+  .dark .np-glass {
+    background: #1e1c19;
   }
 }
 

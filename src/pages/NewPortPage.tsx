@@ -57,7 +57,8 @@ export const NewPortPage: React.FC = () => {
         style={{ visibility: splashDone ? 'visible' : 'hidden' }}
       >
         <ZineHeader />
-        <main>
+        {/* Offsets the fixed header so the hero does not start underneath it. */}
+        <main className="pt-14 sm:pt-16">
           <ZineHero projectCount={projects.length} skillCount={skills.length} />
           <ClippingBoard />
           <SkillTags />

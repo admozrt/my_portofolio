@@ -1,5 +1,12 @@
-import React, { useState } from 'react';
-import { motion, AnimatePresence, useScroll, useSpring, useReducedMotion } from 'framer-motion';
+import React, { useEffect, useRef, useState } from 'react';
+import {
+  motion,
+  AnimatePresence,
+  useScroll,
+  useSpring,
+  useMotionValueEvent,
+  useReducedMotion,
+} from 'framer-motion';
 import { Menu, X, Sun, Moon } from 'lucide-react';
 import { useTheme } from '../../hooks/useTheme';
 import { useActiveSection } from '../../hooks/useActiveSection';
@@ -29,8 +36,34 @@ export const ZineHeader: React.FC = () => {
   const reduce = useReducedMotion();
   const [menuOpen, setMenuOpen] = useState(false);
   const activeSection = useActiveSection(sectionIds);
-  const { scrollYProgress } = useScroll();
+  const { scrollY, scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, { stiffness: 100, damping: 30, restDelta: 0.001 });
+
+  // Header tucks away while scrolling down, and comes back the moment scrolling
+  // stops or reverses, so it is always reachable when the reader pauses.
+  //
+  // The idle timer is rescheduled from a ref rather than from inside the scroll
+  // callback's closure, so a re-render mid-scroll cannot drop the pending
+  // "scrolling has stopped" reveal.
+  const [hidden, setHidden] = useState(false);
+  const lastY = useRef(0);
+  const idleTimer = useRef<number | undefined>(undefined);
+  const menuOpenRef = useRef(menuOpen);
+  menuOpenRef.current = menuOpen;
+
+  useMotionValueEvent(scrollY, 'change', (y) => {
+    const goingDown = y > lastY.current + 2;
+    const goingUp = y < lastY.current - 2;
+    if (goingDown || goingUp) lastY.current = y;
+
+    if (goingDown && y > 120 && !menuOpenRef.current) setHidden(true);
+    if (goingUp || y <= 120) setHidden(false);
+
+    window.clearTimeout(idleTimer.current);
+    idleTimer.current = window.setTimeout(() => setHidden(false), 200);
+  });
+
+  useEffect(() => () => window.clearTimeout(idleTimer.current), []);
 
   const goTo = (id: string) => {
     document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -38,13 +71,20 @@ export const ZineHeader: React.FC = () => {
   };
 
   return (
-    <header className="sticky top-0 z-40 border-b border-zine-rule/70 bg-zine-paper/85 backdrop-blur-md dark:border-zine-rule-dark/70 dark:bg-zine-paper-dark/85">
+    <motion.header
+      animate={{ y: hidden && !reduce ? '-100%' : '0%' }}
+      transition={{ type: 'spring', bounce: 0, duration: 0.45 }}
+      // Fixed, not sticky: the page wrapper clips overflow on the x axis, which
+      // makes a sticky child behave unpredictably.
+      className="np-glass fixed inset-x-0 top-0 z-40 border-b border-zine-rule/60 dark:border-zine-rule-dark/60"
+    >
       <motion.div
         className="absolute bottom-0 left-0 right-0 z-10 h-0.5 origin-left bg-zine-pen dark:bg-zine-pen-dark"
         style={{ scaleX }}
       />
 
-      <div className="mx-auto flex h-14 max-w-5xl items-center justify-between px-5 sm:h-16">
+      {/* Nav and controls share the right edge; only the wordmark stays left. */}
+      <div className="flex h-14 items-center justify-between gap-4 px-5 sm:h-16 sm:px-8 lg:px-12">
         <button
           type="button"
           onClick={() => window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' })}
@@ -57,7 +97,7 @@ export const ZineHeader: React.FC = () => {
           </span>
         </button>
 
-        <nav className="hidden items-center gap-1 md:flex">
+        <nav className="ml-auto hidden items-center gap-1 md:flex">
           {navItems.map((item) => {
             const isActive = activeSection === item.id;
             return (
@@ -117,7 +157,7 @@ export const ZineHeader: React.FC = () => {
             animate={{ height: 'auto', opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
-            className="overflow-hidden border-t border-zine-rule bg-zine-paper dark:border-zine-rule-dark dark:bg-zine-paper-dark md:hidden"
+            className="np-glass overflow-hidden border-t border-zine-rule dark:border-zine-rule-dark md:hidden"
           >
             <div className="flex flex-col px-5 py-2">
               {navItems.map((item) => (
@@ -138,6 +178,6 @@ export const ZineHeader: React.FC = () => {
           </motion.div>
         )}
       </AnimatePresence>
-    </header>
+    </motion.header>
   );
 };

@@ -226,7 +226,7 @@ export const WeddingProjectsPage: React.FC = () => {
 
       <div className="np-paper min-h-[100dvh] overflow-x-hidden bg-zine-paper font-sans text-zine-ink transition-colors duration-200 dark:bg-zine-paper-dark dark:text-zine-ink-dark">
         <header className="sticky top-0 z-40 border-b border-zine-rule/70 bg-zine-paper/85 backdrop-blur-md dark:border-zine-rule-dark/70 dark:bg-zine-paper-dark/85">
-          <div className="mx-auto flex h-14 max-w-5xl items-center justify-between px-5 sm:h-16">
+          <div className="flex h-14 items-center justify-between px-5 sm:h-16 sm:px-8 lg:px-12">
             <Link to="/" className="flex items-center gap-2.5">
               <Monogram size={30} strokeClassName="stroke-zine-paper dark:stroke-zine-paper-dark" />
               <span className="hidden text-[13px] font-medium sm:block">Adi R. Ma'arif</span>
@@ -245,7 +245,7 @@ export const WeddingProjectsPage: React.FC = () => {
           </div>
         </header>
 
-        <main className="mx-auto max-w-5xl px-5 py-12 sm:py-20">
+        <main className="px-5 py-12 sm:px-8 sm:py-20 lg:px-12">
           <motion.div
             className="mb-10 max-w-2xl"
             initial={{ opacity: 0, y: 20 }}
@@ -262,7 +262,7 @@ export const WeddingProjectsPage: React.FC = () => {
           </motion.div>
 
           <motion.div
-            className="grid grid-cols-2 gap-x-4 gap-y-8 sm:grid-cols-3 lg:grid-cols-4"
+            className="grid grid-cols-2 gap-x-4 gap-y-8 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6"
             variants={containerVariants}
             initial="hidden"
             whileInView="visible"

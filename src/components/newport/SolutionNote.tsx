@@ -13,7 +13,7 @@ export const SolutionNote: React.FC = () => {
   const reduce = useReducedMotion();
 
   return (
-    <section id="solusi" className="mx-auto max-w-5xl px-5 py-6 sm:py-10">
+    <section id="solusi" className="px-5 sm:px-8 lg:px-12 py-6 sm:py-10">
       <motion.div
         initial={reduce ? false : { opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -24,7 +24,7 @@ export const SolutionNote: React.FC = () => {
           animate={{ rotate: reduce ? 0 : -0.8 }}
           whileHover={reduce ? undefined : { rotate: 0, scale: 1.01 }}
           transition={LIFT}
-          className="relative mx-auto max-w-2xl border border-zine-rule bg-zine-card px-5 py-6 shadow-[0_3px_0_rgba(31,30,28,0.06)] dark:border-zine-rule-dark dark:bg-zine-card-dark dark:shadow-[0_3px_0_rgba(0,0,0,0.25)] sm:px-8 sm:py-7"
+          className="relative max-w-2xl border border-zine-rule bg-zine-card px-5 py-6 shadow-[0_3px_0_rgba(31,30,28,0.06)] dark:border-zine-rule-dark dark:bg-zine-card-dark dark:shadow-[0_3px_0_rgba(0,0,0,0.25)] sm:px-8 sm:py-7"
         >
           <span className="np-tape np-tape--cool" aria-hidden="true" />
           <span className="np-pin" aria-hidden="true" />

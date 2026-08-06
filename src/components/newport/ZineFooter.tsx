@@ -33,7 +33,7 @@ const techs = [
 /** Same three-column shape as the main portfolio footer, in the paper palette. */
 export const ZineFooter: React.FC = () => (
   <footer className="border-t border-zine-rule py-12 dark:border-zine-rule-dark">
-    <div className="mx-auto max-w-5xl px-5">
+    <div className="px-5 sm:px-8 lg:px-12">
       <div className="grid grid-cols-1 gap-9 sm:grid-cols-2 lg:grid-cols-3">
         <div>
           <div className="mb-3.5 flex items-center gap-2.5">
