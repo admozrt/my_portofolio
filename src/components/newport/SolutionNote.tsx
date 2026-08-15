@@ -33,8 +33,7 @@ export const SolutionNote: React.FC = () => {
             Mewakili instansi pemerintah, kesehatan, atau perusahaan?
           </p>
           <p className="mt-2 max-w-[48ch] text-[13.5px] leading-relaxed text-zine-ink-soft dark:text-zine-ink-soft-dark">
-            Ada halaman terpisah yang membahas cara kerja, standar keamanan, dan bukti
-            penerapannya untuk kebutuhan seperti itu.
+            Ada halaman khusus: cara kerjanya, standar keamanan, dan proyek yang sudah berjalan.
           </p>
 
           <Link

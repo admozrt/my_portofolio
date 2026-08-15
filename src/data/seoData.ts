@@ -2,7 +2,7 @@ import type { SEOData } from '../types';
 
 export const seoData: SEOData = {
   title: "Adi Rakhmatullah Ma'arif - Software Engineer",
-  description: "Software engineer yang membangun sistem untuk kesehatan, pemerintahan, dan usaha ritel. Memilih pendekatan yang paling masuk akal per masalah, bukan terpaku pada satu tools.",
+  description: "Rancang, bangun, dan rawat sistem untuk perusahaan, layanan publik, kesehatan, UMKM, dan keperluan pribadi. Enam tahun mengerjakan sistem yang semuanya masih berjalan.",
   keywords: [
     "Software Engineer",
     "Full Stack Developer",

@@ -27,7 +27,7 @@ export const SoftSkillNotes: React.FC = () => {
           Cara Saya Bekerja
         </h2>
         <p className="max-w-[38ch] text-[13.5px] leading-relaxed text-zine-ink-soft dark:text-zine-ink-soft-dark">
-          Kebiasaan kerja di luar urusan teknologi.
+          Yang tidak kelihatan dari daftar teknologi di atas.
         </p>
       </motion.div>
 

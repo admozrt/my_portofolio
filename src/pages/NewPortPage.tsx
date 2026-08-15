@@ -41,7 +41,7 @@ export const NewPortPage: React.FC = () => {
         data={{
           title: "Adi Rakhmatullah Ma'arif - Software Engineer",
           description:
-            "Kumpulan projek dan pengalaman Adi Rakhmatullah Ma'arif, software engineer yang membangun sistem untuk kesehatan, pemerintahan, dan usaha ritel.",
+            'Rancang, bangun, dan rawat sistem untuk perusahaan, layanan publik, kesehatan, UMKM, dan keperluan pribadi. Enam tahun mengerjakan sistem yang semuanya masih berjalan.',
           keywords: [
             'Software Engineer',
             'Full Stack Developer',

@@ -63,7 +63,7 @@ const ROUTES = {
   },
   projectWedding: {
     match: (path) => /project-wedding/i.test(path),
-    title: "Undangan Pernikahan Digital — Projek Adi Rakhmatullah Ma'arif",
+    title: "Undangan Pernikahan Digital - Projek Adi Rakhmatullah Ma'arif",
     description:
       "Kumpulan microsite undangan pernikahan digital, masing-masing dengan tema, warna, dan interaksi yang dirancang khusus per pasangan.",
     image: BASE + "/tito/preview.jpg",
@@ -74,9 +74,9 @@ const ROUTES = {
   },
   corepos: {
     match: (path) => /corepos/i.test(path),
-    title: "Core POS by Dirakhmat — Sistem Kasir Dinamis Multi-Sektor",
+    title: "Core POS by Dirakhmat - Sistem Kasir Dinamis Multi-Sektor",
     description:
-      "Satu platform kasir untuk Retail, F&B, Jasa, Apotek, dan Koperasi — dikonfigurasi bukan dibangun ulang. RBAC granular, stok FEFO, struk digital, dan dashboard real-time.",
+      "Satu platform kasir untuk Retail, F&B, Jasa, Apotek, dan Koperasi, dikonfigurasi bukan dibangun ulang. RBAC granular, stok FEFO, struk digital, dan dashboard real-time.",
     image: BASE + "/corepos/icon.png",
     imageW: "512",
     imageH: "512",
@@ -85,9 +85,9 @@ const ROUTES = {
   },
   solusiDigital: {
     match: (path) => /solusi-digital/i.test(path),
-    title: "Solusi Digital Institusional — Adi Rakhmatullah Ma'arif",
+    title: "Solusi Digital Institusional - Adi Rakhmatullah Ma'arif",
     description:
-      "Sistem digital yang terukur, aman, dan dapat dipertanggungjawabkan untuk instansi pemerintah, layanan kesehatan, dan logistik.",
+      "Sistem digital yang terukur, aman, dan dapat dipertanggungjawabkan untuk instansi pemerintah, layanan kesehatan, dan perusahaan.",
     image: BASE + "/my.png",
     imageW: "997",
     imageH: "1247",
@@ -98,7 +98,7 @@ const ROUTES = {
     match: () => true, // default
     title: "Adi Rakhmatullah Ma'arif - Software Engineer",
     description:
-      "Kumpulan projek dan pengalaman Adi Rakhmatullah Ma'arif, software engineer yang membangun sistem untuk kesehatan, pemerintahan, dan usaha ritel.",
+      "Rancang, bangun, dan rawat sistem untuk perusahaan, layanan publik, kesehatan, UMKM, dan keperluan pribadi. Enam tahun mengerjakan sistem yang semuanya masih berjalan.",
     image: BASE + "/my.png",
     imageW: "997",
     imageH: "1247",

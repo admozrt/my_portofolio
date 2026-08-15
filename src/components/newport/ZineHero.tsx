@@ -29,19 +29,18 @@ export const ZineHero: React.FC<{ projectCount: number; skillCount: number }> = 
 
       <motion.h1
         {...rise(0.1)}
-        className="np-hand mt-4 max-w-[16ch] text-[38px] tracking-tight text-zine-ink dark:text-zine-ink-dark sm:text-[58px] lg:text-[68px]"
+        className="np-hand mt-4 max-w-[19ch] text-[38px] tracking-tight text-zine-ink dark:text-zine-ink-dark sm:text-[58px] lg:text-[68px]"
       >
-        Saya membangun{' '}
-        <span className="text-zine-pen dark:text-zine-pen-dark">produk digital</span> yang dipakai
-        setiap hari.
+        Rancang, bangun, dan rawat{' '}
+        <span className="text-zine-pen dark:text-zine-pen-dark">produk digital</span> Anda.
       </motion.h1>
 
       <motion.p
         {...rise(0.2)}
         className="mt-6 max-w-[46ch] text-[15px] leading-relaxed text-zine-ink-soft dark:text-zine-ink-soft-dark"
       >
-        Software engineer sejak 2020. Halaman ini mengumpulkan sistem yang sudah saya kerjakan,
-        mulai dari web app sampai dengan mobile app sebagai solusi digital.
+        Enam tahun mengerjakan sistem untuk perusahaan, layanan publik, kesehatan, UMKM, dan
+        keperluan pribadi. Semuanya masih berjalan sampai sekarang.
       </motion.p>
 
       <motion.dl
@@ -51,7 +50,7 @@ export const ZineHero: React.FC<{ projectCount: number; skillCount: number }> = 
         {[
           { value: '6+', label: 'Tahun pengalaman' },
           { value: String(projectCount) + '+', label: 'Projek dikerjakan' },
-          { value: String(skillCount) + '+', label: 'Skill dipakai rutin' },
+          { value: String(skillCount) + '+', label: 'Teknologi dipakai' },
         ].map((stat) => (
           <div key={stat.label}>
             <dt className="sr-only">{stat.label}</dt>

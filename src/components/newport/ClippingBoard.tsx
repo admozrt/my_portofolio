@@ -31,8 +31,7 @@ export const ClippingBoard: React.FC = () => {
           Projek
         </h2>
         <p className="max-w-[40ch] text-[13.5px] leading-relaxed text-zine-ink-soft dark:text-zine-ink-soft-dark">
-          Sistem yang sudah berjalan dan dipakai, bukan konsep. Ketuk kartunya untuk melihat
-          detail.
+          Semuanya sudah jalan di tempat kliennya. Ketuk kartu untuk lihat detail.
         </p>
       </motion.div>
 

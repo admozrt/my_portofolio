@@ -43,8 +43,8 @@ export const ZineFooter: React.FC = () => (
             </span>
           </div>
           <p className="mb-5 max-w-xs text-[13px] leading-relaxed text-zine-ink-soft dark:text-zine-ink-soft-dark">
-            Software engineer yang membangun sistem untuk kesehatan, pemerintahan, dan usaha
-            ritel.
+            Rancang, bangun, dan rawat sistem untuk perusahaan, layanan publik, kesehatan, UMKM,
+            dan keperluan pribadi.
           </p>
           <div className="flex gap-2">
             {contactInfo.map((contact) => {

@@ -14,9 +14,9 @@ export const softSkills: SoftSkill[] = [
       'Membedah kebutuhan yang masih kabur jadi langkah teknis yang jelas sebelum menulis kode.',
   },
   {
-    name: 'Komunikasi dengan pengguna non-teknis',
+    name: 'Bicara dengan pengguna',
     description:
-      'Terbiasa menggali kebutuhan langsung dari petugas rumah sakit, staf instansi, dan pemilik usaha.',
+      'Menggali kebutuhan langsung dari petugas rumah sakit, staf instansi, dan pemilik usaha.',
   },
   {
     name: 'Analisis kebutuhan',
@@ -24,9 +24,9 @@ export const softSkills: SoftSkill[] = [
       'Menerjemahkan alur kerja yang selama ini manual jadi rancangan sistem yang benar-benar dipakai.',
   },
   {
-    name: 'Mandiri dan terstruktur',
+    name: 'Menjalankan projek secara terstruktur',
     description:
-      'Mengerjakan proyek dari perencanaan sampai rilis tanpa perlu diarahkan tiap langkah.',
+      'Mengerjakan projek dari perencanaan sampai rilis tanpa perlu diarahkan tiap langkah.',
   },
   {
     name: 'Kolaborasi tim',
@@ -34,8 +34,8 @@ export const softSkills: SoftSkill[] = [
       'Bekerja dengan tim internal instansi maupun klien lepas, termasuk serah terima dan dokumentasi.',
   },
   {
-    name: 'Belajar hal baru',
+    name: 'Memilih dan menggunakan teknologi sesuai keperluan',
     description:
-      'Mengambil teknologi baru saat memang dibutuhkan proyek, bukan karena sedang ramai dibicarakan.',
+      'Mengambil teknologi baru saat memang dibutuhkan projek, bukan karena sedang ramai dibicarakan.',
   },
 ];

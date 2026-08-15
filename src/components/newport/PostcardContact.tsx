@@ -24,7 +24,8 @@ export const PostcardContact: React.FC = () => {
                 Kontak
               </h2>
               <p className="mt-3 max-w-[42ch] text-[14px] leading-relaxed text-zine-ink-soft dark:text-zine-ink-soft-dark">
-                Punya sistem yang perlu dibangun atau diperbaiki? Kirim pesan lewat salah satu kontak berikut. Biasanya saya balas dalam satu hari kerja.
+                Punya sistem yang perlu dibangun atau dibenahi? Kirim pesan lewat salah satu
+                kontak di samping. Biasanya saya balas dalam sehari.
               </p>
             </div>
 
