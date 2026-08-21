@@ -392,6 +392,9 @@ export const WeddingPageSaufiAfifah: React.FC = () => {
   const [showAllUcapan, setShowAllUcapan] = useState(false);
   const [kirim, setKirim] = useState<'idle' | 'sending' | 'done'>('idle');
   const [isPlaying, setIsPlaying] = useState(false);
+  const [muatSelesai, setMuatSelesai] = useState(false);
+  const [muatHilang, setMuatHilang] = useState(false);
+  const [muatProgres, setMuatProgres] = useState(0);
   const [audioReady, setAudioReady] = useState(false);
   const [bcaCopied, setBcaCopied] = useState(false);
   const [addrCopied, setAddrCopied] = useState(false);
@@ -702,6 +705,9 @@ export const WeddingPageSaufiAfifah: React.FC = () => {
     const a = audioRef.current;
     if (!a) return;
     audioManualRef.current = true;
+    /* Tombol ini selalu berarti suara. Kalau ditekan sebelum gestur pembuka
+       sempat jalan, bisunya dibuka di sini. */
+    a.muted = false;
     if (a.paused) a.play().then(() => setIsPlaying(true), () => {});
     else {
       a.pause();
@@ -710,36 +716,126 @@ export const WeddingPageSaufiAfifah: React.FC = () => {
   }, []);
 
   /*
-    Pembuka musik. Dipasang sebagai pendengar tersendiri di document, bukan
+    Overlay pemuatan. Menunggu gambar sampai benar-benar termuat, dan lagunya
+    cukup sampai `canplay` — lagu latar tidak butuh buffer penuh, dan berkasnya
+    4,3 MB; menunggu `canplaythrough` akan menahan tamu terlalu lama di
+    jaringan lambat.
+
+    Ada batas waktu 9 detik. Tanpa itu, satu aset yang gagal termuat akan
+    mengurung tamu di layar pemuatan selamanya — dan undangan yang tidak bisa
+    dibuka jauh lebih buruk daripada undangan dengan satu awan yang belum siap.
+  */
+  useEffect(() => {
+    const besar = window.matchMedia('(min-width: 768px)').matches;
+    const sisi = besar ? 'lg' : 'sm';
+    const gambar = [
+      `/saufi/cloud-gate-left-${sisi}.webp`,
+      `/saufi/cloud-gate-right-${sisi}.webp`,
+      '/saufi/cloud-bank.webp',
+      '/saufi/cloud-column.webp',
+      '/saufi/cloud-drift.webp',
+      '/saufi/cloud-frame.svg',
+      '/saufi/map-frame.svg',
+      '/saufi/puff.svg',
+    ];
+
+    let hidup = true;
+    let beres = 0;
+    const total = gambar.length + 1; // + lagu
+    const naik = () => {
+      beres += 1;
+      if (!hidup) return;
+      setMuatProgres(Math.round((beres / total) * 100));
+      if (beres >= total) setMuatSelesai(true);
+    };
+
+    gambar.forEach((src) => {
+      const im = new Image();
+      im.onload = naik;
+      im.onerror = naik; // gagal pun tetap dihitung: jangan sampai mengurung tamu
+      im.src = src;
+    });
+
+    const a = audioRef.current;
+    if (!a) naik();
+    else if (a.readyState >= 3) naik();
+    else {
+      const sekali = () => {
+        a.removeEventListener('canplay', sekali);
+        a.removeEventListener('error', sekali);
+        naik();
+      };
+      a.addEventListener('canplay', sekali);
+      a.addEventListener('error', sekali);
+    }
+
+    const batas = window.setTimeout(() => hidup && setMuatSelesai(true), 9000);
+    return () => {
+      hidup = false;
+      window.clearTimeout(batas);
+    };
+  }, []);
+
+  /* Dilepas dari DOM setelah pudarnya selesai, supaya tidak menyisakan lapisan
+     tak terlihat yang menadah klik. */
+  useEffect(() => {
+    if (!muatSelesai) return;
+    const t = window.setTimeout(() => setMuatHilang(true), 620);
+    return () => window.clearTimeout(t);
+  }, [muatSelesai]);
+
+  /*
+    Menjalankan lagunya dalam keadaan bisu, secepat mungkin setelah halaman
+    dibuka. Ini yang membuat sentuhan pertama tamu langsung berbunyi.
+  */
+  useEffect(() => {
+    audioRef.current?.play().catch(() => {
+      /* Sebagian peramban menolak bahkan pemutaran bisu. Tidak apa-apa:
+         pembuka di bawah tetap akan mencoba lagi pada gestur pertama. */
+    });
+  }, []);
+
+  /*
+    Pembuka bisu. Dipasang sebagai pendengar tersendiri di document, bukan
     dititipkan di advance(), karena advance() punya dua jalan keluar lebih awal
     — kunci animasi dan kartu yang masih bisa digulir — dan ketukan pada titik
     navigasi memanggil animateTo() langsung tanpa melewatinya sama sekali.
 
-    Peramban hanya mengizinkan audio berbunyi kalau play() dipanggil di dalam
-    penanganan gestur pengguna. Yang dihitung sebagai gestur cuma `pointerup`,
-    `touchend`, `keydown`, dan `click` — `wheel` TIDAK termasuk. Karena itu
-    percobaannya tidak dibatasi sekali: pendengarnya bertahan sampai ada satu
-    percobaan yang benar-benar berhasil, baru dilepas.
+    Yang dihitung peramban sebagai gestur pengguna cuma `pointerup`,
+    `touchend`, `keydown`, dan `click`. **`wheel` TIDAK termasuk**, jadi
+    pemakai mouse yang masuk lewat roda belum akan mendengar apa pun sampai ia
+    mengklik sesuatu. Karena itu pendengarnya tidak dilepas setelah satu kali
+    coba, melainkan bertahan sampai suaranya benar-benar terbuka.
   */
   useEffect(() => {
     const jenis = ['pointerup', 'touchend', 'keydown', 'click'] as const;
-    const coba = () => {
+    const buka = (e: Event) => {
+      /* Ketukan pada tombol musik itu sendiri dilewati. Pendengar ini berjalan
+         di fase capture, jadi tanpa penjagaan ini ia akan membuka bisunya lebih
+         dulu, lalu toggleMusic menafsirkannya sebagai "sedang berbunyi" dan
+         langsung menjedanya — satu ketukan berujung senyap. */
+      const t = e.target;
+      /* `document` bukan Element dan tidak punya closest(); tanpa penjagaan
+         ini pendengarnya melempar error dan bisunya tidak pernah terbuka. */
+      if (t instanceof Element && t.closest('.saufiwed-music')) return;
+
       const a = audioRef.current;
-      /* Sudah pernah terbuka, atau tamu sudah memutuskan sendiri lewat
-         tombolnya. Dua-duanya berarti pembuka ini tidak punya urusan lagi. */
+      /* Sudah terbuka, atau tamu sudah memutuskan sendiri lewat tombolnya. */
       if (!a || audioOpenedRef.current || audioManualRef.current) return lepas();
-      if (!a.paused) return lepas();
-      a.play().then(() => {
+
+      a.muted = false;
+      const selesai = () => {
         audioOpenedRef.current = true;
         setIsPlaying(true);
         lepas();
-      }, () => {
-        /* Ditolak — biarkan pendengarnya tetap terpasang untuk gestur
-           berikutnya, misalnya ketukan pertama di layar. */
-      });
+      };
+      /* Kalau pemutaran bisunya tadi ditolak, elemennya masih berhenti —
+         sekarang di dalam gestur, play() diizinkan. */
+      if (a.paused) a.play().then(selesai, () => { a.muted = true; });
+      else selesai();
     };
-    const lepas = () => jenis.forEach((t) => document.removeEventListener(t, coba, true));
-    jenis.forEach((t) => document.addEventListener(t, coba, true));
+    const lepas = () => jenis.forEach((t) => document.removeEventListener(t, buka, true));
+    jenis.forEach((t) => document.addEventListener(t, buka, true));
     return lepas;
   }, []);
 
@@ -1002,20 +1098,44 @@ export const WeddingPageSaufiAfifah: React.FC = () => {
 
       <div className="saufiwed-root">
         {/*
-          `preload="metadata"` bukan "none": elemennya perlu benar-benar memeriksa
-          keberadaan berkasnya supaya `onLoadedMetadata` menyala. Itu yang jadi
-          syarat munculnya tombol — selama berkasnya belum ditaruh di
-          public/saufi/, tombolnya tidak pernah tampil, jadi tamu tidak menemukan
-          kontrol mati.
+          Dimulai BISU dan langsung berjalan sejak halaman dibuka.
+
+          Audio yang terdengar tidak boleh berbunyi otomatis di peramban mana
+          pun tanpa gestur pengguna — itu kebijakan, bukan sesuatu yang bisa
+          diakali. Yang diizinkan adalah pemutaran bisu. Jadi lagunya sudah
+          jalan dan ter-buffer sejak awal, dan sentuhan pertama tamu tinggal
+          membuka bisunya: bunyinya seketika, tanpa menunggu berkasnya dimuat.
+
+          `preload="auto"` supaya isinya benar-benar diambil, bukan cuma
+          metadatanya; `playsInline` untuk Safari di iOS.
         */}
         <audio
           ref={audioRef}
           src={BG_AUDIO}
           loop
-          preload="metadata"
+          muted
+          playsInline
+          preload="auto"
           onLoadedMetadata={() => setAudioReady(true)}
           onError={() => setAudioReady(false)}
         />
+
+        {!muatHilang && (
+          <div className={`saufiwed-load${muatSelesai ? ' saufiwed-load--out' : ''}`} role="status" aria-live="polite">
+            <span
+              className="saufiwed-load__cloud"
+              aria-hidden="true"
+              style={{ backgroundImage: 'url(/saufi/cloud-bank.webp)' }}
+            />
+            <span className="saufiwed-load__name">
+              {GROOM_FIRST} &amp; {BRIDE_FIRST}
+            </span>
+            <span className="saufiwed-load__bar" aria-hidden="true">
+              <i style={{ width: `${muatProgres}%` }} />
+            </span>
+            <span className="saufiwed-load__sr">Memuat undangan</span>
+          </div>
+        )}
 
         {audioReady && (
           <button
