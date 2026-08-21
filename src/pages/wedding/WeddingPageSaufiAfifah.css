@@ -245,7 +245,13 @@
     awannya. Persen 26% pada awan selebar 162px sudah 42px: lewat.
   */
   --out-x: 22px;
-  --out-y: 40%;
+  /* Seberapa jauh awan menyembul dari tepi kartu, dalam persen tingginya
+     sendiri. 40% terlalu malu-malu — sebagian besar badannya tertutup kartu.
+     Batas atasnya bukan selera: mendekati 100% awan berpisah total dari kartu
+     dan kembali terbaca sebagai aset melayang. 68% menampakkan lebih dari dua
+     pertiga badannya sambil menyisakan sepertiga tertindih, jadi hubungan
+     "menempel" masih terbaca. */
+  --out-y: 68%;
   translate: calc(var(--sx) * var(--out-x)) calc(var(--sy) * var(--out-y));
 
   /* Gerak sangat kecil, hanya supaya awannya tidak terasa seperti stiker.
@@ -260,7 +266,7 @@
 @media (min-width: 768px) {
   .saufiwed-cardcloud {
     --out-x: 38%;
-    --out-y: 48%;
+    --out-y: 70%;
   }
 }
 /* Amplitudonya kecil dengan sengaja: hanyutan ini menumpuk di atas geseran
@@ -273,6 +279,16 @@
     transform: translate3d(1.5%, -1.5%, 0);
   }
 }
+/* Tengah-atas. Penjangkarannya lewat `left: 50%`, lalu setengah lebarnya
+   ditarik balik di dalam `translate` yang sama — tidak bisa dipisah ke
+   `transform`, karena `transform` sudah dikuasai animasi hanyutnya. */
+.saufiwed-cardcloud--tc {
+  left: 50%;
+  top: 0;
+  --sy: -1;
+  translate: calc(-50% + var(--nudge-x, 0px)) calc(var(--sy) * var(--out-y));
+}
+
 .saufiwed-cardcloud--tl {
   left: 0;
   top: 0;

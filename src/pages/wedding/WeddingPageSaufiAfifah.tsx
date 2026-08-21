@@ -106,7 +106,7 @@ const CLOUD = {
 interface CardCloud {
   src: keyof typeof CLOUD;
   /** Sudut tempat awan menyembul dari balik kartu. */
-  spot: 'tl' | 'tr' | 'bl' | 'br';
+  spot: 'tl' | 'tc' | 'tr' | 'bl' | 'br';
   /** Lebar, dalam persen lebar kartu. Tingginya mengikuti rasio aslinya. */
   size: string;
   flip?: boolean;
@@ -128,13 +128,13 @@ const CARD_CLOUDS: Record<number, CardCloud[]> = {
     { src: 'column', spot: 'tr', size: '44%' },
     { src: 'bank', spot: 'bl', size: '42%', flip: true },
   ],
-  3: [{ src: 'drift', spot: 'br', size: '48%' }],
+  3: [{ src: 'drift', spot: 'tc', size: '58%' }],
   4: [
     { src: 'bank', spot: 'tl', size: '40%', flip: true },
-    { src: 'column', spot: 'br', size: '42%' },
+    { src: 'column', spot: 'tr', size: '42%' },
   ],
   5: [{ src: 'bank', spot: 'tr', size: '42%' }],
-  6: [{ src: 'drift', spot: 'bl', size: '48%' }],
+  6: [{ src: 'drift', spot: 'tr', size: '48%' }],
   7: [
     { src: 'column', spot: 'tl', size: '40%', flip: true },
     { src: 'bank', spot: 'br', size: '44%' },
@@ -861,15 +861,15 @@ export const WeddingPageSaufiAfifah: React.FC = () => {
                 width="min(560px, 88vw)"
                 style={{ alignItems: 'center', gap: 13, textAlign: 'center' }}
               >
-                <div className="saufiwed-eyebrow">Bismillahirrahmanirrahim</div>
-                <p className="saufiwed-display" style={{ maxWidth: '26ch', margin: 0, fontSize: 'clamp(19px, 5vw, 27px)', lineHeight: 1.45, color: '#2C3B4C'}}>
-                Dengan penuh syukur, kami mengundang Anda menjadi bagian dari hari bahagia kami.
-              </p>
-              <div className="saufiwed-stem" />
-              <div className="saufiwed-eyebrow" style={{ ['--ls' as string]: '0.28em', color: '#6C7C92' } as React.CSSProperties}>
-                {GROOM_FIRST} &amp; {BRIDE_FIRST}
-              </div>
-            </Station>
+                  <div className="saufiwed-eyebrow">Bismillahirrahmanirrahim</div>
+                  <p className="saufiwed-display" style={{ maxWidth: '26ch', margin: 0, fontSize: 'clamp(19px, 5vw, 27px)', lineHeight: 1.45, color: '#2C3B4C'}}>
+                  Dengan penuh syukur, kami mengundang Anda menjadi bagian dari hari bahagia kami.
+                </p>
+                <div className="saufiwed-stem" />
+                <div className="saufiwed-eyebrow" style={{ ['--ls' as string]: '0.28em', color: '#6C7C92' } as React.CSSProperties}>
+                  {GROOM_FIRST} &amp; {BRIDE_FIRST}
+                </div>
+              </Station>
 
             {/* 03 Tanggal */}
             <Station
