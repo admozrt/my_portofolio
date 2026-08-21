@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { ArrowUpRight, CalendarPlus, Instagram, Send, Sparkles } from 'lucide-react';
+import { ArrowUpRight, CalendarPlus, Check, Instagram, Send, Sparkles } from 'lucide-react';
 import { SEOHead } from '../../components/ui/SEOHead';
 import './WeddingPageSaufiAfifah.css';
 
@@ -51,6 +51,44 @@ const GIFT_RECIPIENT = '';
    string untuk memakai inisial sebagai penggantinya. */
 const BRIDE_PHOTO = '';
 const GROOM_PHOTO = '';
+
+/*
+  Backend RSVP dan ucapan: Google Apps Script Web App, tanpa server sendiri.
+  Polanya diambil dari WeddingPageTito.tsx yang sudah terpakai.
+
+  Kosongkan ("") untuk mode demo — form tetap jalan tapi ucapan hanya hidup di
+  layar tamu itu sendiri dan hilang saat halaman di-refresh. Langkah setup ada
+  di public/saufi/README-google-sheets.md.
+
+  WAJIB endpoint milik pasangan ini sendiri. Memakai endpoint undangan lain
+  akan mencampur data dua pernikahan ke satu spreadsheet.
+*/
+const SHEETS_ENDPOINT = 'https://script.google.com/macros/s/AKfycbyKre0xhCitTzbCdJYAGlTbj2IcCUtTV6dLtFvjoBxfe0cuTUeY5n4tyD5DzmxaSvvX/exec';
+
+/* Berkas musik latar. Tombolnya baru muncul kalau berkas ini benar-benar ada,
+   jadi tidak ada kontrol mati yang membingungkan tamu selama belum diisi. */
+const BG_AUDIO = '/saufi/backsound.mp3';
+
+const KEHADIRAN_OPTIONS = ['Hadir', 'Tidak Hadir', 'Masih Ragu'] as const;
+type Kehadiran = (typeof KEHADIRAN_OPTIONS)[number];
+
+const PESAN_MAX = 200;
+/* Tito memakai 5. Di sini 3, supaya kartunya tidak langsung minta digulir
+   begitu dibuka — kartu di halaman ini dibatasi 86svh. */
+const UCAPAN_PREVIEW = 3;
+
+const UCAPAN_SEED: UcapanItem[] = [
+  {
+    nama: 'Keluarga Besar',
+    pesan: 'Barakallahu lakuma wa baraka alaikuma. Semoga menjadi keluarga sakinah, mawaddah, warahmah.',
+    time: Date.now() - 1000 * 60 * 40,
+  },
+  {
+    nama: 'Sahabat',
+    pesan: 'Selamat menempuh hidup baru. Bahagia selalu untuk kalian berdua.',
+    time: Date.now() - 1000 * 60 * 110,
+  },
+];
 
 const STATION_LABELS = ['Cover', 'Pembukaan', 'Tanggal', 'Lokasi', 'Profil', 'RSVP', 'Gift', 'Penutup'];
 
@@ -174,9 +212,10 @@ interface Countdown {
   secs: number;
 }
 
-interface Wish {
-  name: string;
-  text: string;
+interface UcapanItem {
+  nama: string;
+  pesan: string;
+  time: number;
 }
 
 interface Layer {
@@ -211,6 +250,54 @@ interface Bit {
 }
 
 const pad = (n: number) => String(n).padStart(2, '0');
+
+/*
+  Ditulis `mode: 'no-cors'` dengan Content-Type text/plain supaya permintaannya
+  tergolong "simple request" dan tidak memicu preflight — Apps Script tidak
+  menjawab OPTIONS. Konsekuensinya jawabannya tidak bisa dibaca, jadi
+  keberhasilan hanya berarti "terkirim tanpa melempar".
+*/
+async function submitToSheet(payload: Record<string, string>): Promise<boolean> {
+  if (!SHEETS_ENDPOINT) return true; // mode demo: anggap sukses
+  try {
+    await fetch(SHEETS_ENDPOINT, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify(payload),
+    });
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+/** `null` berarti pakai seed: endpoint kosong, jaringan gagal, atau bentuk
+ *  jawabannya tidak sesuai. */
+async function fetchUcapan(): Promise<UcapanItem[] | null> {
+  if (!SHEETS_ENDPOINT) return null;
+  try {
+    const res = await fetch(SHEETS_ENDPOINT, { method: 'GET' });
+    const data = await res.json();
+    if (!data || !Array.isArray(data.ucapan)) return null;
+    return data.ucapan.map((u: { nama: string; pesan: string; time: string }) => ({
+      nama: u.nama,
+      pesan: u.pesan,
+      time: new Date(u.time).getTime() || Date.now(),
+    }));
+  } catch {
+    return null;
+  }
+}
+
+function relativeTime(ts: number): string {
+  const menit = Math.floor((Date.now() - ts) / 60000);
+  if (menit < 1) return 'baru saja';
+  if (menit < 60) return `${menit} menit lalu`;
+  const jam = Math.floor(menit / 60);
+  if (jam < 24) return `${jam} jam lalu`;
+  return `${Math.floor(jam / 24)} hari lalu`;
+}
 
 /**
  * Satu stasiun: pembungkus yang dikuasai kamera, awan yang menempel di
@@ -296,12 +383,16 @@ export const WeddingPageSaufiAfifah: React.FC = () => {
 
   const [cd, setCd] = useState<Countdown | null>(null);
   const [active, setActive] = useState(0);
-  const [name, setName] = useState('');
-  const [attend, setAttend] = useState<'' | 'yes' | 'no'>('');
-  const [guests, setGuests] = useState('1');
-  const [message, setMessage] = useState('');
-  const [wishes, setWishes] = useState<Wish[]>([]);
-  const [sent, setSent] = useState(false);
+  /* Tamu yang dibukakan lewat ?to= tidak perlu mengetik namanya lagi. */
+  const [nama, setNama] = useState(guest === 'Tamu Undangan' ? '' : guest);
+  const [kehadiran, setKehadiran] = useState<Kehadiran>('Hadir');
+  const [jumlah, setJumlah] = useState(1);
+  const [pesan, setPesan] = useState('');
+  const [ucapanList, setUcapanList] = useState<UcapanItem[]>(UCAPAN_SEED);
+  const [showAllUcapan, setShowAllUcapan] = useState(false);
+  const [kirim, setKirim] = useState<'idle' | 'sending' | 'done'>('idle');
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [audioReady, setAudioReady] = useState(false);
   const [bcaCopied, setBcaCopied] = useState(false);
   const [addrCopied, setAddrCopied] = useState(false);
 
@@ -311,6 +402,9 @@ export const WeddingPageSaufiAfifah: React.FC = () => {
   const petalsRef = useRef<HTMLDivElement | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const hintRef = useRef<HTMLDivElement | null>(null);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+  /* Percobaan pemutaran hanya sekali, pada gerakan pertama tamu. */
+  const triedAudioRef = useRef(false);
 
   const layersRef = useRef<Layer[]>([]);
   const stopsRef = useRef<number[]>([]);
@@ -590,10 +684,33 @@ export const WeddingPageSaufiAfifah: React.FC = () => {
   const advance = useCallback(
     (dir: number) => {
       if (lockRef.current) return;
+      /*
+        Gerakan pertama tamu dipakai sebagai izin memutar musik. Chrome tidak
+        menghitung `wheel` sebagai gestur pengguna, jadi bagi pemakai mouse
+        panggilan ini memang akan ditolak — dan itu tidak apa-apa: statusnya
+        tetap "jeda" dan tombolnya masih bisa ditekan manual.
+      */
+      if (!triedAudioRef.current) {
+        triedAudioRef.current = true;
+        audioRef.current?.play().then(
+          () => setIsPlaying(true),
+          () => setIsPlaying(false)
+        );
+      }
       animateTo(idxRef.current + dir);
     },
     [animateTo]
   );
+
+  const toggleMusic = useCallback(() => {
+    const a = audioRef.current;
+    if (!a) return;
+    if (a.paused) a.play().then(() => setIsPlaying(true), () => {});
+    else {
+      a.pause();
+      setIsPlaying(false);
+    }
+  }, []);
 
   /* ── Pemasangan mesin 3D ── */
   useEffect(() => {
@@ -774,6 +891,17 @@ export const WeddingPageSaufiAfifah: React.FC = () => {
     };
   }, []);
 
+  /* ── Ucapan: ambil dari Sheets kalau endpoint diisi ── */
+  useEffect(() => {
+    let hidup = true;
+    fetchUcapan().then((data) => {
+      if (hidup && data && data.length) setUcapanList(data);
+    });
+    return () => {
+      hidup = false;
+    };
+  }, []);
+
   /* ── Aksi ── */
   const copy = (text: string, set: (v: boolean) => void) => {
     const done = () => {
@@ -784,11 +912,23 @@ export const WeddingPageSaufiAfifah: React.FC = () => {
     else done();
   };
 
-  const submitRsvp = () => {
-    if (!name.trim()) return;
-    if (message.trim()) setWishes((prev) => [{ name, text: message }, ...prev]);
-    setSent(true);
-    setMessage('');
+  const submitRsvp = async () => {
+    if (!nama.trim() || !pesan.trim() || kirim === 'sending') return;
+    setKirim('sending');
+    const item: UcapanItem = { nama: nama.trim(), pesan: pesan.trim(), time: Date.now() };
+    /* Dua tab berbeda di spreadsheet-nya, jadi dua kiriman terpisah. */
+    await Promise.all([
+      submitToSheet({
+        type: 'rsvp',
+        nama: item.nama,
+        kehadiran,
+        jumlah: kehadiran === 'Tidak Hadir' ? '0' : String(jumlah),
+        pesan: item.pesan,
+      }),
+      submitToSheet({ type: 'ucapan', nama: item.nama, pesan: item.pesan }),
+    ]);
+    setUcapanList((prev) => [item, ...prev]);
+    setKirim('done');
     burst(0.5, 0.5, 70);
   };
 
@@ -830,6 +970,36 @@ export const WeddingPageSaufiAfifah: React.FC = () => {
       />
 
       <div className="saufiwed-root">
+        {/*
+          `preload="metadata"` bukan "none": elemennya perlu benar-benar memeriksa
+          keberadaan berkasnya supaya `onLoadedMetadata` menyala. Itu yang jadi
+          syarat munculnya tombol — selama berkasnya belum ditaruh di
+          public/saufi/, tombolnya tidak pernah tampil, jadi tamu tidak menemukan
+          kontrol mati.
+        */}
+        <audio
+          ref={audioRef}
+          src={BG_AUDIO}
+          loop
+          preload="metadata"
+          onLoadedMetadata={() => setAudioReady(true)}
+          onError={() => setAudioReady(false)}
+        />
+
+        {audioReady && (
+          <button
+            type="button"
+            className={`saufiwed-music${isPlaying ? ' saufiwed-music--on' : ''}`}
+            onClick={toggleMusic}
+            aria-label={isPlaying ? 'Jeda musik' : 'Putar musik'}
+            title={isPlaying ? 'Jeda musik' : 'Putar musik'}
+          >
+            <span className="saufiwed-music__bar" />
+            <span className="saufiwed-music__bar" />
+            <span className="saufiwed-music__bar" />
+          </button>
+        )}
+
         <section className="saufiwed-rail">
           <div className="saufiwed-stage">
             <div className="saufiwed-world" ref={worldRef}>
@@ -1021,84 +1191,172 @@ export const WeddingPageSaufiAfifah: React.FC = () => {
             </Station>
 
             {/* 06 RSVP */}
-            <Station
-              index={5}
-              z={-7100}
-              width="min(520px, 88vw)"
-              /* Tanpa maxHeight/overflow di sini. Scroll di dalam kartu bersaing
-                 dengan scroll halaman yang menggerakkan kamera, dan di layar
-                 sentuh keduanya sama-sama gerak vertikal sehingga tidak bisa
-                 dibedakan pengguna. Jaring pengamannya dipasang di CSS, hanya
-                 untuk layar lebar. */
-              style={{ gap: 10 }}
-            >
+            <Station index={5} z={-7100} width="min(520px, 88vw)" style={{ gap: 10 }}>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
                 <div className="saufiwed-eyebrow">RSVP</div>
-                <div className="saufiwed-display" style={{ fontSize: 'clamp(21px, 5.4vw, 30px)' }}>Konfirmasi kehadiran</div>
-                <div className="saufiwed-body" style={{ fontSize: 12.5 }}>Mohon konfirmasi sebelum 1 September 2026.</div>
+                <div className="saufiwed-display" style={{ fontSize: 'clamp(21px, 5.4vw, 30px)' }}>
+                  Konfirmasi kehadiran
+                </div>
+                <div className="saufiwed-body" style={{ fontSize: 12.5 }}>
+                  Mohon konfirmasi sebelum 1 September 2026.
+                </div>
+                {ucapanList.length > 0 && (
+                  <div className="saufiwed-rsvp__summary">
+                    {ucapanList.length} ucapan telah kami terima
+                  </div>
+                )}
               </div>
 
-              <label className="saufiwed-field">
-                Nama
-                <input
-                  className="saufiwed-input"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  placeholder="Nama lengkap"
-                />
-              </label>
-
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
-                <div className="saufiwed-field">Kehadiran</div>
-                <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
+              {kirim === 'done' ? (
+                <div className="saufiwed-rsvp__done">
+                  <span className="saufiwed-rsvp__check" aria-hidden="true">
+                    <Check />
+                  </span>
+                  <div className="saufiwed-display" style={{ fontSize: 'clamp(19px, 4.8vw, 25px)' }}>
+                    Terima kasih, {nama}
+                  </div>
+                  <div className="saufiwed-body" style={{ fontSize: 12.5 }}>
+                    {kehadiran === 'Hadir'
+                      ? 'Konfirmasi kehadiranmu sudah kami terima. Sampai jumpa di hari bahagia kami.'
+                      : kehadiran === 'Masih Ragu'
+                        ? 'Terima kasih atas kabarnya. Kami tetap menantikan kehadiranmu.'
+                        : 'Terima kasih atas doa dan ucapannya. Restumu sudah lebih dari cukup bagi kami.'}
+                  </div>
                   <button
                     type="button"
-                    className={`saufiwed-pill${attend === 'yes' ? ' saufiwed-pill--on' : ''}`}
+                    className="saufiwed-pill"
+                    style={{ alignSelf: 'flex-start' }}
                     onClick={() => {
-                      setAttend('yes');
-                      burst(0.5, 0.55, 40);
+                      setPesan('');
+                      setKirim('idle');
                     }}
                   >
-                    Hadir
-                  </button>
-                  <button
-                    type="button"
-                    className={`saufiwed-pill${attend === 'no' ? ' saufiwed-pill--on' : ''}`}
-                    onClick={() => setAttend('no')}
-                  >
-                    Tidak hadir
+                    Kirim ucapan lagi
                   </button>
                 </div>
-              </div>
+              ) : (
+                <>
+                  <label className="saufiwed-field">
+                    Nama
+                    <input
+                      className="saufiwed-input"
+                      value={nama}
+                      onChange={(e) => setNama(e.target.value)}
+                      placeholder="Nama lengkap"
+                      autoComplete="name"
+                    />
+                  </label>
 
-              <label className="saufiwed-field">
-                Jumlah tamu
-                <select className="saufiwed-input" value={guests} onChange={(e) => setGuests(e.target.value)}>
-                  <option value="1">1 orang</option>
-                  <option value="2">2 orang</option>
-                  <option value="3">3 orang</option>
-                  <option value="4">4 orang</option>
-                </select>
-              </label>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+                    <div className="saufiwed-field">Kehadiran</div>
+                    {/* Segmented control seperti Tito: tiga pilihan muat satu
+                        baris. Tiga pill terpisah membungkus jadi dua baris di
+                        layar 375 dan memakan 117px — hampir dua kali ini. */}
+                    <div
+                      className="saufiwed-choices"
+                      style={{ ['--active-idx' as string]: KEHADIRAN_OPTIONS.indexOf(kehadiran) } as React.CSSProperties}
+                      role="radiogroup"
+                      aria-label="Kehadiran"
+                    >
+                      <span className="saufiwed-choices__pill" aria-hidden="true" />
+                      {KEHADIRAN_OPTIONS.map((k) => (
+                        <button
+                          key={k}
+                          type="button"
+                          role="radio"
+                          aria-checked={kehadiran === k}
+                          className={kehadiran === k ? 'on' : undefined}
+                          onClick={() => {
+                            setKehadiran(k);
+                            if (k === 'Hadir') burst(0.5, 0.55, 40);
+                          }}
+                        >
+                          {k}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
 
-              <label className="saufiwed-field">
-                Ucapan &amp; doa
-                <textarea
-                  className="saufiwed-input saufiwed-input--area"
-                  rows={3}
-                  value={message}
-                  onChange={(e) => setMessage(e.target.value)}
-                  placeholder="Tulis pesan untuk mempelai"
-                />
-              </label>
+                  {/* Yang tidak datang tidak perlu ditanya membawa berapa orang. */}
+                  {kehadiran !== 'Tidak Hadir' && (
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+                      <div className="saufiwed-field">Jumlah tamu</div>
+                      <div className="saufiwed-stepper">
+                        <button
+                          type="button"
+                          onClick={() => setJumlah((n) => Math.max(1, n - 1))}
+                          disabled={jumlah <= 1}
+                          aria-label="Kurangi jumlah tamu"
+                        >
+                          &minus;
+                        </button>
+                        <b>{jumlah}</b>
+                        <button
+                          type="button"
+                          onClick={() => setJumlah((n) => Math.min(10, n + 1))}
+                          disabled={jumlah >= 10}
+                          aria-label="Tambah jumlah tamu"
+                        >
+                          +
+                        </button>
+                      </div>
+                    </div>
+                  )}
 
-              <button type="button" className="saufiwed-pill saufiwed-pill--solid" style={{ alignSelf: 'flex-start' }} onClick={submitRsvp}>
-                {sent ? 'Terima kasih' : 'Kirim konfirmasi'}
-                <span className="saufiwed-pill__icon" aria-hidden="true">
-                  <Send />
-                </span>
-              </button>
+                  <label className="saufiwed-field">
+                    <span className="saufiwed-field__row">
+                      Ucapan &amp; doa
+                      <em className={pesan.length > PESAN_MAX - 30 ? 'near' : undefined}>
+                        {pesan.length}/{PESAN_MAX}
+                      </em>
+                    </span>
+                    <textarea
+                      className="saufiwed-input saufiwed-input--area"
+                      rows={3}
+                      value={pesan}
+                      onChange={(e) => setPesan(e.target.value.slice(0, PESAN_MAX))}
+                      placeholder="Tulis pesan untuk mempelai"
+                    />
+                  </label>
 
+                  <button
+                    type="button"
+                    className="saufiwed-pill saufiwed-pill--solid"
+                    style={{ alignSelf: 'flex-start' }}
+                    onClick={submitRsvp}
+                    disabled={kirim === 'sending'}
+                  >
+                    {kirim === 'sending' ? 'Mengirim' : 'Kirim konfirmasi'}
+                    <span className="saufiwed-pill__icon" aria-hidden="true">
+                      <Send />
+                    </span>
+                  </button>
+                </>
+              )}
+
+              {ucapanList.length > 0 && (
+                <div className="saufiwed-ucapan">
+                  {(showAllUcapan ? ucapanList : ucapanList.slice(0, UCAPAN_PREVIEW)).map((u, i) => (
+                    <article className="saufiwed-wish" key={`${u.time}-${i}`}>
+                      <header className="saufiwed-wish__head">
+                        <span className="saufiwed-wish__name">{u.nama}</span>
+                        <span className="saufiwed-wish__time">{relativeTime(u.time)}</span>
+                      </header>
+                      <p className="saufiwed-body" style={{ fontSize: 12.5, margin: 0 }}>{u.pesan}</p>
+                    </article>
+                  ))}
+
+                  {ucapanList.length > UCAPAN_PREVIEW && (
+                    <button
+                      type="button"
+                      className="saufiwed-ucapan__more"
+                      onClick={() => setShowAllUcapan((v) => !v)}
+                    >
+                      {showAllUcapan ? 'Tampilkan lebih sedikit' : `Lihat semua ucapan (${ucapanList.length})`}
+                    </button>
+                  )}
+                </div>
+              )}
             </Station>
 
             {/* 07 Wedding Gift */}
@@ -1179,24 +1437,6 @@ export const WeddingPageSaufiAfifah: React.FC = () => {
               <Credit />
             </Station>
           </div>
-
-          {/*
-              Ucapan yang baru dikirim tampil sebagai lapisan sendiri di bawah
-              kartu, bukan di dalamnya. Kalau ditumpuk di dalam kartu, kartunya
-              melewati tinggi layar dan butuh scroll sendiri — dan scroll di
-              dalam kartu bersaing dengan scroll halaman yang menggerakkan
-              kamera. Hanya yang terbaru yang ditampilkan; RSVP ini belum punya
-              penyimpanan, jadi isinya memang cuma gema dari yang barusan
-              diketik pengunjung.
-            */}
-          {active === 5 && wishes.length > 0 && (
-            <div className="saufiwed-wishlayer">
-              <div className="saufiwed-wish">
-                <div style={{ fontSize: 11, letterSpacing: '0.1em', textTransform: 'uppercase', color: '#3E5470' }}>{wishes[0].name}</div>
-                <div className="saufiwed-body" style={{ fontSize: 13, lineHeight: 1.55 }}>{wishes[0].text}</div>
-              </div>
-            </div>
-          )}
 
           <div className="saufiwed-petals" ref={petalsRef} />
           <canvas className="saufiwed-canvas" ref={canvasRef} />

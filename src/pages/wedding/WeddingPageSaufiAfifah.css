@@ -763,41 +763,263 @@
   border-color: rgba(238, 242, 248, 0.36);
 }
 
-/* Ucapan terbaru, sebagai lapisan tersendiri di bawah kartu RSVP. */
-/* Catatan, bukan kontrol: tidak boleh menadah klik yang ditujukan ke tombol
-   kirim di kartu belakangnya. */
-.saufiwed-wishlayer {
-  position: absolute;
-  pointer-events: none;
-  left: 50%;
-  bottom: 74px;
-  translate: -50% 0;
-  width: min(420px, 84vw);
-  z-index: 8;
-  animation: saufiwedRise 420ms var(--ease-out) both;
+/* ── Ucapan ───────────────────────────────────────────────── */
+
+.saufiwed-ucapan {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 2px;
 }
-@keyframes saufiwedRise {
+.saufiwed-wish {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 10px 12px;
+  background: #edf1f8;
+  border-left: 2px solid #8fa6c4;
+  border-radius: 4px;
+  animation: saufiwedUcapanIn 420ms var(--ease-out) both;
+}
+@keyframes saufiwedUcapanIn {
   from {
     opacity: 0;
-    transform: translateY(10px);
+    transform: translateY(-6px);
   }
   to {
     opacity: 1;
     transform: none;
   }
 }
+.saufiwed-wish__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+}
+.saufiwed-wish__name {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 16px;
+  color: #2c3b4c;
+}
+.saufiwed-wish__time {
+  font-size: 9.5px;
+  letter-spacing: 0.08em;
+  color: #8fa6c4;
+  white-space: nowrap;
+}
+.saufiwed-ucapan__more {
+  align-self: flex-start;
+  padding: 4px 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-indent: 0.22em;
+  text-transform: uppercase;
+  color: #3e5470;
+  border-bottom: 1px solid rgba(62, 84, 112, 0.3);
+}
+.saufiwed-ucapan__more:hover {
+  border-bottom-color: #3e5470;
+}
 
-.saufiwed-wish {
+/* Kartu gelap dipakai stasiun lain; ucapan hanya ada di kartu terang, tapi
+   ditulis supaya tidak pecah kalau nanti dipindah. */
+.saufiwed-card--dark .saufiwed-wish {
+  background: rgba(238, 242, 248, 0.08);
+  border-left-color: rgba(238, 242, 248, 0.45);
+}
+.saufiwed-card--dark .saufiwed-wish__name {
+  color: #eef2f8;
+}
+
+/* ── RSVP ─────────────────────────────────────────────────── */
+
+.saufiwed-rsvp__summary {
+  margin-top: 2px;
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-indent: 0.18em;
+  text-transform: uppercase;
+  color: #8fa6c4;
+}
+.saufiwed-rsvp__done {
   display: flex;
   flex-direction: column;
+  gap: 8px;
+}
+.saufiwed-rsvp__check {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 999px;
+  background: rgba(62, 84, 112, 0.1);
+  color: #3e5470;
+}
+.saufiwed-rsvp__check svg {
+  width: 17px;
+  height: 17px;
+  stroke-width: 1.6;
+}
+
+/* Penghitung karakter duduk di baris label yang sama, didorong ke kanan. */
+.saufiwed-field__row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+}
+.saufiwed-field__row em {
+  font-style: normal;
+  font-size: 9.5px;
+  letter-spacing: 0.06em;
+  color: #a8b4c4;
+}
+.saufiwed-field__row em.near {
+  color: #3e5470;
+}
+
+/* Segmented control kehadiran. Pil penandanya digeser dengan `translate`
+   sebesar kelipatan lebarnya sendiri, jadi tidak perlu tahu lebar kartunya. */
+.saufiwed-choices {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  padding: 3px;
+  border: 1px solid #d3dce8;
+  border-radius: 999px;
+  background: #fdfeff;
+}
+.saufiwed-choices__pill {
+  position: absolute;
+  top: 3px;
+  bottom: 3px;
+  left: 3px;
+  width: calc((100% - 6px) / 3);
+  border-radius: 999px;
+  background: #3e5470;
+  translate: calc(var(--active-idx, 0) * 100%) 0;
+  transition: translate 320ms var(--ease-gate);
+}
+.saufiwed-choices button {
+  position: relative;
+  z-index: 1;
+  min-height: 40px;
+  padding: 0 4px;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  font-size: 9.5px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #2f4159;
+  transition: color 200ms var(--ease-out);
+}
+.saufiwed-choices button.on {
+  color: #eef2f8;
+}
+
+.saufiwed-stepper {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  align-self: flex-start;
+  border: 1px solid #d3dce8;
+  border-radius: 999px;
+  background: #fdfeff;
+  padding: 3px;
+}
+.saufiwed-stepper button {
+  width: 38px;
+  height: 38px;
+  border: 0;
+  border-radius: 999px;
+  background: none;
+  cursor: pointer;
+  font-size: 17px;
+  line-height: 1;
+  color: #3e5470;
+  transition: background 160ms var(--ease-out);
+}
+.saufiwed-stepper button:hover:not(:disabled) {
+  background: rgba(62, 84, 112, 0.08);
+}
+.saufiwed-stepper button:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+.saufiwed-stepper b {
+  min-width: 30px;
+  text-align: center;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 19px;
+  font-weight: 400;
+  font-variant-numeric: tabular-nums;
+}
+
+.saufiwed-pill:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+/* ── Musik ────────────────────────────────────────────────── */
+
+.saufiwed-music {
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+  /* Di atas titik navigasi (8), tapi sudutnya memang kosong: titik navigasi
+     terpusat vertikal dan petunjuk gulir ada di tengah bawah. */
+  z-index: 9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   gap: 3px;
-  padding: 11px 13px;
-  /* Berdiri langsung di atas panggung, bukan di dalam kartu, jadi latarnya
-     harus pekat sendiri dan punya bayangan supaya terangkat dari awan. */
-  background: rgba(240, 244, 250, 0.97);
-  border-left: 2px solid #8fa6c4;
-  border-radius: 4px;
-  box-shadow: 0 14px 34px rgba(38, 49, 61, 0.16);
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border-radius: 999px;
+  border: 1px solid rgba(62, 84, 112, 0.18);
+  background: rgba(250, 252, 255, 0.82);
+  backdrop-filter: blur(10px);
+  cursor: pointer;
+  transition: transform 200ms var(--ease-out), border-color 200ms var(--ease-out);
+}
+.saufiwed-music:hover {
+  transform: scale(1.06);
+  border-color: #3e5470;
+}
+.saufiwed-music:active {
+  transform: scale(0.97);
+}
+.saufiwed-music__bar {
+  width: 3px;
+  height: 7px;
+  border-radius: 2px;
+  background: #3e5470;
+  transition: height 200ms var(--ease-out);
+}
+.saufiwed-music--on .saufiwed-music__bar {
+  animation: saufiwedMusicBar 900ms ease-in-out infinite;
+}
+.saufiwed-music--on .saufiwed-music__bar:nth-child(2) {
+  animation-delay: 150ms;
+}
+.saufiwed-music--on .saufiwed-music__bar:nth-child(3) {
+  animation-delay: 300ms;
+}
+@keyframes saufiwedMusicBar {
+  0%,
+  100% {
+    height: 6px;
+  }
+  50% {
+    height: 16px;
+  }
 }
 
 /* ── Footer ───────────────────────────────────────────────── */
