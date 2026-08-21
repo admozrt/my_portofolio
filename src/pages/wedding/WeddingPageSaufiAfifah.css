@@ -320,6 +320,17 @@
   lapisan tambahan, karena background selalu tergambar di belakang teks
   anaknya tanpa perlu bermain z-index.
 */
+/* Pengantar "The Wedding Of" di cover. Jaraknya dirapatkan ke nama mempelai
+   supaya keduanya terbaca satu kesatuan, bukan dua baris terpisah. */
+.saufiwed-cover__pre {
+  margin-bottom: -4px;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-style: italic;
+  font-size: clamp(15px, 4.2vw, 20px);
+  letter-spacing: 0.02em;
+  color: #6c7c92;
+}
+
 .saufiwed-screen--cover {
   width: min(560px, 88vw);
   align-items: center;
@@ -1071,14 +1082,25 @@
 }
 
 /*
-  Di cover tidak ada kartu, hanya kabut radial di atas awan. Garis pemisah
-  dihilangkan supaya tidak ada tepi lurus yang memotong kabutnya, dan jaraknya
-  dirapatkan karena cover sudah punya padding sendiri yang lega.
+  Di luar kartu — di cover maupun di blok petunjuk gulir — garis pemisahnya
+  dihilangkan supaya tidak ada tepi lurus yang memotong kabut awan, dan
+  lebarnya menyusut ke isinya sendiri supaya tidak menarik garis selebar layar.
 */
-.saufiwed-screen--cover .saufiwed-footer {
+.saufiwed-screen--cover .saufiwed-footer,
+.saufiwed-hint .saufiwed-footer {
   margin-top: 10px;
   padding-top: 0;
   border-top: 0;
+  width: auto;
+}
+.saufiwed-hint .saufiwed-footer {
+  margin-top: 0;
+  margin-bottom: 2px;
+}
+/* Petunjuk gulir sengaja tidak menadah pointer, tapi kreditnya tautan yang
+   memang harus bisa diklik. */
+.saufiwed-hint .saufiwed-footer__credit {
+  pointer-events: auto;
 }
 
 /* ── Overlay ──────────────────────────────────────────────── */

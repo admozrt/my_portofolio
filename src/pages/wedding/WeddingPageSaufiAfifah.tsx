@@ -403,8 +403,17 @@ export const WeddingPageSaufiAfifah: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const hintRef = useRef<HTMLDivElement | null>(null);
   const audioRef = useRef<HTMLAudioElement | null>(null);
-  /* Percobaan pemutaran hanya sekali, pada gerakan pertama tamu. */
-  const triedAudioRef = useRef(false);
+  /* Dipasang true begitu tamu menekan tombol musiknya sendiri, supaya
+     pembuka otomatis berhenti ikut campur setelah itu. */
+  const audioManualRef = useRef(false);
+  /*
+    Musiknya sudah pernah berhasil dibuka. Dipisah dari pelepasan pendengar
+    karena keduanya tidak setara: React.StrictMode memasang efek dua kali di
+    mode pengembangan, jadi ada dua pendengar, dan yang berhasil hanya melepas
+    dirinya sendiri. Sisanya akan memutar ulang musik yang baru saja dijeda
+    tamu. Penanda bersama ini yang menutup celah itu.
+  */
+  const audioOpenedRef = useRef(false);
 
   const layersRef = useRef<Layer[]>([]);
   const stopsRef = useRef<number[]>([]);
@@ -684,19 +693,6 @@ export const WeddingPageSaufiAfifah: React.FC = () => {
   const advance = useCallback(
     (dir: number) => {
       if (lockRef.current) return;
-      /*
-        Gerakan pertama tamu dipakai sebagai izin memutar musik. Chrome tidak
-        menghitung `wheel` sebagai gestur pengguna, jadi bagi pemakai mouse
-        panggilan ini memang akan ditolak — dan itu tidak apa-apa: statusnya
-        tetap "jeda" dan tombolnya masih bisa ditekan manual.
-      */
-      if (!triedAudioRef.current) {
-        triedAudioRef.current = true;
-        audioRef.current?.play().then(
-          () => setIsPlaying(true),
-          () => setIsPlaying(false)
-        );
-      }
       animateTo(idxRef.current + dir);
     },
     [animateTo]
@@ -705,11 +701,46 @@ export const WeddingPageSaufiAfifah: React.FC = () => {
   const toggleMusic = useCallback(() => {
     const a = audioRef.current;
     if (!a) return;
+    audioManualRef.current = true;
     if (a.paused) a.play().then(() => setIsPlaying(true), () => {});
     else {
       a.pause();
       setIsPlaying(false);
     }
+  }, []);
+
+  /*
+    Pembuka musik. Dipasang sebagai pendengar tersendiri di document, bukan
+    dititipkan di advance(), karena advance() punya dua jalan keluar lebih awal
+    — kunci animasi dan kartu yang masih bisa digulir — dan ketukan pada titik
+    navigasi memanggil animateTo() langsung tanpa melewatinya sama sekali.
+
+    Peramban hanya mengizinkan audio berbunyi kalau play() dipanggil di dalam
+    penanganan gestur pengguna. Yang dihitung sebagai gestur cuma `pointerup`,
+    `touchend`, `keydown`, dan `click` — `wheel` TIDAK termasuk. Karena itu
+    percobaannya tidak dibatasi sekali: pendengarnya bertahan sampai ada satu
+    percobaan yang benar-benar berhasil, baru dilepas.
+  */
+  useEffect(() => {
+    const jenis = ['pointerup', 'touchend', 'keydown', 'click'] as const;
+    const coba = () => {
+      const a = audioRef.current;
+      /* Sudah pernah terbuka, atau tamu sudah memutuskan sendiri lewat
+         tombolnya. Dua-duanya berarti pembuka ini tidak punya urusan lagi. */
+      if (!a || audioOpenedRef.current || audioManualRef.current) return lepas();
+      if (!a.paused) return lepas();
+      a.play().then(() => {
+        audioOpenedRef.current = true;
+        setIsPlaying(true);
+        lepas();
+      }, () => {
+        /* Ditolak — biarkan pendengarnya tetap terpasang untuk gestur
+           berikutnya, misalnya ketukan pertama di layar. */
+      });
+    };
+    const lepas = () => jenis.forEach((t) => document.removeEventListener(t, coba, true));
+    jenis.forEach((t) => document.addEventListener(t, coba, true));
+    return lepas;
   }, []);
 
   /* ── Pemasangan mesin 3D ── */
@@ -1015,13 +1046,16 @@ export const WeddingPageSaufiAfifah: React.FC = () => {
                 data-z="-80"
                 style={{ transform: 'translate(-50%, -50%) translateZ(0)' }}
               >
-                <div className="saufiwed-eyebrow" style={{ ['--ls' as string]: '0.34em', color: '#3E5470', fontSize: '12px' } as React.CSSProperties}>Kepada {guest}</div>
+                {/* Pengantar nama mempelai. Serif miring, bukan huruf kapital
+                    berjarak — kalau sama dengan eyebrow, dua baris kecil
+                    beruntun terbaca sebagai satu blok yang sama beratnya. */}
+                <div className="saufiwed-cover__pre">The Wedding Of</div>
                 <div className="saufiwed-display" style={{ fontSize: 'clamp(38px, 11vw, 64px)', lineHeight: 1.03, color: '#223142' }}>
                   {GROOM_FIRST} <span style={{ fontStyle: 'italic', color: '#3E5470' }}>&amp;</span> {BRIDE_FIRST}
                 </div>
                 <div className="saufiwed-rule" />
                 <div className="saufiwed-eyebrow" style={{ ['--ls' as string]: '0.34em', color: '#6C7C92' } as React.CSSProperties}>{DATE_SHORT}</div>
-                <Credit compact />
+                <div className="saufiwed-eyebrow" style={{ ['--ls' as string]: '0.34em', color: '#3E5470', fontSize: '12px' } as React.CSSProperties}>Kepada {guest}</div>
               </div>
 
               {/* 02 Pembukaan */}
@@ -1454,7 +1488,11 @@ export const WeddingPageSaufiAfifah: React.FC = () => {
             ))}
           </nav>
 
+          {/* Kredit menumpang di blok petunjuk gulir, bukan berdiri sendiri:
+              dengan begitu ia ikut memudar bersama petunjuknya begitu tamu
+              meninggalkan cover, tanpa perlu perhitungan opacity kedua. */}
           <div className="saufiwed-hint" ref={hintRef}>
+            <Credit compact />
             <span>Gulir untuk masuk</span>
             <i />
           </div>
