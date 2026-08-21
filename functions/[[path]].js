@@ -61,6 +61,18 @@ const ROUTES = {
     url: BASE + "/tito-wina",
     siteName: "Undangan Pernikahan",
   },
+  weddingSaufi: {
+    match: (path) =>
+      /saufi/i.test(path) || /afifah/i.test(path) || /aruna/i.test(path) || /damar/i.test(path),
+    title: "Undangan Pernikahan Saufi & Afifah 💍",
+    description:
+      "Dengan penuh syukur, kami mengundang Anda menjadi bagian dari hari bahagia kami. Kamis, 10 September 2026 · Jln. Sekumpul Gg. Taufik No. 39A, Martapura, Kalimantan Selatan",
+    image: BASE + "/saufi/preview.jpg",
+    imageW: "1200",
+    imageH: "630",
+    url: BASE + "/saufi-afifah",
+    siteName: "Undangan Pernikahan",
+  },
   projectWedding: {
     match: (path) => /project-wedding/i.test(path),
     title: "Undangan Pernikahan Digital - Projek Adi Rakhmatullah Ma'arif",
@@ -128,9 +140,10 @@ function buildMetaTags(meta) {
     `<meta property="og:image:height" content="${meta.imageH}" />`,
     `<meta property="og:url" content="${meta.url}" />`,
     `<meta property="og:locale" content="id_ID" />`,
-    // "summary", not "summary_large_image": every image this site ships is
-    // portrait or square, which a large card crops or pillarboxes.
-    `<meta name="twitter:card" content="summary" />`,
+    // A large card only helps when the image is actually landscape. Most
+    // images this site ships are portrait or square, and a large card crops
+    // or pillarboxes those — so the shape decides, not a blanket default.
+    `<meta name="twitter:card" content="${Number(meta.imageW) > Number(meta.imageH) ? 'summary_large_image' : 'summary'}" />`,
     `<meta name="twitter:title" content="${meta.title}" />`,
     `<meta name="twitter:description" content="${meta.description}" />`,
     `<meta name="twitter:image" content="${meta.image}" />`,

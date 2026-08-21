@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 // Konsep lama "Control Room" — route-nya dimatikan, file-nya tetap ada.
 // import { PortfolioPage } from './pages/PortfolioPage';
 import { WeddingPageAjie } from './pages/wedding/WeddingPageAjie';
@@ -11,6 +11,7 @@ import { WeddingPageAryaSekar } from './pages/wedding/WeddingPageAryaSekar';
 import { WeddingPageRezaKirana } from './pages/wedding/WeddingPageRezaKirana';
 import { WeddingPageBagasNadira } from './pages/wedding/WeddingPageBagasNadira';
 import { WeddingPageWisnuRatih } from './pages/wedding/WeddingPageWisnuRatih';
+import { WeddingPageSaufiAfifah } from './pages/wedding/WeddingPageSaufiAfifah';
 import { WeddingProjectsPage } from './pages/WeddingProjectsPage';
 import { InstitutionalSolutionsPage } from './pages/InstitutionalSolutionsPage';
 import { CorePOSPage } from './pages/CorePOSPage';
@@ -67,6 +68,12 @@ const App: React.FC = () => {
 
         {/* Undangan Pernikahan (Kidung Jawi - Jawa Dark & Moody): /wisnu-ratih?to=NamaPengunjung */}
         <Route path="/wisnu-ratih" element={<WeddingPageWisnuRatih />} />
+
+        {/* Undangan Pernikahan (Negeri Awan - kamera perspektif): /saufi-afifah?to=NamaPengunjung */}
+        <Route path="/saufi-afifah" element={<WeddingPageSaufiAfifah />} />
+        {/* Slug lama sempat masuk sitemap sebelum data aslinya turun, jadi
+            dialihkan, bukan dihapus. */}
+        <Route path="/aruna-damar" element={<Navigate to="/saufi-afifah" replace />} />
 
         {/* Showcase proyek undangan pernikahan */}
         <Route path="/project-wedding" element={<WeddingProjectsPage />} />

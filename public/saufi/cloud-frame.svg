@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 320" width="320" height="320" fill="none" role="img" aria-label="Bingkai lingkaran dari gumpalan awan">
+  <!-- Tengah dibiarkan kosong. Foto dipasang sebagai latar elemen induk,
+       bingkai ini menumpuk di atasnya. -->
+  <g stroke="#8FA6C4" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+
+    <g fill="#F6F8FB">
+      <ellipse cx="160" cy="30" rx="54" ry="26"/>
+      <ellipse cx="248" cy="66" rx="44" ry="24"/>
+      <ellipse cx="290" cy="152" rx="26" ry="46"/>
+      <ellipse cx="252" cy="248" rx="44" ry="26"/>
+      <ellipse cx="160" cy="292" rx="54" ry="26"/>
+      <ellipse cx="68" cy="248" rx="44" ry="26"/>
+      <ellipse cx="30" cy="152" rx="26" ry="46"/>
+      <ellipse cx="70" cy="66" rx="44" ry="24"/>
+    </g>
+
+    <circle cx="160" cy="160" r="118" opacity=".5"/>
+
+    <g opacity=".55" fill="#FFFFFF" stroke="none">
+      <ellipse cx="160" cy="24" rx="30" ry="13"/>
+      <ellipse cx="256" cy="60" rx="24" ry="12"/>
+      <ellipse cx="64" cy="60" rx="24" ry="12"/>
+      <ellipse cx="160" cy="298" rx="30" ry="12"/>
+    </g>
+
+    <g opacity=".4">
+      <path d="M132 34 q28 -14 56 -2"/>
+      <path d="M228 70 q22 -12 44 -2"/>
+      <path d="M48 70 q22 -12 44 -2"/>
+      <path d="M132 288 q28 -12 56 -2"/>
+    </g>
+  </g>
+</svg>

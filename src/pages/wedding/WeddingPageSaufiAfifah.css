@@ -1,0 +1,955 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400&display=swap');
+
+/**
+ * Undangan "Negeri Awan" — Saufi & Afifah.
+ *
+ * Satu rel scroll panjang yang digerakkan sebagai kamera 3D: tiap layer punya
+ * data-z sendiri, dan komponennya menulis translateZ + opacity per frame.
+ * Kelas di sini hanya menata posisi dan gaya; semua transform runtime diatur
+ * dari TSX-nya.
+ */
+
+.saufiwed-root {
+  /* Kurva gerak dijadikan token supaya satu halaman punya satu bahasa gerak.
+     Bawaan CSS terlalu lemah dan bikin gerakan terasa lambat. */
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-gate: cubic-bezier(0.32, 0.72, 0, 1);
+  --shell: 2rem;
+  --shell-pad: 6px;
+
+  position: relative;
+  background: #e7edf4;
+  color: #26313d;
+  font-family: Jost, system-ui, sans-serif;
+  font-weight: 300;
+  /* Halaman ini tidak menggulir sama sekali — perpindahan section dianimasikan
+     sendiri. `overscroll-behavior` mencegah pantulan karet di peramban seluler
+     saat gerakan ditahan. */
+  overflow: hidden;
+  overscroll-behavior: none;
+  -webkit-font-smoothing: antialiased;
+  text-wrap: pretty;
+}
+
+.saufiwed-root *,
+.saufiwed-root *::before,
+.saufiwed-root *::after {
+  box-sizing: border-box;
+}
+
+/* :where() lagi, dengan alasan yang sama: warna tautan bawaan tidak boleh
+   mengalahkan warna label pada tombol pill. */
+.saufiwed-root :where(a) {
+  color: #3e5470;
+  text-decoration: none;
+}
+.saufiwed-root :where(a):hover {
+  color: #8fa6c4;
+}
+
+/*
+  Reset kontrol form. Ditulis dengan :where() supaya bobot spesifisitasnya nol,
+  jadi kelas komponen di bawah selalu menang.
+
+  Tanpa itu, `.saufiwed-root button` (0,1,1) mengalahkan `.saufiwed-pill` (0,1,0):
+  `font: inherit` mengembalikan ukuran huruf tombol ke 16px dan `color: inherit`
+  membuat label tombol gelap di atas latar gelap sehingga tulisannya hilang.
+*/
+.saufiwed-root :where(input, textarea, select, button) {
+  font: inherit;
+  color: inherit;
+}
+
+/* ── Panggung ─────────────────────────────────────────────── */
+
+/*
+  Rel tidak lagi jadi jalur scroll. Tingginya dikunci satu layar: posisi kamera
+  sekarang datang dari indeks section yang di-tween, bukan dari fraksi scroll.
+  Itu yang membuatnya ringan — saat diam tidak ada satu pun perhitungan yang
+  berjalan.
+*/
+.saufiwed-rail {
+  position: relative;
+  height: 100svh;
+}
+
+.saufiwed-stage {
+  position: relative;
+  height: 100svh;
+  overflow: hidden;
+  background: linear-gradient(180deg, #fafbfd 0%, #e9eff6 44%, #d6e0ec 100%);
+}
+
+/*
+  `inset: 0` pada panggung, jadi perspective-origin 50% 50% jatuh di titik yang
+  persis sama seperti waktu masih dipegang panggung — geometrinya tidak berubah
+  sedikit pun.
+
+  Tanpa `transform-style: preserve-3d`: stasiun-stasiunnya bidang datar yang
+  memang harus diratakan ke dalam world. Yang butuh ruang 3D sendiri hanya
+  kartu mempelai, dan itu sudah menyatakan `preserve-3d` di tingkatnya sendiri.
+*/
+.saufiwed-world {
+  position: absolute;
+  inset: 0;
+  perspective: 1200px;
+  perspective-origin: 50% 50%;
+}
+
+
+
+/* ── Pintu ────────────────────────────────────────────────── */
+
+/*
+  Gerbang berada di translateZ(-630px) dengan perspective 1200px, jadi ia
+  tergambar hanya 66% dari ukuran CSS-nya dan tertarik ke tengah layar. Kalau
+  ditulis 50vw x 92svh, hasilnya cuma dua panel kecil melayang di tengah.
+  Angka di bawah adalah ukuran yang sudah dikompensasi (dibagi 0.66) supaya
+  kedua awan benar-benar menutup layar saat undangan pertama dibuka.
+*/
+.saufiwed-cloudgate {
+  position: absolute;
+  top: -30svh;
+  width: 84vw;
+  height: 160svh;
+  background-repeat: no-repeat;
+  /*
+    Aset gerbang punya dua ukuran, dan CSS-lah yang memilih. Rasio slot ini
+    = 0.525 x (lebar viewport / tinggi viewport), jadi 0.24 di ponsel tegak
+    tapi 0.84 di layar lebar. Dengan `cover`, satu berkas berasio 0.487
+    kehilangan separuh lebarnya di ponsel — termasuk tepi bergelombang di
+    tengah yang justru bikin dua awan terbaca menyatu jadi satu massa.
+
+    Aturannya: rasio aset harus selalu lebih kecil atau sama dengan rasio slot
+    tersempit di rentangnya, supaya `cover` hanya memangkas atas-bawah dan tepi
+    dalam tidak pernah tersentuh.
+
+    URL-nya dititipkan sebagai custom property dari TSX karena webpack gagal
+    me-resolve url(/saufi/...) di dalam berkas CSS. Nilai yang tidak terpakai
+    tidak pernah diunduh browser, jadi ponsel tidak ikut menarik set desktop.
+  */
+  background-image: var(--gate-sm);
+  background-size: cover;
+  /*
+    Wajib. Setelah gerbangnya tersibak, translateZ-nya dijepit ke NEAR_MAX
+    (+420px) seperti semua layer yang sudah dilewati kamera — artinya ia
+    berpindah ke DEPAN seluruh stasiun, yang duduk di -90px. Opacity-nya
+    memang sudah nol, tapi opacity tidak mematikan hit-testing: dua panel
+    selebar 84vw x 160svh yang tak terlihat tetap menadah setiap klik, jadi
+    tidak ada satu pun tombol di stasiun mana pun yang bisa ditekan.
+  */
+  pointer-events: none;
+  will-change: transform, opacity;
+}
+@media (min-width: 768px) {
+  .saufiwed-cloudgate {
+    background-image: var(--gate-lg);
+  }
+}
+/* Tanpa transform-origin: gerbang ini menggeser, bukan berputar pada engsel.
+   Jangkar gambar ke sisi dalam supaya kedua tepi bertemu rapi saat tertutup,
+   dan supaya yang terpangkas `cover` selalu sisi luarnya. */
+.saufiwed-cloudgate--l {
+  left: -28vw;
+  background-position: right center;
+}
+.saufiwed-cloudgate--r {
+  right: -28vw;
+  background-position: left center;
+}
+
+/* ── Peta ─────────────────────────────────────────────────── */
+
+.saufiwed-map {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  border-radius: calc(var(--shell) - var(--shell-pad));
+  overflow: hidden;
+  background: #e9eff6;
+}
+.saufiwed-map__frame {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+.saufiwed-map__empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  font-size: 11px;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: #8fa6c4;
+}
+/* Bingkai awan hanya hiasan tepi, jadi tidak boleh menangkap pointer:
+   peta di bawahnya harus tetap bisa digeser dan di-zoom. */
+.saufiwed-map__cloud {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 100% 100%;
+}
+
+/* ── Kartu stasiun ────────────────────────────────────────── */
+
+.saufiwed-screen {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  display: flex;
+  flex-direction: column;
+  will-change: transform, opacity;
+}
+
+/*
+  Awan yang menempel di sudut kartu. Sebagian sengaja menyembul keluar dari
+  batas kartu supaya kartunya terlihat betul-betul tenggelam di dalam awan,
+  bukan sekadar kotak yang ditempeli gambar.
+*/
+.saufiwed-cardcloud {
+  position: absolute;
+  /*
+    Rasio diambil dari berkasnya sendiri lewat --ar, bukan dipukul rata 3/2.
+    Rasio asli ketiga aset 1.667, 1.442, dan 2.222; dipaksa masuk kotak 1.5
+    dengan `contain`, cloud-drift menyisakan 32.5% ruang transparan — 16% di
+    atas, 16% di bawah — sehingga awan yang dijangkarkan ke sudut sebenarnya
+    mengambang jauh dari sudut itu. Dengan kotak yang sudah serasio gambarnya,
+    `100% 100%` mengisi penuh tanpa meregangkan apa pun.
+  */
+  aspect-ratio: var(--ar, 1.5);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 100% 100%;
+  pointer-events: none;
+  opacity: 0.9;
+
+  /*
+    Penjangkaran dipisah dari geseran. left/right/top/bottom menempelkan awan
+    ke sisi kartu; geserannya memakai properti `translate` yang persennya
+    dihitung terhadap kotak elemen ini sendiri.
+
+    Sebelumnya geserannya ditulis sebagai top/bottom negatif, yang dihitung
+    terhadap TINGGI kartu — dan tinggi tiap stasiun beda jauh, dari setinggi
+    teks cover sampai 86svh. Satu kelas yang sama menghasilkan geseran ~15px
+    di satu kartu dan ~100px di kartu lain.
+
+    Di mobile geserannya dipatok piksel, bukan persen. Kartu 88-90vw pada layar
+    375 hanya menyisakan ~20px di tiap sisi; setelah stasiun diskalakan 0.93
+    oleh perspektif, marginnya jadi ~34px. Jadi awan paling banyak boleh
+    menyembul ~30px sebelum tepinya tersapu overflow:hidden milik panggung —
+    dan 30px itu nilai tetap, sedangkan persen ikut membesar bersama lebar
+    awannya. Persen 26% pada awan selebar 162px sudah 42px: lewat.
+  */
+  --out-x: 22px;
+  --out-y: 40%;
+  translate: calc(var(--sx) * var(--out-x)) calc(var(--sy) * var(--out-y));
+
+  /* Gerak sangat kecil, hanya supaya awannya tidak terasa seperti stiker.
+     `translate`, `scale`, dan `transform` adalah tiga properti terpisah yang
+     dikomposisi berurutan, jadi pembalikan kiri-kanan dan animasi di bawah
+     tidak saling menimpa. Pembalikan `scale` tidak membalik arah `translate`,
+     karena penskalaan terjadi di ruang lokal sebelum penggeseran. */
+  animation: saufiwedCardDrift var(--dur, 22s) ease-in-out infinite alternate;
+  animation-delay: var(--delay, 0s);
+  will-change: transform;
+}
+@media (min-width: 768px) {
+  .saufiwed-cardcloud {
+    --out-x: 38%;
+    --out-y: 48%;
+  }
+}
+/* Amplitudonya kecil dengan sengaja: hanyutan ini menumpuk di atas geseran
+   sudut, dan di mobile sisa marginnya cuma beberapa piksel. */
+@keyframes saufiwedCardDrift {
+  from {
+    transform: translate3d(-1.5%, 1.5%, 0);
+  }
+  to {
+    transform: translate3d(1.5%, -1.5%, 0);
+  }
+}
+.saufiwed-cardcloud--tl {
+  left: 0;
+  top: 0;
+  --sx: -1;
+  --sy: -1;
+}
+.saufiwed-cardcloud--tr {
+  right: 0;
+  top: 0;
+  --sx: 1;
+  --sy: -1;
+}
+.saufiwed-cardcloud--bl {
+  left: 0;
+  bottom: 0;
+  --sx: -1;
+  --sy: 1;
+}
+.saufiwed-cardcloud--br {
+  right: 0;
+  bottom: 0;
+  --sx: 1;
+  --sy: 1;
+}
+
+/*
+  Teks cover berdiri langsung di atas awan yang ramai, jadi ia butuh kabut
+  lembut di belakangnya. Dipakai sebagai background elemen ini sendiri, bukan
+  lapisan tambahan, karena background selalu tergambar di belakang teks
+  anaknya tanpa perlu bermain z-index.
+*/
+.saufiwed-screen--cover {
+  width: min(560px, 88vw);
+  align-items: center;
+  gap: 10px;
+  text-align: center;
+  /* Jari-jari gradien sengaja lebih kecil daripada kotaknya, dan padding dibuat
+     lega, supaya kabutnya sudah habis sebelum mencapai tepi elemen. Kalau
+     jari-jarinya melebihi kotak, gradien terpotong dan yang terlihat justru
+     persegi panjang bertepi lurus di tengah awan. */
+  padding: 76px 12px;
+  background: radial-gradient(
+    ellipse 58% 50% at 50% 50%,
+    rgba(250, 252, 255, 0.95) 0%,
+    rgba(250, 252, 255, 0.82) 42%,
+    rgba(250, 252, 255, 0.42) 72%,
+    rgba(250, 252, 255, 0) 100%
+  );
+}
+
+/**
+ * Kartu bersarang: cangkang luar lengkung besar, inti dalam dengan radius
+ * konsentris. Sudut siku bertabrakan dengan konsep awan yang semuanya lengkung,
+ * jadi seluruh wadah di halaman ini dibulatkan dan tombolnya tetap pill.
+ */
+/**
+ * Kartu bersarang tanpa elemen tambahan. Border tebal semi-transparan jadi
+ * "cangkang" luar, dan karena radius bagian dalam otomatis dihitung sebagai
+ * radius luar dikurangi tebal border, lengkungnya konsentris dengan sendirinya.
+ * `background-clip: padding-box` yang membuat cangkangnya terbaca sebagai
+ * lapisan terpisah, bukan menyatu dengan isi kartu.
+ *
+ * Sudut siku bertabrakan dengan konsep awan yang semuanya lengkung, jadi semua
+ * wadah di halaman ini dibulatkan dan semua tombol tetap pill.
+ */
+/* Mobile-first: di layar kecil kartu dibuat serapat mungkin supaya isinya
+   masih muat dalam satu layar tanpa perlu scroll di dalam kartu. */
+/*
+  `position: relative` + z-index wajib ada. Awan kartu diposisikan absolut,
+  sedangkan kartu ini defaultnya statis, dan elemen statis selalu tergambar
+  lebih dulu daripada elemen berposisi. Tanpa dua baris ini, awan yang
+  seharusnya di belakang justru menutupi seluruh isi kartu.
+*/
+.saufiwed-card {
+  /*
+    Wajib flex. Tiap stasiun mengoper `alignItems` dan `gap` ke kartu ini lewat
+    prop `style`, dan keduanya tidak berlaku sama sekali pada `display: block`.
+    Akibatnya jarak antar isi hilang, dan anak yang punya `max-width` — seperti
+    paragraf pembukaan — menempel ke kiri alih-alih di tengah: terukur sisa
+    kiri 36px lawan sisa kanan 88px pada kartu selebar 307px.
+  */
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  z-index: 1;
+  padding: 15px 13px;
+  border-radius: var(--shell);
+  border: var(--shell-pad) solid rgba(255, 255, 255, 0.45);
+  background: rgba(253, 254, 255, 0.92);
+  background-clip: padding-box;
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.6), 0 0 0 1px rgba(62, 84, 112, 0.09),
+    0 26px 60px rgba(38, 49, 61, 0.14);
+
+  /*
+    Kartu yang isinya melebihi layar digulir di dalam dirinya sendiri, di semua
+    lebar. Dulu ini hanya dipasang di layar lebar karena scroll dalam kartu
+    bersaing dengan scroll halaman; halaman sudah tidak menggulir lagi, jadi
+    alasannya hilang. Satu gerakan menghabiskan isi kartu dulu, baru gerakan
+    berikutnya pindah section.
+
+    overflow-x ditulis eksplisit: kalau hanya overflow-y yang diisi, nilai
+    `visible` di sumbu lain otomatis jadi `auto` dan memunculkan bilah gulir
+    mendatar yang tidak ada gunanya.
+  */
+  max-height: 86svh;
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(62, 84, 112, 0.28) transparent;
+}
+.saufiwed-card::-webkit-scrollbar {
+  width: 5px;
+}
+.saufiwed-card::-webkit-scrollbar-thumb {
+  border-radius: 999px;
+  background: rgba(62, 84, 112, 0.28);
+}
+.saufiwed-card--dark {
+  scrollbar-color: rgba(238, 242, 248, 0.32) transparent;
+}
+.saufiwed-card--dark::-webkit-scrollbar-thumb {
+  background: rgba(238, 242, 248, 0.32);
+}
+
+@media (min-width: 480px) {
+  .saufiwed-card {
+    padding: 21px 17px;
+  }
+}
+@media (min-width: 768px) {
+  .saufiwed-card {
+    padding: 27px 22px;
+  }
+}
+@media (min-width: 1024px) {
+  .saufiwed-card {
+    padding: 32px 26px;
+  }
+}
+
+.saufiwed-card--dark {
+  border-color: rgba(238, 242, 248, 0.16);
+  background: rgba(62, 84, 112, 0.96);
+  color: #eef2f8;
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.14), 0 0 0 1px rgba(238, 242, 248, 0.18),
+    0 26px 60px rgba(38, 49, 61, 0.24);
+}
+
+/*
+  Jarak huruf ikut ditambahkan SETELAH huruf terakhir, jadi kotak teksnya lebih
+  lebar daripada tintanya. Waktu dirata-tengahkan, yang di tengah adalah kotak
+  itu — tintanya melenceng ke kiri sebesar setengah jarak huruf. `text-indent`
+  sebesar satu jarak huruf menggeser baris ke kanan setengahnya, jadi tepat
+  menutup selisih itu. Nilainya dipegang satu variabel supaya jarak huruf dan
+  penebusannya tidak bisa berbeda.
+*/
+.saufiwed-eyebrow {
+  font-size: 12px;
+  --ls: 0.46em;
+  letter-spacing: var(--ls);
+  text-indent: var(--ls);
+  text-transform: uppercase;
+  color: #7e8ca0;
+}
+.saufiwed-card--dark .saufiwed-eyebrow {
+  color: rgba(238, 242, 248, 0.66);
+}
+
+.saufiwed-display {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  letter-spacing: -0.02em;
+  line-height: 1.12;
+}
+
+.saufiwed-rule {
+  width: 42px;
+  height: 1px;
+  background: #b9c6d8;
+}
+
+.saufiwed-stem {
+  width: 1px;
+  height: 40px;
+  background: linear-gradient(#b9c6d8, rgba(185, 198, 216, 0));
+}
+.saufiwed-card--dark .saufiwed-stem {
+  background: linear-gradient(rgba(238, 242, 248, 0.5), rgba(238, 242, 248, 0));
+}
+
+.saufiwed-body {
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: #556272;
+}
+@media (min-width: 768px) {
+  .saufiwed-body {
+    font-size: 15px;
+    line-height: 1.68;
+  }
+}
+.saufiwed-card--dark .saufiwed-body {
+  color: rgba(238, 242, 248, 0.74);
+}
+
+/* ── Hitung mundur & acara ────────────────────────────────── */
+
+.saufiwed-countdown {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 6px;
+  width: 100%;
+  max-width: 400px;
+}
+.saufiwed-cdcell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  padding: 9px 3px;
+  border: 1px solid rgba(238, 242, 248, 0.22);
+  background: rgba(238, 242, 248, 0.07);
+}
+.saufiwed-cdnum {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 22px;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+@media (min-width: 480px) {
+  .saufiwed-cdnum {
+    font-size: 26px;
+  }
+}
+.saufiwed-cdlabel {
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  text-indent: 0.2em;
+  text-transform: uppercase;
+  color: rgba(238, 242, 248, 0.62);
+}
+
+.saufiwed-events {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1px;
+  width: 100%;
+  background: rgba(238, 242, 248, 0.2);
+}
+.saufiwed-event {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 13px 12px;
+  background: #3e5470;
+  text-align: left;
+}
+.saufiwed-event dt {
+  font-size: 10px;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: #c3d2e4;
+}
+.saufiwed-event dd {
+  margin: 0;
+}
+
+/* ── Mempelai ─────────────────────────────────────────────── */
+
+.saufiwed-people {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: 12px;
+}
+.saufiwed-person {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 9px;
+  padding: 13px 11px;
+  background: rgba(239, 243, 249, 0.9);
+  border: 1px solid #dce4ee;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+.saufiwed-portrait {
+  position: relative;
+  /* Potret paling banyak makan tinggi di kartu profil, jadi ia yang paling
+     dulu dikecilkan di layar sempit dan baru dilonggarkan kalau ruangnya ada. */
+  width: min(94px, 27vw);
+  aspect-ratio: 1;
+  transform: translateZ(30px);
+  transform-style: preserve-3d;
+}
+/* Slot foto. Bingkai berornamen menumpuk di atasnya. */
+@media (min-width: 480px) {
+  .saufiwed-portrait {
+    width: min(116px, 30vw);
+  }
+}
+@media (min-width: 768px) {
+  .saufiwed-portrait {
+    width: min(132px, 20vw);
+  }
+}
+.saufiwed-photo {
+  position: absolute;
+  inset: 10%;
+  border-radius: 50%;
+  overflow: hidden;
+  background: #dee6f1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.saufiwed-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.saufiwed-initial {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 30px;
+  line-height: 1;
+  color: #3e5470;
+}
+.saufiwed-frame {
+  position: absolute;
+  inset: 0;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  pointer-events: none;
+}
+
+/* ── Kontrol ──────────────────────────────────────────────── */
+
+.saufiwed-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 10px;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: #7e8ca0;
+}
+.saufiwed-input {
+  border: 1px solid #d3dce8;
+  background: #fdfeff;
+  padding: 10px 12px;
+  font-size: 14px;
+  letter-spacing: 0;
+  text-transform: none;
+  outline: none;
+  /* Tidak ikut dikecilkan di bawah 44px: itu batas target sentuh yang masih
+     nyaman ditekan jempol. Yang dirapatkan hanya paddingnya. */
+  min-height: 44px;
+  font-family: inherit;
+}
+.saufiwed-input:focus {
+  border-color: #3e5470;
+}
+.saufiwed-input--area {
+  resize: vertical;
+}
+
+.saufiwed-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 8px 8px 8px 17px;
+  border-radius: 999px;
+  font-size: 10px;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  cursor: pointer;
+  min-height: 44px;
+  border: 1px solid #d3dce8;
+  background: transparent;
+  color: #2f4159;
+  transition: background 200ms var(--ease-out), color 200ms var(--ease-out),
+    border-color 200ms var(--ease-out), transform 160ms var(--ease-out);
+}
+/* Tombol tanpa ikon tidak perlu ruang kanan yang lega. */
+.saufiwed-pill:not(:has(.saufiwed-pill__icon)) {
+  padding-right: 17px;
+}
+.saufiwed-pill:hover {
+  border-color: #3e5470;
+}
+.saufiwed-pill:active {
+  transform: scale(0.97);
+}
+
+/* Ikon duduk di lingkarannya sendiri, menempel rapat ke tepi kanan tombol. */
+.saufiwed-pill__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  flex: none;
+  border-radius: 999px;
+  background: rgba(62, 84, 112, 0.08);
+  transition: transform 260ms var(--ease-out), background 200ms var(--ease-out);
+}
+.saufiwed-pill__icon svg {
+  width: 14px;
+  height: 14px;
+  stroke-width: 1.5;
+}
+.saufiwed-pill--solid .saufiwed-pill__icon,
+.saufiwed-pill--on .saufiwed-pill__icon,
+.saufiwed-pill--ghost .saufiwed-pill__icon {
+  background: rgba(238, 242, 248, 0.18);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .saufiwed-pill:hover .saufiwed-pill__icon {
+    transform: translate(2px, -2px) scale(1.06);
+  }
+}
+/* Tautan Instagram di kartu mempelai: pill yang sama, sekadar diperkecil,
+   supaya tidak ada komponen baru cuma untuk satu tautan. */
+.saufiwed-pill--mini {
+  gap: 8px;
+  padding: 6px 6px 6px 14px;
+  /* Sekunder, jadi boleh lebih kecil dari tombol utama — tapi tidak sampai di
+     bawah 40px, karena ini tetap sesuatu yang ditekan dengan jempol. */
+  min-height: 40px;
+  font-size: 9px;
+  letter-spacing: 0.16em;
+  text-transform: none;
+}
+.saufiwed-pill--mini:not(:has(.saufiwed-pill__icon)) {
+  padding-right: 14px;
+}
+.saufiwed-pill--mini .saufiwed-pill__icon {
+  width: 22px;
+  height: 22px;
+}
+.saufiwed-pill--mini .saufiwed-pill__icon svg {
+  width: 12px;
+  height: 12px;
+}
+
+.saufiwed-pill--on {
+  border-color: #3e5470;
+  background: #3e5470;
+  color: #eef2f8;
+}
+.saufiwed-pill--solid {
+  border-color: #3e5470;
+  background: #3e5470;
+  color: #eef2f8;
+  letter-spacing: 0.3em;
+  min-height: 46px;
+  padding: 12px 18px;
+}
+.saufiwed-pill--solid:hover {
+  background: #2f4159;
+}
+.saufiwed-pill--ghost {
+  border-color: rgba(238, 242, 248, 0.36);
+  color: #eef2f8;
+  background: rgba(238, 242, 248, 0.08);
+  letter-spacing: 0.3em;
+  min-height: 44px;
+}
+.saufiwed-pill--ghost:hover {
+  background: rgba(238, 242, 248, 0.16);
+  border-color: rgba(238, 242, 248, 0.36);
+}
+
+/* Ucapan terbaru, sebagai lapisan tersendiri di bawah kartu RSVP. */
+/* Catatan, bukan kontrol: tidak boleh menadah klik yang ditujukan ke tombol
+   kirim di kartu belakangnya. */
+.saufiwed-wishlayer {
+  position: absolute;
+  pointer-events: none;
+  left: 50%;
+  bottom: 74px;
+  translate: -50% 0;
+  width: min(420px, 84vw);
+  z-index: 8;
+  animation: saufiwedRise 420ms var(--ease-out) both;
+}
+@keyframes saufiwedRise {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.saufiwed-wish {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding: 11px 13px;
+  /* Berdiri langsung di atas panggung, bukan di dalam kartu, jadi latarnya
+     harus pekat sendiri dan punya bayangan supaya terangkat dari awan. */
+  background: rgba(240, 244, 250, 0.97);
+  border-left: 2px solid #8fa6c4;
+  border-radius: 4px;
+  box-shadow: 0 14px 34px rgba(38, 49, 61, 0.16);
+}
+
+/* ── Footer ───────────────────────────────────────────────── */
+
+/*
+  Kredit pembuat, dipakai di dua tempat dengan latar yang berlawanan: cover
+  yang terang dan kartu penutup yang gelap. Nilai bawaannya untuk latar terang,
+  lalu dibalik di dalam kartu gelap — bukan sebaliknya, supaya menambah tempat
+  ketiga nanti tidak perlu menulis ulang warnanya.
+*/
+.saufiwed-footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  margin-top: 12px;
+  padding-top: 11px;
+  width: 100%;
+  border-top: 1px solid rgba(62, 84, 112, 0.14);
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 12.5px;
+  letter-spacing: 0.06em;
+  color: #7e8ca0;
+}
+.saufiwed-footer__credit {
+  font-family: Jost, system-ui, sans-serif;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-indent: 0.2em;
+  text-transform: uppercase;
+  color: #7e8ca0;
+  opacity: 0.85;
+  transition: opacity 200ms var(--ease-out), color 200ms var(--ease-out);
+}
+.saufiwed-footer__credit:hover {
+  opacity: 1;
+  color: #3e5470;
+}
+
+.saufiwed-card--dark .saufiwed-footer {
+  border-top-color: rgba(238, 242, 248, 0.16);
+  color: rgba(238, 242, 248, 0.62);
+}
+.saufiwed-card--dark .saufiwed-footer__credit {
+  color: rgba(238, 242, 248, 0.62);
+}
+.saufiwed-card--dark .saufiwed-footer__credit:hover {
+  color: #eef2f8;
+}
+
+/*
+  Di cover tidak ada kartu, hanya kabut radial di atas awan. Garis pemisah
+  dihilangkan supaya tidak ada tepi lurus yang memotong kabutnya, dan jaraknya
+  dirapatkan karena cover sudah punya padding sendiri yang lega.
+*/
+.saufiwed-screen--cover .saufiwed-footer {
+  margin-top: 10px;
+  padding-top: 0;
+  border-top: 0;
+}
+
+/* ── Overlay ──────────────────────────────────────────────── */
+
+.saufiwed-petals,
+.saufiwed-canvas {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.saufiwed-petals {
+  z-index: 6;
+}
+.saufiwed-canvas {
+  width: 100%;
+  height: 100%;
+  z-index: 7;
+}
+
+.saufiwed-dots {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  z-index: 8;
+}
+.saufiwed-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
+  padding: 0;
+  border: none;
+  cursor: pointer;
+  background: rgba(62, 84, 112, 0.28);
+  transition: height 260ms cubic-bezier(0.23, 1, 0.32, 1), background 200ms ease;
+}
+.saufiwed-dot--on {
+  height: 20px;
+  background: #3e5470;
+}
+
+/* Petunjuk gulir memudar jadi nol setelah dipakai, tapi opacity nol tidak
+   mematikan hit-testing — dan pita selebar layar ini duduk tepat di jalur
+   tombol yang ada di bagian bawah kartu. */
+.saufiwed-hint {
+  position: absolute;
+  bottom: 26px;
+  left: 0;
+  right: 0;
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  z-index: 8;
+  will-change: opacity;
+}
+.saufiwed-hint span {
+  font-size: 16px;
+  letter-spacing: 0.34em;
+  text-indent: 0.34em;
+  text-transform: uppercase;
+  color: #000000;
+}
+.saufiwed-hint i {
+  width: 1px;
+  height: 34px;
+  background: linear-gradient(#afbed2, rgba(175, 190, 210, 0));
+  animation: saufiwedSway 2.8s ease-in-out infinite;
+}
+
+/*
+  Rotasi 210 derajat di sini warisan animasi kelopak bunga, dan awan tidak
+  jungkir balik. Diganti hanyutan menyamping yang lebih lebar supaya tetap
+  terasa hidup. Jarak naiknya dipendekkan dan opasitasnya diturunkan supaya
+  partikelnya tidak pernah sampai ke pita tengah tempat teks kartu berada.
+*/
+@keyframes saufiwedFloatUp {
+  0% {
+    transform: translate3d(0, 0, 0) scale(0.9);
+    opacity: 0;
+  }
+  18% {
+    opacity: 0.55;
+  }
+  100% {
+    transform: translate3d(var(--drift, 26px), -90px, 0) scale(1.15);
+    opacity: 0;
+  }
+}
+
+@keyframes saufiwedSway {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .saufiwed-root *,
+  .saufiwed-root *::before,
+  .saufiwed-root *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}

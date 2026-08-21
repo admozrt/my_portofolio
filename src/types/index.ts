@@ -66,7 +66,21 @@ export interface Partner {
 }
 
 // SEO-related types
-export type SEOSchemaType = 'Person' | 'SoftwareApplication' | 'Service';
+export type SEOSchemaType = 'Person' | 'SoftwareApplication' | 'Service' | 'Event';
+
+/** Dipakai halaman undangan: schema Event butuh waktu dan tempat, dan itu
+    tidak bisa diturunkan dari judul atau deskripsi. */
+export interface SEOEventData {
+  /** ISO 8601 lengkap dengan offset zona waktu. */
+  startDate: string;
+  endDate: string;
+  locationName: string;
+  streetAddress: string;
+  locality: string;
+  region: string;
+  /** Nama yang ditampilkan sebagai penyelenggara acara. */
+  organizers: string[];
+}
 
 export interface SEOData {
   title: string;
@@ -78,6 +92,8 @@ export interface SEOData {
   type: string;
   /** JSON-LD schema.org @type — defaults to 'Person' if omitted */
   schemaType?: SEOSchemaType;
+  /** Wajib saat schemaType 'Event'; diabaikan untuk tipe lain. */
+  event?: SEOEventData;
 }
 
 // Component prop types

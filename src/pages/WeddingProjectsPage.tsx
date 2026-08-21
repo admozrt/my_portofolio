@@ -114,6 +114,17 @@ const weddings: WeddingEntry[] = [
     theme: 'Digital Heirloom',
   },
   {
+    id: 'saufi-afifah',
+    names: 'Saufi & Afifah',
+    date: new Date('2026-09-10T06:30:00+08:00'),
+    dateLabel: '10 September 2026',
+    location: 'Martapura, Kalimantan Selatan',
+    cover: '/saufi/cover.jpg',
+    href: '/saufi-afifah',
+    accent: '#3E5470',
+    theme: 'Negeri Awan',
+  },
+  {
     id: 'wisnu-ratih',
     names: 'Wisnu & Ratih',
     date: new Date('2027-07-24T08:00:00+07:00'),

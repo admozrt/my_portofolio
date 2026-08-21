@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 40" width="48" height="40" fill="none" role="img" aria-label="Gumpalan awan kecil">
+  <path d="M12 32 q-10 -2 -9 -11 q1 -8 10 -8 q2 -9 12 -9 q9 0 12 8 q9 -1 10 8 q1 10 -9 12 z" fill="#FFFFFF"/>
+  <path d="M12 32 q-10 -2 -9 -11 q1 -8 10 -8 q2 -9 12 -9 q9 0 12 8 q9 -1 10 8 q1 10 -9 12 z" stroke="#8FA6C4" stroke-width="1" opacity=".5" stroke-linejoin="round"/>
+  <path d="M14 24 q8 -5 16 -1" stroke="#8FA6C4" stroke-width="1" stroke-linecap="round" opacity=".3"/>
+</svg>

@@ -105,6 +105,33 @@ export const SEOHead: React.FC<SEOHeadProps> = ({ data }) => {
           "Pengembangan Software Custom"
         ]
       };
+    } else if (schemaType === 'Event' && data.event) {
+      const ev = data.event;
+      structuredData = {
+        "@context": "https://schema.org",
+        "@type": "Event",
+        "name": data.title,
+        "description": data.description,
+        "url": data.url,
+        "image": data.image,
+        "startDate": ev.startDate,
+        "endDate": ev.endDate,
+        "eventStatus": "https://schema.org/EventScheduled",
+        "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+        "location": {
+          "@type": "Place",
+          "name": ev.locationName,
+          "address": {
+            "@type": "PostalAddress",
+            "streetAddress": ev.streetAddress,
+            "addressLocality": ev.locality,
+            "addressRegion": ev.region,
+            "addressCountry": "ID"
+          }
+        },
+        "organizer": ev.organizers.map((name) => ({ "@type": "Person", name })),
+        "isAccessibleForFree": true
+      };
     } else {
       // Default: Person schema for portfolio page
       structuredData = {
