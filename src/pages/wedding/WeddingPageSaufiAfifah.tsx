@@ -1112,7 +1112,8 @@ export const WeddingPageSaufiAfifah: React.FC = () => {
                 <div className="saufiwed-eyebrow">Wedding Gift</div>
                 <div className="saufiwed-display" style={{ fontSize: 'clamp(22px, 5.6vw, 31px)' }}>Tanda kasih</div>
                 <div className="saufiwed-body" style={{ fontSize: 14 }}>
-                  Kehadiran Anda adalah hadiah terbaik. Bila ingin memberi tanda kasih, kanalnya kami sampaikan menyusul.
+                  Kehadiran Anda adalah hadiah terbaik. Doa Restu Anda merupakan karunia yang sangat berarti bagi kami.
+              Dan jika memberi adalah ungkapan tanda kasih Anda, Anda dapat memberi kado melalui:
                 </div>
               </div>
 
