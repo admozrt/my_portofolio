@@ -10,6 +10,7 @@ import { SkillTags } from '../components/newport/SkillTags';
 import { SoftSkillNotes } from '../components/newport/SoftSkillNotes';
 import { NotebookExperience } from '../components/newport/NotebookExperience';
 import { SolutionNote } from '../components/newport/SolutionNote';
+import { PartnerNotes } from '../components/newport/PartnerNotes';
 import { PostcardContact } from '../components/newport/PostcardContact';
 import { ZineFooter } from '../components/newport/ZineFooter';
 import { projects } from '../data/project';
@@ -75,6 +76,7 @@ export const NewPortPage: React.FC = () => {
           <SoftSkillNotes />
           <NotebookExperience />
           <SolutionNote />
+          <PartnerNotes />
           <PostcardContact />
         </main>
         <ZineFooter />

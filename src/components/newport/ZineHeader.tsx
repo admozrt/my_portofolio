@@ -18,6 +18,7 @@ const navItems = [
   { id: 'skill', label: 'Skill' },
   { id: 'softskill', label: 'Cara Kerja' },
   { id: 'pengalaman', label: 'Pengalaman' },
+  { id: 'mitra', label: 'Mitra' },
   { id: 'kontak', label: 'Kontak' },
 ];
 
