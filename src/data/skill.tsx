@@ -64,6 +64,7 @@ export const skills: Skill[] = [
   { icon: faLayerGroup, name: 'Goravel', color: 'text-red-500', level: 65, category: 'Backend' },
 
   { icon: faDatabase, name: 'MySQL', color: 'text-blue-700', level: 95, category: 'Database' },
+  { icon: faDatabase, name: 'Postgre SQL', color: 'text-green-700', level: 85, category: 'Database' },
   { icon: faDatabase, name: 'Oracle', color: 'text-orange-600', level: 70, category: 'Database' },
   { icon: faHtml5, name: 'HTML5', color: 'text-orange-500', level: 95, category: 'Frontend' },
   { icon: faCss3Alt, name: 'CSS3', color: 'text-blue-500', level: 92, category: 'Frontend' },
