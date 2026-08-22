@@ -3,6 +3,20 @@ import type { Experience } from '../types';
 export const experiences: Experience[] = [
   {
     id: 1,
+    title: 'Software Engineer',
+    company: 'Mandiri - Freelance',
+    location: 'Remote',
+    period: 'Februari 2020 - Sekarang',
+    description: 'Mengembangkan aplikasi web dan mobile untuk berbagai klien di berbagai industri',
+    technologies: ['PHP', 'Laravel', 'Golang', 'React', 'Typescript', 'MySQL', 'Postgree', 'JavaScript','TailwindCSS', 'Bootstrap'],
+    achievements: [
+      'Berhasil menyelesaikan 20+ projek tepat waktu',
+      'Mempertahankan tingkat kepuasan klien 96%',
+      'Membangun solusi yang melayani 100k+ pengguna'
+    ]
+  },
+  {
+    id: 2,
     title: 'Software Developer',
     company: 'RSJ Sambang Lihum - Prov.Kalimantan Selatan',
     location: 'Kalimantan Selatan, Indonesia',
@@ -13,20 +27,6 @@ export const experiences: Experience[] = [
       'Mengimplementasikan sistem manajemen data pasien yang aman',
       'Mengoptimalkan query database yang meningkatkan waktu respon',
       'Memberikan solusi untuk meningkatkan pelayanan kesehatan di rumah sakit'
-    ]
-  },
-  {
-    id: 2,
-    title: 'Software Engineer',
-    company: 'Mandiri - Freelance',
-    location: 'Remote',
-    period: 'Februari 2020 - Sekarang',
-    description: 'Mengembangkan aplikasi web kustom untuk berbagai klien di berbagai industri',
-    technologies: ['PHP', 'Laravel', 'Golang', 'React', 'MySQL', 'Postgree', 'JavaScript','TailwindCSS', 'Bootstrap'],
-    achievements: [
-      'Berhasil menyelesaikan 18+ projek tepat waktu',
-      'Mempertahankan tingkat kepuasan klien 98%',
-      'Membangun solusi yang melayani 10k+ pengguna'
     ]
   }
 ];
