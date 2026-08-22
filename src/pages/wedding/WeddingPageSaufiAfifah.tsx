@@ -8,7 +8,7 @@ import './WeddingPageSaufiAfifah.css';
 
 /* Akad 06:30 WITA. Kalimantan Selatan itu UTC+8, bukan +7 seperti Jawa;
    salah satu jam kalau ditulis WIB. */
-const WEDDING_DATE = new Date('2026-09-10T06:30:00+08:00');
+const WEDDING_DATE = new Date('2026-09-10T07:00:00+08:00');
 
 const GROOM_FIRST = 'Saufi';
 const BRIDE_FIRST = 'Afifah';
@@ -361,7 +361,7 @@ const Credit: React.FC<{ compact?: boolean }> = ({ compact }) => (
         tempat ucapan terima kasih memang pada tempatnya. */}
     {!compact && (
       <div>
-        Dibuat dengan &hearts; &middot; {GROOM_FIRST} &amp; {BRIDE_FIRST}
+        {GROOM_FIRST} &amp; {BRIDE_FIRST}
       </div>
     )}
     <a
@@ -1085,7 +1085,7 @@ export const WeddingPageSaufiAfifah: React.FC = () => {
              Person milik pembuatnya — itu bawaan SEOHead kalau schemaType
              tidak diisi, dan jelas bukan isi halaman ini. */
           event: {
-            startDate: '2026-09-10T06:30:00+08:00',
+            startDate: '2026-09-10T07:00:00+08:00',
             endDate: '2026-09-10T12:00:00+08:00',
             locationName: VENUE_NAME,
             streetAddress: 'Jln. Sekumpul Gg. Taufik No. 39A',
@@ -1225,11 +1225,11 @@ export const WeddingPageSaufiAfifah: React.FC = () => {
               <dl className="saufiwed-events" style={{ margin: 0 }}>
                 <div className="saufiwed-event">
                   <dt>Akad Nikah</dt>
-                  <dd className="saufiwed-display" style={{ fontSize: 'clamp(19px, 5vw, 23px)' }}>06.30 - 09.00 WITA</dd>
+                  <dd className="saufiwed-display" style={{ fontSize: 'clamp(19px, 5vw, 23px)' }}>07.00 - 09.00 WITA</dd>
                 </div>
                 <div className="saufiwed-event">
                   <dt>Resepsi</dt>
-                  <dd className="saufiwed-display" style={{ fontSize: 'clamp(19px, 5vw, 23px)' }}>09.30 WITA - selesai</dd>
+                  <dd className="saufiwed-display" style={{ fontSize: 'clamp(19px, 5vw, 23px)' }}>09.00 WITA - selesai</dd>
                 </div>
               </dl>
               <div className="saufiwed-body" style={{ fontSize: 12.5 }}>Keduanya di alamat yang sama, Sekumpul, Martapura.</div>
