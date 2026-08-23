@@ -12,7 +12,7 @@ const WEDDING_DATE = new Date('2026-09-10T07:00:00+08:00');
 
 const GROOM_FIRST = 'Saufi';
 const BRIDE_FIRST = 'Afifah';
-const GROOM_FULL = 'Ahmad Saufi Anwar';
+const GROOM_FULL = 'Ahmad Saufi Anwar, S.H';
 const BRIDE_FULL = 'Siti Nur Afifah';
 const DATE_LABEL = 'Kamis, 10 September 2026';
 const DATE_SHORT = '10 . 09 . 2026';
@@ -1305,9 +1305,6 @@ export const WeddingPageSaufiAfifah: React.FC = () => {
                     initial: 'A',
                     full: BRIDE_FULL,
                     role: 'Putri bungsu dari 5 bersaudara',
-                    /* Ibunda mempelai wanita telah berpulang. Ditulis dengan
-                       gelar almarhumah, bukan disamakan begitu saja dengan
-                       orang tua yang masih ada. */
                     parents: 'Putri dari Bapak H. M. Jahrani & Almh. Hj. Fatimah.',
                     ig: BRIDE_IG,
                   },
