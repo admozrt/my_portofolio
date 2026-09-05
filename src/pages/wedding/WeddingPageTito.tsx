@@ -122,12 +122,12 @@ const GIFTS = [
     bg: "linear-gradient(135deg, #8d7873, #6F5C59)",
   },
   {
-    id: "ewallet",
-    type: "E-Wallet",
-    name: "DANA",
-    logo: "DANA",
-    number: "083159501624",
-    holder: "Wina Azizah Nur Awalin",
+    id: "bank2",
+    type: "Transfer Bank",
+    name: "Bank BCA",
+    logo: "BCA",
+    number: "7896192166",
+    holder: "Indri Cindar Sari",
     bg: "linear-gradient(135deg, #8d7873, #6F5C59)",
   },
 ];
@@ -1166,7 +1166,7 @@ export const WeddingPageTito: React.FC = () => {
 
           <div className={`titowed-gift-cards titowed-reveal${giftVisible ? " in" : ""}`}
             style={{ transitionDelay: "0.15s" }}>
-            {GIFTS.filter((g) => (giftTab === "angpao" ? g.id === "bank" : g.id === "ewallet")).map((g) => (
+            {GIFTS.filter((g) => (giftTab === "angpao" ? g.id === "bank" : g.id === "bank2")).map((g) => (
               <div key={g.id} className="titowed-gift-card">
                 <div className="titowed-gift-logo" style={{ background: g.bg }}>
                   {g.logo}
