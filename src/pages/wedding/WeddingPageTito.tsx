@@ -97,7 +97,7 @@ const EVENTS = [
   {
     title: "Akad Nikah",
     date: DATE_LABEL,
-    time: "07.30 – 09.30 WITA",
+    time: "08.00 – 09.30 WITA",
     venue: "Masjid Hajjah Nuriyah Loktabat",
     address: "Masjid Hajjah Nuriyah Loktabat",
   },
