@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { motion, useReducedMotion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 import { LIFT, REVEAL } from './motion';
+import { useLang } from '../../hooks/useLang';
 
 /**
  * Pointer to the institutional-solutions page. Deliberately a single pinned
@@ -11,6 +12,7 @@ import { LIFT, REVEAL } from './motion';
  */
 export const SolutionNote: React.FC = () => {
   const reduce = useReducedMotion();
+  const { t } = useLang();
 
   return (
     <section id="solusi" className="px-5 sm:px-8 lg:px-12 py-6 sm:py-10">
@@ -30,17 +32,17 @@ export const SolutionNote: React.FC = () => {
           <span className="np-pin" aria-hidden="true" />
 
           <p className="np-hand text-[19px] text-zine-ink dark:text-zine-ink-dark sm:text-[22px]">
-            Mewakili instansi pemerintah, kesehatan, atau perusahaan?
+            {t.solution.title}
           </p>
           <p className="mt-2 max-w-[48ch] text-[13.5px] leading-relaxed text-zine-ink-soft dark:text-zine-ink-soft-dark">
-            Ada halaman khusus: cara kerjanya, standar keamanan, dan proyek yang sudah berjalan.
+            {t.solution.body}
           </p>
 
           <Link
             to="/solusi-digital"
             className="mt-4 inline-flex items-center gap-1.5 text-[13.5px] font-medium text-zine-pen transition-colors hover:text-zine-ink dark:text-zine-pen-dark dark:hover:text-zine-ink-dark"
           >
-            Lihat Solusi Khusus
+            {t.solution.cta}
             <ArrowRight className="h-4 w-4" />
           </Link>
         </motion.div>

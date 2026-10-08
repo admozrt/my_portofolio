@@ -9,29 +9,20 @@ import { NarrativeBridge } from '../components/institutional/NarrativeBridge';
 import { ComplianceSection } from '../components/institutional/ComplianceSection';
 import { ReferenceAttachment } from '../components/institutional/ReferenceAttachment';
 import { ProposalContact } from '../components/institutional/ProposalContact';
-import { transformationChapters } from '../data/transformationChapters';
+import { useTransformationChapters } from '../hooks/useLocalizedData';
+import { useLang } from '../hooks/useLang';
 
 export const InstitutionalSolutionsPage: React.FC = () => {
+  const { t } = useLang();
+  const transformationChapters = useTransformationChapters();
   return (
     <ThemeProvider>
     <div className="font-sans min-h-screen">
       <SEOHead
         data={{
-          title: "Solusi Digital Institusional — Adi Rakhmatullah Ma'arif",
-          description:
-            'Sistem digital yang terukur, aman, dan dapat dipertanggungjawabkan untuk instansi pemerintah, layanan kesehatan, dan logistik. Dibangun dengan Laravel, React, dan teknologi modern.',
-          keywords: [
-            'Solusi Digital',
-            'Sistem Informasi Pemerintahan',
-            'Sistem Informasi Kesehatan',
-            'Sistem Manajemen Logistik',
-            'Software Custom',
-            'Pengembangan Sistem',
-            'Laravel',
-            'React',
-            'Software Engineer Indonesia',
-            'Digital Transformation',
-          ],
+          title: t.seo.solutionsTitle,
+          description: t.seo.solutionsDescription,
+          keywords: t.seo.solutionsKeywords,
           author: "Adi Rakhmatullah Ma'arif",
           url: 'https://dirakhmat.app/solusi-digital',
           image: 'https://dirakhmat.app/my.png',

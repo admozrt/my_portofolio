@@ -15,6 +15,7 @@ import { PostcardContact } from '../components/newport/PostcardContact';
 import { ZineFooter } from '../components/newport/ZineFooter';
 import { projects } from '../data/project';
 import { skills } from '../data/skill';
+import { useLang } from '../hooks/useLang';
 import './NewPortPage.css';
 
 /**
@@ -24,6 +25,7 @@ import './NewPortPage.css';
  */
 export const NewPortPage: React.FC = () => {
   const [splashDone, setSplashDone] = useState(false);
+  const { t } = useLang();
   const { hash } = useLocation();
 
   // Sub-pages link back here as "/#projek" and friends. Wait for the splash to
@@ -40,20 +42,9 @@ export const NewPortPage: React.FC = () => {
     <ThemeProvider>
       <SEOHead
         data={{
-          title: "Adi Rakhmatullah Ma'arif - Software Engineer",
-          description:
-            'Rancang, bangun, dan rawat sistem untuk perusahaan, layanan publik, kesehatan, UMKM, dan keperluan pribadi. Enam tahun mengerjakan sistem yang semuanya masih berjalan.',
-          keywords: [
-            'Software Engineer',
-            'Full Stack Developer',
-            'Pengembangan Web',
-            'Portofolio',
-            'Laravel',
-            'React',
-            'Indonesia',
-            'Banjarbaru',
-            'Kalimantan Selatan',
-          ],
+          title: t.seo.homeTitle,
+          description: t.seo.homeDescription,
+          keywords: t.seo.homeKeywords,
           author: "Adi Rakhmatullah Ma'arif",
           url: 'https://dirakhmat.app',
           image: 'https://dirakhmat.app/my.png',

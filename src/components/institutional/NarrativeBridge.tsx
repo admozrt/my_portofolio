@@ -1,9 +1,11 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { useLang } from '../../hooks/useLang';
 
 const EASE: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
 export const NarrativeBridge: React.FC = () => {
+  const { t } = useLang();
   return (
     <section className="relative bg-black py-24 px-6 border-t border-zinc-800">
       <div className="mx-auto max-w-3xl text-center">
@@ -14,8 +16,7 @@ export const NarrativeBridge: React.FC = () => {
           transition={{ duration: 0.9, ease: EASE }}
           className="text-xl sm:text-3xl font-medium leading-relaxed text-zinc-300"
         >
-          Tapi hasil yang bagus saja tidak cukup. Untuk produk digital, semuanya
-          harus bisa dipertanggungjawabkan.
+          {t.institutional.bridge}
         </motion.p>
       </div>
     </section>

@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { skills } from '../../data/skill';
 import type { Skill } from '../../types';
 import { EASE, LIFT, REVEAL } from './motion';
+import { useLang } from '../../hooks/useLang';
 
 const CATEGORIES: { key: Skill['category']; label: string }[] = [
   { key: 'Backend', label: 'Backend' },
@@ -27,6 +28,7 @@ const SkillIcon: React.FC<{ icon: Skill['icon'] }> = ({ icon }) => {
  */
 export const SkillTags: React.FC = () => {
   const reduce = useReducedMotion();
+  const { t } = useLang();
 
   return (
     <section id="skill" className="px-5 sm:px-8 lg:px-12 py-14 sm:py-20">
@@ -37,7 +39,7 @@ export const SkillTags: React.FC = () => {
         transition={REVEAL}
         className="np-hand mb-10 text-[30px] text-zine-ink dark:text-zine-ink-dark sm:text-[36px]"
       >
-        Skill / Keahlian
+        {t.skills.heading}
       </motion.h2>
 
       <div className="space-y-9">
@@ -100,7 +102,7 @@ export const SkillTags: React.FC = () => {
                       <span
                         className="mt-1.5 block h-[3px] w-full bg-zine-rule dark:bg-zine-rule-dark"
                         role="img"
-                        aria-label={`${skill.name}, tingkat ${skill.level} dari 100`}
+                        aria-label={t.skills.levelAria(skill.name, skill.level)}
                       >
                         <motion.span
                           className="block h-full bg-zine-pen dark:bg-zine-pen-dark"

@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import { EASE } from './motion';
+import { useLang } from '../../hooks/useLang';
 
 /**
  * Opening note. Left aligned rather than centered so it reads as something
@@ -11,6 +12,7 @@ export const ZineHero: React.FC<{ projectCount: number; skillCount: number }> = 
   skillCount,
 }) => {
   const reduce = useReducedMotion();
+  const { t } = useLang();
 
   const rise = (delay: number) => ({
     initial: reduce ? false : { opacity: 0, y: 18 },
@@ -31,16 +33,16 @@ export const ZineHero: React.FC<{ projectCount: number; skillCount: number }> = 
         {...rise(0.1)}
         className="np-hand mt-4 max-w-[19ch] text-[38px] tracking-tight text-zine-ink dark:text-zine-ink-dark sm:text-[58px] lg:text-[68px]"
       >
-        Rancang, bangun, dan rawat{' '}
-        <span className="text-zine-pen dark:text-zine-pen-dark">produk digital</span> Anda.
+        {t.hero.titleBefore}
+        <span className="text-zine-pen dark:text-zine-pen-dark">{t.hero.titleAccent}</span>
+        {t.hero.titleAfter}
       </motion.h1>
 
       <motion.p
         {...rise(0.2)}
         className="mt-6 max-w-[46ch] text-[15px] leading-relaxed text-zine-ink-soft dark:text-zine-ink-soft-dark"
       >
-        Enam tahun mengerjakan sistem untuk perusahaan, layanan publik, kesehatan, UMKM, dan
-        keperluan pribadi. Semuanya masih berjalan sampai sekarang.
+        {t.hero.lead}
       </motion.p>
 
       <motion.dl
@@ -48,9 +50,9 @@ export const ZineHero: React.FC<{ projectCount: number; skillCount: number }> = 
         className="mt-10 flex flex-wrap gap-x-12 gap-y-5 border-t border-zine-rule dark:border-zine-rule-dark pt-6"
       >
         {[
-          { value: '6+', label: 'Tahun pengalaman' },
-          { value: String(projectCount) + '+', label: 'Projek dikerjakan' },
-          { value: String(skillCount) + '+', label: 'Teknologi dipakai' },
+          { value: '6+', label: t.hero.statYears },
+          { value: String(projectCount) + '+', label: t.hero.statProjects },
+          { value: String(skillCount) + '+', label: t.hero.statTech },
         ].map((stat) => (
           <div key={stat.label}>
             <dt className="sr-only">{stat.label}</dt>

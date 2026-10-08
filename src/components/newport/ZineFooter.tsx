@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { contactInfo } from '../../data/contact';
 import { Monogram } from '../ui/Monogram';
 import { contactIconFor } from './contactIcons';
+import { useLang } from '../../hooks/useLang';
 
 /**
  * Anchors are written as routed links back to the homepage rather than plain
@@ -10,13 +11,14 @@ import { contactIconFor } from './contactIcons';
  * those sections. On the homepage the hash effect in NewPortPage picks it up.
  */
 const quickLinks = [
-  { label: 'Projek', to: '/#projek' },
-  { label: 'Skill', to: '/#skill' },
-  { label: 'Cara Kerja', to: '/#softskill' },
-  { label: 'Pengalaman', to: '/#pengalaman' },
-  { label: 'Kontak', to: '/#kontak' },
-  { label: 'Solusi Digital', to: '/solusi-digital' },
-];
+  { key: 'projek', to: '/#projek' },
+  { key: 'skill', to: '/#skill' },
+  { key: 'softskill', to: '/#softskill' },
+  { key: 'pengalaman', to: '/#pengalaman' },
+  { key: 'mitra', to: '/#mitra' },
+  { key: 'kontak', to: '/#kontak' },
+  { key: 'solusi', to: '/solusi-digital' },
+] as const;
 
 const techs = [
   'PHP',
@@ -31,7 +33,9 @@ const techs = [
 ];
 
 /** Same three-column shape as the main portfolio footer, in the paper palette. */
-export const ZineFooter: React.FC = () => (
+export const ZineFooter: React.FC = () => {
+  const { t } = useLang();
+  return (
   <footer className="border-t border-zine-rule py-12 dark:border-zine-rule-dark">
     <div className="px-5 sm:px-8 lg:px-12">
       <div className="grid grid-cols-1 gap-9 sm:grid-cols-2 lg:grid-cols-3">
@@ -43,8 +47,7 @@ export const ZineFooter: React.FC = () => (
             </span>
           </div>
           <p className="mb-5 max-w-xs text-[13px] leading-relaxed text-zine-ink-soft dark:text-zine-ink-soft-dark">
-            Rancang, bangun, dan rawat sistem untuk perusahaan, layanan publik, kesehatan, UMKM,
-            dan keperluan pribadi.
+            {t.footer.tagline}
           </p>
           <div className="flex gap-2">
             {contactInfo.map((contact) => {
@@ -67,16 +70,16 @@ export const ZineFooter: React.FC = () => (
 
         <div>
           <h4 className="mb-4 font-mono text-[10.5px] uppercase tracking-[0.14em] text-zine-ink-soft dark:text-zine-ink-soft-dark">
-            Navigasi
+            {t.footer.navigation}
           </h4>
           <ul className="space-y-2.5">
             {quickLinks.map((link) => (
-              <li key={link.label}>
+              <li key={link.key}>
                 <Link
                   to={link.to}
                   className="text-[13px] text-zine-ink-soft transition-colors hover:text-zine-pen dark:text-zine-ink-soft-dark dark:hover:text-zine-pen-dark"
                 >
-                  {link.label}
+                  {t.nav[link.key]}
                 </Link>
               </li>
             ))}
@@ -85,7 +88,7 @@ export const ZineFooter: React.FC = () => (
 
         <div className="sm:col-span-2 lg:col-span-1">
           <h4 className="mb-4 font-mono text-[10.5px] uppercase tracking-[0.14em] text-zine-ink-soft dark:text-zine-ink-soft-dark">
-            Teknologi
+            {t.footer.technology}
           </h4>
           <div className="flex flex-wrap gap-1.5">
             {techs.map((tech) => (
@@ -105,4 +108,5 @@ export const ZineFooter: React.FC = () => (
       </div>
     </div>
   </footer>
-);
+  );
+};

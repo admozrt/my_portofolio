@@ -2,9 +2,11 @@ import React from 'react';
 import { Sun, Moon } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTheme } from '../../hooks/useTheme';
+import { useLang } from '../../hooks/useLang';
 
 export const ThemeToggle: React.FC = () => {
   const { isDark, toggleTheme } = useTheme();
+  const { t } = useLang();
 
   return (
     <motion.button
@@ -12,8 +14,8 @@ export const ThemeToggle: React.FC = () => {
       className="p-2 rounded-xl bg-zinc-100 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-200 hover:bg-zinc-200 dark:hover:bg-zinc-700 transition-colors"
       whileHover={{ scale: 1.1 }}
       whileTap={{ scale: 0.9 }}
-      aria-label="Ganti tema"
-      title={isDark ? 'Ganti ke mode terang' : 'Ganti ke mode gelap'}
+      aria-label={t.common.themeLabel}
+      title={isDark ? t.common.toLight : t.common.toDark}
     >
       <AnimatePresence mode="wait">
         <motion.div

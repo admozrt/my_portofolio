@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
-import { softSkills } from '../../data/softSkill';
+import { useSoftSkills } from '../../hooks/useLocalizedData';
+import { useLang } from '../../hooks/useLang';
 import { LIFT, REVEAL } from './motion';
 
 /** Alternating tilt so the notes look stuck on by hand, not laid out on a grid. */
@@ -13,6 +14,8 @@ const TILT = [-1.6, 1.2, -0.9, 1.8, -1.3, 1];
  */
 export const SoftSkillNotes: React.FC = () => {
   const reduce = useReducedMotion();
+  const { t } = useLang();
+  const softSkills = useSoftSkills();
 
   return (
     <section id="softskill" className="px-5 sm:px-8 lg:px-12 py-14 sm:py-20">
@@ -24,10 +27,10 @@ export const SoftSkillNotes: React.FC = () => {
         className="mb-8 flex flex-wrap items-baseline justify-between gap-3"
       >
         <h2 className="np-hand text-[28px] text-zine-ink dark:text-zine-ink-dark sm:text-[36px]">
-          Cara Saya Bekerja
+          {t.softSkills.heading}
         </h2>
         <p className="max-w-[38ch] text-[13.5px] leading-relaxed text-zine-ink-soft dark:text-zine-ink-soft-dark">
-          Yang tidak kelihatan dari daftar teknologi di atas.
+          {t.softSkills.intro}
         </p>
       </motion.div>
 

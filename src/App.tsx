@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
+import { LanguageProvider } from './components/providers/Language';
 // Konsep lama "Control Room" — route-nya dimatikan, file-nya tetap ada.
 // import { PortfolioPage } from './pages/PortfolioPage';
 import { WeddingPageAjie } from './pages/wedding/WeddingPageAjie';
@@ -30,6 +31,7 @@ const ScrollToTop: React.FC = () => {
 
 const App: React.FC = () => {
   return (
+    <LanguageProvider>
     <Router>
       <ScrollToTop />
       <Routes>
@@ -86,6 +88,7 @@ const App: React.FC = () => {
 
       </Routes>
     </Router>
+    </LanguageProvider>
   );
 };
 

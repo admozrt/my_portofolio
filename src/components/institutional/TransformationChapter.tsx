@@ -1,7 +1,8 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { AlertCircle } from 'lucide-react';
-import { projects } from '../../data/project';
+import { useProjects } from '../../hooks/useLocalizedData';
+import { useLang } from '../../hooks/useLang';
 import type { TransformationChapter as ChapterData, TransformationMetric } from '../../data/transformationChapters';
 import { useCountUp } from '../../hooks/useCountUp';
 
@@ -30,14 +31,15 @@ const MetricItem: React.FC<{ metric: TransformationMetric; delay: number }> = ({
 };
 
 export const TransformationChapter: React.FC<{ chapter: ChapterData; index: number }> = ({ chapter, index }) => {
-  const project = projects.find((p) => p.id === chapter.projectId);
+  const { t } = useLang();
+  const project = useProjects().find((p) => p.id === chapter.projectId);
   if (!project) return null;
 
   return (
     <section className="relative bg-zinc-50 dark:bg-zinc-950 py-16 px-6 border-t border-zinc-200 dark:border-zinc-800">
       <div className="mx-auto max-w-6xl">
         <div className="mb-8 font-mono text-xs uppercase tracking-[0.2em] text-zinc-400 dark:text-zinc-600">
-          Studi Kasus {String(index + 1).padStart(2, '0')} &middot; {project.domain}
+          {t.institutional.caseStudy} {String(index + 1).padStart(2, '0')} &middot; {project.domain}
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch">
@@ -51,7 +53,7 @@ export const TransformationChapter: React.FC<{ chapter: ChapterData; index: numb
           >
             <div className="flex items-center gap-2 mb-4 font-mono text-[10px] uppercase tracking-widest text-zinc-500">
               <AlertCircle className="h-3.5 w-3.5" />
-              Sebelum
+              {t.institutional.before}
             </div>
             <h3 className="text-base font-semibold text-zinc-700 dark:text-zinc-200 mb-2">{chapter.beforeProblem}</h3>
             <p className="text-sm text-zinc-500 leading-relaxed">{chapter.beforeDescription}</p>

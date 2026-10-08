@@ -11,18 +11,15 @@ import { Menu, X, Sun, Moon } from 'lucide-react';
 import { useTheme } from '../../hooks/useTheme';
 import { useActiveSection } from '../../hooks/useActiveSection';
 import { Monogram } from '../ui/Monogram';
+import { LangToggle } from '../ui/LangToggle';
+import { useLang } from '../../hooks/useLang';
 import { LIFT } from './motion';
 
-const navItems = [
-  { id: 'projek', label: 'Projek' },
-  { id: 'skill', label: 'Skill' },
-  { id: 'softskill', label: 'Cara Kerja' },
-  { id: 'pengalaman', label: 'Pengalaman' },
-  { id: 'mitra', label: 'Mitra' },
-  { id: 'kontak', label: 'Kontak' },
-];
+/* Id section tetap berbahasa Indonesia di kedua mode: itu jangkar URL
+   (`/#projek`) yang dirujuk halaman lain, bukan teks yang dibaca. */
+const navIds = ['projek', 'skill', 'softskill', 'pengalaman', 'mitra', 'kontak'] as const;
 
-const sectionIds = navItems.map((item) => item.id);
+const sectionIds = [...navIds];
 
 /**
  * Mirrors the structure of the main portfolio's Navigation (monogram, section
@@ -34,6 +31,8 @@ const sectionIds = navItems.map((item) => item.id);
  */
 export const ZineHeader: React.FC = () => {
   const { isDark, toggleTheme } = useTheme();
+  const { t } = useLang();
+  const navItems = navIds.map((id) => ({ id, label: t.nav[id] }));
   const reduce = useReducedMotion();
   const [menuOpen, setMenuOpen] = useState(false);
   const activeSection = useActiveSection(sectionIds);
@@ -90,7 +89,7 @@ export const ZineHeader: React.FC = () => {
           type="button"
           onClick={() => window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' })}
           className="flex items-center gap-2.5"
-          aria-label="Ke atas halaman"
+          aria-label={t.nav.toTop}
         >
           <Monogram size={30} strokeClassName="stroke-zine-paper dark:stroke-zine-paper-dark" />
           <span className="hidden text-[13px] font-medium text-zine-ink dark:text-zine-ink-dark sm:block">
@@ -126,6 +125,7 @@ export const ZineHeader: React.FC = () => {
         </nav>
 
         <div className="flex items-center gap-2">
+          <LangToggle />
           <motion.button
             type="button"
             onClick={toggleTheme}
@@ -133,7 +133,7 @@ export const ZineHeader: React.FC = () => {
             whileTap={{ scale: 0.94 }}
             transition={LIFT}
             className="rounded-full border border-zine-rule p-2 text-zine-ink-soft transition-colors hover:text-zine-pen dark:border-zine-rule-dark dark:text-zine-ink-soft-dark dark:hover:text-zine-pen-dark"
-            aria-label={isDark ? 'Ganti ke mode terang' : 'Ganti ke mode gelap'}
+            aria-label={isDark ? t.common.toLight : t.common.toDark}
           >
             {isDark ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
           </motion.button>
@@ -143,7 +143,7 @@ export const ZineHeader: React.FC = () => {
             onClick={() => setMenuOpen((v) => !v)}
             whileTap={{ scale: 0.94 }}
             className="rounded-full border border-zine-rule p-2 text-zine-ink-soft dark:border-zine-rule-dark dark:text-zine-ink-soft-dark md:hidden"
-            aria-label={menuOpen ? 'Tutup menu' : 'Buka menu'}
+            aria-label={menuOpen ? t.nav.closeMenu : t.nav.openMenu}
             aria-expanded={menuOpen}
           >
             {menuOpen ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}

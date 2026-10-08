@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import { ChevronDown } from 'lucide-react';
+import { useLang } from '../../hooks/useLang';
 import type { ComplianceCard as ComplianceCardData } from '../../data/complianceCards';
 
 const stampColor: Record<ComplianceCardData['stampLabel'], string> = {
@@ -12,6 +13,7 @@ const stampColor: Record<ComplianceCardData['stampLabel'], string> = {
 export const ComplianceCard: React.FC<{ card: ComplianceCardData; index: number }> = ({ card, index }) => {
   const [open, setOpen] = useState(false);
   const reduce = useReducedMotion();
+  const { t } = useLang();
 
   return (
     <motion.div
@@ -39,7 +41,7 @@ export const ComplianceCard: React.FC<{ card: ComplianceCardData; index: number 
         className="inline-flex items-center gap-1 text-xs font-medium text-amber-700 dark:text-amber-400 hover:text-amber-800 dark:hover:text-amber-300"
         aria-expanded={open}
       >
-        Detail teknis
+        {t.institutional.technicalDetail}
         <ChevronDown className={`h-3.5 w-3.5 transition-transform ${open ? 'rotate-180' : ''}`} />
       </button>
 

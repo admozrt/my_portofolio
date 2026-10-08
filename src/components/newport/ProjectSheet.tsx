@@ -4,12 +4,7 @@ import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { X, ExternalLink, Github } from 'lucide-react';
 import type { Project } from '../../types';
 import { SHEET } from './motion';
-
-const statusLabel: Record<Project['status'], string> = {
-  selesai: 'Selesai',
-  sedang_berjalan: 'Berjalan',
-  direncanakan: 'Direncanakan',
-};
+import { useLang } from '../../hooks/useLang';
 
 interface ProjectSheetProps {
   project: Project | null;
@@ -24,6 +19,7 @@ interface ProjectSheetProps {
  */
 export const ProjectSheet: React.FC<ProjectSheetProps> = ({ project, onClose }) => {
   const reduce = useReducedMotion();
+  const { t } = useLang();
   const open = project !== null;
 
   useEffect(() => {
@@ -72,7 +68,7 @@ export const ProjectSheet: React.FC<ProjectSheetProps> = ({ project, onClose }) 
             <button
               type="button"
               onClick={onClose}
-              aria-label="Tutup detail"
+              aria-label={t.projects.closeDetail}
               className="absolute right-3 top-3 z-10 rounded-full border border-zine-rule p-1.5 text-zine-ink-soft transition-colors hover:text-zine-pen dark:border-zine-rule-dark dark:text-zine-ink-soft-dark dark:hover:text-zine-pen-dark"
             >
               <X className="h-4 w-4" />
@@ -86,7 +82,7 @@ export const ProjectSheet: React.FC<ProjectSheetProps> = ({ project, onClose }) 
                 {project.title}
               </h3>
               <p className="mt-1 font-mono text-[10.5px] uppercase tracking-[0.08em] text-zine-pen dark:text-zine-pen-dark">
-                {statusLabel[project.status]}
+                {t.projects.status[project.status]}
               </p>
 
               <p className="mt-5 text-[13.5px] leading-relaxed text-zine-ink-soft dark:text-zine-ink-soft-dark sm:text-[14px]">
@@ -96,7 +92,7 @@ export const ProjectSheet: React.FC<ProjectSheetProps> = ({ project, onClose }) 
               <div className="mt-6 grid grid-cols-1 gap-6 sm:grid-cols-[1.1fr_1fr]">
                 <div>
                   <h4 className="font-mono text-[10px] uppercase tracking-[0.12em] text-zine-ink-soft dark:text-zine-ink-soft-dark">
-                    Angka
+                    {t.projects.numbers}
                   </h4>
                   <dl className="mt-3 space-y-3">
                     {project.metrics.map((metric) => (
@@ -114,7 +110,7 @@ export const ProjectSheet: React.FC<ProjectSheetProps> = ({ project, onClose }) 
 
                 <div>
                   <h4 className="font-mono text-[10px] uppercase tracking-[0.12em] text-zine-ink-soft dark:text-zine-ink-soft-dark">
-                    Aktivitas
+                    {t.projects.activity}
                   </h4>
                   <ul className="mt-3 space-y-2">
                     {project.logEntries.map((log) => (
@@ -134,7 +130,7 @@ export const ProjectSheet: React.FC<ProjectSheetProps> = ({ project, onClose }) 
 
               <div className="mt-6 border-t border-dashed border-zine-rule pt-5 dark:border-zine-rule-dark">
                 <h4 className="font-mono text-[10px] uppercase tracking-[0.12em] text-zine-ink-soft dark:text-zine-ink-soft-dark">
-                  Teknologi
+                  {t.projects.technology}
                 </h4>
                 <div className="mt-3 flex flex-wrap gap-1.5">
                   {project.technologies.map((tech) => (
@@ -157,7 +153,7 @@ export const ProjectSheet: React.FC<ProjectSheetProps> = ({ project, onClose }) 
                         className="inline-flex items-center gap-1.5 text-[13.5px] font-medium text-zine-pen hover:underline dark:text-zine-pen-dark"
                       >
                         <ExternalLink className="h-4 w-4" />
-                        Kunjungi
+                        {t.projects.visit}
                       </Link>
                     ) : (
                       <a
@@ -167,7 +163,7 @@ export const ProjectSheet: React.FC<ProjectSheetProps> = ({ project, onClose }) 
                         className="inline-flex items-center gap-1.5 text-[13.5px] font-medium text-zine-pen hover:underline dark:text-zine-pen-dark"
                       >
                         <ExternalLink className="h-4 w-4" />
-                        Kunjungi
+                        {t.projects.visit}
                       </a>
                     ))}
                   {project.github && (

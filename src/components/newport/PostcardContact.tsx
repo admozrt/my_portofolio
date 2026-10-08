@@ -4,9 +4,11 @@ import { ArrowUpRight } from 'lucide-react';
 import { contactInfo } from '../../data/contact';
 import { contactIconFor } from './contactIcons';
 import { LIFT, REVEAL } from './motion';
+import { useLang } from '../../hooks/useLang';
 
 export const PostcardContact: React.FC = () => {
   const reduce = useReducedMotion();
+  const { t } = useLang();
 
   return (
     <section id="kontak" className="px-5 sm:px-8 lg:px-12 py-14 sm:py-20">
@@ -21,11 +23,10 @@ export const PostcardContact: React.FC = () => {
           <div className="flex flex-col justify-between gap-6">
             <div>
               <h2 className="np-hand text-[26px] text-zine-ink dark:text-zine-ink-dark sm:text-[32px]">
-                Kontak
+                {t.contact.heading}
               </h2>
               <p className="mt-3 max-w-[42ch] text-[14px] leading-relaxed text-zine-ink-soft dark:text-zine-ink-soft-dark">
-                Punya sistem yang perlu dibangun atau dibenahi? Kirim pesan lewat salah satu
-                kontak di samping. Biasanya saya balas dalam sehari.
+                {t.contact.body}
               </p>
             </div>
 

@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useReducedMotion } from 'framer-motion';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { useLang } from '../../hooks/useLang';
 
 interface ClippingSliderProps {
   label: string;
@@ -21,6 +22,7 @@ export const ClippingSlider: React.FC<ClippingSliderProps> = ({
 }) => {
   const trackRef = useRef<HTMLDivElement>(null);
   const reduce = useReducedMotion();
+  const { t } = useLang();
   const [atStart, setAtStart] = useState(true);
   const [atEnd, setAtEnd] = useState(true);
 
@@ -62,7 +64,7 @@ export const ClippingSlider: React.FC<ClippingSliderProps> = ({
             onClick={() => nudge(-1)}
             disabled={atStart}
             className={arrowClass}
-            aria-label={`Geser ${label} ke kiri`}
+            aria-label={t.projects.slideLeft(label)}
           >
             <ChevronLeft className="h-4 w-4" />
           </button>
@@ -71,7 +73,7 @@ export const ClippingSlider: React.FC<ClippingSliderProps> = ({
             onClick={() => nudge(1)}
             disabled={atEnd}
             className={arrowClass}
-            aria-label={`Geser ${label} ke kanan`}
+            aria-label={t.projects.slideRight(label)}
           >
             <ChevronRight className="h-4 w-4" />
           </button>

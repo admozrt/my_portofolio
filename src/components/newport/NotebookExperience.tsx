@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
-import { experiences } from '../../data/experience';
+import { useExperiences } from '../../hooks/useLocalizedData';
+import { useLang } from '../../hooks/useLang';
 import { REVEAL } from './motion';
 
 /**
@@ -10,6 +11,8 @@ import { REVEAL } from './motion';
  */
 export const NotebookExperience: React.FC = () => {
   const reduce = useReducedMotion();
+  const { t } = useLang();
+  const experiences = useExperiences();
 
   return (
     <section id="pengalaman" className="px-5 sm:px-8 lg:px-12 py-14 sm:py-20">
@@ -20,7 +23,7 @@ export const NotebookExperience: React.FC = () => {
         transition={REVEAL}
         className="np-hand mb-10 text-[30px] text-zine-ink dark:text-zine-ink-dark sm:text-[36px]"
       >
-        Pengalaman
+        {t.experience.heading}
       </motion.h2>
 
       <div className="np-margin-rule border border-zine-rule bg-zine-card px-5 py-7 dark:border-zine-rule-dark dark:bg-zine-card-dark sm:py-10 sm:pl-16 sm:pr-8">

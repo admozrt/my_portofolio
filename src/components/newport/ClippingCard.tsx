@@ -3,12 +3,7 @@ import { motion, useReducedMotion } from 'framer-motion';
 import { Plus, FileText } from 'lucide-react';
 import type { Project } from '../../types';
 import { LIFT, REVEAL } from './motion';
-
-const statusLabel: Record<Project['status'], string> = {
-  selesai: 'Selesai',
-  sedang_berjalan: 'Berjalan',
-  direncanakan: 'Direncanakan',
-};
+import { useLang } from '../../hooks/useLang';
 
 /** Paper swatch tints, cycled by position so neighbouring clippings differ. */
 const TINTS = ['#cfe0c9', '#c9d7ea', '#ecd9b8', '#e3cfe0', '#e8c9cf'];
@@ -38,6 +33,7 @@ export const ClippingCard: React.FC<ClippingCardProps> = ({
   onOpen,
 }) => {
   const reduce = useReducedMotion();
+  const { t } = useLang();
   const [logoError, setLogoError] = useState(false);
 
   const isLarge = size === 'large';
@@ -61,7 +57,7 @@ export const ClippingCard: React.FC<ClippingCardProps> = ({
         <button
           type="button"
           onClick={() => onOpen(project)}
-          aria-label={`Lihat detail ${project.title}`}
+          aria-label={t.projects.viewDetail(project.title)}
           className="relative flex h-full w-full flex-col border border-zine-rule bg-zine-card px-3.5 pb-3.5 pt-4 text-left shadow-[0_3px_0_rgba(31,30,28,0.06)] transition-shadow duration-500 hover:shadow-[0_14px_28px_-16px_rgba(31,30,28,0.55)] dark:border-zine-rule-dark dark:bg-zine-card-dark dark:shadow-[0_3px_0_rgba(0,0,0,0.25)]"
         >
           <span
@@ -114,7 +110,7 @@ export const ClippingCard: React.FC<ClippingCardProps> = ({
 
           <span className="mt-auto flex items-center justify-between border-t border-dashed border-zine-rule pt-2.5 dark:border-zine-rule-dark">
             <span className="font-mono text-[10px] uppercase tracking-[0.06em] text-zine-ink-soft dark:text-zine-ink-soft-dark">
-              {statusLabel[project.status]}
+              {t.projects.status[project.status]}
             </span>
             <Plus className="h-3.5 w-3.5 text-zine-pen dark:text-zine-pen-dark" />
           </span>

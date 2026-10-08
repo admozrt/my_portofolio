@@ -1,17 +1,20 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { partners } from '../../data/partner';
+import { usePartners } from '../../hooks/useLocalizedData';
+import { useLang } from '../../hooks/useLang';
 
 export const ReferenceAttachment: React.FC = () => {
+  const { t } = useLang();
+  const partners = usePartners();
   return (
     <section className="relative bg-white dark:bg-stone-950 py-20 px-6 border-t border-stone-200 dark:border-stone-800">
       <div className="mx-auto max-w-4xl">
         <div className="mb-10 text-center">
           <p className="font-mono text-xs uppercase tracking-[0.2em] text-amber-700 dark:text-amber-400 mb-2">
-            Lampiran Referensi
+            {t.institutional.referenceEyebrow}
           </p>
           <h2 className="text-2xl sm:text-3xl font-semibold text-stone-800 dark:text-stone-100">
-            Instansi &amp; Mitra Kerja Sama
+            {t.institutional.referenceTitle}
           </h2>
         </div>
 
@@ -30,7 +33,7 @@ export const ReferenceAttachment: React.FC = () => {
                 <p className="text-xs text-stone-500 dark:text-stone-400">{partner.relationship}</p>
               </div>
               <div className="font-serif italic text-stone-400 dark:text-stone-500 text-xs border-t sm:border-t-0 sm:border-l border-stone-200 dark:border-stone-700 pt-2 sm:pt-0 sm:pl-4">
-                — kerja sama terverifikasi
+                {t.institutional.referenceVerified}
               </div>
             </motion.div>
           ))}

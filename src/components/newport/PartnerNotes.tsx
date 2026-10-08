@@ -1,7 +1,8 @@
 import React from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import { ArrowUpRight } from 'lucide-react';
-import { partners } from '../../data/partner';
+import { usePartners } from '../../hooks/useLocalizedData';
+import { useLang } from '../../hooks/useLang';
 import { LIFT, REVEAL } from './motion';
 
 /**
@@ -25,6 +26,8 @@ const punyaSitus = (website?: string) => Boolean(website && website !== '#');
 
 export const PartnerNotes: React.FC = () => {
   const reduce = useReducedMotion();
+  const { t } = useLang();
+  const partners = usePartners();
 
   return (
     <section id="mitra" className="px-5 sm:px-8 lg:px-12 py-14 sm:py-20">
@@ -36,10 +39,10 @@ export const PartnerNotes: React.FC = () => {
         className="mb-8 flex flex-wrap items-baseline justify-between gap-3"
       >
         <h2 className="np-hand text-[28px] text-zine-ink dark:text-zine-ink-dark sm:text-[36px]">
-          Mitra &amp; Klien
+          {t.partners.heading}
         </h2>
         <p className="max-w-[38ch] text-[13.5px] leading-relaxed text-zine-ink-soft dark:text-zine-ink-soft-dark">
-          Instansi dan perusahaan yang sistemnya saya kerjakan.
+          {t.partners.intro}
         </p>
       </motion.div>
 
