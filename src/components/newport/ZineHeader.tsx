@@ -65,13 +65,57 @@ export const ZineHeader: React.FC = () => {
 
   useEffect(() => () => window.clearTimeout(idleTimer.current), []);
 
+  const headerRef = useRef<HTMLElement>(null);
+  /* Section yang menunggu digulir sampai panel menu mobile selesai menutup. */
+  const pendingScroll = useRef<string | null>(null);
+  const pendingTimer = useRef<number | undefined>(undefined);
+
+  const scrollToSection = (id: string) => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    const offset = headerRef.current?.offsetHeight ?? 64;
+    window.scrollTo({
+      top: el.getBoundingClientRect().top + window.scrollY - offset,
+      behavior: reduce ? 'auto' : 'smooth',
+    });
+  };
+
+  /* Dijalankan sekali saja: ref dikosongkan sebelum menggulir, jadi
+     onExitComplete dan timeout pengaman tidak bisa sama-sama menggulir. */
+  const flushPendingScroll = () => {
+    window.clearTimeout(pendingTimer.current);
+    const id = pendingScroll.current;
+    pendingScroll.current = null;
+    if (id) scrollToSection(id);
+  };
+
+  useEffect(() => () => window.clearTimeout(pendingTimer.current), []);
+
+  /*
+    Di ponsel, gulir TIDAK dimulai bersamaan dengan menutup menu.
+
+    Kalau keduanya terjadi dalam ketukan yang sama, panel menu menyusut dan
+    tombol yang baru diketuk — yang masih memegang fokus — dicabut dari DOM
+    di tengah gulir halus, dan peramban ponsel membatalkan gulirnya: menu
+    menutup, halaman diam di tempat. Jadi menu ditutup dulu, dan gulirnya
+    dijalankan begitu animasi tutupnya benar-benar selesai.
+  */
   const goTo = (id: string) => {
-    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    if (!menuOpen) {
+      scrollToSection(id);
+      return;
+    }
+    (document.activeElement as HTMLElement | null)?.blur();
+    pendingScroll.current = id;
     setMenuOpen(false);
+    // Pengaman kalau onExitComplete tidak terpanggil, mis. animasi dimatikan.
+    window.clearTimeout(pendingTimer.current);
+    pendingTimer.current = window.setTimeout(flushPendingScroll, 450);
   };
 
   return (
     <motion.header
+      ref={headerRef}
       animate={{ y: hidden && !reduce ? '-100%' : '0%' }}
       transition={{ type: 'spring', bounce: 0, duration: 0.45 }}
       // Fixed, not sticky: the page wrapper clips overflow on the x axis, which
@@ -151,7 +195,7 @@ export const ZineHeader: React.FC = () => {
         </div>
       </div>
 
-      <AnimatePresence initial={false}>
+      <AnimatePresence initial={false} onExitComplete={flushPendingScroll}>
         {menuOpen && (
           <motion.div
             initial={{ height: 0, opacity: 0 }}
