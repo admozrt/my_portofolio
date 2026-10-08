@@ -25,7 +25,7 @@ import './NewPortPage.css';
  */
 export const NewPortPage: React.FC = () => {
   const [splashDone, setSplashDone] = useState(false);
-  const { t } = useLang();
+  const { t, lang } = useLang();
   const { hash } = useLocation();
 
   // Sub-pages link back here as "/#projek" and friends. Wait for the splash to
@@ -46,7 +46,15 @@ export const NewPortPage: React.FC = () => {
           description: t.seo.homeDescription,
           keywords: t.seo.homeKeywords,
           author: "Adi Rakhmatullah Ma'arif",
-          url: 'https://dirakhmat.app',
+          // Canonical menunjuk dirinya sendiri. Kalau /en ber-canonical ke /,
+          // Google menganggapnya salinan dan membuangnya dari indeks.
+          url: lang === 'en' ? 'https://dirakhmat.app/en' : 'https://dirakhmat.app',
+          locale: lang === 'en' ? 'en_US' : 'id_ID',
+          alternates: [
+            { hreflang: 'id', href: 'https://dirakhmat.app' },
+            { hreflang: 'en', href: 'https://dirakhmat.app/en' },
+            { hreflang: 'x-default', href: 'https://dirakhmat.app' },
+          ],
           image: 'https://dirakhmat.app/my.png',
           type: 'website',
         }}

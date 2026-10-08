@@ -40,7 +40,18 @@ export const SEOHead: React.FC<SEOHeadProps> = ({ data }) => {
     setMetaTag('og:image', data.image, true);
     setMetaTag('og:url', data.url, true);
     setMetaTag('og:type', data.type, true);
-    setMetaTag('og:locale', 'id_ID', true);
+    setMetaTag('og:locale', data.locale ?? 'id_ID', true);
+
+    // hreflang: dibuang dulu semuanya, karena halaman yang dikunjungi sesudah
+    // ini mungkin tidak punya padanan bahasa sama sekali.
+    document.head.querySelectorAll('link[rel="alternate"][hreflang]').forEach((el) => el.remove());
+    (data.alternates ?? []).forEach(({ hreflang, href }) => {
+      const link = document.createElement('link');
+      link.rel = 'alternate';
+      link.hreflang = hreflang;
+      link.href = href;
+      document.head.appendChild(link);
+    });
 
     // Twitter Card tags
     setMetaTag('twitter:card', 'summary_large_image');

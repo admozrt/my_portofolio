@@ -13,7 +13,7 @@ import { useTransformationChapters } from '../hooks/useLocalizedData';
 import { useLang } from '../hooks/useLang';
 
 export const InstitutionalSolutionsPage: React.FC = () => {
-  const { t } = useLang();
+  const { t, lang } = useLang();
   const transformationChapters = useTransformationChapters();
   return (
     <ThemeProvider>
@@ -24,7 +24,16 @@ export const InstitutionalSolutionsPage: React.FC = () => {
           description: t.seo.solutionsDescription,
           keywords: t.seo.solutionsKeywords,
           author: "Adi Rakhmatullah Ma'arif",
-          url: 'https://dirakhmat.app/solusi-digital',
+          url:
+            lang === 'en'
+              ? 'https://dirakhmat.app/en/solusi-digital'
+              : 'https://dirakhmat.app/solusi-digital',
+          locale: lang === 'en' ? 'en_US' : 'id_ID',
+          alternates: [
+            { hreflang: 'id', href: 'https://dirakhmat.app/solusi-digital' },
+            { hreflang: 'en', href: 'https://dirakhmat.app/en/solusi-digital' },
+            { hreflang: 'x-default', href: 'https://dirakhmat.app/solusi-digital' },
+          ],
           image: 'https://dirakhmat.app/my.png',
           type: 'website',
           schemaType: 'Service',

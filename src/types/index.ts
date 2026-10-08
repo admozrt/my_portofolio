@@ -94,6 +94,11 @@ export interface SEOData {
   schemaType?: SEOSchemaType;
   /** Wajib saat schemaType 'Event'; diabaikan untuk tipe lain. */
   event?: SEOEventData;
+  /** og:locale, mis. 'en_US'. Bawaan 'id_ID'. */
+  locale?: string;
+  /** Padanan bahasa halaman ini, untuk <link rel="alternate" hreflang>.
+   *  Hanya diisi halaman yang memang punya versi bahasa lain. */
+  alternates?: { hreflang: string; href: string }[];
 }
 
 // Component prop types

@@ -34,7 +34,7 @@ const techs = [
 
 /** Same three-column shape as the main portfolio footer, in the paper palette. */
 export const ZineFooter: React.FC = () => {
-  const { t } = useLang();
+  const { t, localePath } = useLang();
   return (
   <footer className="border-t border-zine-rule py-12 dark:border-zine-rule-dark">
     <div className="px-5 sm:px-8 lg:px-12">
@@ -76,7 +76,7 @@ export const ZineFooter: React.FC = () => {
             {quickLinks.map((link) => (
               <li key={link.key}>
                 <Link
-                  to={link.to}
+                  to={localePath(link.to)}
                   className="text-[13px] text-zine-ink-soft transition-colors hover:text-zine-pen dark:text-zine-ink-soft-dark dark:hover:text-zine-pen-dark"
                 >
                   {t.nav[link.key]}

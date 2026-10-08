@@ -12,7 +12,7 @@ import { useLang } from '../../hooks/useLang';
  */
 export const SolutionNote: React.FC = () => {
   const reduce = useReducedMotion();
-  const { t } = useLang();
+  const { t, localePath } = useLang();
 
   return (
     <section id="solusi" className="px-5 sm:px-8 lg:px-12 py-6 sm:py-10">
@@ -39,7 +39,7 @@ export const SolutionNote: React.FC = () => {
           </p>
 
           <Link
-            to="/solusi-digital"
+            to={localePath('/solusi-digital')}
             className="mt-4 inline-flex items-center gap-1.5 text-[13.5px] font-medium text-zine-pen transition-colors hover:text-zine-ink dark:text-zine-pen-dark dark:hover:text-zine-ink-dark"
           >
             {t.solution.cta}

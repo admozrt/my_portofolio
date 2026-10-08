@@ -1,35 +1,46 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { LanguageContext, type Lang } from '../../contexts/LanguageContext';
 
-const KEY = 'lang';
+/** Alamat yang punya padanan English di bawah `/en`. Halaman lain tetap hanya
+ *  Bahasa Indonesia, jadi tombol bahasa tidak boleh mengarah ke `/en/...`-nya. */
+const BILINGUAL = ['/', '/solusi-digital'];
+
+const stripEn = (pathname: string) => pathname.replace(/^\/en(?=\/|$)/, '') || '/';
 
 /**
- * Bahasa antarmuka portofolio.
+ * Bahasa ditentukan oleh ALAMAT, bukan disimpan di localStorage.
  *
- * Dipasang sekali di App, bukan per halaman seperti ThemeProvider, supaya
- * pilihan bahasa ikut terbawa saat pindah dari `/` ke `/solusi-digital`.
+ * Itu yang membuat versi English bisa terindeks: Googlebot datang tanpa
+ * localStorage, mendarat di `/en`, dan langsung merender English. Kalau bahasa
+ * disimpan di peramban, Google hanya pernah melihat versi Indonesia.
  *
- * Bawaannya `id`, sengaja tidak mendeteksi bahasa peramban: banyak pengunjung
- * Indonesia memakai OS berbahasa Inggris, dan deteksi otomatis akan menyajikan
- * English ke audiens utama situs ini sendiri.
+ * Sengaja tidak ada pengalihan otomatis berdasarkan pilihan sebelumnya atau
+ * bahasa peramban — Googlebot bisa ikut teralihkan, dan versi Indonesia malah
+ * hilang dari indeks.
+ *
+ * Harus dipasang DI DALAM <Router>, karena membaca dan mengubah alamat.
  */
 export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [lang, setLang] = useState<Lang>(() => {
-    try {
-      return localStorage.getItem(KEY) === 'en' ? 'en' : 'id';
-    } catch {
-      return 'id';
-    }
-  });
+  const { pathname, hash } = useLocation();
+  const navigate = useNavigate();
+  const lang: Lang = /^\/en(\/|$)/.test(pathname) ? 'en' : 'id';
 
-  useEffect(() => {
-    // Dibaca pembaca layar dan fitur terjemahan otomatis peramban.
+  const setLang = useCallback(
+    (next: Lang) => {
+      if (next === lang) return;
+      const base = stripEn(pathname);
+      if (!BILINGUAL.includes(base)) return;
+      const target = next === 'en' ? (base === '/' ? '/en' : `/en${base}`) : base;
+      // Hash ikut dibawa: /#projek <-> /en#projek tetap mendarat di section yang sama.
+      navigate(target + hash);
+    },
+    [lang, pathname, hash, navigate]
+  );
+
+  // Dibaca pembaca layar dan fitur terjemahan otomatis peramban.
+  React.useEffect(() => {
     document.documentElement.lang = lang;
-    try {
-      localStorage.setItem(KEY, lang);
-    } catch {
-      /* mode privat: pilihan tetap berlaku selama halaman terbuka */
-    }
   }, [lang]);
 
   return <LanguageContext.Provider value={{ lang, setLang }}>{children}</LanguageContext.Provider>;

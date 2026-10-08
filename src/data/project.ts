@@ -34,7 +34,7 @@ export const projects: Project[] = [
     gradient: 'from-blue-500 via-blue-600 to-cyan-600',
     logo: '/images/projects/logos/tmu-ferry.png',
     featured: true,
-    status: 'sedang_berjalan',
+    status: 'selesai',
     domain: 'Perusahaan Pelayaran Kapal',
     monitorStatus: 'LIVE',
     metrics: [
@@ -81,7 +81,7 @@ export const projects: Project[] = [
     gradient: 'from-sky-500 via-blue-600 to-indigo-600',
     logo: '/corepos/icon.png',
     featured: true,
-    status: 'sedang_berjalan',
+    status: 'selesai',
     domain: 'Retail & UMKM Multi-Sektor',
     monitorStatus: 'LIVE',
     metrics: [

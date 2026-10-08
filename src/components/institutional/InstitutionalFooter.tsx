@@ -4,7 +4,7 @@ import { contactInfo } from '../../data/contact';
 import { useLang } from '../../hooks/useLang';
 
 export const InstitutionalFooter: React.FC = () => {
-  const { t } = useLang();
+  const { t, localePath } = useLang();
   return (
     <footer className="border-t border-stone-300 dark:border-stone-800 bg-stone-50 dark:bg-stone-950 py-10 text-stone-500 dark:text-stone-400">
       <div className="container mx-auto flex max-w-5xl flex-col items-center gap-4 px-6 text-center">
@@ -24,7 +24,7 @@ export const InstitutionalFooter: React.FC = () => {
             </a>
           ))}
         </div>
-        <Link to="/" className="text-xs text-stone-400 dark:text-stone-500 hover:text-amber-700 dark:hover:text-amber-400 transition-colors">
+        <Link to={localePath('/')} className="text-xs text-stone-400 dark:text-stone-500 hover:text-amber-700 dark:hover:text-amber-400 transition-colors">
           &larr; {t.common.backToPortfolio}
         </Link>
         <p className="text-xs text-stone-400 dark:text-stone-500">

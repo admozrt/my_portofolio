@@ -31,12 +31,14 @@ const ScrollToTop: React.FC = () => {
 
 const App: React.FC = () => {
   return (
-    <LanguageProvider>
     <Router>
+    <LanguageProvider>
       <ScrollToTop />
       <Routes>
         {/* Portfolio (halaman utama) — konsep zine */}
         <Route path="/" element={<NewPortPage />} />
+        {/* Versi English, berpasangan dengan "/" lewat hreflang. */}
+        <Route path="/en" element={<NewPortPage />} />
         {/* Alias, supaya tautan lama ke /newport tidak mati */}
         <Route path="/newport" element={<NewPortPage />} />
 
@@ -82,13 +84,14 @@ const App: React.FC = () => {
 
         {/* Halaman solusi untuk klien institusional */}
         <Route path="/solusi-digital" element={<InstitutionalSolutionsPage />} />
+        <Route path="/en/solusi-digital" element={<InstitutionalSolutionsPage />} />
 
         {/* Landing produk Core POS (Sistem Kasir Dinamis Multi-Sektor) */}
         <Route path="/corepos" element={<CorePOSPage />} />
 
       </Routes>
-    </Router>
     </LanguageProvider>
+    </Router>
   );
 };
 

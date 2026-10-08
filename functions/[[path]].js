@@ -11,7 +11,48 @@
 
 const BASE = "https://dirakhmat.app";
 
+// Pasangan bahasa untuk halaman yang punya versi English. Dipakai sebagai
+// <link rel="alternate" hreflang> di kedua versinya; x-default ke Indonesia.
+const ALT_HOME = [
+  { hreflang: "id", href: BASE },
+  { hreflang: "en", href: BASE + "/en" },
+  { hreflang: "x-default", href: BASE },
+];
+const ALT_SOLUSI = [
+  { hreflang: "id", href: BASE + "/solusi-digital" },
+  { hreflang: "en", href: BASE + "/en/solusi-digital" },
+  { hreflang: "x-default", href: BASE + "/solusi-digital" },
+];
+
 const ROUTES = {
+  solusiDigitalEn: {
+    match: (path) => /^\/en\/solusi-digital\/?$/i.test(path),
+    title: "Institutional Digital Solutions - Adi Rakhmatullah Ma'arif",
+    description:
+      "Measurable, secure, and accountable digital systems for government agencies, healthcare services, and companies.",
+    image: BASE + "/my.png",
+    imageW: "997",
+    imageH: "1247",
+    url: BASE + "/en/solusi-digital",
+    siteName: "Adi Rakhmatullah Ma'arif - Portfolio",
+    locale: "en_US",
+    htmlLang: "en",
+    alternates: ALT_SOLUSI,
+  },
+  portfolioEn: {
+    match: (path) => /^\/en\/?$/i.test(path),
+    title: "Adi Rakhmatullah Ma'arif - Software Engineer",
+    description:
+      "Design, build, and maintain systems for companies, public services, healthcare, small businesses, and personal use. Six years of systems that are all still running.",
+    image: BASE + "/my.png",
+    imageW: "997",
+    imageH: "1247",
+    url: BASE + "/en",
+    siteName: "Adi Rakhmatullah Ma'arif - Portfolio",
+    locale: "en_US",
+    htmlLang: "en",
+    alternates: ALT_HOME,
+  },
   weddingAjie: {
     match: (path) => /ajie/i.test(path) || /alya/i.test(path),
     title: "Undangan Pernikahan Ajie & Alya 💍",
@@ -105,6 +146,7 @@ const ROUTES = {
     imageH: "1247",
     url: BASE + "/solusi-digital",
     siteName: "Adi Rakhmatullah Ma'arif - Portfolio",
+    alternates: ALT_SOLUSI,
   },
   portfolio: {
     match: () => true, // default
@@ -116,6 +158,7 @@ const ROUTES = {
     imageH: "1247",
     url: BASE,
     siteName: "Adi Rakhmatullah Ma'arif - Portfolio",
+    alternates: ALT_HOME,
   },
 };
 
@@ -139,7 +182,10 @@ function buildMetaTags(meta) {
     `<meta property="og:image:width" content="${meta.imageW}" />`,
     `<meta property="og:image:height" content="${meta.imageH}" />`,
     `<meta property="og:url" content="${meta.url}" />`,
-    `<meta property="og:locale" content="id_ID" />`,
+    `<meta property="og:locale" content="${meta.locale || "id_ID"}" />`,
+    ...(meta.alternates || []).map(
+      (a) => `<link rel="alternate" hreflang="${a.hreflang}" href="${a.href}" />`,
+    ),
     // A large card only helps when the image is actually landscape. Most
     // images this site ships are portrait or square, and a large card crops
     // or pillarboxes those — so the shape decides, not a blanket default.
@@ -203,6 +249,8 @@ export async function onRequest(context) {
     .replace(/<meta\s+property="og:[^>]*>/gi, "")
     .replace(/<meta\s+name="twitter:[^>]*>/gi, "")
     .replace(/<link\s+rel="canonical"[^>]*>/gi, "")
+    .replace(/<link\s+rel="alternate"\s+hreflang[^>]*>/gi, "")
+    .replace(/<html\s+lang="[^"]*"/i, `<html lang="${route.htmlLang || "id"}"`)
     .replace("</head>", `    ${buildMetaTags(route)}\n  </head>`);
 
   return new Response(html, {
