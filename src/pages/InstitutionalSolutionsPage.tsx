@@ -28,7 +28,7 @@ export const InstitutionalSolutionsPage: React.FC = () => {
             lang === 'en'
               ? 'https://dirakhmat.app/en/solusi-digital'
               : 'https://dirakhmat.app/solusi-digital',
-          locale: lang === 'en' ? 'en_US' : 'id_ID',
+          locale: lang === 'en' ? 'en_GB' : 'id_ID',
           alternates: [
             { hreflang: 'id', href: 'https://dirakhmat.app/solusi-digital' },
             { hreflang: 'en', href: 'https://dirakhmat.app/en/solusi-digital' },

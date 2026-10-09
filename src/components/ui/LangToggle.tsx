@@ -1,9 +1,51 @@
-import React from 'react';
+import React, { useId } from 'react';
 import { motion } from 'framer-motion';
 import { useLang } from '../../hooks/useLang';
 import type { Lang } from '../../contexts/LanguageContext';
 
 const OPTIONS: Lang[] = ['id', 'en'];
+
+/*
+  Bendera digambar sebagai SVG inline, bukan emoji: emoji bendera tidak tampil
+  di Windows — yang muncul hanya huruf "ID" dan "GB".
+
+  Keduanya dipotong ke rasio 7:5 supaya sama besar di dalam tombol, walau
+  rasio aslinya berbeda (Indonesia 3:2, Inggris 2:1).
+*/
+const FlagID: React.FC = () => (
+  <svg viewBox="0 0 7 5" className="block h-full w-full" aria-hidden="true">
+    <rect width="7" height="2.5" fill="#CE1126" />
+    <rect y="2.5" width="7" height="2.5" fill="#FFFFFF" />
+  </svg>
+);
+
+const FlagUK: React.FC = () => {
+  // Id clipPath harus unik per instans, atau dua bendera di satu halaman saling
+  // memakai klip milik yang lain.
+  const uid = useId().replace(/:/g, '');
+  return (
+    // viewBox dipotong ke tengah bendera 60x30 dengan rasio 7:5 (42x30).
+    <svg viewBox="9 0 42 30" className="block h-full w-full" aria-hidden="true">
+      <defs>
+        <clipPath id={`uk-t-${uid}`}>
+          <path d="M30,15 h30 v15 z v15 h-30 z h-30 v-15 z v-15 h30 z" />
+        </clipPath>
+      </defs>
+      <rect width="60" height="30" fill="#012169" />
+      <path d="M0,0 L60,30 M60,0 L0,30" stroke="#FFFFFF" strokeWidth="6" />
+      <path
+        d="M0,0 L60,30 M60,0 L0,30"
+        clipPath={`url(#uk-t-${uid})`}
+        stroke="#C8102E"
+        strokeWidth="4"
+      />
+      <path d="M30,0 v30 M0,15 h60" stroke="#FFFFFF" strokeWidth="10" />
+      <path d="M30,0 v30 M0,15 h60" stroke="#C8102E" strokeWidth="6" />
+    </svg>
+  );
+};
+
+const FLAGS: Record<Lang, React.FC> = { id: FlagID, en: FlagUK };
 
 interface LangToggleProps {
   /** `zine` untuk halaman portofolio, `plain` untuk halaman institusional. */
@@ -60,7 +102,18 @@ export const LangToggle: React.FC<LangToggleProps> = ({ variant = 'zine' }) => {
                 transition={{ type: 'spring', bounce: 0, duration: 0.4 }}
               />
             )}
-            <span className="relative">{option}</span>
+            <span className="relative flex items-center gap-1.5">
+              {/* Garis tepi tipis wajib: tanpa itu separuh putih bendera
+                  Indonesia lenyap di atas latar kertas yang terang. */}
+              <span
+                className={`block h-[10px] w-[14px] shrink-0 overflow-hidden rounded-[2px] ring-1 ${
+                  active ? 'ring-white/50' : 'ring-black/15 dark:ring-white/25'
+                }`}
+              >
+                {React.createElement(FLAGS[option])}
+              </span>
+              {option}
+            </span>
           </button>
         );
       })}

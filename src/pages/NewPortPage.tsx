@@ -49,7 +49,7 @@ export const NewPortPage: React.FC = () => {
           // Canonical menunjuk dirinya sendiri. Kalau /en ber-canonical ke /,
           // Google menganggapnya salinan dan membuangnya dari indeks.
           url: lang === 'en' ? 'https://dirakhmat.app/en' : 'https://dirakhmat.app',
-          locale: lang === 'en' ? 'en_US' : 'id_ID',
+          locale: lang === 'en' ? 'en_GB' : 'id_ID',
           alternates: [
             { hreflang: 'id', href: 'https://dirakhmat.app' },
             { hreflang: 'en', href: 'https://dirakhmat.app/en' },
