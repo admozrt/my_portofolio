@@ -678,6 +678,54 @@ export const RekomendasyiPage: React.FC = () => {
     springTo(sn[nearest(sn, projected)], v, Math.abs(v) > 500 ? 0.82 : 1);
   };
 
+  // Geser dua jari di trackpad / roda horizontal (atau Shift + roda mouse).
+  // Track mengikuti jari 1:1, lalu snap ke kartu terdekat begitu gerakan berhenti.
+  const wheelRef = useRef<(e: WheelEvent) => void>(() => {});
+  const wheelIdle = useRef<number>();
+  wheelRef.current = (e: WheelEvent) => {
+    const dx = e.shiftKey && !e.deltaX ? e.deltaY : e.deltaX;
+    // Gerakan yang lebih banyak vertikal dibiarkan menggulir halaman.
+    if (!dx || Math.abs(dx) < Math.abs(e.shiftKey ? 0 : e.deltaY)) return;
+    e.preventDefault();
+    if (dragRef.current) return;
+    cancelAnimationFrame(rafRef.current);
+    const { min, max } = bounds();
+    const w = vpRef.current?.clientWidth ?? 1;
+    const step = e.deltaMode === 1 ? dx * 16 : dx;
+    let x = xRef.current - step;
+    if (x > max) x = max + rubber(x - max, w, 0.3);
+    else if (x < min) x = min - rubber(min - x, w, 0.3);
+    setX(x);
+    clearTimeout(wheelIdle.current);
+    wheelIdle.current = window.setTimeout(() => {
+      const sn = snaps();
+      springTo(sn[nearest(sn, xRef.current)], 0, 1);
+    }, 140);
+  };
+  useEffect(() => {
+    const vp = vpRef.current;
+    if (!vp) return;
+    // Listener asli, bukan onWheel React: React memasangnya pasif, jadi
+    // preventDefault di sana tidak bisa menahan geser-balik halaman di browser.
+    const onWheel = (e: WheelEvent) => wheelRef.current(e);
+    vp.addEventListener('wheel', onWheel, { passive: false });
+    return () => {
+      vp.removeEventListener('wheel', onWheel);
+      clearTimeout(wheelIdle.current);
+    };
+  }, []);
+
+  // Panah kiri/kanan saat carousel difokus.
+  const onCarouselKey = (e: React.KeyboardEvent) => {
+    if (e.key === 'ArrowRight') {
+      e.preventDefault();
+      navShort(1);
+    } else if (e.key === 'ArrowLeft') {
+      e.preventDefault();
+      navShort(-1);
+    }
+  };
+
   // Lebar layar atau bahasa berubah: pastikan carousel tidak tertinggal di luar batas.
   useEffect(() => {
     const clampX = () => {
@@ -1076,6 +1124,11 @@ export const RekomendasyiPage: React.FC = () => {
           <div
             ref={vpRef}
             className="rk-viewport"
+            tabIndex={0}
+            role="region"
+            aria-roledescription="carousel"
+            aria-label={L.shortsTitle}
+            onKeyDown={onCarouselKey}
             onPointerDown={onDown}
             onPointerMove={onMove}
             onPointerUp={onUp}

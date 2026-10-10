@@ -842,9 +842,14 @@
 .rk-viewport {
   margin-top: 36px;
   touch-action: pan-y;
+  /* Geser horizontal di trackpad tidak memicu "kembali ke halaman sebelumnya". */
+  overscroll-behavior-x: contain;
   cursor: grab;
   user-select: none;
   -webkit-user-select: none;
+}
+.rk-viewport:focus-visible {
+  outline-offset: -2px;
 }
 .rk-track {
   display: flex;
