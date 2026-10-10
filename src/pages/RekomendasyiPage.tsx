@@ -33,6 +33,11 @@ import './RekomendasyiPage.css';
 const FONTS_HREF =
   'https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&family=Hanken+Grotesk:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap';
 const EMAIL = 'hello@rekomendasyi.com';
+const SOCIALS = [
+  { name: 'Instagram', handle: '@rekomendasyi', href: 'https://www.instagram.com/rekomendasyi' },
+  { name: 'TikTok', handle: '@rekomendasyi', href: 'https://www.tiktok.com/@rekomendasyi' },
+  { name: 'YouTube', handle: '@nursyifaprtw', href: 'https://www.youtube.com/@nursyifaprtw' },
+];
 const REEL_SECS = 45;
 const EASE_DRAWER = 'cubic-bezier(.32,.72,0,1)';
 const EASE_OUT = 'cubic-bezier(.23,1,.32,1)';
@@ -1169,12 +1174,8 @@ export const RekomendasyiPage: React.FC = () => {
               <span className="rk-contact__reply">{L.reply}</span>
             </div>
             <div className="rk-socials">
-              {[
-                ['Instagram', '@rekomendasyi'],
-                ['TikTok', '@rekomendasyi'],
-                ['YouTube', 'Rekomendasyi'],
-              ].map(([name, handle]) => (
-                <a key={name} href="#collab" className="rk-social">
+              {SOCIALS.map(({ name, handle, href }) => (
+                <a key={name} href={href} target="_blank" rel="noopener noreferrer" className="rk-social">
                   <span className="rk-social__name">{name}</span>
                   <span className="rk-social__handle">{handle}</span>
                 </a>
@@ -1188,9 +1189,11 @@ export const RekomendasyiPage: React.FC = () => {
         <div className="rk-wrap rk-footer__inner">
           <span>© 2026 Nursyifa Pratiwi · Rekomendasyi</span>
           <div className="rk-footer__links">
-            <a href="#collab">YouTube</a>
-            <a href="#collab">TikTok</a>
-            <a href="#collab">Instagram</a>
+            {SOCIALS.map(({ name, href }) => (
+              <a key={name} href={href} target="_blank" rel="noopener noreferrer">
+                {name}
+              </a>
+            ))}
           </div>
         </div>
       </footer>
