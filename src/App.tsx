@@ -17,6 +17,7 @@ import { WeddingProjectsPage } from './pages/WeddingProjectsPage';
 import { InstitutionalSolutionsPage } from './pages/InstitutionalSolutionsPage';
 import { CorePOSPage } from './pages/CorePOSPage';
 import { NewPortPage } from './pages/NewPortPage';
+import { RekomendasyiPage } from './pages/RekomendasyiPage';
 
 const ScrollToTop: React.FC = () => {
   const { pathname, hash } = useLocation();
@@ -88,6 +89,9 @@ const App: React.FC = () => {
 
         {/* Landing produk Core POS (Sistem Kasir Dinamis Multi-Sektor) */}
         <Route path="/corepos" element={<CorePOSPage />} />
+
+        {/* Portofolio kreator "Rekomendasyi" — dari desain Claude Design */}
+        <Route path="/rekomendasyi" element={<RekomendasyiPage />} />
 
       </Routes>
     </LanguageProvider>

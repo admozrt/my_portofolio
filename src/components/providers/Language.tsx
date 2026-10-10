@@ -6,6 +6,10 @@ import { LanguageContext, type Lang } from '../../contexts/LanguageContext';
  *  Bahasa Indonesia, jadi tombol bahasa tidak boleh mengarah ke `/en/...`-nya. */
 const BILINGUAL = ['/', '/solusi-digital'];
 
+/** Halaman berdiri sendiri yang mengatur `<html lang>`-nya sendiri lewat
+ *  tombol bahasa lokal (bukan lewat alamat `/en`). */
+const OWN_LANG = ['/rekomendasyi'];
+
 const stripEn = (pathname: string) => pathname.replace(/^\/en(?=\/|$)/, '') || '/';
 
 /**
@@ -40,8 +44,9 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
 
   // Dibaca pembaca layar dan fitur terjemahan otomatis peramban.
   React.useEffect(() => {
+    if (OWN_LANG.includes(pathname.replace(/\/$/, ''))) return;
     document.documentElement.lang = lang;
-  }, [lang]);
+  }, [lang, pathname]);
 
   return <LanguageContext.Provider value={{ lang, setLang }}>{children}</LanguageContext.Provider>;
 };

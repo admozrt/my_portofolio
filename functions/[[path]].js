@@ -136,6 +136,19 @@ const ROUTES = {
     url: BASE + "/corepos",
     siteName: "Core POS by Dirakhmat",
   },
+  rekomendasyi: {
+    match: (path) => /^\/rekomendasyi\/?$/i.test(path),
+    title: "Rekomendasyi - Nursyifa Pratiwi",
+    description:
+      "I make honest reviews and easy how-tos on food, makeup, travel, sport and products worth buying, so you spend less time guessing.",
+    image: BASE + "/my.png",
+    imageW: "997",
+    imageH: "1247",
+    url: BASE + "/rekomendasyi",
+    siteName: "Rekomendasyi",
+    locale: "en_GB",
+    htmlLang: "en",
+  },
   solusiDigital: {
     match: (path) => /solusi-digital/i.test(path),
     title: "Solusi Digital Institusional - Adi Rakhmatullah Ma'arif",
