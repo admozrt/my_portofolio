@@ -115,7 +115,7 @@ export const SHORTS: Short[] = [
 
 export const LANG = {
   en:{ navShelf:'The shelf', navShorts:'Shorts', workWithMe:'Work with me', role:'lifestyle creator',
-    h1a:'Food, looks and places worth your time, ', h1b:'tried and picked', h1c:' for you.',
+    h1a:'Foods, looks and places worth your time, ', h1b:'tried and picked', h1c:' for you.',
     heroP:'I make honest reviews and easy how-tos on food, makeup, travel, sport and products worth buying, so you spend less time guessing.',
     browse:'Browse the shelf', collabBtn:'Collaborate', dropReel:'drop showreel video · 16:11',
     kickerShelf:"Editor's picks", shelfTitle:'The shelf', shelfP:'Every video here is a pick I stand behind. Filter by what you want to try next.',
@@ -128,7 +128,7 @@ export const LANG = {
     send:'Send an email', copy:'Copy address', copied:'Copied', reply:'I reply within two working days.',
     why:"Why it's on the shelf", cta:"Want your product in a video like this? Let's talk →", chapters:'Chapters', picks:'The picks', menuOpen:'Open menu', menuClose:'Close menu', stop:'Stop video' },
   id:{ navShelf:'Rak pilihan', navShorts:'Video pendek', workWithMe:'Ajak kerja sama', role:'kreator lifestyle',
-    h1a:'Makanan, makeup, dan tempat yang layak dicoba, ', h1b:'sudah kucoba dan kupilih', h1c:' untukmu.',
+    h1a:'Kuliner, makeup, dan tempat yang layak dicoba, ', h1b:'sudah kucoba dan kupilih', h1c:' untukmu.',
     heroP:'Aku membuat review jujur dan panduan singkat seputar kuliner, makeup, jalan-jalan, olahraga, dan produk yang layak dibeli, supaya kamu tidak perlu menebak-nebak.',
     browse:'Lihat rak pilihan', collabBtn:'Kerja sama', dropReel:'letakkan video showreel · 16:11',
     kickerShelf:'Pilihan editor', shelfTitle:'Rak pilihan', shelfP:'Semua video di sini benar-benar aku rekomendasikan. Saring sesuai yang ingin kamu coba berikutnya.',
