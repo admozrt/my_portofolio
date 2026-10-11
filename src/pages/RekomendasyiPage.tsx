@@ -12,6 +12,7 @@ import {
   type Lang,
   type Video,
 } from '../data/rekomendasyi';
+import { THUMBS } from '../data/rekomendasyiThumbs';
 import { parseEmbed, seekYouTube, type Embed } from '../utils/videoEmbed';
 import './RekomendasyiPage.css';
 
@@ -63,8 +64,9 @@ const SHORT_VIDEOS = SHORT_IDS.map((id) => VID[id]).filter(Boolean);
 const PLATFORM: Record<Embed['provider'], string> = { tiktok: 'TikTok', instagram: 'Instagram', youtube: 'YouTube' };
 const REEL = parseEmbed(REEL_EMBED);
 
-/** Latar thumbnail: gambar sendiri, lalu thumbnail YouTube, lalu pola garis. */
-const posterOf = (thumb: string | undefined, embed: Embed | null) => thumb || embed?.poster;
+/** Latar thumbnail: `thumb` di data, lalu gambar di public/rekomendasyi/
+ *  (hasil skrip atau taruh manual), lalu thumbnail YouTube, lalu pola garis. */
+const posterOf = (v: Video, embed: Embed | null) => v.thumb || THUMBS[v.id] || embed?.poster;
 const thumbBg = (hue: number, poster?: string) =>
   poster ? `center / cover no-repeat url("${poster}"), ${stripes(hue)}` : stripes(hue);
 
@@ -1074,7 +1076,7 @@ export const RekomendasyiPage: React.FC = () => {
                     data-thumb="1"
                     className="rk-thumb"
                     style={{
-                      background: thumbBg(v.hue, posterOf(v.thumb, EMBED[v.id])),
+                      background: thumbBg(v.hue, posterOf(v, EMBED[v.id])),
                       transform: hov && !reduceRef.current ? 'scale(1.015)' : 'scale(1)',
                       boxShadow: hov ? '0 22px 44px -22px rgba(42,35,32,.5)' : '0 1px 0 rgba(42,35,32,.04)',
                     }}
@@ -1084,7 +1086,7 @@ export const RekomendasyiPage: React.FC = () => {
                       {v.pinned && <span className="rk-chip rk-chip--accent">{L.pinned}</span>}
                     </div>
                     {statOf(v) && <span className="rk-chip rk-chip--dark rk-thumb__dur">{statOf(v)}</span>}
-                    {!posterOf(v.thumb, EMBED[v.id]) && (
+                    {!posterOf(v, EMBED[v.id]) && (
                       <span className="rk-thumb__label">
                         {v.thumbLabel ? `thumbnail · ${v.thumbLabel}` : `${kindOf(v)} · 9:16`}
                       </span>
@@ -1194,10 +1196,10 @@ export const RekomendasyiPage: React.FC = () => {
                     key={s.id}
                     data-short={i}
                     className="rk-short"
-                    style={{ background: thumbBg(s.hue, posterOf(s.thumb, se)) }}
+                    style={{ background: thumbBg(s.hue, posterOf(s, se)) }}
                   >
                     <span className="rk-chip rk-short__platform">{kindOf(s)}</span>
-                    {!posterOf(s.thumb, se) && <span className="rk-short__hint">vertical clip 9:16</span>}
+                    {!posterOf(s, se) && <span className="rk-short__hint">vertical clip 9:16</span>}
                     <div className="rk-short__icon" style={{ opacity: on ? 0.0001 : 1 }}>
                       <div>{on ? <PauseIcon /> : <PlayIcon />}</div>
                     </div>
@@ -1298,7 +1300,7 @@ export const RekomendasyiPage: React.FC = () => {
             {openEmbed ? (
               <div
                 className={`rk-player rk-player--embed${openEmbed.vertical ? ' rk-player--vertical' : ''}`}
-                style={{ background: thumbBg(open.hue, posterOf(open.thumb, openEmbed)) }}
+                style={{ background: thumbBg(open.hue, posterOf(open, openEmbed)) }}
               >
                 {closeButton}
                 <div className="rk-player__stage">
