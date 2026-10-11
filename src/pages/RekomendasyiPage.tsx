@@ -67,6 +67,14 @@ const REEL = parseEmbed(REEL_EMBED);
 /** Latar thumbnail: `thumb` di data, lalu gambar di public/rekomendasyi/
  *  (hasil skrip atau taruh manual), lalu thumbnail YouTube, lalu pola garis. */
 const posterOf = (v: Video, embed: Embed | null) => v.thumb || THUMBS[v.id] || embed?.poster;
+/** Rekap di hero: satu konten per kategori, yang pertama di `VIDEOS` (jadi
+ *  yang disematkan didahulukan) dan punya thumbnail. Kategori kosong terlewati. */
+const RECAP = CATS.filter((c) => c.id !== 'all')
+  .map((c) => VIDEOS.find((v) => v.cat === c.id && posterOf(v, EMBED[v.id])))
+  .filter((v): v is Video => Boolean(v));
+const SLIDE_SECS = 3;
+const RECAP_SECS = RECAP.length * SLIDE_SECS;
+
 const thumbBg = (hue: number, poster?: string) =>
   poster ? `center / cover no-repeat url("${poster}"), ${stripes(hue)}` : stripes(hue);
 
@@ -142,6 +150,14 @@ export const RekomendasyiPage: React.FC = () => {
   const [embedStart, setEmbedStart] = useState(0);
   const [embedChapter, setEmbedChapter] = useState(-1);
   const [reelEmbedOn, setReelEmbedOn] = useState(false);
+  // Rekap hero: waktu berjalan, dijeda pengguna, sedang di-hover, terlihat di layar.
+  const [recapT, setRecapT] = useState(0);
+  const [recapPaused, setRecapPaused] = useState(
+    () => typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  );
+  const [recapHover, setRecapHover] = useState(false);
+  const [recapVisible, setRecapVisible] = useState(false);
+  const [docVisible, setDocVisible] = useState(true);
 
   const L = LANG[lang];
   const isId = lang === 'id';
@@ -168,6 +184,8 @@ export const RekomendasyiPage: React.FC = () => {
   const closingRef = useRef(false);
   const scrubbingRef = useRef(false);
   const frameRef = useRef<HTMLIFrameElement>(null);
+  const recapRef = useRef<HTMLDivElement>(null);
+  const recapFrameRef = useRef<HTMLDivElement>(null);
 
   // ---------- Halaman: font, bahasa dokumen, scroll halus ----------
 
@@ -396,13 +414,43 @@ export const RekomendasyiPage: React.FC = () => {
     return () => clearInterval(iv);
   }, [ticking, playing, openId, reelPlaying]);
 
+  // ---------- Rekap hero ----------
+
+  // Hanya berjalan saat terlihat, tab aktif, tidak di-hover, tidak dijeda, dan
+  // panel detail tertutup — timer tidak jalan sia-sia di latar belakang.
+  const recapRunning = RECAP.length > 0 && !recapPaused && !recapHover && recapVisible && docVisible && !openId;
+
+  useEffect(() => {
+    const el = recapRef.current;
+    if (!el) return;
+    const io = new IntersectionObserver(([entry]) => setRecapVisible(entry.isIntersecting), {
+      threshold: 0.35,
+    });
+    io.observe(el);
+    const onVis = () => setDocVisible(document.visibilityState === 'visible');
+    document.addEventListener('visibilitychange', onVis);
+    return () => {
+      io.disconnect();
+      document.removeEventListener('visibilitychange', onVis);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!recapRunning) return;
+    const iv = window.setInterval(() => setRecapT((prev) => (prev + 0.1) % RECAP_SECS), 100);
+    return () => clearInterval(iv);
+  }, [recapRunning]);
+
+  const recapIndex = Math.min(RECAP.length - 1, Math.floor(recapT / SLIDE_SECS));
+  const recapFrac = (recapT - recapIndex * SLIDE_SECS) / SLIDE_SECS;
+
   // ---------- Panel detail: mengembang dari thumbnail ----------
 
-  const openDetail = (id: string, e: React.SyntheticEvent<HTMLElement>) => {
+  const openDetail = (id: string, e: React.SyntheticEvent<HTMLElement>, origin?: HTMLElement | null) => {
     if (openId) return;
     clearTimeout(hoverTimer.current);
     document.body.style.overflow = 'hidden';
-    originEl.current = e.currentTarget.querySelector<HTMLElement>('[data-thumb]');
+    originEl.current = origin ?? e.currentTarget.querySelector<HTMLElement>('[data-thumb]');
     originRect.current = originEl.current?.getBoundingClientRect() ?? null;
     closingRef.current = false;
     setT(0);
@@ -987,6 +1035,84 @@ export const RekomendasyiPage: React.FC = () => {
           {REEL && reelEmbedOn ? (
             <div className="rk-reel rk-reel--embed">
               <EmbedFrame embed={REEL} title="Showreel 2026" />
+            </div>
+          ) : !REEL && RECAP.length ? (
+            <div
+              ref={recapRef}
+              className={`rk-reel rk-recap${recapRunning ? '' : ' is-paused'}`}
+              role="region"
+              aria-roledescription="carousel"
+              aria-label={`${L.recap} 2026`}
+              onPointerEnter={(e) => e.pointerType === 'mouse' && setRecapHover(true)}
+              onPointerLeave={() => setRecapHover(false)}
+            >
+              {RECAP.map((v, i) => {
+                const poster = posterOf(v, EMBED[v.id]);
+                const active = i === recapIndex;
+                return (
+                  <div key={v.id} className={`rk-recap__slide rk-recap__slide--${i % 4}${active ? ' is-active' : ''}`} aria-hidden={!active}>
+                    <div className="rk-recap__bg" style={{ backgroundImage: `url("${poster}")` }} />
+                    <div ref={active ? recapFrameRef : undefined} className="rk-recap__frame">
+                      <div className="rk-recap__img" style={{ backgroundImage: `url("${poster}")` }} />
+                    </div>
+                  </div>
+                );
+              })}
+
+              <div className="rk-reel__chips">
+                <span className="rk-chip">{L.recap} 2026</span>
+                <span className="rk-chip rk-chip--accent">{fmt(RECAP_SECS)}</span>
+              </div>
+
+              {(() => {
+                const v = loc(RECAP[recapIndex]);
+                return (
+                  <div key={v.id} className="rk-recap__text">
+                    <span className="rk-chip rk-chip--accent">{catL(v.cat)}</span>
+                    <span className="rk-recap__title">{v.title}</span>
+                    <span className="rk-recap__meta">
+                      {[kindOf(v), statOf(v)].filter(Boolean).join(' · ')}
+                    </span>
+                    <button
+                      type="button"
+                      className="rk-recap__watch"
+                      onClick={(e) => openDetail(v.id, e, recapFrameRef.current)}
+                    >
+                      {L.watch} ↗
+                    </button>
+                  </div>
+                );
+              })()}
+
+              <button
+                type="button"
+                className="rk-recap__toggle"
+                aria-label={recapPaused ? L.play : L.pause}
+                aria-pressed={!recapPaused}
+                onClick={() => setRecapPaused((p) => !p)}
+              >
+                {recapPaused ? <PlayIcon /> : <PauseIcon />}
+              </button>
+
+              <div className="rk-recap__segments">
+                {RECAP.map((v, i) => (
+                  <button
+                    key={v.id}
+                    type="button"
+                    className="rk-recap__seg"
+                    aria-label={`${i + 1} / ${RECAP.length}: ${loc(v).title}`}
+                    aria-current={i === recapIndex}
+                    onClick={() => setRecapT(i * SLIDE_SECS)}
+                  >
+                    <span
+                      style={{
+                        transform: `scaleX(${i < recapIndex ? 1 : i === recapIndex ? recapFrac : 0})`,
+                        transition: i === recapIndex && recapFrac > 0.04 ? 'transform 100ms linear' : 'none',
+                      }}
+                    />
+                  </button>
+                ))}
+              </div>
             </div>
           ) : (
           <div

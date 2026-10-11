@@ -1512,3 +1512,226 @@
   font: 500 13px 'JetBrains Mono', monospace;
   color: var(--rk-muted);
 }
+
+/* ---------- Rekap hero: satu konten per kategori ---------- */
+
+.rk-recap {
+  cursor: default;
+  background: var(--rk-ink);
+  isolation: isolate;
+}
+.rk-recap__slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 500ms ease;
+  pointer-events: none;
+}
+.rk-recap__slide.is-active {
+  opacity: 1;
+}
+/* Latar: gambar yang sama, diburamkan, supaya kotak mendatar tetap penuh
+   walau kontennya tegak. */
+.rk-recap__bg {
+  position: absolute;
+  inset: -40px;
+  background: center / cover no-repeat;
+  filter: blur(28px) saturate(130%) brightness(0.72);
+  transform: scale(1.1);
+}
+.rk-recap__frame {
+  position: absolute;
+  top: 50%;
+  right: clamp(18px, 6%, 56px);
+  height: 82%;
+  aspect-ratio: 9 / 16;
+  transform: translateY(-50%);
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 24px 48px -18px rgba(0, 0, 0, 0.55), 0 0 0 1px rgba(255, 251, 245, 0.18);
+}
+.rk-recap__img {
+  position: absolute;
+  inset: 0;
+  background: center / cover no-repeat;
+  transform-origin: center;
+}
+/* Ken Burns pelan, arah berbeda tiap slide. Hanya slide aktif yang bergerak;
+   animasi mulai ulang setiap slide jadi aktif. */
+.rk-recap__slide.is-active .rk-recap__img {
+  animation: rk-kb-0 3s linear both;
+}
+.rk-recap__slide--1.is-active .rk-recap__img {
+  animation-name: rk-kb-1;
+}
+.rk-recap__slide--2.is-active .rk-recap__img {
+  animation-name: rk-kb-2;
+}
+.rk-recap__slide--3.is-active .rk-recap__img {
+  animation-name: rk-kb-3;
+}
+.rk-recap.is-paused .rk-recap__img {
+  animation-play-state: paused;
+}
+@keyframes rk-kb-0 {
+  from { transform: scale(1) translate(0, 0); }
+  to { transform: scale(1.08) translate(-2%, -2%); }
+}
+@keyframes rk-kb-1 {
+  from { transform: scale(1.08) translate(2%, 0); }
+  to { transform: scale(1) translate(0, 0); }
+}
+@keyframes rk-kb-2 {
+  from { transform: scale(1) translate(0, 2%); }
+  to { transform: scale(1.08) translate(2%, -1%); }
+}
+@keyframes rk-kb-3 {
+  from { transform: scale(1.06) translate(-2%, 2%); }
+  to { transform: scale(1) translate(0, 0); }
+}
+
+.rk-recap .rk-reel__chips {
+  z-index: 2;
+}
+.rk-recap__text {
+  position: absolute;
+  z-index: 2;
+  left: clamp(18px, 4%, 32px);
+  bottom: 40px;
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  color: var(--rk-paper);
+  animation: rk-recap-in 520ms var(--rk-ease-out) both;
+}
+@keyframes rk-recap-in {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: none; }
+}
+.rk-recap__text .rk-chip--accent {
+  padding: 5px 10px;
+}
+.rk-recap__title {
+  font-family: 'Newsreader', serif;
+  font-size: clamp(19px, 2.3vw, 30px);
+  line-height: 1.1;
+  letter-spacing: -0.015em;
+  text-wrap: balance;
+  text-shadow: 0 2px 18px rgba(0, 0, 0, 0.35);
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.rk-recap__meta {
+  font: 500 11px 'JetBrains Mono', monospace;
+  color: rgba(255, 251, 245, 0.78);
+}
+.rk-recap__watch {
+  margin-top: 4px;
+  border: 0;
+  border-radius: 999px;
+  padding: 8px 14px;
+  background: var(--rk-paper);
+  color: var(--rk-ink) !important;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 140ms ease-out;
+}
+.rk-recap__watch:active {
+  transform: scale(0.96);
+}
+.rk-recap__toggle {
+  position: absolute;
+  z-index: 2;
+  top: 14px;
+  right: 14px;
+  width: 38px;
+  height: 38px;
+  border: 0;
+  border-radius: 999px;
+  background: rgba(255, 251, 245, 0.85);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  transition: transform 140ms ease-out;
+}
+.rk-recap__toggle:active {
+  transform: scale(0.92);
+}
+.rk-recap__toggle .rk-play {
+  border-top-width: 7px;
+  border-bottom-width: 7px;
+  border-left-width: 11px;
+  margin-left: 3px;
+}
+.rk-recap__toggle .rk-pause {
+  gap: 3px;
+}
+.rk-recap__toggle .rk-pause span {
+  width: 3.5px;
+  height: 13px;
+}
+/* Bar segmen ala story; tiap segmen bisa diklik untuk loncat. */
+.rk-recap__segments {
+  position: absolute;
+  z-index: 2;
+  left: clamp(18px, 4%, 32px);
+  right: clamp(18px, 4%, 32px);
+  bottom: 14px;
+  display: flex;
+  gap: 6px;
+}
+.rk-recap__seg {
+  flex: 1;
+  height: 16px;
+  padding: 6px 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+.rk-recap__seg::before {
+  content: '';
+  display: block;
+  height: 3px;
+  border-radius: 3px;
+  background: rgba(255, 251, 245, 0.32);
+}
+.rk-recap__seg span {
+  display: block;
+  height: 3px;
+  margin-top: -3px;
+  border-radius: 3px;
+  background: var(--rk-paper);
+  transform-origin: left;
+}
+
+@media (max-width: 520px) {
+  .rk-recap__frame {
+    height: 74%;
+    top: 46%;
+  }
+  .rk-recap__text {
+    width: 54%;
+    bottom: 34px;
+  }
+  .rk-recap__watch {
+    padding: 7px 12px;
+    font-size: 12px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rk-recap__slide {
+    transition: none;
+  }
+  .rk-recap__slide.is-active .rk-recap__img,
+  .rk-recap__text {
+    animation: none;
+  }
+}
