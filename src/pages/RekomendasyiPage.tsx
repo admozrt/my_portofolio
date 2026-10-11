@@ -6,8 +6,7 @@ import {
   ID_VID,
   LANG,
   REEL_EMBED,
-  SHORTS,
-  SHORTS_ID,
+  SHORT_IDS,
   VIDEOS,
   type FilterId,
   type Lang,
@@ -24,10 +23,12 @@ import './RekomendasyiPage.css';
  * Bahasa disimpan di state lokal (bawaan English seperti desainnya), bukan di
  * alamat `/en` — halaman ini memang tidak punya versi English terpisah.
  *
- * Video yang punya tautan `embed` (YouTube / Instagram / TikTok) diputar
- * lewat iframe platformnya, dimuat baru setelah pengunjung menekan play. Yang
- * belum punya tautan tetap memakai pemutar simulasi dari desain: pola garis
- * dan timer 100ms.
+ * Video diputar lewat iframe platformnya (TikTok / Instagram / YouTube),
+ * dimuat baru setelah pengunjung menekan play. Entri tanpa tautan yang valid
+ * jatuh ke pemutar simulasi dari desain: pola garis dan timer 100ms.
+ *
+ * Panel detail hanya menampilkan data yang ada (catatan, alasan, bab bersifat
+ * opsional), supaya tidak ada isi yang dikarang untuk konten asli.
  */
 
 const FONTS_HREF =
@@ -58,7 +59,8 @@ const fmt = (secs: number) => {
 /** Tarikan karet di luar batas carousel: makin jauh, makin berat. */
 const rubber = (o: number, d: number, c = 0.55) => (o * d * c) / (d + c * Math.abs(o));
 const EMBED: Record<string, Embed | null> = Object.fromEntries(VIDEOS.map((v) => [v.id, parseEmbed(v.embed)]));
-const SHORT_EMBED = SHORTS.map((s) => parseEmbed(s.embed));
+const SHORT_VIDEOS = SHORT_IDS.map((id) => VID[id]).filter(Boolean);
+const PLATFORM: Record<Embed['provider'], string> = { tiktok: 'TikTok', instagram: 'Instagram', youtube: 'YouTube' };
 const REEL = parseEmbed(REEL_EMBED);
 
 /** Latar thumbnail: gambar sendiri, lalu thumbnail YouTube, lalu pola garis. */
@@ -368,7 +370,7 @@ export const RekomendasyiPage: React.FC = () => {
     if (!ticking) return;
     const iv = window.setInterval(() => {
       if (playing && openId) {
-        const secs = VID[openId].secs;
+        const secs = VID[openId].secs ?? 0;
         setT((prev) => {
           const next = prev + 0.1;
           if (next >= secs) {
@@ -517,13 +519,13 @@ export const RekomendasyiPage: React.FC = () => {
     const el = scrubRef.current;
     if (!el || !openId) return;
     const r = el.getBoundingClientRect();
-    setT(Math.min(1, Math.max(0, (e.clientX - r.left) / r.width)) * VID[openId].secs);
+    setT(Math.min(1, Math.max(0, (e.clientX - r.left) / r.width)) * (VID[openId].secs ?? 0));
   };
 
   const togglePlay = (e: React.MouseEvent) => {
     e.stopPropagation();
     if (!openId) return;
-    const secs = VID[openId].secs;
+    const secs = VID[openId].secs ?? 0;
     setT((prev) => (prev >= secs ? 0 : prev));
     setPlaying((p) => !p);
   };
@@ -554,7 +556,7 @@ export const RekomendasyiPage: React.FC = () => {
     const step = c ? c.offsetWidth + 16 : 240;
     const { min } = bounds();
     const out: number[] = [];
-    for (let i = 0; i < SHORTS.length; i++) {
+    for (let i = 0; i < SHORT_VIDEOS.length; i++) {
       const p = Math.max(min, -i * step);
       if (!out.includes(p)) out.push(p);
     }
@@ -747,20 +749,35 @@ export const RekomendasyiPage: React.FC = () => {
   // ---------- Turunan untuk render ----------
 
   const loc = useCallback(
-    (v: Video): Video =>
-      isId
-        ? {
-            ...v,
-            title: ID_VID[v.id].title,
-            notes: ID_VID[v.id].notes,
-            why: ID_VID[v.id].why,
-            items: v.items.map((it, i) => [it[0], ID_VID[v.id].items[i]] as [number, string]),
-          }
-        : v,
+    (v: Video): Video => {
+      const tr = ID_VID[v.id];
+      if (!isId || !tr) return v;
+      return {
+        ...v,
+        title: tr.title,
+        notes: tr.notes ?? v.notes,
+        why: tr.why ?? v.why,
+        items: v.items?.map((it, i) => [it[0], tr.items?.[i] ?? it[1]] as [number, string]),
+      };
+    },
     [isId]
   );
   const catL = (c: FilterId) => (isId ? CAT_ID[c] : CAT_EN[c]);
   const fmtL = (f: Video['format']) => (isId && f === 'Picks' ? 'Rekomendasi' : f);
+  /** Platform untuk konten ber-embed, kalau tidak format (Tutorial/Picks). */
+  const kindOf = (v: Video) => {
+    const e = EMBED[v.id];
+    return e ? PLATFORM[e.provider] : fmtL(v.format);
+  };
+  const dateL = (iso: string) =>
+    new Date(`${iso}T00:00:00`).toLocaleDateString(isId ? 'id-ID' : 'en-GB', {
+      day: 'numeric',
+      month: 'short',
+      year: 'numeric',
+    });
+  /** Angka yang ada untuk konten ini: tayangan, tanggal, atau durasi. */
+  const statOf = (v: Video) =>
+    v.views ? `${v.views} ${L.views}` : v.date ? dateL(v.date) : v.secs ? fmt(v.secs) : '';
 
   const list = filtered(filter);
   const counts = useMemo(
@@ -797,7 +814,7 @@ export const RekomendasyiPage: React.FC = () => {
       <span />
     </button>
   );
-  const frac = open ? Math.min(1, t / open.secs) : 0;
+  const frac = open && open.secs ? Math.min(1, t / open.secs) : 0;
 
   const copyEmail = () => {
     navigator.clipboard?.writeText(EMAIL).catch(() => {});
@@ -1062,27 +1079,43 @@ export const RekomendasyiPage: React.FC = () => {
                       boxShadow: hov ? '0 22px 44px -22px rgba(42,35,32,.5)' : '0 1px 0 rgba(42,35,32,.04)',
                     }}
                   >
-                    <span className="rk-chip rk-thumb__no">No. {VIDEO_NO[v.id]}</span>
-                    <span className="rk-chip rk-chip--dark rk-thumb__dur">{fmt(v.secs)}</span>
+                    <div className="rk-thumb__tl">
+                      <span className="rk-chip">No. {VIDEO_NO[v.id]}</span>
+                      {v.pinned && <span className="rk-chip rk-chip--accent">{L.pinned}</span>}
+                    </div>
+                    {statOf(v) && <span className="rk-chip rk-chip--dark rk-thumb__dur">{statOf(v)}</span>}
                     {!posterOf(v.thumb, EMBED[v.id]) && (
-                      <span className="rk-thumb__label">thumbnail · {v.thumbLabel}</span>
+                      <span className="rk-thumb__label">
+                        {v.thumbLabel ? `thumbnail · ${v.thumbLabel}` : `${kindOf(v)} · 9:16`}
+                      </span>
                     )}
-                    <div className="rk-thumb__preview" style={{ opacity: prev ? 1 : 0 }}>
-                      <span className="rk-chip">{L.previewing}</span>
-                    </div>
-                    <div className="rk-progress rk-thumb__bar" style={{ opacity: prev ? 1 : 0 }}>
-                      <div
-                        style={{
-                          transform: prev ? 'scaleX(1)' : 'scaleX(0)',
-                          transition: prev ? 'transform 10s linear' : 'transform 200ms ease-out',
-                        }}
-                      />
-                    </div>
+                    {/* Pratinjau "tanpa suara" hanya untuk pemutar simulasi; konten
+                        asli tidak punya pratinjau, jadi tidak dipura-purakan. */}
+                    {!EMBED[v.id] && (
+                      <>
+                        <div className="rk-thumb__preview" style={{ opacity: prev ? 1 : 0 }}>
+                          <span className="rk-chip">{L.previewing}</span>
+                        </div>
+                        <div className="rk-progress rk-thumb__bar" style={{ opacity: prev ? 1 : 0 }}>
+                          <div
+                            style={{
+                              transform: prev ? 'scaleX(1)' : 'scaleX(0)',
+                              transition: prev ? 'transform 10s linear' : 'transform 200ms ease-out',
+                            }}
+                          />
+                        </div>
+                      </>
+                    )}
+                    {EMBED[v.id] && (
+                      <span className="rk-thumb__play" aria-hidden="true">
+                        <PlayIcon />
+                      </span>
+                    )}
                   </div>
                   <div className="rk-card__meta">
                     <div className="rk-eyebrow">
                       {catL(v.cat)}
-                      <span>· {fmtL(v.format)}</span>
+                      {kindOf(v) && <span>· {kindOf(v)}</span>}
                     </div>
                     <h3 className="rk-card__title">{lv.title}</h3>
                   </div>
@@ -1135,13 +1168,13 @@ export const RekomendasyiPage: React.FC = () => {
             onPointerCancel={onUp}
           >
             <div ref={trackRef} className="rk-track">
-              {SHORTS.map((s, i) => {
+              {SHORT_VIDEOS.map((s, i) => {
                 const on = playingShort === i;
-                const se = SHORT_EMBED[i];
-                const title = isId ? SHORTS_ID[i] : s.title;
+                const se = EMBED[s.id];
+                const title = loc(s).title;
                 if (se && on) {
                   return (
-                    <div key={s.title} data-short={i} className="rk-short rk-short--embed">
+                    <div key={s.id} data-short={i} className="rk-short rk-short--embed">
                       <EmbedFrame embed={se} title={title} />
                       <button
                         type="button"
@@ -1158,25 +1191,25 @@ export const RekomendasyiPage: React.FC = () => {
                 }
                 return (
                   <div
-                    key={s.title}
+                    key={s.id}
                     data-short={i}
                     className="rk-short"
                     style={{ background: thumbBg(s.hue, posterOf(s.thumb, se)) }}
                   >
-                    <span className="rk-chip rk-short__platform">{s.platform}</span>
+                    <span className="rk-chip rk-short__platform">{kindOf(s)}</span>
                     {!posterOf(s.thumb, se) && <span className="rk-short__hint">vertical clip 9:16</span>}
                     <div className="rk-short__icon" style={{ opacity: on ? 0.0001 : 1 }}>
                       <div>{on ? <PauseIcon /> : <PlayIcon />}</div>
                     </div>
                     <div className="rk-short__foot">
                       <span className="rk-short__title">{title}</span>
-                      <span className="rk-short__dur">{fmt(s.secs)}</span>
+                      {statOf(s) && <span className="rk-short__dur">{statOf(s)}</span>}
                       {!se && (
                         <div className="rk-progress rk-short__bar">
                           <div
                             style={{
                               transform: on ? 'scaleX(1)' : 'scaleX(0)',
-                              transition: on ? `transform ${s.secs}s linear` : 'transform 200ms ease-out',
+                              transition: on ? `transform ${s.secs ?? 30}s linear` : 'transform 200ms ease-out',
                             }}
                           />
                         </div>
@@ -1287,7 +1320,7 @@ export const RekomendasyiPage: React.FC = () => {
               </div>
             ) : (
             <div className="rk-player" onClick={togglePlay} style={{ background: stripes(open.hue) }}>
-              <span className="rk-player__label">video · {open.thumbLabel}</span>
+              {open.thumbLabel && <span className="rk-player__label">video · {open.thumbLabel}</span>}
               {closeButton}
               <div className="rk-player__big" style={{ opacity: playing || t > 0 ? 0 : 1 }}>
                 <div>
@@ -1328,30 +1361,51 @@ export const RekomendasyiPage: React.FC = () => {
                   <span className="rk-scrub__knob" style={{ left: `${frac * 100}%` }} />
                 </div>
                 <span className="rk-controls__time">
-                  {fmt(t)} / {fmt(open.secs)}
+                  {fmt(t)} / {fmt(open.secs ?? 0)}
                 </span>
               </div>
             </div>
             )}
 
-            <div data-body="1" className="rk-detail">
+            <div data-body="1" className={`rk-detail${open.items?.length ? '' : ' rk-detail--single'}`}>
               <div className="rk-detail__main">
                 <div className="rk-eyebrow">
                   {catL(open.cat)}
                   <span>
-                    · {fmtL(open.format)} · No. {VIDEO_NO[open.id]}
+                    {kindOf(open) && `· ${kindOf(open)} `}· No. {VIDEO_NO[open.id]}
                   </span>
                 </div>
                 <h2 className="rk-detail__title">{open.title}</h2>
-                <p className="rk-detail__notes">{open.notes}</p>
-                <div className="rk-why">
-                  <span className="rk-why__label">{L.why}</span>
-                  <span className="rk-why__text">{open.why}</span>
-                </div>
+                {(statOf(open) || open.pinned) && (
+                  <div className="rk-detail__stats">
+                    {statOf(open) && <span>{statOf(open)}</span>}
+                    {open.pinned && <span className="rk-chip rk-chip--accent">{L.pinned}</span>}
+                  </div>
+                )}
+                {open.notes && <p className="rk-detail__notes">{open.notes}</p>}
+                {open.why && (
+                  <div className="rk-why">
+                    <span className="rk-why__label">{L.why}</span>
+                    <span className="rk-why__text">{open.why}</span>
+                  </div>
+                )}
+                {openEmbed && (
+                  <div className="rk-actions">
+                    <a
+                      href={openEmbed.pageUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="rk-btn-ghost rk-btn--sm"
+                    >
+                      {L.openOn} {PLATFORM[openEmbed.provider]} ↗
+                    </a>
+                  </div>
+                )}
                 <a href="#collab" className="rk-detail__cta" onClick={goCollab}>
                   {L.cta}
                 </a>
               </div>
+              {open.items?.length ? (
               <div className="rk-chapters">
                 <span className="rk-contact__label">
                   {open.format === 'Tutorial' ? L.chapters : L.picks}
@@ -1367,7 +1421,7 @@ export const RekomendasyiPage: React.FC = () => {
                         </div>
                       );
                     }
-                    const next = open.items[i + 1];
+                    const next = open.items?.[i + 1];
                     const active = openEmbed ? embedChapter === i : t >= start && (!next || t < next[0]);
                     return (
                       <button
@@ -1396,6 +1450,7 @@ export const RekomendasyiPage: React.FC = () => {
                   })}
                 </div>
               </div>
+              ) : null}
             </div>
           </div>
         </div>

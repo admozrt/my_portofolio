@@ -17,6 +17,8 @@ export interface Embed {
   vertical: boolean;
   /** Thumbnail yang bisa diambil tanpa API. Hanya YouTube yang menyediakan. */
   poster?: string;
+  /** Halaman video di platformnya, untuk tombol "Buka di …". */
+  pageUrl: string;
 }
 
 const YT_ID = /^[\w-]{11}$/;
@@ -53,6 +55,7 @@ export const parseEmbed = (raw?: string): Embed | null => {
       // enablejsapi=1 supaya halaman bisa mengirim perintah seekTo lewat postMessage.
       src: `https://www.youtube-nocookie.com/embed/${id}?autoplay=1&playsinline=1&rel=0&enablejsapi=1`,
       poster: `https://i.ytimg.com/vi/${id}/hqdefault.jpg`,
+      pageUrl: vertical ? `https://www.youtube.com/shorts/${id}` : `https://youtu.be/${id}`,
     };
   }
 
@@ -65,18 +68,22 @@ export const parseEmbed = (raw?: string): Embed | null => {
       id,
       vertical: true,
       src: `https://www.instagram.com/${kind}/${id}/embed`,
+      pageUrl: `https://www.instagram.com/${kind}/${id}/`,
     };
   }
 
   if (host === 'tiktok.com') {
+    // /@akun/video/ID (tautan bagikan) atau /embed/v2/ID, /embed/ID (kode embed).
+    const user = parts[0]?.startsWith('@') ? parts[0] : '@rekomendasyi';
     const i = parts.indexOf('video');
-    const id = i >= 0 ? parts[i + 1] : undefined;
+    const id = i >= 0 ? parts[i + 1] : parts[0] === 'embed' ? parts[parts.length - 1] : undefined;
     if (!id || !/^\d+$/.test(id)) return null;
     return {
       provider: 'tiktok',
       id,
       vertical: true,
       src: `https://www.tiktok.com/player/v1/${id}?autoplay=1&rel=0&description=0`,
+      pageUrl: `https://www.tiktok.com/${user}/video/${id}`,
     };
   }
 
