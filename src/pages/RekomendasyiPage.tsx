@@ -40,6 +40,17 @@ const EMAIL = 'pratiwi.syifa@gmail.com';
 const gmailUrl = (to: string, subject: string, body: string) =>
   `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(to)}` +
   `&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+const mailtoUrl = (to: string, subject: string, body: string) =>
+  `mailto:${to}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+
+/** Ponsel/tablet selalu punya aplikasi email bawaan, dan `mailto:` langsung
+ *  membukanya (Gmail app, Mail di iPhone, dst). iPadOS mengaku "Macintosh",
+ *  jadi dikenali dari layar sentuhnya. */
+const isMobileDevice = () => {
+  if (typeof navigator === 'undefined') return false;
+  const ua = navigator.userAgent;
+  return /Android|iPhone|iPad|iPod|Mobile/i.test(ua) || (/Macintosh/.test(ua) && navigator.maxTouchPoints > 1);
+};
 const SOCIALS = [
   { name: 'Instagram', handle: '@rekomendasyi', href: 'https://www.instagram.com/rekomendasyi' },
   { name: 'TikTok', handle: '@rekomendasyi', href: 'https://www.tiktok.com/@rekomendasyi' },
@@ -873,20 +884,23 @@ export const RekomendasyiPage: React.FC = () => {
 
   // Template kerja sama sesuai bahasa aktif; jenisnya diambil dari tiga
   // penawaran di halaman supaya selalu sama dengan yang tertulis.
-  const mailHref = gmailUrl(
-    EMAIL,
-    L.mailSubject,
-    [
-      L.mailHi,
-      '',
-      L.mailBrand,
-      `${L.mailType} (${[L.o1, L.o2, L.o3].map((x) => x.toLowerCase()).join(' / ')}):`,
-      L.mailLink,
-      L.mailTimeline,
-      '',
-      L.mailThanks,
-    ].join('\n')
-  );
+  const mailBody = [
+    L.mailHi,
+    '',
+    L.mailBrand,
+    `${L.mailType} (${[L.o1, L.o2, L.o3].map((x) => x.toLowerCase()).join(' / ')}):`,
+    L.mailLink,
+    L.mailTimeline,
+    '',
+    L.mailThanks,
+  ].join('\n');
+  // Ponsel: aplikasi email bawaan lewat mailto. Desktop: Gmail web, karena
+  // mailto sering diam saja di laptop tanpa aplikasi email.
+  const mobileMail = useMemo(isMobileDevice, []);
+  const mailHref = mobileMail
+    ? mailtoUrl(EMAIL, L.mailSubject, mailBody)
+    : gmailUrl(EMAIL, L.mailSubject, mailBody);
+  const mailTarget = mobileMail ? {} : { target: '_blank', rel: 'noopener noreferrer' };
 
   const copyEmail = () => {
     navigator.clipboard?.writeText(EMAIL).catch(() => {});
@@ -1396,11 +1410,11 @@ export const RekomendasyiPage: React.FC = () => {
           <div className="rk-contact">
             <div className="rk-stack" style={{ gap: 10 }}>
               <span className="rk-contact__label">Email</span>
-              <a href={mailHref} target="_blank" rel="noopener noreferrer" className="rk-contact__email">
+              <a href={mailHref} {...mailTarget} className="rk-contact__email">
                 {EMAIL}
               </a>
               <div className="rk-actions" style={{ gap: 10, marginTop: 6 }}>
-                <a href={mailHref} target="_blank" rel="noopener noreferrer" className="rk-btn-accent rk-btn--sm">
+                <a href={mailHref} {...mailTarget} className="rk-btn-accent rk-btn--sm">
                   {L.send}
                 </a>
                 <button type="button" className="rk-btn-ghost rk-btn--sm" onClick={copyEmail}>
