@@ -142,7 +142,8 @@ export const LANG = {
     o2:'Integrated pick', o2d:'Your product inside a recommendation list, with honest notes.',
     o3:'Short-form series', o3d:'Three to five vertical videos for Reels, TikTok and Shorts.',
     send:'Send an email', copy:'Copy address', copied:'Copied', reply:'I reply within two working days.',
-    why:"Why it's on the shelf", cta:"Want your product in a video like this? Let's talk →", chapters:'Chapters', picks:'The picks', menuOpen:'Open menu', menuClose:'Close menu', stop:'Stop video', openOn:'Open on', pinned:'Pinned', views:'views', recap:'Recap', watch:'Watch', play:'Play recap', pause:'Pause recap' },
+    why:"Why it's on the shelf", cta:"Want your product in a video like this? Let's talk →", chapters:'Chapters', picks:'The picks', menuOpen:'Open menu', menuClose:'Close menu', stop:'Stop video', openOn:'Open on', pinned:'Pinned', views:'views', recap:'Recap', watch:'Watch', play:'Play recap', pause:'Pause recap',
+    mailSubject:'Collaboration with Rekomendasyi', mailHi:'Hi Syifa,', mailBrand:'Brand / company:', mailType:'Type of collaboration', mailLink:'Product link:', mailTimeline:'Timeline:', mailThanks:'Thanks!' },
   id:{ navShelf:'Rak pilihan', navShorts:'Video pendek', workWithMe:'Ajak kerja sama', role:'kreator lifestyle',
     h1a:'Kuliner, makeup, dan tempat yang layak dicoba, ', h1b:'sudah kucoba dan kupilih', h1c:' untukmu.',
     heroP:'Aku membuat review jujur dan panduan singkat seputar kuliner, makeup, jalan-jalan, olahraga, dan produk yang layak dibeli, supaya kamu tidak perlu menebak-nebak.',
@@ -155,7 +156,8 @@ export const LANG = {
     o2:'Masuk daftar rekomendasi', o2d:'Produkmu tampil dalam daftar rekomendasi, dengan catatan yang jujur.',
     o3:'Seri video pendek', o3d:'Tiga sampai lima video vertikal untuk Reels, TikTok, dan Shorts.',
     send:'Kirim email', copy:'Salin alamat', copied:'Tersalin', reply:'Aku membalas dalam dua hari kerja.',
-    why:'Kenapa ada di rak ini', cta:'Mau produkmu ada di video seperti ini? Yuk ngobrol →', chapters:'Bab', picks:'Daftar pilihan', menuOpen:'Buka menu', menuClose:'Tutup menu', stop:'Hentikan video', openOn:'Buka di', pinned:'Disematkan', views:'x ditonton', recap:'Rekap', watch:'Tonton', play:'Putar rekap', pause:'Jeda rekap' },
+    why:'Kenapa ada di rak ini', cta:'Mau produkmu ada di video seperti ini? Yuk ngobrol →', chapters:'Bab', picks:'Daftar pilihan', menuOpen:'Buka menu', menuClose:'Tutup menu', stop:'Hentikan video', openOn:'Buka di', pinned:'Disematkan', views:'x ditonton', recap:'Rekap', watch:'Tonton', play:'Putar rekap', pause:'Jeda rekap',
+    mailSubject:'Kerja sama dengan Rekomendasyi', mailHi:'Halo Syifa,', mailBrand:'Nama brand / perusahaan:', mailType:'Jenis kerja sama', mailLink:'Link produk:', mailTimeline:'Timeline:', mailThanks:'Terima kasih!' },
 };
 
 export type Lang = keyof typeof LANG;

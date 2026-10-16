@@ -34,11 +34,16 @@ import './RekomendasyiPage.css';
 
 const FONTS_HREF =
   'https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&family=Hanken+Grotesk:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap';
-const EMAIL = 'hello@rekomendasyi.com';
+const EMAIL = 'pratiwi.syifa@gmail.com';
+/** Jendela tulis Gmail web. Dipakai sebagai ganti `mailto:`, yang diam saja
+ *  di perangkat tanpa aplikasi email bawaan (umum di laptop Windows). */
+const gmailUrl = (to: string, subject: string, body: string) =>
+  `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(to)}` +
+  `&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 const SOCIALS = [
   { name: 'Instagram', handle: '@rekomendasyi', href: 'https://www.instagram.com/rekomendasyi' },
   { name: 'TikTok', handle: '@rekomendasyi', href: 'https://www.tiktok.com/@rekomendasyi' },
-  { name: 'YouTube', handle: '@nursyifaprtw', href: 'https://www.youtube.com/@nursyifaprtw' },
+  { name: 'YouTube', handle: '@rekomendasyi', href: 'https://www.youtube.com/@rekomendasyi' },
 ];
 const REEL_SECS = 45;
 const EASE_DRAWER = 'cubic-bezier(.32,.72,0,1)';
@@ -866,6 +871,23 @@ export const RekomendasyiPage: React.FC = () => {
   );
   const frac = open && open.secs ? Math.min(1, t / open.secs) : 0;
 
+  // Template kerja sama sesuai bahasa aktif; jenisnya diambil dari tiga
+  // penawaran di halaman supaya selalu sama dengan yang tertulis.
+  const mailHref = gmailUrl(
+    EMAIL,
+    L.mailSubject,
+    [
+      L.mailHi,
+      '',
+      L.mailBrand,
+      `${L.mailType} (${[L.o1, L.o2, L.o3].map((x) => x.toLowerCase()).join(' / ')}):`,
+      L.mailLink,
+      L.mailTimeline,
+      '',
+      L.mailThanks,
+    ].join('\n')
+  );
+
   const copyEmail = () => {
     navigator.clipboard?.writeText(EMAIL).catch(() => {});
     setCopied(true);
@@ -1374,11 +1396,11 @@ export const RekomendasyiPage: React.FC = () => {
           <div className="rk-contact">
             <div className="rk-stack" style={{ gap: 10 }}>
               <span className="rk-contact__label">Email</span>
-              <a href={`mailto:${EMAIL}`} className="rk-contact__email">
+              <a href={mailHref} target="_blank" rel="noopener noreferrer" className="rk-contact__email">
                 {EMAIL}
               </a>
               <div className="rk-actions" style={{ gap: 10, marginTop: 6 }}>
-                <a href={`mailto:${EMAIL}`} className="rk-btn-accent rk-btn--sm">
+                <a href={mailHref} target="_blank" rel="noopener noreferrer" className="rk-btn-accent rk-btn--sm">
                   {L.send}
                 </a>
                 <button type="button" className="rk-btn-ghost rk-btn--sm" onClick={copyEmail}>
