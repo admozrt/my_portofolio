@@ -45,7 +45,7 @@ const id = {
 
   projects: {
     heading: 'Projek',
-    intro: 'Berikut beberapa projek yang sudah berjalan. Ketuk kartu untuk lihat detail.',
+    intro: 'Berikut beberapa projek yang sudah berjalan.Geser dan Ketuk kartu untuk lihat detail.',
     featured: 'Projek utama',
     other: 'Projek lain',
     slideLeft: (label: string) => `Geser ${label} ke kiri`,
@@ -199,7 +199,7 @@ const en: typeof id = {
 
   projects: {
     heading: 'Projects',
-    intro: 'A few projects that are already running. Tap a card to see the details.',
+    intro: 'A few projects that are already running. Slide and Tap a card to see the details.',
     featured: 'Featured projects',
     other: 'Other projects',
     slideLeft: (label: string) => `Scroll ${label} left`,
