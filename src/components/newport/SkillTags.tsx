@@ -104,11 +104,18 @@ export const SkillTags: React.FC = () => {
                         role="img"
                         aria-label={t.skills.levelAria(skill.name, skill.level)}
                       >
+                        {/*
+                          Margin hanya atas-bawah. Bar mulai dari lebar 0, jadi
+                          elemennya berupa titik di sisi kiri tag; dengan margin
+                          -40px di semua sisi, titik itu pada kolom kiri di ponsel
+                          (±28px dari tepi) tidak pernah dianggap terlihat dan
+                          barnya tidak pernah terisi.
+                        */}
                         <motion.span
                           className="block h-full bg-zine-pen dark:bg-zine-pen-dark"
                           initial={reduce ? { width: `${skill.level}%` } : { width: 0 }}
                           whileInView={{ width: `${skill.level}%` }}
-                          viewport={{ once: true, margin: '-40px' }}
+                          viewport={{ once: true, margin: '-40px 0px' }}
                           transition={{ duration: 0.9, delay: i * 0.03, ease: EASE }}
                         />
                       </span>
