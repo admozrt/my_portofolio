@@ -73,6 +73,29 @@ export const projects: Project[] = [
     ]
   },
   {
+    id: 11,
+    title: 'Rekrutmen BLUD RSJ Sambang Lihum',
+    description: 'Aplikasi web rekrutmen pegawai BLUD Non-PNS RSJ Sambang Lihum. Pelamar melihat formasi, persyaratan, dan jadwal seleksi di satu tempat, lalu mencari sendiri hasil setiap tahap — seleksi administrasi, ujian, hingga wawancara — cukup dengan nama atau nomor urut. Berkas yang tidak memenuhi syarat ditampilkan beserta alasannya, sehingga proses seleksi lebih terbuka dan pertanyaan berulang ke panitia berkurang.',
+    technologies: ['Laravel', 'React', 'TypeScript', 'shadcn/ui', 'Tailwind', 'MySQL'],
+    link: 'https://rekrutmen.sambanglihum.com',
+    gradient: 'from-teal-500 via-emerald-600 to-cyan-600',
+    logo: '/images/projects/logos/logo-rsj.png',
+    featured: true,
+    status: 'sedang_berjalan',
+    domain: 'Kesehatan & Pemerintahan',
+    monitorStatus: 'LIVE',
+    metrics: [
+      { label: 'Pendaftar', value: '1.123' },
+      { label: 'Formasi', value: '18' },
+      { label: 'Lulus Administrasi', value: '592' }
+    ],
+    logEntries: [
+      { timestamp: '09:00', message: 'Hasil seleksi administrasi diumumkan' },
+      { timestamp: '09:04', message: 'Nomor ujian peserta diterbitkan' },
+      { timestamp: '09:10', message: 'Jadwal wawancara dipublikasikan' }
+    ]
+  },
+  {
     id: 10,
     title: 'Core POS by Dirakhmat',
     description: 'Sistem kasir dinamis multi-sektor — satu platform yang dikonfigurasi (bukan dibangun ulang) untuk Retail, F&B, Jasa, Apotek, dan Koperasi. RBAC granular, stok FEFO, struk digital, dan dashboard real-time.',

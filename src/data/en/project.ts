@@ -57,6 +57,22 @@ export const projectsEn: Partial<Record<number, Partial<Project>>> = {
       { timestamp: '10:12', message: 'Visit statistics synced' },
     ],
   },
+  11: {
+    title: 'BLUD Recruitment Portal — RSJ Sambang Lihum',
+    description:
+      'A web application for recruiting non-civil-servant BLUD staff at RSJ Sambang Lihum psychiatric hospital. Applicants see positions, requirements, and the selection schedule in one place, then look up their own result at every stage — document screening, written test, and interview — by name or registration number. Applications that fail screening are shown with the reason, making the process more transparent and cutting repeat questions to the committee.',
+    domain: 'Healthcare & Government',
+    metrics: [
+      { label: 'Applicants', value: '1,123' },
+      { label: 'Positions', value: '18' },
+      { label: 'Passed Screening', value: '592' },
+    ],
+    logEntries: [
+      { timestamp: '09:00', message: 'Document screening results published' },
+      { timestamp: '09:04', message: 'Exam numbers issued' },
+      { timestamp: '09:10', message: 'Interview schedule published' },
+    ],
+  },
   10: {
     description:
       'A dynamic multi-sector point-of-sale system — one platform that is configured, not rebuilt, for Retail, F&B, Services, Pharmacy, and Cooperatives. Granular RBAC, FEFO stock, digital receipts, and a real-time dashboard.',
