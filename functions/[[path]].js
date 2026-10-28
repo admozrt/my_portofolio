@@ -114,6 +114,17 @@ const ROUTES = {
     url: BASE + "/saufi-afifah",
     siteName: "Undangan Pernikahan",
   },
+  weddingElfima: {
+    match: (path) => /elfima/i.test(path) || /harris/i.test(path),
+    title: "Undangan Pernikahan Elfima & Harris 💍",
+    description:
+      "Dengan memohon rahmat Allah, kami mengundang Anda di hari bahagia kami. Sabtu, 12 Desember 2026 · Griphta Hotel, Kudus",
+    image: BASE + "/elfima/preview.jpg",
+    imageW: "1200",
+    imageH: "630",
+    url: BASE + "/elfima-harris",
+    siteName: "Undangan Pernikahan",
+  },
   projectWedding: {
     match: (path) => /project-wedding/i.test(path),
     title: "Undangan Pernikahan Digital - Projek Adi Rakhmatullah Ma'arif",

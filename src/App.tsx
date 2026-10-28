@@ -13,6 +13,7 @@ import { WeddingPageRezaKirana } from './pages/wedding/WeddingPageRezaKirana';
 import { WeddingPageBagasNadira } from './pages/wedding/WeddingPageBagasNadira';
 import { WeddingPageWisnuRatih } from './pages/wedding/WeddingPageWisnuRatih';
 import { WeddingPageSaufiAfifah } from './pages/wedding/WeddingPageSaufiAfifah';
+import { WeddingPageElfimaHarris } from './pages/wedding/WeddingPageElfimaHarris';
 import { WeddingProjectsPage } from './pages/WeddingProjectsPage';
 import { InstitutionalSolutionsPage } from './pages/InstitutionalSolutionsPage';
 import { CorePOSPage } from './pages/CorePOSPage';
@@ -79,6 +80,10 @@ const App: React.FC = () => {
         {/* Slug lama sempat masuk sitemap sebelum data aslinya turun, jadi
             dialihkan, bukan dihapus. */}
         <Route path="/aruna-damar" element={<Navigate to="/saufi-afifah" replace />} />
+
+        {/* Undangan Pernikahan (taman mawar): /elfima-harris?to=NamaPengunjung */}
+        <Route path="/elfima-harris" element={<WeddingPageElfimaHarris />} />
+        <Route path="/harris-elfima" element={<Navigate to="/elfima-harris" replace />} />
 
         {/* Showcase proyek undangan pernikahan */}
         <Route path="/project-wedding" element={<WeddingProjectsPage />} />
