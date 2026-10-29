@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { SEOHead } from '../../components/ui/SEOHead';
 import './WeddingPageElfimaHarris.css';
 
@@ -137,6 +137,11 @@ async function fetchWishes(): Promise<Wish[] | null> {
   }
 }
 
+/* Efek blur hanya di layar >= 768px; di ponsel blur per frame pada gambar
+   selebar layar menghabiskan memori GPU (lihat catatan animasi di bawah). */
+const blurOk = () => window.innerWidth >= 768;
+const fx = (px: number) => (blurOk() ? { filter: `blur(${px}px)` } : {});
+
 const pad = (n: number) => String(n).padStart(2, '0');
 
 function countdown(now: number) {
@@ -200,110 +205,172 @@ export const WeddingPageElfimaHarris: React.FC = () => {
     []
   );
 
-  /* ── Font, hitung mundur, data ucapan ── */
+  /* ── Hitung mundur, data ucapan ── */
   useEffect(() => {
+    const timer = window.setInterval(() => setNow(Date.now()), 1000);
+    fetchWishes().then((list) => list && list.length && setWishes(list));
+    return () => clearInterval(timer);
+  }, []);
+
+  /* ── Animasi ──
+
+     Tiga aturan yang menghilangkan glitch di ponsel (terlihat di rekaman
+     layar Chrome Android: pemandangan hilang, potongan kotak muncul
+     belakangan, tombol telat tampil):
+
+     1. Efek `filter: blur()` hanya di layar >= 768px. Blur per frame pada
+        gambar selebar layar menghabiskan memori GPU ponsel; Chrome lalu gagal
+        menggambar sebagian tile dan layar jadi bolong.
+     2. Animasi masuk memakai `fill: 'backwards'`: keadaan awal ditahan selama
+        jeda, dan setelah selesai efeknya dilepas sehingga elemen kembali ke
+        gaya CSS biasa. `fill: 'both'` menahan layer komposit selamanya.
+     3. Keadaan awal dipasang di useLayoutEffect (sebelum layar pertama
+        digambar), jadi tidak ada kedip "tampil penuh lalu hilang". */
+
+  const sway = useCallback(
+    (sel: string) => {
+      if (reduceRef.current) return;
+      q<HTMLImageElement>(sel).forEach((el, i) => {
+        if (el.dataset.swaying) return;
+        el.dataset.swaying = '1';
+        const [dx] = DIRS[el.dataset.sway as Corner];
+        el.animate(
+          [{ transform: 'rotate(0deg) scale(1)' }, { transform: `rotate(${dx * -1.8}deg) scale(1.025)` }],
+          { duration: 5200 + (i % 4) * 900, iterations: Infinity, direction: 'alternate', easing: 'ease-in-out', delay: -(i * 700) }
+        );
+      });
+    },
+    [q]
+  );
+
+  const reveal = useCallback((el: HTMLElement, delay: number): Animation => {
+    if (reduceRef.current) {
+      return el.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 300, delay: Math.min(delay, 300), fill: 'backwards' });
+    }
+    if (el.dataset.r === 'write' || el.dataset.ct === 'write') {
+      return el.animate(
+        [
+          { clipPath: 'inset(-20% 100% -20% 0)', opacity: 0.3 },
+          { clipPath: 'inset(-20% 0% -20% 0)', opacity: 1 },
+        ],
+        { duration: 1500, delay, easing: EIO, fill: 'backwards' }
+      );
+    }
+    return el.animate(
+      [
+        { opacity: 0, transform: 'translateY(14px)', ...fx(6) },
+        { opacity: 1, transform: 'none', ...(blurOk() ? { filter: 'blur(0px)' } : {}) },
+      ],
+      { duration: 900, delay, easing: EO, fill: 'backwards' }
+    );
+  }, []);
+
+  /* Sampul. Keadaan awal dipasang sebelum paint dan animasinya dijeda sampai
+     pemandangan, bunga, dan font siap — supaya pemandangan tidak muncul
+     belakangan di tengah animasi dan nama tidak berganti font sambil
+     ditulis. Paling lama ditunggu 2,5 detik. */
+  useLayoutEffect(() => {
     reduceRef.current = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const r = reduceRef.current;
+
     const link = document.createElement('link');
     link.rel = 'stylesheet';
     link.href = FONTS_HREF;
-    document.head.appendChild(link);
-    const timer = window.setInterval(() => setNow(Date.now()), 1000);
-    fetchWishes().then((list) => list && list.length && setWishes(list));
-    return () => {
-      link.remove();
-      clearInterval(timer);
-    };
-  }, []);
-
-  /* ── Animasi masuk ── */
-
-  const sway = useCallback(() => {
-    if (reduceRef.current) return;
-    q<HTMLImageElement>('[data-sway]').forEach((el, i) => {
-      if (el.dataset.swaying) return;
-      el.dataset.swaying = '1';
-      const [dx] = DIRS[el.dataset.sway as Corner];
-      el.animate(
-        [{ transform: 'rotate(0deg) scale(1)' }, { transform: `rotate(${dx * -1.8}deg) scale(1.025)` }],
-        { duration: 5200 + (i % 4) * 900, iterations: Infinity, direction: 'alternate', easing: 'ease-in-out', delay: -(i * 700) }
-      );
+    const cssLoaded = new Promise<void>((res) => {
+      link.onload = () => res();
+      link.onerror = () => res();
     });
-  }, [q]);
+    document.head.appendChild(link);
 
-  const reveal = useCallback((el: HTMLElement, delay: number) => {
-    if (reduceRef.current) {
-      el.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 300, delay: Math.min(delay, 300), fill: 'both' });
-      return;
-    }
-    if (el.dataset.r === 'write' || el.dataset.ct === 'write') {
-      el.animate(
-        [
-          { clipPath: 'inset(-20% 100% -20% 0)', opacity: 0.3, filter: 'blur(2px)' },
-          { clipPath: 'inset(-20% 0% -20% 0)', opacity: 1, filter: 'blur(0px)' },
-        ],
-        { duration: 1500, delay, easing: EIO, fill: 'both' }
-      );
-    } else {
-      el.animate(
-        [
-          { opacity: 0, transform: 'translateY(14px)', filter: 'blur(6px)' },
-          { opacity: 1, transform: 'none', filter: 'blur(0px)' },
-        ],
-        { duration: 900, delay, easing: EO, fill: 'both' }
-      );
-    }
-  }, []);
-
-  /* Sampul: pemandangan mendekat dari buram, bunga masuk dari luar layar,
-     lalu teks muncul satu per satu. */
-  useEffect(() => {
-    const r = reduceRef.current;
-    const raf = requestAnimationFrame(() => {
-      sway();
-      q('[data-cv="scene"]').forEach((el) =>
+    const anims: Animation[] = [];
+    q('[data-cv="scene"]').forEach((el) =>
+      anims.push(
         el.animate(
           [
-            { transform: 'scale(1.16)', filter: 'blur(10px)', opacity: 0.5 },
-            { transform: 'scale(1)', filter: 'blur(0px)', opacity: 1 },
+            { transform: 'scale(1.16)', opacity: 0, ...fx(10) },
+            { transform: 'scale(1)', opacity: 1, ...(blurOk() ? { filter: 'blur(0px)' } : {}) },
           ],
-          { duration: r ? 400 : 2600, easing: EO, fill: 'both' }
+          { duration: r ? 400 : 2600, easing: EO, fill: 'backwards' }
         )
-      );
-      CORNERS.forEach((k, i) => {
-        const [x, y] = DIRS[k];
-        q(`[data-fl="cv-${k}"]`).forEach((el) =>
+      )
+    );
+    CORNERS.forEach((k, i) => {
+      const [x, y] = DIRS[k];
+      q(`[data-fl="cv-${k}"]`).forEach((el) =>
+        anims.push(
           el.animate(
             [
-              { transform: `translate(${x * 28}%, ${y * 22}%) rotate(${x * y * 9}deg) scale(.92)`, opacity: 0, filter: 'blur(6px)' },
-              { transform: 'none', opacity: 1, filter: 'blur(0px)' },
+              { transform: `translate(${x * 28}%, ${y * 22}%) rotate(${x * y * 9}deg) scale(.92)`, opacity: 0, ...fx(6) },
+              { transform: 'none', opacity: 1, ...(blurOk() ? { filter: 'blur(0px)' } : {}) },
             ],
-            { duration: r ? 300 : 1900, delay: r ? 0 : 350 + i * 150, easing: EO, fill: 'both' }
+            { duration: r ? 300 : 1900, delay: r ? 0 : 350 + i * 150, easing: EO, fill: 'backwards' }
           )
-        );
-      });
-      q('[data-ct]').forEach((el, i) => reveal(el, 1100 + i * 110));
+        )
+      );
     });
-    return () => cancelAnimationFrame(raf);
+    q('[data-ct]').forEach((el, i) => anims.push(reveal(el, 1100 + i * 110)));
+    anims.forEach((a) => a.pause());
+
+    let started = false;
+    const start = () => {
+      if (started) return;
+      started = true;
+      anims.forEach((a) => a.play());
+      // Bunga sampul mulai bergoyang setelah selesai masuk.
+      window.setTimeout(() => sway('[data-fl^="cv-"] [data-sway]'), r ? 0 : 2500);
+    };
+    const images = q<HTMLImageElement>('.eh-cover img').map((img) => img.decode().catch(() => undefined));
+    const fonts = cssLoaded.then(() =>
+      document.fonts
+        ? Promise.all([
+            document.fonts.load('400 48px "Pinyon Script"'),
+            document.fonts.load('500 17px "Cormorant Garamond"'),
+          ]).catch(() => undefined)
+        : undefined
+    );
+    const timeout = window.setTimeout(start, 2500);
+    Promise.all([...images, fonts]).then(start);
+
+    return () => {
+      clearTimeout(timeout);
+      started = true;
+      // StrictMode menjalankan efek ini dua kali; animasi yang dijeda dari
+      // putaran pertama harus dibatalkan atau elemennya tertahan tersembunyi.
+      anims.forEach((a) => a.cancel());
+      link.remove();
+    };
   }, [q, reveal, sway]);
 
-  /* Section undangan: tiap elemen [data-r] muncul saat section-nya masuk layar. */
+  /* Section undangan: section diberi `data-revealed` saat masuk layar. CSS
+     menyembunyikan [data-r] di section yang belum, jadi tidak ada kedip. */
   useEffect(() => {
     if (!opened) return;
     const sc = scrollRef.current;
     if (!sc) return;
+    const showSection = (target: HTMLElement) => {
+      if (target.dataset.revealed) return;
+      target.dataset.revealed = '1';
+      Array.from(target.querySelectorAll<HTMLElement>('[data-r]')).forEach((el, i) => reveal(el, 80 + i * 80));
+    };
+    const sections = q('[data-sec]');
+    // Section pertama langsung dimunculkan saat dibuka, tidak menunggu
+    // observer — kalau observer telat, tamu tidak melihat layar kosong.
+    if (sections[0]) showSection(sections[0]);
+    if (typeof IntersectionObserver === 'undefined') {
+      sections.forEach(showSection);
+      return;
+    }
     const io = new IntersectionObserver(
-      (entries) =>
-        entries.forEach((e) => {
-          const target = e.target as HTMLElement;
-          if (!e.isIntersecting || target.dataset.revealed) return;
-          target.dataset.revealed = '1';
-          Array.from(target.querySelectorAll<HTMLElement>('[data-r]')).forEach((el, i) => reveal(el, 80 + i * 80));
-        }),
+      (entries) => entries.forEach((e) => e.isIntersecting && showSection(e.target as HTMLElement)),
       { root: sc, threshold: 0.25 }
     );
-    q('[data-sec]').forEach((s) => io.observe(s));
-    sway();
-    return () => io.disconnect();
+    sections.forEach((s) => io.observe(s));
+    // Bunga kolom bergoyang setelah animasi masuknya selesai, bukan bersamaan.
+    const t = window.setTimeout(() => sway('[data-fl^="mf-"] [data-sway], [data-fl^="as-"] [data-sway]'), 2600);
+    return () => {
+      io.disconnect();
+      clearTimeout(t);
+    };
   }, [opened, q, reveal, sway]);
 
   const open = () => {
@@ -314,8 +381,8 @@ export const WeddingPageElfimaHarris: React.FC = () => {
     q('[data-cv="text"]').forEach((el) =>
       el.animate(
         [
-          { opacity: 1, transform: 'none', filter: 'blur(0px)' },
-          { opacity: 0, transform: 'translateY(-12px)', filter: 'blur(6px)' },
+          { opacity: 1, transform: 'none' },
+          { opacity: 0, transform: 'translateY(-12px)' },
         ],
         { duration: 380, easing: EO, fill: 'forwards' }
       )
@@ -332,8 +399,8 @@ export const WeddingPageElfimaHarris: React.FC = () => {
     q('[data-cv="scene"]').forEach((el) =>
       el.animate(
         [
-          { transform: 'scale(1)', opacity: 1, filter: 'blur(0px)' },
-          { transform: 'scale(2.4)', opacity: 0, filter: 'blur(4px)' },
+          { transform: 'scale(1)', opacity: 1, ...(blurOk() ? { filter: 'blur(0px)' } : {}) },
+          { transform: 'scale(2.4)', opacity: 0, ...fx(4) },
         ],
         { duration: r ? 300 : 1450, easing: EIO, fill: 'forwards' }
       )
@@ -724,11 +791,15 @@ export const WeddingPageElfimaHarris: React.FC = () => {
             ))}
           </nav>
 
-          <div className="eh-petals" aria-hidden="true">
-            {petals.map((style, i) => (
-              <div key={i} className="eh-petal" style={style} />
-            ))}
-          </div>
+          {/* Kelopak baru dipasang setelah sampul dibuka: di belakang sampul
+              mereka tidak terlihat tapi tetap memakan GPU. */}
+          {opened && (
+            <div className="eh-petals" aria-hidden="true">
+              {petals.map((style, i) => (
+                <div key={i} className="eh-petal" style={style} />
+              ))}
+            </div>
+          )}
         </main>
 
         {/* ── Sampul ── */}
