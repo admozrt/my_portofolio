@@ -13,12 +13,19 @@ import { WeddingPageRezaKirana } from './pages/wedding/WeddingPageRezaKirana';
 import { WeddingPageBagasNadira } from './pages/wedding/WeddingPageBagasNadira';
 import { WeddingPageWisnuRatih } from './pages/wedding/WeddingPageWisnuRatih';
 import { WeddingPageSaufiAfifah } from './pages/wedding/WeddingPageSaufiAfifah';
-import { WeddingPageElfimaHarris } from './pages/wedding/WeddingPageElfimaHarris';
+import { WeddingPageFadilaSyarief } from './pages/wedding/WeddingPageFadilaSyarief';
 import { WeddingProjectsPage } from './pages/WeddingProjectsPage';
 import { InstitutionalSolutionsPage } from './pages/InstitutionalSolutionsPage';
 import { CorePOSPage } from './pages/CorePOSPage';
 import { NewPortPage } from './pages/NewPortPage';
 import { RekomendasyiPage } from './pages/RekomendasyiPage';
+
+/* Pengalihan yang membawa query & hash. <Navigate to="/x"> polos membuang
+   `?to=NamaTamu`, padahal link undangan lama yang tersebar memuat nama tamu. */
+const RedirectKeepQuery: React.FC<{ to: string }> = ({ to }) => {
+  const { search, hash } = useLocation();
+  return <Navigate to={`${to}${search}${hash}`} replace />;
+};
 
 const ScrollToTop: React.FC = () => {
   const { pathname, hash } = useLocation();
@@ -81,9 +88,12 @@ const App: React.FC = () => {
             dialihkan, bukan dihapus. */}
         <Route path="/aruna-damar" element={<Navigate to="/saufi-afifah" replace />} />
 
-        {/* Undangan Pernikahan (taman mawar): /elfima-harris?to=NamaPengunjung */}
-        <Route path="/elfima-harris" element={<WeddingPageElfimaHarris />} />
-        <Route path="/harris-elfima" element={<Navigate to="/elfima-harris" replace />} />
+        {/* Undangan Pernikahan (taman mawar): /fadila-syarief?to=NamaPengunjung */}
+        <Route path="/fadila-syarief" element={<WeddingPageFadilaSyarief />} />
+        <Route path="/syarief-fadila" element={<RedirectKeepQuery to="/fadila-syarief" />} />
+        {/* Halaman ini awalnya untuk Elfima & Harris; link lama dialihkan. */}
+        <Route path="/elfima-harris" element={<RedirectKeepQuery to="/fadila-syarief" />} />
+        <Route path="/harris-elfima" element={<RedirectKeepQuery to="/fadila-syarief" />} />
 
         {/* Showcase proyek undangan pernikahan */}
         <Route path="/project-wedding" element={<WeddingProjectsPage />} />

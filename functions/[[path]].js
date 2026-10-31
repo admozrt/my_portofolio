@@ -114,15 +114,17 @@ const ROUTES = {
     url: BASE + "/saufi-afifah",
     siteName: "Undangan Pernikahan",
   },
-  weddingElfima: {
-    match: (path) => /elfima/i.test(path) || /harris/i.test(path),
-    title: "Undangan Pernikahan Elfima & Harris 💍",
+  weddingFadila: {
+    // Nama lama (Elfima & Harris) ikut dicocokkan: alamat lamanya dialihkan ke sini.
+    match: (path) =>
+      /fadila/i.test(path) || /syarief/i.test(path) || /elfima/i.test(path) || /harris/i.test(path),
+    title: "Undangan Pernikahan Fadila & Syarief 💍",
     description:
-      "Dengan memohon rahmat Allah, kami mengundang Anda di hari bahagia kami. Sabtu, 12 Desember 2026 · Griphta Hotel, Kudus",
-    image: BASE + "/elfima/preview.jpg",
+      "Dengan memohon rahmat Allah, kami mengundang Anda di hari bahagia kami. Akad Sabtu, 28 November 2026 · Resepsi Minggu, 29 November 2026 · Cempaka Hulu, Banjarbaru",
+    image: BASE + "/fadila/preview.jpg",
     imageW: "1200",
     imageH: "630",
-    url: BASE + "/elfima-harris",
+    url: BASE + "/fadila-syarief",
     siteName: "Undangan Pernikahan",
   },
   projectWedding: {

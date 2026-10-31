@@ -1,5 +1,5 @@
 /*
- * Undangan Elfima & Harris. Mobile-first: aturan dasar = ponsel (sesuai
+ * Undangan Fadila & Syarief. Mobile-first: aturan dasar = ponsel (sesuai
  * desain), lalu @media 768px (tablet) dan 1200px (desktop) melebarkannya.
  * Semua kelas diawali `eh-`; tidak ada aturan global.
  */
@@ -546,6 +546,62 @@
   display: none;
 }
 
+/* ─── Tombol musik (pola dari undangan Tito) ─────────────────────── */
+
+/* Ponsel/tablet: di atas menu pil bawah supaya tidak menutupinya. */
+.eh-music {
+  position: absolute;
+  right: 14px;
+  bottom: 72px;
+  z-index: 25;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid rgba(155, 68, 88, 0.22);
+  background: rgba(255, 250, 248, 0.86);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 6px 18px rgba(120, 60, 70, 0.16);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  cursor: pointer;
+  animation: eh-music-in 500ms ease 900ms both;
+  transition: transform 160ms ease-out, border-color 200ms ease;
+}
+.eh-music:hover {
+  transform: scale(1.06);
+  border-color: var(--eh-rose);
+}
+.eh-music:active {
+  transform: scale(0.95);
+}
+.eh-music span {
+  width: 3px;
+  height: 8px;
+  border-radius: 2px;
+  background: var(--eh-rose);
+  transition: height 0.2s ease;
+}
+.eh-music.is-playing span {
+  animation: eh-music-bar 0.9s ease-in-out infinite;
+}
+.eh-music.is-playing span:nth-child(2) {
+  animation-delay: 0.15s;
+}
+.eh-music.is-playing span:nth-child(3) {
+  animation-delay: 0.3s;
+}
+@keyframes eh-music-bar {
+  0%, 100% { height: 6px; }
+  50% { height: 16px; }
+}
+@keyframes eh-music-in {
+  from { opacity: 0; transform: scale(0.8); }
+  to { opacity: 1; transform: none; }
+}
+
 /* ─── Kelopak ────────────────────────────────────────────────────── */
 
 .eh-petals {
@@ -1004,9 +1060,19 @@
   .eh-nav button.is-on .eh-nav__label {
     color: var(--eh-rose);
   }
+  .eh-music {
+    right: 22px;
+    bottom: 22px;
+    width: 44px;
+    height: 44px;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .eh-music,
+  .eh-music.is-playing span {
+    animation: none;
+  }
   .eh-petals {
     display: none;
   }

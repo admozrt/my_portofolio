@@ -1,9 +1,9 @@
 import React, { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { SEOHead } from '../../components/ui/SEOHead';
-import './WeddingPageElfimaHarris.css';
+import './WeddingPageFadilaSyarief.css';
 
 /*
-  Undangan Elfima & Harris — diterjemahkan dari desain Claude Design
+  Undangan Fadila & Syarief — diterjemahkan dari desain Claude Design
   "Undangan Pernikahan". Desain aslinya hanya kolom ponsel (maks 440px);
   di sini dibuat mobile-first lalu melebar:
 
@@ -13,55 +13,67 @@ import './WeddingPageElfimaHarris.css';
     >= 1200   layar dibagi: panel pemandangan tetap di kiri (nama, tanggal,
               hitung mundur), undangan bergulir di kanan.
 
-  Sampul selalu layar penuh. Semua aset di public/elfima/.
+  Sampul selalu layar penuh. Semua aset di public/fadila/.
+
+  Halaman ini awalnya dibuat untuk Elfima & Harris (/elfima-harris); alamat
+  lama itu dialihkan ke /fadila-syarief di App.tsx.
 */
 
 /* ─── CONFIG ──────────────────────────────────────────────────────── */
 
-/* Kudus = WIB (UTC+7). */
-const WEDDING_DATE = new Date('2026-12-12T09:00:00+07:00');
+/* Banjarbaru = WITA (UTC+8). Hitung mundur menuju akad. */
+const WEDDING_DATE = new Date('2026-11-28T08:00:00+08:00');
 
-const BRIDE_FIRST = 'Elfima';
-const GROOM_FIRST = 'Harris';
-const BRIDE_FULL = 'dr. Elfima Aditya Utami';
-const GROOM_FULL = 'Muhammad Harris, S.H';
-const BRIDE_PARENTS = ['Putri kedua dari', 'Bapak Drs. Supriyadi M.Pd (alm)', '& Dra. Sri Mulyati'];
-const GROOM_PARENTS = ['Putra kedua dari', 'Bapak & Ibu Hj. Siti Aminah', 'Sembiring, S.Pd.I'];
+const BRIDE_FIRST = 'Fadila';
+const GROOM_FIRST = 'Syarief';
+const BRIDE_FULL = 'Nur Fadila Amelia';
+const GROOM_FULL = 'Ahmad Syarief';
+const BRIDE_PARENTS = ['Putri pertama dari', 'Bapak Muhammad Suhaili', '& Ibu Nor Hayati'];
+const GROOM_PARENTS = ['Putra pertama dari', 'Bapak H. Sarwani', '& Ibu Hj. Hanifah (almh)'];
 
-/* Isi tanpa "@". Kosong = tombol Instagram disembunyikan; desain aslinya
-   masih menautkan ke instagram.com, yang tidak berguna bagi tamu. */
+/* Isi tanpa "@". Kosong = tombol Instagram disembunyikan. */
 const BRIDE_IG = '';
 const GROOM_IG = '';
 
-const DATE_LABEL = 'Sabtu, 12 Desember 2026';
-const DATE_SHORT = '12 · 12 · 2026';
+const DATE_LABEL = 'Sabtu, 28 November 2026';
+const DATE_SHORT = '28 · 11 · 2026';
 
-const VENUE_NAME = 'Griphta Hotel';
-const VENUE_ADDRESS = ['Jl. AKBP R. Agil Kusumadya No. 100,', 'Jatimakmur Jati Wetan, Kec. Jati, Kudus'];
-const MAP_LINK = 'https://maps.google.com/?q=Griphta+Hotel+Kudus';
-const MAP_EMBED_URL = 'https://maps.google.com/maps?q=Griphta%20Hotel%20Kudus&z=15&output=embed';
+const VENUE_NAME = 'Cempaka Hulu, Banjarbaru';
+const VENUE_ADDRESS = ['Jl. H. Mistar Cokrokusumo, Cempaka Hulu,', 'RT 43 / RW 01, Banjarbaru'];
+const MAP_LINK = 'https://maps.app.goo.gl/ZkxWSNYhbCWZqe3F7';
+/* Link pendek maps.app.goo.gl tidak bisa dipakai sebagai src iframe; peta
+   tersemat dibangun dari alamatnya, tanpa kunci API. */
+const MAP_EMBED_URL =
+  'https://maps.google.com/maps?q=' +
+  encodeURIComponent('Jl. H. Mistar Cokrokusumo, Cempaka, Banjarbaru, Kalimantan Selatan') +
+  '&z=15&output=embed';
+const CAL_LOCATION = encodeURIComponent('Jl. H. Mistar Cokrokusumo, Cempaka Hulu, Banjarbaru');
 
+/* Akad dan resepsi beda hari, jadi tiap acara membawa tanggalnya sendiri.
+   Kalender wajib punya jam selesai; untuk acara "sampai selesai" dipatok
+   3–4 jam setelah mulai. */
 const EVENTS = [
   {
     name: 'Akad Nikah',
-    time: 'Pukul 09.00 WIB – selesai',
-    /* 09.00–11.00 WIB = 02.00–04.00 UTC; kalender wajib punya jam selesai. */
-    calendar:
-      'https://calendar.google.com/calendar/render?action=TEMPLATE&text=Akad%20Nikah%20Elfima%20%26%20Harris&dates=20261212T020000Z/20261212T040000Z&location=Griphta%20Hotel%20Kudus',
+    date: 'Sabtu, 28 November 2026',
+    time: 'Pukul 08.00 WITA – selesai',
+    // 08.00–11.00 WITA = 00.00–03.00 UTC
+    calendar: `https://calendar.google.com/calendar/render?action=TEMPLATE&text=Akad%20Nikah%20Fadila%20%26%20Syarief&dates=20261128T000000Z/20261128T030000Z&location=${CAL_LOCATION}`,
   },
   {
     name: 'Resepsi',
-    time: 'Pukul 11.00 – 14.00 WIB',
-    calendar:
-      'https://calendar.google.com/calendar/render?action=TEMPLATE&text=Resepsi%20Elfima%20%26%20Harris&dates=20261212T040000Z/20261212T070000Z&location=Griphta%20Hotel%20Kudus',
+    date: 'Minggu, 29 November 2026',
+    time: 'Pukul 09.00 WITA – selesai',
+    // 09.00–13.00 WITA = 01.00–05.00 UTC
+    calendar: `https://calendar.google.com/calendar/render?action=TEMPLATE&text=Resepsi%20Fadila%20%26%20Syarief&dates=20261129T010000Z/20261129T050000Z&location=${CAL_LOCATION}`,
   },
 ];
 
+/* Data tidak menyebut pihak mana, jadi satu kelompok tanpa label pihak. */
 const FAMILY = [
-  { side: 'Pihak Laki-laki', names: ['Dimas Vidiawan (Kakek)', 'Rizky Davidianto (Paman)', 'Fahri Ovidianto (Paman)', 'Reza Vidiano (Abang)'] },
   {
-    side: 'Pihak Wanita',
-    names: ['Arif Ovidianto (Abang)', 'Inviana Adinda (Kakak)', 'Inviani Rahayu (Kakak)', 'Ratna Invinara Desi (Tante)', 'Ani Invika Utari (Bunde)'],
+    side: 'Seluruh Keluarga Besar',
+    names: ['H. Syahdan (alm) & Hj. St. Rukayah (almh)', 'Asri (alm) & Mastiarah (almh)'],
   },
 ];
 
@@ -75,6 +87,12 @@ const FAMILY = [
 */
 const SHEETS_ENDPOINT = '';
 
+/* Musik latar (pola tombol dari WeddingPageTito.tsx). Berkas aslinya
+   bernama bg.mpeg padahal isinya MP3; diganti .mp3 supaya dikirim sebagai
+   audio/mpeg — dengan .mpeg server mengirim video/mpeg dan Safari menolak
+   memutarnya. */
+const BG_AUDIO = '/fadila/bg.mp3';
+
 const SEED_WISHES: Wish[] = [
   { nama: 'Nadia Putri', status: 'Hadir', pesan: 'Selamat menempuh hidup baru, semoga sakinah mawaddah warahmah.', time: 0 },
   { nama: 'Raka & Sinta', status: 'Hadir', pesan: 'Barakallahu lakuma. Bahagia selalu untuk kalian berdua.', time: 0 },
@@ -82,7 +100,9 @@ const SEED_WISHES: Wish[] = [
 
 const ATTEND = ['Hadir', 'Tidak Hadir', 'Masih Ragu'] as const;
 const ATTEND_SHORT = ['Hadir', 'Tidak Hadir', 'Ragu'];
-const NAV = ['Pembuka', 'Mempelai', 'Acara', 'Waktu', 'Lokasi', 'Ucapan', 'Keluarga', 'Penutup'];
+/* Section Pembuka (Bismillah + QS. Ar-Rum 21) dihapus atas permintaan:
+   setelah sampul dibuka, undangan langsung ke Mempelai. */
+const NAV = ['Mempelai', 'Acara', 'Waktu', 'Lokasi', 'Ucapan', 'Keluarga', 'Penutup'];
 
 const FONTS_HREF =
   'https://fonts.googleapis.com/css2?family=Pinyon+Script&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Jost:wght@400;500&display=swap';
@@ -168,7 +188,7 @@ const Flowers: React.FC<{ group: 'cv' | 'mf' | 'as' }> = ({ group }) => (
   <>
     {CORNERS.map((k) => (
       <div key={k} className={`eh-fl eh-fl--${k} eh-fl--${group}`} data-fl={`${group}-${k}`} aria-hidden="true">
-        <img data-sway={k} src={`/elfima/fl-${k}.png`} alt="" draggable={false} />
+        <img data-sway={k} src={`/fadila/fl-${k}.png`} alt="" draggable={false} />
       </div>
     ))}
   </>
@@ -176,7 +196,7 @@ const Flowers: React.FC<{ group: 'cv' | 'mf' | 'as' }> = ({ group }) => (
 
 /* ─── KOMPONEN ────────────────────────────────────────────────────── */
 
-export const WeddingPageElfimaHarris: React.FC = () => {
+export const WeddingPageFadilaSyarief: React.FC = () => {
   const rootRef = useRef<HTMLDivElement>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
   const wishListRef = useRef<HTMLDivElement>(null);
@@ -185,6 +205,11 @@ export const WeddingPageElfimaHarris: React.FC = () => {
 
   const [coverVisible, setCoverVisible] = useState(true);
   const [opened, setOpened] = useState(false);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+  const [isPlaying, setIsPlaying] = useState(false);
+  /* Dijeda sendiri oleh tamu: jangan diputar ulang otomatis saat tab
+     kembali aktif. */
+  const pausedByGuestRef = useRef(false);
   const [active, setActive] = useState(0);
   const [now, setNow] = useState(() => Date.now());
 
@@ -428,9 +453,44 @@ export const WeddingPageElfimaHarris: React.FC = () => {
         )
       );
     });
+    // Klik "Buka Undangan" adalah gestur pengguna, jadi autoplay diizinkan.
+    audioRef.current
+      ?.play()
+      .then(() => setIsPlaying(true))
+      .catch(() => setIsPlaying(false));
     setOpened(true);
     window.setTimeout(() => setCoverVisible(false), D);
   };
+
+  const toggleMusic = useCallback(() => {
+    const audio = audioRef.current;
+    if (!audio) return;
+    if (audio.paused) {
+      pausedByGuestRef.current = false;
+      audio.play().then(() => setIsPlaying(true)).catch(() => {});
+    } else {
+      pausedByGuestRef.current = true;
+      audio.pause();
+      setIsPlaying(false);
+    }
+  }, []);
+
+  /* Musik berhenti saat tab/aplikasi ditinggal (mis. pindah ke WhatsApp),
+     lanjut lagi saat kembali — kecuali tamu sendiri yang menjedanya. */
+  useEffect(() => {
+    if (!opened) return;
+    const onVis = () => {
+      const audio = audioRef.current;
+      if (!audio) return;
+      if (document.hidden) {
+        if (!audio.paused) audio.pause();
+      } else if (!pausedByGuestRef.current) {
+        audio.play().then(() => setIsPlaying(true)).catch(() => setIsPlaying(false));
+      }
+    };
+    document.addEventListener('visibilitychange', onVis);
+    return () => document.removeEventListener('visibilitychange', onVis);
+  }, [opened]);
 
   /* ── Navigasi section ── */
 
@@ -521,27 +581,28 @@ export const WeddingPageElfimaHarris: React.FC = () => {
       <SEOHead
         data={{
           title: `Undangan Pernikahan ${BRIDE_FIRST} & ${GROOM_FIRST}`,
-          description: `Dengan memohon rahmat Allah, kami mengundang Anda di hari bahagia kami. ${DATE_LABEL}, ${VENUE_NAME}, Kudus.`,
+          description: `Dengan memohon rahmat Allah, kami mengundang Anda di hari bahagia kami. Akad ${DATE_LABEL}, resepsi Minggu, 29 November 2026 di Cempaka Hulu, Banjarbaru.`,
           keywords: [
             'Undangan Pernikahan Digital',
             `${BRIDE_FULL} & ${GROOM_FULL}`,
-            'Elfima Harris',
-            'Pernikahan Kudus',
-            'Griphta Hotel',
-            '12 Desember 2026',
+            'Fadila Syarief',
+            'Pernikahan Banjarbaru',
+            'Cempaka Hulu',
+            'Kalimantan Selatan',
+            '28 November 2026',
           ],
           author: "Adi Rakhmatullah Ma'arif",
-          url: 'https://dirakhmat.app/elfima-harris',
-          image: 'https://dirakhmat.app/elfima/preview.jpg',
+          url: 'https://dirakhmat.app/fadila-syarief',
+          image: 'https://dirakhmat.app/fadila/preview.jpg',
           type: 'website',
           schemaType: 'Event',
           event: {
-            startDate: '2026-12-12T09:00:00+07:00',
-            endDate: '2026-12-12T14:00:00+07:00',
+            startDate: '2026-11-28T08:00:00+08:00',
+            endDate: '2026-11-29T13:00:00+08:00',
             locationName: VENUE_NAME,
-            streetAddress: 'Jl. AKBP R. Agil Kusumadya No. 100, Jatimakmur Jati Wetan',
-            locality: 'Kec. Jati, Kudus',
-            region: 'Jawa Tengah',
+            streetAddress: 'Jl. H. Mistar Cokrokusumo, RT 43 / RW 01',
+            locality: 'Cempaka Hulu, Banjarbaru',
+            region: 'Kalimantan Selatan',
             organizers: [BRIDE_FULL, GROOM_FULL],
           },
         }}
@@ -552,7 +613,7 @@ export const WeddingPageElfimaHarris: React.FC = () => {
       <div
         ref={rootRef}
         className={`eh-root${opened ? ' is-open' : ''}`}
-        style={{ '--eh-scene': "url('/elfima/scene.jpg')" } as React.CSSProperties}
+        style={{ '--eh-scene': "url('/fadila/scene.jpg')" } as React.CSSProperties}
       >
         {/* Latar pemandangan buram — terlihat di tablet & desktop di luar kolom. */}
         <div className="eh-backdrop" aria-hidden="true" />
@@ -588,6 +649,8 @@ export const WeddingPageElfimaHarris: React.FC = () => {
         </aside>
 
         {/* ── Kolom undangan ── */}
+        <audio ref={audioRef} src={BG_AUDIO} loop preload="none" />
+
         <main className="eh-col">
           <div className="eh-col__bg" aria-hidden="true" />
           <Flowers group="mf" />
@@ -599,17 +662,7 @@ export const WeddingPageElfimaHarris: React.FC = () => {
             onScroll={onScroll}
             style={{ overflowY: opened ? 'auto' : 'hidden' }}
           >
-            <section data-sec="0" className="eh-sec eh-sec--narrow" aria-label="Pembuka">
-              <div data-r="" className="eh-kicker">Bismillahirrahmanirrahim</div>
-              <div data-r="" className="eh-rule" />
-              <p data-r="" className="eh-quote">
-                “Dan di antara tanda-tanda kekuasaan-Nya ialah Dia menciptakan untukmu pasangan hidup dari jenismu
-                sendiri, supaya kamu merasa tenteram kepadanya, dan dijadikan-Nya di antaramu rasa kasih dan sayang.”
-              </p>
-              <div data-r="" className="eh-cite">QS. Ar-Rum : 21</div>
-            </section>
-
-            <section data-sec="1" className="eh-sec" aria-label="Mempelai">
+            <section data-sec="0" className="eh-sec" aria-label="Mempelai">
               <div data-r="" className="eh-kicker">Bride &amp; Groom</div>
               <div className="eh-couple">
                 <div className="eh-person">
@@ -642,16 +695,16 @@ export const WeddingPageElfimaHarris: React.FC = () => {
               </div>
             </section>
 
-            <section data-sec="2" className="eh-sec" aria-label="Acara">
+            <section data-sec="1" className="eh-sec" aria-label="Acara">
               <div className="eh-events">
                 {EVENTS.map((ev, i) => (
                   <div key={ev.name} className="eh-event">
                     {i > 0 && <div data-r="" className="eh-rule eh-event__sep" />}
                     <div data-r="write" className="eh-script eh-script--title">{ev.name}</div>
                     <div data-r="" className="eh-event__info">
-                      <div className="eh-event__date">{DATE_LABEL}</div>
+                      <div className="eh-event__date">{ev.date}</div>
                       <div>{ev.time}</div>
-                      <div className="eh-muted">{VENUE_NAME}, Kudus</div>
+                      <div className="eh-muted">{VENUE_NAME}</div>
                     </div>
                     <a data-r="" className="eh-btn eh-btn--ghost" href={ev.calendar} target="_blank" rel="noopener noreferrer">
                       Tambah ke Kalender
@@ -661,7 +714,7 @@ export const WeddingPageElfimaHarris: React.FC = () => {
               </div>
             </section>
 
-            <section data-sec="3" className="eh-sec" aria-label="Hitung mundur">
+            <section data-sec="2" className="eh-sec" aria-label="Hitung mundur">
               <div data-r="write" className="eh-script eh-script--title">Menghitung Hari</div>
               <div data-r="" className="eh-cd" role="timer" aria-live="off">
                 {cdItems.map(([v, l]) => (
@@ -674,10 +727,10 @@ export const WeddingPageElfimaHarris: React.FC = () => {
               <p data-r="" className="eh-quote eh-quote--sm">Menuju hari bahagia kami, {DATE_LABEL}.</p>
             </section>
 
-            <section data-sec="4" className="eh-sec" aria-label="Lokasi">
+            <section data-sec="3" className="eh-sec" aria-label="Lokasi">
               <div data-r="write" className="eh-script eh-script--title">Lokasi Acara</div>
               <div data-r="" className="eh-map">
-                <iframe title="Peta lokasi Griphta Hotel Kudus" src={MAP_EMBED_URL} loading="lazy" />
+                <iframe title="Peta lokasi acara di Cempaka Hulu, Banjarbaru" src={MAP_EMBED_URL} loading="lazy" />
               </div>
               <div data-r="" className="eh-venue">{VENUE_NAME}</div>
               <p data-r="" className="eh-small">
@@ -690,7 +743,7 @@ export const WeddingPageElfimaHarris: React.FC = () => {
               </a>
             </section>
 
-            <section data-sec="5" className="eh-sec" aria-label="Ucapan dan doa">
+            <section data-sec="4" className="eh-sec" aria-label="Ucapan dan doa">
               <div data-r="write" className="eh-script eh-script--title">Ucapan &amp; Doa</div>
               <p data-r="" className="eh-small">Kirim ucapan untuk mempelai dan konfirmasi kehadiran.</p>
               <div className="eh-wish">
@@ -746,7 +799,7 @@ export const WeddingPageElfimaHarris: React.FC = () => {
               </div>
             </section>
 
-            <section data-sec="6" className="eh-sec" aria-label="Turut mengundang">
+            <section data-sec="5" className="eh-sec" aria-label="Turut mengundang">
               <div data-r="write" className="eh-script eh-script--title">Turut Mengundang</div>
               <div className="eh-family">
                 {FAMILY.map((f) => (
@@ -762,7 +815,7 @@ export const WeddingPageElfimaHarris: React.FC = () => {
               </div>
             </section>
 
-            <section data-sec="7" className="eh-sec eh-sec--narrow" aria-label="Penutup">
+            <section data-sec="6" className="eh-sec eh-sec--narrow" aria-label="Penutup">
               <p data-r="" className="eh-quote">
                 Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir dan
                 memberikan doa restu.
@@ -791,6 +844,20 @@ export const WeddingPageElfimaHarris: React.FC = () => {
             ))}
           </nav>
 
+          {opened && (
+            <button
+              type="button"
+              className={`eh-music${isPlaying ? ' is-playing' : ''}`}
+              onClick={toggleMusic}
+              aria-label={isPlaying ? 'Jeda musik' : 'Putar musik'}
+              title={isPlaying ? 'Jeda musik' : 'Putar musik'}
+            >
+              <span />
+              <span />
+              <span />
+            </button>
+          )}
+
           {/* Kelopak baru dipasang setelah sampul dibuka: di belakang sampul
               mereka tidak terlihat tapi tetap memakan GPU. */}
           {opened && (
@@ -807,7 +874,7 @@ export const WeddingPageElfimaHarris: React.FC = () => {
           <div data-cv="root" className="eh-cover">
             <div className="eh-cover__backdrop" aria-hidden="true" />
             <div className="eh-cover__stage" aria-hidden="true">
-              <img data-cv="scene" className="eh-cover__scene" src="/elfima/scene.jpg" alt="" draggable={false} />
+              <img data-cv="scene" className="eh-cover__scene" src="/fadila/scene.jpg" alt="" draggable={false} />
               <Flowers group="cv" />
             </div>
             <div className="eh-cover__content">
@@ -838,4 +905,4 @@ export const WeddingPageElfimaHarris: React.FC = () => {
   );
 };
 
-export default WeddingPageElfimaHarris;
+export default WeddingPageFadilaSyarief;
