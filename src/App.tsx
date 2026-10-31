@@ -13,7 +13,7 @@ import { WeddingPageRezaKirana } from './pages/wedding/WeddingPageRezaKirana';
 import { WeddingPageBagasNadira } from './pages/wedding/WeddingPageBagasNadira';
 import { WeddingPageWisnuRatih } from './pages/wedding/WeddingPageWisnuRatih';
 import { WeddingPageSaufiAfifah } from './pages/wedding/WeddingPageSaufiAfifah';
-import { WeddingPageFadilaSyarief } from './pages/wedding/WeddingPageFadilaSyarief';
+import { WeddingPageAmelSyarief } from './pages/wedding/WeddingPageAmelSyarief';
 import { WeddingProjectsPage } from './pages/WeddingProjectsPage';
 import { InstitutionalSolutionsPage } from './pages/InstitutionalSolutionsPage';
 import { CorePOSPage } from './pages/CorePOSPage';
@@ -88,12 +88,15 @@ const App: React.FC = () => {
             dialihkan, bukan dihapus. */}
         <Route path="/aruna-damar" element={<Navigate to="/saufi-afifah" replace />} />
 
-        {/* Undangan Pernikahan (taman mawar): /fadila-syarief?to=NamaPengunjung */}
-        <Route path="/fadila-syarief" element={<WeddingPageFadilaSyarief />} />
-        <Route path="/syarief-fadila" element={<RedirectKeepQuery to="/fadila-syarief" />} />
+        {/* Undangan Pernikahan (taman mawar): /amel-syarief?to=NamaPengunjung */}
+        <Route path="/amel-syarief" element={<WeddingPageAmelSyarief />} />
+        <Route path="/syarief-amel" element={<RedirectKeepQuery to="/amel-syarief" />} />
+        {/* Alamat sebelumnya, sudah sempat dibagikan. */}
+        <Route path="/fadila-syarief" element={<RedirectKeepQuery to="/amel-syarief" />} />
+        <Route path="/syarief-fadila" element={<RedirectKeepQuery to="/amel-syarief" />} />
         {/* Halaman ini awalnya untuk Elfima & Harris; link lama dialihkan. */}
-        <Route path="/elfima-harris" element={<RedirectKeepQuery to="/fadila-syarief" />} />
-        <Route path="/harris-elfima" element={<RedirectKeepQuery to="/fadila-syarief" />} />
+        <Route path="/elfima-harris" element={<RedirectKeepQuery to="/amel-syarief" />} />
+        <Route path="/harris-elfima" element={<RedirectKeepQuery to="/amel-syarief" />} />
 
         {/* Showcase proyek undangan pernikahan */}
         <Route path="/project-wedding" element={<WeddingProjectsPage />} />

@@ -1,5 +1,5 @@
 /*
- * Undangan Fadila & Syarief. Mobile-first: aturan dasar = ponsel (sesuai
+ * Undangan Amel & Syarief. Mobile-first: aturan dasar = ponsel (sesuai
  * desain), lalu @media 768px (tablet) dan 1200px (desktop) melebarkannya.
  * Semua kelas diawali `eh-`; tidak ada aturan global.
  */
@@ -167,6 +167,23 @@
 .eh-quote--sm {
   font-size: 18px;
   line-height: 1.5;
+}
+/* Teks Arab di section Pembuka. Amiri dipilih karena harakatnya terbaca
+   jelas; line-height lebar supaya tanda baca atas-bawah tidak bertabrakan. */
+.eh-arabic {
+  margin: 0;
+  font-family: 'Amiri', 'Traditional Arabic', serif;
+  color: var(--eh-rose-deep);
+  text-align: center;
+}
+.eh-arabic--basmalah {
+  font-size: 30px;
+  line-height: 1.6;
+}
+.eh-arabic--ayah {
+  font-size: 22px;
+  line-height: 2.1;
+  color: var(--eh-ink);
 }
 .eh-cite {
   font-size: 13px;
@@ -784,6 +801,12 @@
   }
   .eh-kicker {
     font-size: 16px;
+  }
+  .eh-arabic--basmalah {
+    font-size: 34px;
+  }
+  .eh-arabic--ayah {
+    font-size: 25px;
   }
   .eh-quote {
     font-size: 21px;

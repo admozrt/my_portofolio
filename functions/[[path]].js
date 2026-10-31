@@ -114,17 +114,21 @@ const ROUTES = {
     url: BASE + "/saufi-afifah",
     siteName: "Undangan Pernikahan",
   },
-  weddingFadila: {
-    // Nama lama (Elfima & Harris) ikut dicocokkan: alamat lamanya dialihkan ke sini.
+  weddingAmel: {
+    // Alamat lama (/fadila-syarief, /elfima-harris) dialihkan ke sini, jadi ikut dicocokkan.
     match: (path) =>
-      /fadila/i.test(path) || /syarief/i.test(path) || /elfima/i.test(path) || /harris/i.test(path),
-    title: "Undangan Pernikahan Fadila & Syarief 💍",
+      /amel/i.test(path) ||
+      /syarief/i.test(path) ||
+      /fadila/i.test(path) ||
+      /elfima/i.test(path) ||
+      /harris/i.test(path),
+    title: "Undangan Pernikahan Amel & Syarief 💍",
     description:
       "Dengan memohon rahmat Allah, kami mengundang Anda di hari bahagia kami. Akad Sabtu, 28 November 2026 · Resepsi Minggu, 29 November 2026 · Cempaka Hulu, Banjarbaru",
-    image: BASE + "/fadila/preview.jpg",
+    image: BASE + "/amel/preview.jpg",
     imageW: "1200",
     imageH: "630",
-    url: BASE + "/fadila-syarief",
+    url: BASE + "/amel-syarief",
     siteName: "Undangan Pernikahan",
   },
   projectWedding: {
