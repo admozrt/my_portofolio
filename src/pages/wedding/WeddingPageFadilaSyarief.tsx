@@ -85,7 +85,7 @@ const FAMILY = [
   WAJIB endpoint milik pasangan ini sendiri — memakai endpoint undangan lain
   mencampur data dua pernikahan ke satu spreadsheet.
 */
-const SHEETS_ENDPOINT = '';
+const SHEETS_ENDPOINT = 'https://script.google.com/macros/s/AKfycbxVE_IFx3Q_Dh4aDUZ4_pVbBSGmaO32-eSAQWfE3fovhscb97kAxotp_aktAadeisDtxw/exec';
 
 /* Musik latar (pola tombol dari WeddingPageTito.tsx). Berkas aslinya
    bernama bg.mpeg padahal isinya MP3; diganti .mp3 supaya dikirim sebagai
