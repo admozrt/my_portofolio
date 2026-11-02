@@ -13,6 +13,7 @@ import {
   type Video,
 } from '../data/rekomendasyi';
 import { THUMBS } from '../data/rekomendasyiThumbs';
+import { gmailUrl, isMobileDevice, mailtoUrl } from '../utils/mail';
 import { parseEmbed, seekYouTube, type Embed } from '../utils/videoEmbed';
 import './RekomendasyiPage.css';
 
@@ -35,22 +36,6 @@ import './RekomendasyiPage.css';
 const FONTS_HREF =
   'https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&family=Hanken+Grotesk:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap';
 const EMAIL = 'pratiwi.syifa@gmail.com';
-/** Jendela tulis Gmail web. Dipakai sebagai ganti `mailto:`, yang diam saja
- *  di perangkat tanpa aplikasi email bawaan (umum di laptop Windows). */
-const gmailUrl = (to: string, subject: string, body: string) =>
-  `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(to)}` +
-  `&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-const mailtoUrl = (to: string, subject: string, body: string) =>
-  `mailto:${to}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-
-/** Ponsel/tablet selalu punya aplikasi email bawaan, dan `mailto:` langsung
- *  membukanya (Gmail app, Mail di iPhone, dst). iPadOS mengaku "Macintosh",
- *  jadi dikenali dari layar sentuhnya. */
-const isMobileDevice = () => {
-  if (typeof navigator === 'undefined') return false;
-  const ua = navigator.userAgent;
-  return /Android|iPhone|iPad|iPod|Mobile/i.test(ua) || (/Macintosh/.test(ua) && navigator.maxTouchPoints > 1);
-};
 const SOCIALS = [
   { name: 'Instagram', handle: '@rekomendasyi', href: 'https://www.instagram.com/rekomendasyi' },
   { name: 'TikTok', handle: '@rekomendasyi', href: 'https://www.tiktok.com/@rekomendasyi' },

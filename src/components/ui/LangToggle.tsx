@@ -50,13 +50,16 @@ const FLAGS: Record<Lang, React.FC> = { id: FlagID, en: FlagUK };
 interface LangToggleProps {
   /** `zine` untuk halaman portofolio, `plain` untuk halaman institusional. */
   variant?: 'zine' | 'plain';
+  /** Opsional: membungkus pergantian bahasa, mis. untuk animasi transisi
+   *  halaman. Wajib memanggil `apply()`. */
+  onPick?: (lang: 'id' | 'en', apply: () => void) => void;
 }
 
 /**
  * Pil dua segmen ID / EN. Penanda pilihan aktif bergeser dengan layoutId,
  * jadi pindah bahasa terasa sebagai satu gerakan, bukan dua tombol berkedip.
  */
-export const LangToggle: React.FC<LangToggleProps> = ({ variant = 'zine' }) => {
+export const LangToggle: React.FC<LangToggleProps> = ({ variant = 'zine', onPick }) => {
   const { lang, setLang, t } = useLang();
   const zine = variant === 'zine';
 
@@ -78,7 +81,12 @@ export const LangToggle: React.FC<LangToggleProps> = ({ variant = 'zine' }) => {
             type="button"
             role="radio"
             aria-checked={active}
-            onClick={() => setLang(option)}
+            onClick={() => {
+              if (active) return;
+              const apply = () => setLang(option);
+              if (onPick) onPick(option, apply);
+              else apply();
+            }}
             // Pil-nya sengaja ramping supaya muat di header bersama tombol
             // tema, tapi area sentuhnya diperluas lewat ::before sampai 45px —
             // tampilan tetap ringkas, jempol tetap gampang mengenai.

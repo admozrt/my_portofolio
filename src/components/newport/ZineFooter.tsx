@@ -8,7 +8,7 @@ import { useLang } from '../../hooks/useLang';
 /**
  * Anchors are written as routed links back to the homepage rather than plain
  * scrollIntoView, so this footer also works on sub-pages that do not have
- * those sections. On the homepage the hash effect in NewPortPage picks it up.
+ * those sections. On the homepage the hash effect in PortfolioV2Page picks it up.
  */
 const quickLinks = [
   { key: 'projek', to: '/#projek' },

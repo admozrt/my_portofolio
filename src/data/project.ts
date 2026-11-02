@@ -29,7 +29,7 @@ export const projects: Project[] = [
     id: 2,
     title: 'TMU Ferry - Platform Tiket Kapal',
     description: 'Platform tiket kapal komprehensif dengan penjadwalan real-time, gateway pembayaran terintegrasi, dan antarmuka mobile responsif untuk optimisasi transportasi maritim pada PT.Timur Mila Utama.',
-    technologies: ['Laravel', 'React', 'React Native', 'MySQL', 'Redis', 'Gateway Pembayaran', 'Integrasi API'],
+    technologies: ['Laravel', 'React', 'React Native', 'MySQL', 'Redis', 'Docker', 'Gateway Pembayaran', 'Integrasi API'],
     link: 'https://timurmilautama.co.id',
     gradient: 'from-blue-500 via-blue-600 to-cyan-600',
     logo: '/images/projects/logos/tmu-ferry.png',

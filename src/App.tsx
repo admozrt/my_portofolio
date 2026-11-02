@@ -17,7 +17,7 @@ import { WeddingPageAmelSyarief } from './pages/wedding/WeddingPageAmelSyarief';
 import { WeddingProjectsPage } from './pages/WeddingProjectsPage';
 import { InstitutionalSolutionsPage } from './pages/InstitutionalSolutionsPage';
 import { CorePOSPage } from './pages/CorePOSPage';
-import { NewPortPage } from './pages/NewPortPage';
+import { PortfolioV2Page } from './pages/PortfolioV2Page';
 import { RekomendasyiPage } from './pages/RekomendasyiPage';
 
 /* Pengalihan yang membawa query & hash. <Navigate to="/x"> polos membuang
@@ -45,11 +45,16 @@ const App: React.FC = () => {
       <ScrollToTop />
       <Routes>
         {/* Portfolio (halaman utama) — konsep zine */}
-        <Route path="/" element={<NewPortPage />} />
+        <Route path="/" element={<PortfolioV2Page />} />
         {/* Versi English, berpasangan dengan "/" lewat hreflang. */}
-        <Route path="/en" element={<NewPortPage />} />
+        <Route path="/en" element={<PortfolioV2Page />} />
+
+        {/* Alamat uji coba portofolio "Rancang → Bangun → Rawat" sebelum jadi
+            halaman utama; dialihkan supaya tautan yang sempat dibagikan tetap jalan. */}
+        <Route path="/v2" element={<RedirectKeepQuery to="/" />} />
+        <Route path="/en/v2" element={<RedirectKeepQuery to="/en" />} />
         {/* Alias, supaya tautan lama ke /newport tidak mati */}
-        <Route path="/newport" element={<NewPortPage />} />
+        <Route path="/newport" element={<RedirectKeepQuery to="/" />} />
 
         {/* Konsep lama "Control Room". Route dimatikan atas permintaan,
             komponennya sengaja tidak dihapus supaya bisa dinyalakan lagi. */}

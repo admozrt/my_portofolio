@@ -8,7 +8,7 @@ import { Monogram } from '../components/ui/Monogram';
 import { ZineFooter } from '../components/newport/ZineFooter';
 import { LIFT } from '../components/newport/motion';
 import { SEOHead } from '../components/ui/SEOHead';
-import './NewPortPage.css';
+import '../components/newport/zine.css';
 
 const EASE: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
