@@ -12,16 +12,16 @@ invitations built as standalone, fully themed pages.
 
 ## Tech Stack
 
-| Area | Stack |
-|---|---|
-| Framework | Create React App (`react-scripts` 5) — **not** Next.js |
-| UI | React 19, TypeScript 4.9 |
-| Routing | `react-router-dom` 7 (`BrowserRouter`, client-side) |
-| Styling | Tailwind CSS 3 (portfolio pages) + plain co-located CSS (wedding invitations) |
-| Animation | Framer Motion 12, GSAP 3 (ScrollTrigger) |
-| Icons | `lucide-react`, `react-icons`, FontAwesome 7 |
-| Fonts | `@fontsource-variable/geist`, `geist-mono` |
-| Hosting | Cloudflare Pages + Pages Functions |
+| Area      | Stack                                                                         |
+| --------- | ----------------------------------------------------------------------------- |
+| Framework | Create React App (`react-scripts` 5) — **not** Next.js                        |
+| UI        | React 19, TypeScript 4.9                                                      |
+| Routing   | `react-router-dom` 7 (`BrowserRouter`, client-side)                           |
+| Styling   | Tailwind CSS 3 (portfolio pages) + plain co-located CSS (wedding invitations) |
+| Animation | Framer Motion 12, GSAP 3 (ScrollTrigger)                                      |
+| Icons     | `lucide-react`, `react-icons`, FontAwesome 7                                  |
+| Fonts     | `@fontsource-variable/geist`, `geist-mono`                                    |
+| Hosting   | Cloudflare Pages + Pages Functions                                            |
 
 ---
 
@@ -104,20 +104,20 @@ projects, clients, experience, and skills.
 
 ## Routes
 
-| Path | Page |
-|---|---|
-| `/` | Portfolio homepage |
+| Path               | Page                              |
+| ------------------ | --------------------------------- |
+| `/`                | Portfolio homepage                |
 | `/project-wedding` | Wedding invitation showcase index |
-| `/solusi-digital` | Institutional solutions |
-| `/corepos` | Core POS product page |
-| `/ajie-alya` | Wedding — Ajie & Alya |
-| `/anggi-rezza` | Wedding — Anggi & Rezza |
-| `/tito-wina` | Wedding — Tito & Wina |
-| `/dimas-laila` | Wedding — Dimas & Laila |
-| `/arya-sekar` | Wedding — Arya & Sekar |
-| `/reza-kirana` | Wedding — Reza & Kirana |
-| `/bagas-nadira` | Wedding — Bagas & Nadira |
-| `/wisnu-ratih` | Wedding — Wisnu & Ratih |
+| `/solusi-digital`  | Institutional solutions           |
+| `/corepos`         | Core POS product page             |
+| `/ajie-alya`       | Wedding — Ajie & Alya             |
+| `/anggi-rezza`     | Wedding — Anggi & Rezza           |
+| `/tito-wina`       | Wedding — Tito & Wina             |
+| `/dimas-laila`     | Wedding — Dimas & Laila           |
+| `/arya-sekar`      | Wedding — Arya & Sekar            |
+| `/reza-kirana`     | Wedding — Reza & Kirana           |
+| `/bagas-nadira`    | Wedding — Bagas & Nadira          |
+| `/wisnu-ratih`     | Wedding — Wisnu & Ratih           |
 
 ---
 
