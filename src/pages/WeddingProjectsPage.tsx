@@ -1,16 +1,22 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { motion, useReducedMotion, type Variants } from 'framer-motion';
-import { ArrowLeft, ArrowUpRight, Calendar, MapPin } from 'lucide-react';
+import { ArrowLeft, ArrowUpRight, Calendar, MapPin, Moon, Sun } from 'lucide-react';
 import { ThemeProvider } from '../components/providers/Theme';
-import { ThemeToggle } from '../components/layout/ThemeToggle';
-import { Monogram } from '../components/ui/Monogram';
-import { ZineFooter } from '../components/newport/ZineFooter';
-import { LIFT } from '../components/newport/motion';
 import { SEOHead } from '../components/ui/SEOHead';
-import '../components/newport/zine.css';
+import { useTheme } from '../hooks/useTheme';
+import { useLang } from '../hooks/useLang';
+import { runTransition } from '../components/v2/viewTransition';
+import '../components/v2/v2.css';
 
-const EASE: [number, number, number, number] = [0.16, 1, 0.3, 1];
+/**
+ * Daftar undangan pernikahan digital, dengan gaya portofolio utama
+ * ("blueprint di kertas", kelas v2-).
+ *
+ * Tiap kartu adalah ponsel yang "mengintip": layarnya menggulir sendiri dari
+ * foto sampul ke isi undangan — saat disorot kursor di desktop, atau saat
+ * kartu melewati tengah layar di HP. Bagian bawah layar disusun dari data
+ * kartu (tanggal, kota, warna aksen), bukan tangkapan layar asli.
+ */
 
 interface WeddingEntry {
   id: string;
@@ -27,7 +33,7 @@ interface WeddingEntry {
 const weddings: WeddingEntry[] = [
   {
     id: 'ajie-alya',
-    names: "Ajie & Alya",
+    names: 'Ajie & Alya',
     date: new Date('2026-06-07T09:00:00+08:00'),
     dateLabel: '7 Juni 2026',
     location: 'Tapin, Kalimantan Selatan',
@@ -137,91 +143,137 @@ const weddings: WeddingEntry[] = [
   },
 ];
 
-const containerVariants: Variants = {
-  hidden: {},
-  visible: { transition: { staggerChildren: 0.1 } },
-};
-const itemVariants: Variants = {
-  hidden: { opacity: 0, y: 28 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: EASE } },
-};
+const isUpcoming = (d: Date) => d.getTime() > Date.now();
 
-function getStatus(date: Date): { label: string; upcoming: boolean } {
-  const upcoming = date.getTime() > Date.now();
-  return { label: upcoming ? 'Akan Datang' : 'Sudah Berlangsung', upcoming };
-}
-
-/** Fixed per position so the wall looks pinned up by hand, not auto-arranged. */
-const TILT = [-2, 1.5, -1.2, 1.8, -1.6, 1.1, -0.9, 2, -1.4];
+/* ─── Kartu: ponsel mengintip ────────────────────────────────────── */
 
 const WeddingCard: React.FC<{ entry: WeddingEntry; index: number }> = ({ entry, index }) => {
-  const status = getStatus(entry.date);
-  const reduce = useReducedMotion();
+  const cardRef = useRef<HTMLAnchorElement>(null);
+  const [peek, setPeek] = useState(false);
+  const [shown, setShown] = useState(false);
+  const upcoming = isUpcoming(entry.date);
+
+  useEffect(() => {
+    const el = cardRef.current;
+    if (!el) return;
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const coarse = window.matchMedia('(pointer: coarse)').matches;
+
+    // Masuk saat pertama terlihat.
+    const appear = new IntersectionObserver(
+      ([e]) => {
+        if (e.isIntersecting) {
+          setShown(true);
+          appear.disconnect();
+        }
+      },
+      { threshold: 0.15 }
+    );
+    appear.observe(el);
+
+    // Layar sentuh: mengintip sendiri saat kartu ada di pita tengah layar.
+    let center: IntersectionObserver | null = null;
+    if (coarse && !reduce) {
+      center = new IntersectionObserver(([e]) => setPeek(e.isIntersecting), {
+        rootMargin: '-38% 0px -38% 0px',
+      });
+      center.observe(el);
+    }
+    return () => {
+      appear.disconnect();
+      center?.disconnect();
+    };
+  }, []);
+
+  const onEnter = (e: React.PointerEvent) => {
+    if (e.pointerType === 'mouse' && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) setPeek(true);
+  };
 
   return (
-    <motion.div variants={itemVariants} className="h-full">
-      <motion.a
-        href={entry.href}
-        target="_blank"
-        rel="noopener noreferrer"
-        animate={{ rotate: reduce ? 0 : TILT[index % TILT.length] }}
-        whileHover={reduce ? undefined : { rotate: 0, scale: 1.03 }}
-        transition={LIFT}
-        className="relative flex h-full flex-col border border-zine-rule bg-zine-card px-2.5 pb-3 pt-4 no-underline shadow-[0_3px_0_rgba(31,30,28,0.06)] transition-shadow duration-500 hover:shadow-[0_14px_28px_-16px_rgba(31,30,28,0.55)] dark:border-zine-rule-dark dark:bg-zine-card-dark dark:shadow-[0_3px_0_rgba(0,0,0,0.25)]"
-      >
-        <span className={`np-tape ${index % 2 === 1 ? 'np-tape--cool' : ''}`} aria-hidden="true" />
-        {index % 3 === 0 && <span className="np-pin" aria-hidden="true" />}
-
-        <span className="block overflow-hidden">
-          <img
-            src={entry.cover}
-            alt={`Undangan ${entry.names}`}
-            loading="lazy"
-            draggable={false}
-            className="block aspect-[4/5] w-full object-cover"
-          />
+    <a
+      ref={cardRef}
+      href={entry.href}
+      target="_blank"
+      rel="noopener noreferrer"
+      className={`v2-wed${shown ? ' is-shown' : ''}${peek ? ' is-peek' : ''}`}
+      style={{ transitionDelay: `${(index % 4) * 70}ms`, ['--wed-accent' as string]: entry.accent }}
+      onPointerEnter={onEnter}
+      onPointerLeave={() => setPeek(false)}
+      aria-label={`Buka undangan ${entry.names}`}
+    >
+      <div className="v2-wed__sheet">
+        <span className="v2-wed__spec" aria-hidden="true">
+          9:16 · microsite
         </span>
+        <div className="v2-wed__phone" aria-hidden="true">
+          <span className="v2-wed__notch" />
+          <div className="v2-wed__screen">
+            <div className="v2-wed__scroll">
+              <div className="v2-wed__cover">
+                <img src={entry.cover} alt="" loading="lazy" draggable={false} />
+                <span className="v2-wed__cover-names">{entry.names}</span>
+              </div>
+              <div className="v2-wed__block">
+                <span className="v2-wed__label">Akad & Resepsi</span>
+                <b>{entry.dateLabel}</b>
+                <span>{entry.location}</span>
+              </div>
+              <div className="v2-wed__block v2-wed__block--tint">
+                <span className="v2-wed__label">RSVP</span>
+                <i />
+                <i />
+                <span className="v2-wed__btn">Kirim</span>
+              </div>
+              <div className="v2-wed__block">
+                <span className="v2-wed__label">Ucapan & doa</span>
+                <i />
+                <i className="is-short" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
 
-        <span className="np-hand mt-2.5 block text-[17px] text-zine-ink dark:text-zine-ink-dark sm:text-[19px]">
-          {entry.names}
+      <div className="v2-wed__meta">
+        <div className="v2-wed__top">
+          <b className="v2-wed__names">{entry.names}</b>
+          <ArrowUpRight size={15} aria-hidden="true" />
+        </div>
+        <span className="v2-wed__theme">
+          <i style={{ background: entry.accent }} aria-hidden="true" />
+          {entry.theme}
         </span>
-
-        <span className="mt-1 flex items-center gap-1.5">
-          <span
-            className="h-2 w-2 shrink-0 ring-1 ring-black/10"
-            style={{ backgroundColor: entry.accent }}
-            aria-hidden="true"
-          />
-          <span className="truncate text-[11.5px] text-zine-ink-soft dark:text-zine-ink-soft-dark">
-            {entry.theme}
+        <span className="v2-wed__row">
+          <Calendar size={13} aria-hidden="true" />
+          {entry.dateLabel}
+        </span>
+        <span className="v2-wed__row">
+          <MapPin size={13} aria-hidden="true" />
+          <span className="v2-wed__trunc">{entry.location}</span>
+        </span>
+        {upcoming ? (
+          <span className="v2-wed__status v2-wed__status--soon">Akan datang</span>
+        ) : (
+          <span className="v2-live v2-wed__status">
+            <i />
+            Berjalan
           </span>
-        </span>
-
-        <span className="mt-2 block space-y-1 text-[11.5px] text-zine-ink-soft dark:text-zine-ink-soft-dark">
-          <span className="flex items-center gap-1.5">
-            <Calendar className="h-3 w-3 shrink-0" />
-            {entry.dateLabel}
-          </span>
-          <span className="flex items-center gap-1.5">
-            <MapPin className="h-3 w-3 shrink-0" />
-            <span className="truncate">{entry.location}</span>
-          </span>
-        </span>
-
-        <span className="mt-auto flex items-center justify-between border-t border-dashed border-zine-rule pt-2.5 dark:border-zine-rule-dark">
-          <span className="font-mono text-[10px] uppercase tracking-[0.06em] text-zine-ink-soft dark:text-zine-ink-soft-dark">
-            {status.label}
-          </span>
-          <ArrowUpRight className="h-3.5 w-3.5 text-zine-pen dark:text-zine-pen-dark" />
-        </span>
-      </motion.a>
-    </motion.div>
+        )}
+      </div>
+    </a>
   );
 };
 
-export const WeddingProjectsPage: React.FC = () => {
+/* ─── Halaman ────────────────────────────────────────────────────── */
+
+const WeddingProjectsContent: React.FC = () => {
+  const { t } = useLang();
+  const { isDark, toggleTheme } = useTheme();
+  const upcoming = weddings.filter((w) => isUpcoming(w.date)).length;
+  const cities = new Set(weddings.map((w) => w.location.split(',')[0])).size;
+
   return (
-    <ThemeProvider>
+    <div className="v2-root v2-root--nopen">
       <SEOHead
         data={{
           title: "Undangan Pernikahan Digital - Proyek Adi Rakhmatullah Ma'arif",
@@ -235,58 +287,76 @@ export const WeddingProjectsPage: React.FC = () => {
         }}
       />
 
-      <div className="np-paper min-h-[100dvh] overflow-x-hidden bg-zine-paper font-sans text-zine-ink transition-colors duration-200 dark:bg-zine-paper-dark dark:text-zine-ink-dark">
-        <header className="sticky top-0 z-40 border-b border-zine-rule/70 bg-zine-paper/85 backdrop-blur-md dark:border-zine-rule-dark/70 dark:bg-zine-paper-dark/85">
-          <div className="flex h-14 items-center justify-between px-5 sm:h-16 sm:px-8 lg:px-12">
-            <Link to="/" className="flex items-center gap-2.5">
-              <Monogram size={30} strokeClassName="stroke-zine-paper dark:stroke-zine-paper-dark" />
-              <span className="hidden text-[13px] font-medium sm:block">Adi R. Ma'arif</span>
-            </Link>
-            <div className="flex items-center gap-3">
-              <Link
-                to="/"
-                className="inline-flex items-center gap-1.5 text-[13px] font-medium text-zine-ink-soft transition-colors hover:text-zine-pen dark:text-zine-ink-soft-dark dark:hover:text-zine-pen-dark"
-              >
-                <ArrowLeft className="h-4 w-4" />
-                <span className="hidden sm:inline">Kembali ke Portofolio</span>
-                <span className="sm:hidden">Kembali</span>
-              </Link>
-              <ThemeToggle />
-            </div>
-          </div>
-        </header>
-
-        <main className="px-5 py-12 sm:px-8 sm:py-20 lg:px-12">
-          <motion.div
-            className="mb-10 max-w-2xl"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, ease: EASE }}
+      <header className="v2-header">
+        <Link to="/" className="v2-header__logo" aria-label="Adi Rakhmatullah Ma'arif">
+          AM
+        </Link>
+        <div className="v2-header__tools">
+          <Link to="/#projek" className="v2-link-btn">
+            <ArrowLeft size={14} aria-hidden="true" /> {t.common.backToPortfolio}
+          </Link>
+          <button
+            type="button"
+            className="v2-icon-btn"
+            aria-label={isDark ? t.common.toLight : t.common.toDark}
+            onClick={(e) =>
+              runTransition(
+                'theme',
+                () => {
+                  document.documentElement.classList.toggle('dark', !isDark);
+                  toggleTheme();
+                },
+                { x: e.clientX, y: e.clientY }
+              )
+            }
           >
-            <h1 className="np-hand text-[30px] leading-tight text-zine-ink dark:text-zine-ink-dark sm:text-[44px]">
-              Undangan Pernikahan Digital
-            </h1>
-            <p className="mt-3 text-[13.5px] leading-relaxed text-zine-ink-soft dark:text-zine-ink-soft-dark sm:text-[14.5px]">
-              Setiap pasangan mendapat microsite dengan tema, warna, dan interaksi yang dirancang
-              khusus untuk cerita mereka sendiri, bukan template yang dipakai ulang.
+            {isDark ? <Sun size={16} /> : <Moon size={16} />}
+          </button>
+        </div>
+      </header>
+
+      <main className="v2-main">
+        <section className="v2-sec v2-wed-head">
+          <header className="v2-head">
+            <span className="v2-badge v2-badge--bangun">Projek · Undangan digital</span>
+            <h1 className="v2-head__title">Undangan Pernikahan Digital</h1>
+            <p className="v2-head__intro">
+              Setiap pasangan mendapat microsite dengan tema, warna, dan interaksi yang dirancang khusus untuk
+              cerita mereka sendiri, bukan template yang dipakai ulang.
             </p>
-          </motion.div>
-
-          <motion.div
-            className="grid grid-cols-2 gap-x-4 gap-y-8 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6"
-            variants={containerVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: '-60px' }}
-          >
-            {weddings.map((entry, i) => (
-              <WeddingCard key={entry.id} entry={entry} index={i} />
+          </header>
+          <dl className="v2-hero__stats v2-wed-stats">
+            {[
+              [String(weddings.length), 'Undangan'],
+              [String(upcoming), 'Akan datang'],
+              [String(cities), 'Kota'],
+            ].map(([v, l]) => (
+              <div key={l}>
+                <dd>{v}</dd>
+                <dt>{l}</dt>
+              </div>
             ))}
-          </motion.div>
-        </main>
+          </dl>
+          <p className="v2-wed-hint">Arahkan kursor ke ponsel, atau gulir pelan di HP, untuk mengintip isi undangannya.</p>
+        </section>
 
-        <ZineFooter />
-      </div>
-    </ThemeProvider>
+        <div className="v2-wed-grid">
+          {weddings.map((entry, i) => (
+            <WeddingCard key={entry.id} entry={entry} index={i} />
+          ))}
+        </div>
+      </main>
+
+      <footer className="v2-footer">
+        <span>© {new Date().getFullYear()} Adi Rakhmatullah Ma'arif</span>
+        <span>{t.v2.footer}</span>
+      </footer>
+    </div>
   );
 };
+
+export const WeddingProjectsPage: React.FC = () => (
+  <ThemeProvider>
+    <WeddingProjectsContent />
+  </ThemeProvider>
+);

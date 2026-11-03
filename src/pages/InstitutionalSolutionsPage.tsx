@@ -1,5 +1,5 @@
 import React from 'react';
-import { ThemeProvider } from '../components/providers/Theme';
+import { ForcedDarkTheme } from '../components/providers/Theme';
 import { SEOHead } from '../components/ui/SEOHead';
 import { InstitutionalHeader } from '../components/institutional/InstitutionalHeader';
 import { InstitutionalFooter } from '../components/institutional/InstitutionalFooter';
@@ -16,7 +16,8 @@ export const InstitutionalSolutionsPage: React.FC = () => {
   const { t, lang } = useLang();
   const transformationChapters = useTransformationChapters();
   return (
-    <ThemeProvider>
+    // Halaman ini selalu gelap; tidak ada tombol tema di header-nya.
+    <ForcedDarkTheme>
     <div className="font-sans min-h-screen">
       <SEOHead
         data={{
@@ -54,6 +55,6 @@ export const InstitutionalSolutionsPage: React.FC = () => {
       <ProposalContact />
       <InstitutionalFooter />
     </div>
-    </ThemeProvider>
+    </ForcedDarkTheme>
   );
 };

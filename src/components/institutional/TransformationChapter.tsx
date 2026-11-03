@@ -19,11 +19,11 @@ const MetricItem: React.FC<{ metric: TransformationMetric; delay: number }> = ({
       transition={{ duration: 0.5, delay, ease: EASE }}
       className="min-w-0"
     >
-      <div className="font-mono text-lg sm:text-2xl font-semibold text-amber-600 dark:text-amber-400 whitespace-nowrap">
+      <div className="font-mono text-lg sm:text-2xl font-semibold text-amber-600 whitespace-nowrap">
         {count}
         {metric.suffix}
       </div>
-      <div className="mt-1 text-[10px] sm:text-xs uppercase tracking-wide text-stone-500 dark:text-stone-400 leading-snug break-words">
+      <div className="mt-1 text-[10px] sm:text-xs uppercase tracking-wide text-stone-500 leading-snug break-words">
         {metric.label}
       </div>
     </motion.div>
@@ -59,13 +59,15 @@ export const TransformationChapter: React.FC<{ chapter: ChapterData; index: numb
             <p className="text-sm text-zinc-500 leading-relaxed">{chapter.beforeDescription}</p>
           </motion.div>
 
-          {/* After panel */}
+          {/* After panel — selalu terang, sama seperti sisi "Sesudah" di hero:
+              halaman ini selalu gelap, jadi terangnya panel ini yang membuat
+              kontras sebelum/sesudah terbaca. */}
           <motion.div
             initial={{ opacity: 0, x: 16 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: '-80px' }}
             transition={{ duration: 0.6, ease: EASE, delay: 0.15 }}
-            className="rounded-lg border border-amber-200 dark:border-amber-900/50 bg-gradient-to-br from-amber-50 to-white dark:from-stone-900 dark:to-stone-800 p-6"
+            className="rounded-lg border border-amber-200 bg-gradient-to-br from-amber-50 to-white p-6"
           >
             <div className="flex items-center gap-3 mb-4">
               {project.logo && (
@@ -77,12 +79,12 @@ export const TransformationChapter: React.FC<{ chapter: ChapterData; index: numb
                   transition={{ duration: 0.4, ease: [0.34, 1.56, 0.64, 1] }}
                   className={`h-12 w-12 sm:h-14 sm:w-14 shrink-0 rounded-xl bg-gradient-to-br ${project.gradient} p-0.5 shadow-md`}
                 >
-                  <div className="h-full w-full rounded-[10px] bg-white dark:bg-stone-800 flex items-center justify-center overflow-hidden">
+                  <div className="h-full w-full rounded-[10px] bg-white flex items-center justify-center overflow-hidden">
                     <img src={project.logo} alt="" className="h-full w-full object-contain p-1.5" />
                   </div>
                 </motion.div>
               )}
-              <h3 className="text-base font-semibold text-stone-800 dark:text-stone-100">{project.title}</h3>
+              <h3 className="text-base font-semibold text-stone-800">{project.title}</h3>
             </div>
 
             <div className="grid grid-cols-3 gap-3 mb-4">
@@ -95,7 +97,7 @@ export const TransformationChapter: React.FC<{ chapter: ChapterData; index: numb
               {project.technologies.slice(0, 5).map((t) => (
                 <span
                   key={t}
-                  className="rounded-full border border-stone-200 dark:border-stone-700 bg-white dark:bg-stone-800 px-2.5 py-0.5 font-mono text-[10px] text-stone-600 dark:text-stone-300"
+                  className="rounded-full border border-stone-200 bg-white px-2.5 py-0.5 font-mono text-[10px] text-stone-600"
                 >
                   {t}
                 </span>

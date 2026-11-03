@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useLayoutEffect } from 'react';
 import { ThemeContext } from '../../contexts/ThemeContext';
 import type { ThemeProviderProps } from '../../types';
 
@@ -26,6 +26,27 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
 
   return (
     <ThemeContext.Provider value={{ isDark, toggleTheme }}>
+      {children}
+    </ThemeContext.Provider>
+  );
+};
+/**
+ * Tema gelap paksa untuk halaman yang memang dirancang gelap (/solusi-digital).
+ * Kelas `dark` dipasang sebelum layar pertama digambar (useLayoutEffect) supaya
+ * tidak berkedip terang, dan dikembalikan ke pilihan tersimpan pengunjung saat
+ * halaman ditinggalkan — pilihan itu sendiri tidak diubah.
+ */
+export const ForcedDarkTheme: React.FC<ThemeProviderProps> = ({ children }) => {
+  useLayoutEffect(() => {
+    const root = window.document.documentElement;
+    root.classList.add('dark');
+    return () => {
+      root.classList.toggle('dark', localStorage.getItem('theme') === 'dark');
+    };
+  }, []);
+
+  return (
+    <ThemeContext.Provider value={{ isDark: true, toggleTheme: () => {} }}>
       {children}
     </ThemeContext.Provider>
   );

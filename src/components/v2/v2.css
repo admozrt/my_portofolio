@@ -1620,3 +1620,259 @@ html[data-v2vt='lang']::view-transition-old(root) {
 @keyframes v2-vt-fade {
   to { opacity: 0.6; }
 }
+
+/* ─── Halaman tanpa garis pena (mis. /project-wedding) ───────────── */
+
+.v2-root--nopen {
+  --v2-gutter: 16px;
+}
+@media (min-width: 768px) {
+  .v2-root--nopen { --v2-gutter: 32px; }
+}
+@media (min-width: 1024px) {
+  .v2-root--nopen { --v2-gutter: 48px; }
+}
+
+/* ─── /project-wedding: kartu ponsel mengintip ───────────────────── */
+
+.v2-wed-head {
+  padding-bottom: 28px;
+}
+.v2-wed-stats {
+  max-width: 420px;
+}
+.v2-wed-hint {
+  margin: 16px 0 0;
+  font-family: var(--v2-mono);
+  font-size: 11.5px;
+  color: var(--v2-muted);
+}
+.v2-wed-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 28px 18px;
+  padding-bottom: 72px;
+}
+@media (min-width: 420px) {
+  .v2-wed-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (min-width: 768px) {
+  .v2-wed-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 36px 24px; }
+}
+@media (min-width: 1200px) {
+  .v2-wed-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
+
+.v2-wed {
+  --wed-accent: var(--v2-line);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 520ms ease, transform 620ms cubic-bezier(0.23, 1, 0.32, 1);
+}
+.v2-wed.is-shown {
+  opacity: 1;
+  transform: none;
+}
+/* Lembar rancangan tempat ponsel diletakkan. */
+.v2-wed__sheet {
+  position: relative;
+  display: grid;
+  place-items: center;
+  padding: 26px 14px 18px;
+  border: 1.5px dashed var(--v2-line-soft);
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--v2-card) 70%, transparent);
+  transition: border-color 260ms ease;
+}
+.v2-wed:hover .v2-wed__sheet,
+.v2-wed.is-peek .v2-wed__sheet {
+  border-color: var(--v2-line);
+}
+.v2-wed__spec {
+  position: absolute;
+  left: 10px;
+  top: 7px;
+  font-family: var(--v2-mono);
+  font-size: 10px;
+  color: var(--v2-line);
+}
+.v2-wed__phone {
+  position: relative;
+  width: min(100%, 190px);
+  aspect-ratio: 9 / 18.5;
+  padding: 7px;
+  border-radius: 26px;
+  background: var(--v2-ink);
+  box-shadow: 0 18px 34px -22px rgba(16, 36, 58, 0.6);
+  transition: transform 420ms cubic-bezier(0.23, 1, 0.32, 1);
+}
+.v2-wed:hover .v2-wed__phone,
+.v2-wed.is-peek .v2-wed__phone {
+  transform: translateY(-4px);
+}
+.v2-wed__notch {
+  position: absolute;
+  z-index: 2;
+  left: 50%;
+  top: 11px;
+  width: 30%;
+  height: 9px;
+  margin-left: -15%;
+  border-radius: 999px;
+  background: var(--v2-ink);
+}
+.v2-wed__screen {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border-radius: 20px;
+  background: #fff;
+}
+.v2-wed__scroll {
+  display: flex;
+  flex-direction: column;
+  transition: transform 2400ms cubic-bezier(0.65, 0, 0.35, 1);
+}
+/* Mengintip: layar menggulir dari sampul ke isi undangan. */
+.v2-wed.is-peek .v2-wed__scroll {
+  transform: translateY(calc(-100% + 100cqh));
+}
+.v2-wed__screen {
+  container-type: size;
+}
+.v2-wed__cover {
+  position: relative;
+  height: 100cqh;
+  flex: none;
+}
+.v2-wed__cover img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.v2-wed__cover-names {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 12%;
+  text-align: center;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-style: italic;
+  font-size: 15px;
+  color: #fff;
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.55);
+}
+.v2-wed__block {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin: 10px 10px 0;
+  padding: 10px;
+  border-radius: 10px;
+  background: #faf8f4;
+  color: #2a2320;
+  font-size: 10.5px;
+  line-height: 1.35;
+}
+.v2-wed__block:last-child {
+  margin-bottom: 14px;
+}
+.v2-wed__block b {
+  font-size: 12px;
+}
+.v2-wed__block--tint {
+  background: color-mix(in srgb, var(--wed-accent) 16%, #fff);
+}
+.v2-wed__label {
+  font-family: var(--v2-mono);
+  font-size: 9px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--wed-accent);
+}
+.v2-wed__block i {
+  display: block;
+  height: 14px;
+  border-radius: 4px;
+  background: rgba(42, 35, 32, 0.08);
+}
+.v2-wed__block i.is-short {
+  width: 60%;
+}
+.v2-wed__btn {
+  align-self: flex-start;
+  padding: 4px 12px;
+  border-radius: 999px;
+  background: var(--wed-accent);
+  color: #fff;
+  font-size: 10px;
+}
+
+.v2-wed__meta {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 0 2px;
+}
+.v2-wed__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  color: var(--v2-line);
+}
+.v2-wed__names {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--v2-ink);
+}
+.v2-wed__theme {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--v2-mono);
+  font-size: 11px;
+  color: var(--v2-soft);
+}
+.v2-wed__theme i {
+  width: 9px;
+  height: 9px;
+  border-radius: 2px;
+  box-shadow: 0 0 0 1px var(--v2-rule);
+}
+.v2-wed__row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+  font-size: 12.5px;
+  color: var(--v2-soft);
+}
+.v2-wed__trunc {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.v2-wed__status {
+  align-self: flex-start;
+  margin-top: 6px;
+}
+.v2-wed__status--soon {
+  font-family: var(--v2-mono);
+  font-size: 11px;
+  font-weight: 500;
+  padding: 3px 8px;
+  border-radius: 999px;
+  background: var(--v2-rancang-bg);
+  color: var(--v2-rancang);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .v2-wed { opacity: 1; transform: none; }
+  .v2-wed.is-peek .v2-wed__scroll { transform: none; }
+}

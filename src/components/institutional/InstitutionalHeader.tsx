@@ -2,7 +2,6 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
 import { Monogram } from '../ui/Monogram';
-import { ThemeToggle } from '../layout/ThemeToggle';
 import { LangToggle } from '../ui/LangToggle';
 import { useLang } from '../../hooks/useLang';
 
@@ -26,7 +25,6 @@ export const InstitutionalHeader: React.FC = () => {
             <span className="hidden sm:inline">{t.common.backToPortfolio}</span>
           </Link>
           <LangToggle variant="plain" />
-          <ThemeToggle />
         </div>
       </div>
     </header>
