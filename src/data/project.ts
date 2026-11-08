@@ -2,34 +2,10 @@ import type { Project } from '../types';
 
 export const projects: Project[] = [
   {
-    id: 1,
-    title: 'Sinergi Health Baimbai - RME',
-    description: 'Sistem Rekam Medik yang memudahkan dokter dan perawat dalam mengelola pasien, rekam medis, dan administrasi klinik. dengan fitur-fitur seperti pendaftaran pasien, pemeriksaan, diagnosa, resep obat, dan pelaporan. Sistem yang dapat diakses melalui berbagai platform, termasuk web, mobile, dan desktop. dapat digunakan untuk klinik utama, klinik pratama, spesialis dan puskesmas',
-    technologies: ['Laravel', 'React', 'React Native', 'MySQL', 'Redis', 'Integrasi API', 'Satu Sehat', 'BPJS', 'PACS'],
-    link: 'https://sinergi.dinara-sanur.biz.id',
-    gradient: 'from-green-500 via-green-600 to-emerald-400',
-    logo: '/images/projects/logos/sinergi-health.png',
-    featured: true,
-    status: 'sedang_berjalan',
-    domain: 'Kesehatan',
-    monitorStatus: 'LIVE',
-    metrics: [
-      { label: 'Uptime', value: '99.9%' },
-      { label: 'Fasilitas Terhubung', value: '3+' },
-      { label: 'Modul Aktif', value: '6' }
-    ],
-    logEntries: [
-      { timestamp: '08:12', message: 'Pendaftaran pasien baru tercatat' },
-      { timestamp: '08:15', message: 'Rekam medis tersinkron' },
-      { timestamp: '08:20', message: 'Resep obat diterbitkan' },
-      { timestamp: '08:24', message: 'Klaim BPJS diverifikasi' }
-    ]
-  },
-  {
     id: 2,
     title: 'TMU Ferry - Platform Tiket Kapal',
-    description: 'Platform tiket kapal komprehensif dengan penjadwalan real-time, gateway pembayaran terintegrasi, dan antarmuka mobile responsif untuk optimisasi transportasi maritim pada PT.Timur Mila Utama.',
-    technologies: ['Laravel', 'React', 'React Native', 'MySQL', 'Redis', 'Docker', 'Gateway Pembayaran', 'Integrasi API'],
+    description: 'Platform tiket kapal komprehensif dengan penjadwalan real-time, gateway pembayaran terintegrasi, dan antarmuka mobile responsif untuk optimisasi transportasi maritim pada PT.Timur Mila Utama. Terintegrasi dengan Bank BCA dan Pelindo.',
+    technologies: ['Laravel', 'React', 'React Native', 'MySQL', 'Redis', 'Docker', 'Gateway Pembayaran', 'Integrasi API', 'Integrasi Bank BCA', 'Integrasi Pelindo'],
     link: 'https://timurmilautama.co.id',
     gradient: 'from-blue-500 via-blue-600 to-cyan-600',
     logo: '/images/projects/logos/tmu-ferry.png',
@@ -70,6 +46,52 @@ export const projects: Project[] = [
       { timestamp: '10:00', message: 'Data destinasi diperbarui' },
       { timestamp: '10:05', message: 'Event budaya dipublikasikan' },
       { timestamp: '10:12', message: 'Statistik kunjungan disinkron' }
+    ]
+  },
+  {
+    id: 12,
+    title: 'EPBB & BPHTB - BPPRD Kota Banjarbaru',
+    description: 'Pengembangan sistem pajak daerah Kota Banjarbaru untuk Pajak Bumi dan Bangunan (EPBB) dan Bea Perolehan Hak atas Tanah dan Bangunan (BPHTB). Terintegrasi dengan Bank Kalsel dan BPN.',
+    technologies: ['CodeIgniter', 'MySQL', 'Oracle', 'Integrasi API', 'Integrasi Bank Kalsel', 'Integrasi BPN'],
+    link: '#',
+    gradient: 'from-emerald-500 via-teal-600 to-cyan-600',
+    icon: 'fas fa-landmark',
+    featured: true,
+    status: 'selesai',
+    bangunLabel: 'Pengembangan',
+    domain: 'Pajak Daerah & Pemerintahan',
+    monitorStatus: 'OPERATIONAL',
+    metrics: [
+      { label: 'Integrasi', value: 'Bank Kalsel · BPN' }
+    ],
+    logEntries: [
+      { timestamp: '08:00', message: 'Tagihan PBB diterbitkan' },
+      { timestamp: '08:10', message: 'Pembayaran Bank Kalsel tercatat' },
+      { timestamp: '08:20', message: 'Data BPHTB diverifikasi BPN' }
+    ]
+  },
+  {
+    id: 1,
+    title: 'Sinergi Health Baimbai - RME',
+    description: 'Sistem Rekam Medik yang memudahkan dokter dan perawat dalam mengelola pasien, rekam medis, dan administrasi klinik. dengan fitur-fitur seperti pendaftaran pasien, pemeriksaan, diagnosa, resep obat, dan pelaporan. Sistem yang dapat diakses melalui berbagai platform, termasuk web, mobile, dan desktop. dapat digunakan untuk klinik utama, klinik pratama, spesialis dan puskesmas',
+    technologies: ['Laravel', 'React', 'React Native', 'MySQL', 'Redis', 'Integrasi API', 'Satu Sehat', 'BPJS', 'PACS'],
+    link: 'https://sinergi.dinara-sanur.biz.id',
+    gradient: 'from-green-500 via-green-600 to-emerald-400',
+    logo: '/images/projects/logos/sinergi-health.png',
+    featured: true,
+    status: 'sedang_berjalan',
+    domain: 'Kesehatan',
+    monitorStatus: 'LIVE',
+    metrics: [
+      { label: 'Uptime', value: '99.9%' },
+      { label: 'Fasilitas Terhubung', value: '3+' },
+      { label: 'Modul Aktif', value: '6' }
+    ],
+    logEntries: [
+      { timestamp: '08:12', message: 'Pendaftaran pasien baru tercatat' },
+      { timestamp: '08:15', message: 'Rekam medis tersinkron' },
+      { timestamp: '08:20', message: 'Resep obat diterbitkan' },
+      { timestamp: '08:24', message: 'Klaim BPJS diverifikasi' }
     ]
   },
   {

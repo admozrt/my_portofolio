@@ -40,7 +40,16 @@ export const complianceCards: ComplianceCard[] = [
     shortDescription:
       'Transaksi pembayaran diproses melalui payment gateway berlisensi, bukan penanganan dana secara manual.',
     detailDescription:
-      'Pada proyek TMU Ferry (PT. Timur Mila Utama), pembayaran tiket kapal terintegrasi dengan Midtrans, Xendit, dan Bank BCA. Pada proyek BPPRD Kota Banjarbaru, pembayaran pajak/retribusi daerah terintegrasi dengan Bank Kalsel.',
+      'Pada proyek TMU Ferry (PT. Timur Mila Utama), pembayaran tiket kapal terintegrasi dengan Midtrans, Xendit, dan Bank BCA. Pada pengembangan EPBB dan BPHTB di BPPRD Kota Banjarbaru, pembayaran pajak daerah terintegrasi dengan Bank Kalsel.',
     referenceNumber: 'DOC-2026-04',
+  },
+  {
+    title: 'Integrasi Antar-Instansi',
+    stampLabel: 'IMPLEMENTED',
+    shortDescription:
+      'Sistem dihubungkan langsung dengan sistem instansi dan BUMN terkait, bukan input data ulang secara manual.',
+    detailDescription:
+      'Platform tiket kapal TMU Ferry terintegrasi dengan Pelindo. Sistem EPBB dan BPHTB BPPRD Kota Banjarbaru terintegrasi dengan BPN.',
+    referenceNumber: 'DOC-2026-05',
   },
 ];

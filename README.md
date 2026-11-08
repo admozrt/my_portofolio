@@ -112,6 +112,7 @@ projects, clients, experience, and skills.
 | `/corepos`         | Core POS product page             |
 | `/ajie-alya`       | Wedding — Ajie & Alya             |
 | `/anggi-rezza`     | Wedding — Anggi & Rezza           |
+| `/nayla-dawi`      | Wedding — Nayla & Dawi            |
 | `/tito-wina`       | Wedding — Tito & Wina             |
 | `/dimas-laila`     | Wedding — Dimas & Laila           |
 | `/arya-sekar`      | Wedding — Arya & Sekar            |

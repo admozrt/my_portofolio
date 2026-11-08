@@ -99,7 +99,7 @@ export const LayeredProject: React.FC<Props> = ({ project, index, dimmed, matche
             className={`v2-layer v2-layer--bangun bg-gradient-to-br ${project.gradient}`}
             style={{ transform: `translateZ(${gap}px)`, opacity: focus('bangun') ? 1 : 0.25 }}
           >
-            <span className="v2-layer__tag v2-layer__tag--light">{t.v2.layer.bangun}</span>
+            <span className="v2-layer__tag v2-layer__tag--light">{project.bangunLabel ?? t.v2.layer.bangun}</span>
             {project.logo && <img className="v2-layer__logo" src={project.logo} alt="" loading="lazy" />}
             <span className="v2-layer__title">{project.title.split(' - ')[0]}</span>
           </div>
@@ -144,7 +144,7 @@ export const LayeredProject: React.FC<Props> = ({ project, index, dimmed, matche
               className={`v2-phase-picker__btn v2-phase-picker__btn--${p}${phase === p ? ' is-on' : ''}`}
               onClick={() => setPhase((cur) => (cur === p ? null : p))}
             >
-              {t.v2.phase[p]}
+              {p === 'bangun' && project.bangunLabel ? project.bangunLabel : t.v2.phase[p]}
             </button>
           ))}
         </div>

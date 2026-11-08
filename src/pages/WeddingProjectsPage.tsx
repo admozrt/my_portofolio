@@ -5,6 +5,7 @@ import { ThemeProvider } from '../components/providers/Theme';
 import { SEOHead } from '../components/ui/SEOHead';
 import { useTheme } from '../hooks/useTheme';
 import { useLang } from '../hooks/useLang';
+import { Monogram } from '../components/ui/Monogram';
 import { runTransition } from '../components/v2/viewTransition';
 import '../components/v2/v2.css';
 
@@ -85,6 +86,17 @@ const weddings: WeddingEntry[] = [
     href: '/saufi-afifah',
     accent: '#3E5470',
     theme: 'Negeri Awan',
+  },
+  {
+    id: 'nayla-dawi',
+    names: 'Nayla & Dawi',
+    date: new Date('2026-11-22T07:00:00+08:00'),
+    dateLabel: '22 November 2026',
+    location: 'Martapura, Kalimantan Selatan',
+    cover: '/nayla/preview.svg',
+    href: '/nayla-dawi',
+    accent: '#5f7a5b',
+    theme: 'Sage Emas',
   },
   {
     id: 'dimas-laila',
@@ -289,7 +301,7 @@ const WeddingProjectsContent: React.FC = () => {
 
       <header className="v2-header">
         <Link to="/" className="v2-header__logo" aria-label="Adi Rakhmatullah Ma'arif">
-          AM
+          <Monogram size={30} />
         </Link>
         <div className="v2-header__tools">
           <Link to="/#projek" className="v2-link-btn">

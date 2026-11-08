@@ -31,7 +31,7 @@ export const partners: Partner[] = [
     description: 'Badan Pengelola Pajak dan Retribusi Daerah Kota Banjarbaru',
     website: '#',
     category: 'klien',
-    relationship: 'Pengembang Sistem'
+    relationship: 'Pengembang Sistem - EPBB & BPHTB'
   },
   {
     id: 5,

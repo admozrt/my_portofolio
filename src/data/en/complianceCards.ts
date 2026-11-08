@@ -31,6 +31,13 @@ export const complianceCardsEn: Partial<Record<string, Partial<ComplianceCard>>>
     shortDescription:
       'Payments are processed through licensed payment gateways, never handled manually.',
     detailDescription:
-      'In the TMU Ferry project (PT. Timur Mila Utama), ferry ticket payments integrate with Midtrans, Xendit, and Bank BCA. In the BPPRD Banjarbaru City project, regional tax and levy payments integrate with Bank Kalsel.',
+      'In the TMU Ferry project (PT. Timur Mila Utama), ferry ticket payments integrate with Midtrans, Xendit, and Bank BCA. In the EPBB and BPHTB systems for BPPRD Banjarbaru City, regional tax payments integrate with Bank Kalsel.',
+  },
+  'DOC-2026-05': {
+    title: 'Inter-Agency Integration',
+    shortDescription:
+      'Systems connect directly to the relevant agencies and state-owned enterprises instead of re-entering data by hand.',
+    detailDescription:
+      'The TMU Ferry ticketing platform integrates with Pelindo. The EPBB and BPHTB systems for BPPRD Banjarbaru City integrate with BPN (National Land Agency).',
   },
 };

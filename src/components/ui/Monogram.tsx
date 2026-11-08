@@ -14,77 +14,37 @@ interface MonogramProps {
 }
 
 /**
- * Signature "AM" monogram — geometric A + M strokes inside a rounded tile.
- * Reused across nav, splash, and footer as the brand signature.
- * When `draw` is true it line-draws itself (pathLength 0 -> 1), respecting
- * reduced-motion (renders fully drawn, no animation).
+ * Logo "A" — sama dengan ikon tab browser (public/favicon.ico): ubin biru
+ * dengan huruf A krem yang terbelah. Digambar ulang sebagai SVG (grid 48)
+ * supaya tajam di semua ukuran. Dipakai di header, splash, dan footer.
+ * `draw` = muncul dengan skala halus saat mount (menghormati reduced-motion).
+ * `strokeClassName` dipertahankan untuk kompatibilitas pemanggil lama; tidak
+ * lagi dipakai karena warna logo tetap.
  */
 export const Monogram: React.FC<MonogramProps> = ({
   size = 36,
   draw = false,
   className = '',
-  title = 'Adi Rakhmatullah Maarif',
-  strokeClassName = 'stroke-accent-500',
+  title = "Adi Rakhmatullah Ma'arif",
 }) => {
   const reduce = useReducedMotion();
-  const shouldDraw = draw && !reduce;
-
-  const strokeProps = shouldDraw
-    ? {
-        initial: { pathLength: 0, opacity: 0 },
-        animate: { pathLength: 1, opacity: 1 },
-      }
-    : { initial: false as const, animate: { pathLength: 1, opacity: 1 } };
-
+  const animate = draw && !reduce;
   return (
-    <svg
+    <motion.svg
       width={size}
       height={size}
-      viewBox="0 0 40 40"
-      fill="none"
+      viewBox="0 0 48 48"
       role="img"
       aria-label={title}
       className={className}
+      initial={animate ? { opacity: 0, scale: 0.7, rotate: -10 } : false}
+      animate={{ opacity: 1, scale: 1, rotate: 0 }}
+      transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
     >
       <title>{title}</title>
-      {/* Tile */}
-      <motion.rect
-        x="1.5"
-        y="1.5"
-        width="37"
-        height="37"
-        rx="10"
-        className="fill-zinc-900 dark:fill-zinc-100"
-        initial={shouldDraw ? { opacity: 0, scale: 0.8 } : false}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-        style={{ transformOrigin: 'center' }}
-      />
-      {/* Strokes drawn in the accent so the mark reads on the dark/light tile */}
-      <g
-        className={strokeClassName}
-        strokeWidth={2.4}
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      >
-        {/* A */}
-        <motion.path
-          d="M8 29 L13 12 L18 29"
-          {...strokeProps}
-          transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1], delay: 0.15 }}
-        />
-        <motion.path
-          d="M9.8 23 H16.2"
-          {...strokeProps}
-          transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1], delay: 0.55 }}
-        />
-        {/* M */}
-        <motion.path
-          d="M22 29 V12 L27 21 L32 12 V29"
-          {...strokeProps}
-          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.3 }}
-        />
-      </g>
-    </svg>
+      <rect width="48" height="48" rx="7" fill="#0055aa" />
+      <polygon points="10,37.5 19.5,10 21,10 22.3,18 19.8,28 18.6,37.5" fill="#dfe4b9" />
+      <polygon points="22.2,10 29,10 37.8,37.5 30.2,37.5 28.8,32.5 21.6,32.5 23.6,24.5 22.6,17" fill="#dfe4b9" />
+    </motion.svg>
   );
 };

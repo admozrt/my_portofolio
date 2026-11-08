@@ -11,6 +11,7 @@ import { contactInfo } from '../../data/contact';
 import type { Project, Skill } from '../../types';
 import { PHASES, SKILL_CATEGORY_PHASE, SOFT_SKILL_PHASE, projectUses, type Phase } from '../../data/v2Phases';
 import { LangToggle } from '../ui/LangToggle';
+import { Monogram } from '../ui/Monogram';
 import { mailLink } from '../../utils/mail';
 import { runTransition } from './viewTransition';
 
@@ -39,7 +40,7 @@ export const V2Header: React.FC<{ nav: { id: string; label: string }[] }> = ({ n
   return (
     <header className="v2-header">
       <a href="#beranda" className="v2-header__logo" aria-label="Adi Rakhmatullah Ma'arif">
-        AM
+        <Monogram size={30} />
       </a>
       <nav className="v2-header__nav" aria-label="Menu">
         {nav.map((n) => (
@@ -255,6 +256,58 @@ export const ReleaseLog: React.FC = () => {
           );
         })}
       </ol>
+    </section>
+  );
+};
+
+/* ─── Integrasi: sistem ⇄ bank / instansi ────────────────────────── */
+
+export const Integrations: React.FC = () => {
+  const { t } = useLang();
+  const ref = React.useRef<HTMLUListElement>(null);
+  const [inView, setInView] = React.useState(false);
+  React.useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const io = new IntersectionObserver(
+      ([e]) => {
+        if (e.isIntersecting) {
+          setInView(true);
+          io.disconnect();
+        }
+      },
+      { threshold: 0.25 }
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+  return (
+    <section id="integrasi" className="v2-sec">
+      <SectionHead phase="bangun" title={t.v2.intHeading} intro={t.v2.intIntro} />
+      <ul ref={ref} className={`v2-int${inView ? ' is-in' : ''}`}>
+        {t.v2.intItems.map((it) => (
+          <li key={it.system} className="v2-int__row">
+            <div className="v2-int__sys">
+              <b>{it.system}</b>
+              <span>{it.owner}</span>
+            </div>
+            <div className="v2-int__link" aria-hidden="true">
+              <i />
+              <small>{t.v2.intLinked}</small>
+            </div>
+            <ul className="v2-int__partners" aria-label={t.v2.intLinked}>
+              {it.partners.map((p) => (
+                <li key={p}>
+                  <span className="v2-live v2-live--sm">
+                    <i />
+                  </span>
+                  {p}
+                </li>
+              ))}
+            </ul>
+          </li>
+        ))}
+      </ul>
     </section>
   );
 };

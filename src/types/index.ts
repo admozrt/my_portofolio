@@ -52,6 +52,9 @@ export interface Project {
   monitorStatus: 'LIVE' | 'OPERATIONAL' | 'STANDBY';
   metrics: { label: string; value: string }[];
   logEntries: { timestamp: string; message: string }[];
+  /** Ganti label fase "Bangun" (mis. "Pengembangan" untuk sistem yang
+   *  dikembangkan, bukan dibangun dari nol). */
+  bangunLabel?: string;
 }
 
 // Partner-related types

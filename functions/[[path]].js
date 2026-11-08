@@ -131,6 +131,18 @@ const ROUTES = {
     url: BASE + "/amel-syarief",
     siteName: "Undangan Pernikahan",
   },
+  weddingNayla: {
+    match: (path) => /nayla/i.test(path) || /dawi/i.test(path),
+    title: "Undangan Pernikahan Nayla & Dawi 💍",
+    description:
+      "Dengan memohon rahmat Allah, kami mengundang Anda di hari bahagia kami. Minggu, 22 November 2026 · Indrasari, Martapura, Kalimantan Selatan",
+    // Sementara memakai foto default sampai /nayla/preview.jpg tersedia.
+    image: BASE + "/my.png",
+    imageW: "997",
+    imageH: "1247",
+    url: BASE + "/nayla-dawi",
+    siteName: "Undangan Pernikahan",
+  },
   projectWedding: {
     match: (path) => /project-wedding/i.test(path),
     title: "Undangan Pernikahan Digital - Projek Adi Rakhmatullah Ma'arif",

@@ -13,6 +13,7 @@ import { LayeredProject } from '../components/v2/LayeredProject';
 import {
   ContactSketch,
   HowIWork,
+  Integrations,
   ReleaseLog,
   SectionHead,
   SolutionLink,
@@ -67,6 +68,7 @@ const PortfolioV2Content: React.FC = () => {
     () => [
       { id: 'beranda', label: t.v2.phase.rancang + ' · ' + t.v2.phase.bangun + ' · ' + t.v2.phase.rawat },
       { id: 'projek', label: t.nav.projek },
+      { id: 'integrasi', label: t.v2.intHeading },
       { id: 'softskill', label: t.nav.softskill },
       { id: 'skill', label: t.nav.skill },
       { id: 'pengalaman', label: t.nav.pengalaman },
@@ -142,6 +144,7 @@ const PortfolioV2Content: React.FC = () => {
           )}
         </section>
 
+        <Integrations />
         <HowIWork />
         <Toolbox projects={projects} selected={tool} onSelect={setTool} />
         <ReleaseLog />

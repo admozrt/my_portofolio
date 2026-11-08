@@ -17,7 +17,7 @@ export const partnersEn: Partial<Record<number, Partial<Partner>>> = {
   },
   4: {
     description: 'Regional Tax and Levy Management Agency of Banjarbaru City',
-    relationship: 'System Developer',
+    relationship: 'System Developer - EPBB & BPHTB',
   },
   5: {
     description: 'Department of Youth, Sports, Culture, and Tourism of Banjarbaru City',

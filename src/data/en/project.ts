@@ -27,7 +27,7 @@ export const projectsEn: Partial<Record<number, Partial<Project>>> = {
   2: {
     title: 'TMU Ferry - Ferry Ticketing Platform',
     description:
-      'A complete ferry ticketing platform with real-time scheduling, an integrated payment gateway, and a responsive mobile interface, built to streamline sea transport for PT. Timur Mila Utama.',
+      'A complete ferry ticketing platform with real-time scheduling, an integrated payment gateway, and a responsive mobile interface, built to streamline sea transport for PT. Timur Mila Utama. Integrated with Bank BCA and Pelindo.',
     domain: 'Ferry Shipping Company',
     metrics: [
       { label: 'Uptime', value: '99.8%' },
@@ -182,6 +182,19 @@ export const projectsEn: Partial<Record<number, Partial<Project>>> = {
       { timestamp: '08:30', message: 'New asset registered' },
       { timestamp: '08:40', message: 'Asset QR scanned' },
       { timestamp: '08:50', message: 'Asset loan approved' },
+    ],
+  },
+  12: {
+    title: 'EPBB & BPHTB - BPPRD Banjarbaru City',
+    description:
+      'Development of Banjarbaru City regional tax system for Land and Building Tax (EPBB) and Land and Building Acquisition Duty (BPHTB). Integrated with Bank Kalsel and BPN (National Land Agency).',
+    domain: 'Regional Tax & Government',
+    bangunLabel: 'Development',
+    metrics: [{ label: 'Integrations', value: 'Bank Kalsel · BPN' }],
+    logEntries: [
+      { timestamp: '08:00', message: 'Land tax bills issued' },
+      { timestamp: '08:10', message: 'Bank Kalsel payment recorded' },
+      { timestamp: '08:20', message: 'BPHTB data verified with BPN' },
     ],
   },
 };

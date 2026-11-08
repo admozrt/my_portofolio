@@ -14,6 +14,7 @@ import { WeddingPageBagasNadira } from './pages/wedding/WeddingPageBagasNadira';
 import { WeddingPageWisnuRatih } from './pages/wedding/WeddingPageWisnuRatih';
 import { WeddingPageSaufiAfifah } from './pages/wedding/WeddingPageSaufiAfifah';
 import { WeddingPageAmelSyarief } from './pages/wedding/WeddingPageAmelSyarief';
+import { WeddingPageNaylaDawi } from './pages/wedding/WeddingPageNaylaDawi';
 import { WeddingProjectsPage } from './pages/WeddingProjectsPage';
 import { InstitutionalSolutionsPage } from './pages/InstitutionalSolutionsPage';
 import { CorePOSPage } from './pages/CorePOSPage';
@@ -102,6 +103,9 @@ const App: React.FC = () => {
         {/* Halaman ini awalnya untuk Elfima & Harris; link lama dialihkan. */}
         <Route path="/elfima-harris" element={<RedirectKeepQuery to="/amel-syarief" />} />
         <Route path="/harris-elfima" element={<RedirectKeepQuery to="/amel-syarief" />} />
+        {/* Undangan Pernikahan (sage & emas, konsep /anggi-rezza): /nayla-dawi?to=NamaPengunjung */}
+        <Route path="/nayla-dawi" element={<WeddingPageNaylaDawi />} />
+        <Route path="/dawi-nayla" element={<RedirectKeepQuery to="/nayla-dawi" />} />
 
         {/* Showcase proyek undangan pernikahan */}
         <Route path="/project-wedding" element={<WeddingProjectsPage />} />

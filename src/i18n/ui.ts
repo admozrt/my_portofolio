@@ -166,6 +166,13 @@ const id = {
     notes: 'Catatan rilis',
     statusHeading: 'Papan status',
     statusIntro: 'Instansi dan perusahaan yang sistemnya saya kerjakan.',
+    intHeading: 'Integrasi',
+    intIntro: 'Sistem yang saya bangun tersambung langsung dengan bank dan instansi terkait.',
+    intLinked: 'terintegrasi dengan',
+    intItems: [
+      { system: 'TMU Ferry', owner: 'PT. Timur Mila Utama', partners: ['Bank BCA', 'Pelindo'] },
+      { system: 'EPBB & BPHTB', owner: 'BPPRD Kota Banjarbaru', partners: ['Bank Kalsel', 'BPN'] },
+    ],
     running: 'Sistem berjalan',
     contactHeading: 'Mulai fase rancang Anda',
     contactIntro:
@@ -369,6 +376,13 @@ const en: typeof id = {
     notes: 'Release notes',
     statusHeading: 'Status board',
     statusIntro: 'Institutions and companies whose systems I have built.',
+    intHeading: 'Integrations',
+    intIntro: 'Systems I have built connect directly to the banks and agencies involved.',
+    intLinked: 'integrated with',
+    intItems: [
+      { system: 'TMU Ferry', owner: 'PT. Timur Mila Utama', partners: ['Bank BCA', 'Pelindo'] },
+      { system: 'EPBB & BPHTB', owner: 'BPPRD Banjarbaru City', partners: ['Bank Kalsel', 'BPN'] },
+    ],
     running: 'System running',
     contactHeading: 'Start your design phase',
     contactIntro:

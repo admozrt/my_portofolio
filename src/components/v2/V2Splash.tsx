@@ -34,9 +34,9 @@ const Sheet: React.FC<{ ink: boolean; live: boolean; liveLabel: string }> = ({ i
     <div className="v2-splash__item">
       {!ink && <span className="v2-splash__spec">logo · 64</span>}
       {ink ? (
-        <Monogram size={64} strokeClassName="stroke-white dark:stroke-zinc-900" />
+        <Monogram size={64} />
       ) : (
-        <span className="v2-splash__logo-plan">AM</span>
+        <span className="v2-splash__logo-plan">A</span>
       )}
     </div>
     <div className="v2-splash__item">
