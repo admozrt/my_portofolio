@@ -103,7 +103,7 @@ const App: React.FC = () => {
         {/* Halaman ini awalnya untuk Elfima & Harris; link lama dialihkan. */}
         <Route path="/elfima-harris" element={<RedirectKeepQuery to="/amel-syarief" />} />
         <Route path="/harris-elfima" element={<RedirectKeepQuery to="/amel-syarief" />} />
-        {/* Undangan Pernikahan (sage & emas, konsep /anggi-rezza): /nayla-dawi?to=NamaPengunjung */}
+        {/* Undangan Pernikahan (biru & putih, konsep /anggi-rezza): /nayla-dawi?to=NamaPengunjung */}
         <Route path="/nayla-dawi" element={<WeddingPageNaylaDawi />} />
         <Route path="/dawi-nayla" element={<RedirectKeepQuery to="/nayla-dawi" />} />
 

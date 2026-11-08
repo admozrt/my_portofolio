@@ -1,26 +1,26 @@
 @import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Great+Vibes&family=Jost:wght@300;400;500&display=swap");
 
 /* ════════════════════════════════════════════════════════════════
-   Wedding — Nayla & Dawi (sage + emas)
+   Wedding — Nayla & Dawi (biru + putih)
    Semua selector di-scope di bawah .nayla-wedding agar tidak bocor
    ke halaman lain (portfolio, dsb).
    ════════════════════════════════════════════════════════════════ */
 
 .nayla-wedding {
-  --ivory: #f6f4ec;
-  --ivory-2: #e9ecdf;
-  --green: #5f7a5b;
-  --green-deep: #3e5340;
-  --green-soft: #8aa37f;
-  --sage: #b7c9a8;
-  --gold: #b8964a;
-  --gold-light: #d9bf7f;
-  --ink: #2f3a2c;
-  --ink-soft: #5e6b58;
+  --ivory: #f5f8ff;
+  --ivory-2: #e4ebfd;
+  --green: #1f45c9;
+  --green-deep: #12298a;
+  --green-soft: #4d6fe0;
+  --sage: #aebff6;
+  --gold: #2b55d6;
+  --gold-light: #dfe7ff;
+  --ink: #14224f;
+  --ink-soft: #4a5a85;
   --font-script: "Great Vibes", cursive;
   --font-serif: "Cormorant Garamond", serif;
   --font-sans: "Jost", sans-serif;
-  --photo-dim: rgba(40, 56, 40, 0.72);
+  --photo-dim: rgba(14, 30, 100, 0.62);
 
   /* Foto background (di-set lewat inline style di komponen agar path /public
      tidak diproses webpack css-loader; fallback: none) */
@@ -127,7 +127,7 @@
   width: 46px;
   height: 46px;
   border-radius: 50%;
-  border: 3px solid rgba(217, 191, 127, 0.25);
+  border: 3px solid rgba(223, 231, 255, 0.25);
   border-top-color: var(--gold-light);
   animation: nayla-loader-spin 0.9s linear infinite;
 }
@@ -145,9 +145,9 @@
   background-color: var(--green-deep);
   background-image: radial-gradient(
       120% 80% at 50% -10%,
-      rgba(95, 122, 91, 0.55) 0%,
-      rgba(62, 83, 64, 0.7) 55%,
-      rgba(40, 56, 40, 0.85) 100%
+      rgba(31, 69, 201, 0.55) 0%,
+      rgba(18, 41, 138, 0.7) 55%,
+      rgba(14, 30, 100, 0.85) 100%
     ),
     var(--cover-photo);
   background-size: cover;
@@ -179,14 +179,14 @@
 .nayla-wedding .cover-frame {
   position: absolute;
   inset: 18px;
-  border: 1px solid rgba(217, 191, 127, 0.35);
+  border: 1px solid rgba(223, 231, 255, 0.35);
   pointer-events: none;
 }
 .nayla-wedding .cover-frame:after {
   content: "";
   position: absolute;
   inset: 7px;
-  border: 1px solid rgba(217, 191, 127, 0.18);
+  border: 1px solid rgba(223, 231, 255, 0.18);
 }
 .nayla-wedding .cover .label {
   color: var(--gold-light);
@@ -220,8 +220,8 @@
   font-size: 1.5rem;
   font-weight: 600;
   color: var(--ivory);
-  border-top: 1px solid rgba(217, 191, 127, 0.4);
-  border-bottom: 1px solid rgba(217, 191, 127, 0.4);
+  border-top: 1px solid rgba(223, 231, 255, 0.4);
+  border-bottom: 1px solid rgba(223, 231, 255, 0.4);
   padding: 0.5rem 1.6rem;
   display: inline-block;
 }
@@ -256,7 +256,7 @@
   font-size: 0.6rem;
   letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: rgba(217, 191, 127, 0.7);
+  color: rgba(223, 231, 255, 0.7);
   text-decoration: none;
   margin-top: 0.2rem;
   transition: color 0.3s;
@@ -265,7 +265,7 @@
   color: var(--gold-light);
 }
 .nayla-wedding .crafted-foot {
-  color: rgba(217, 191, 127, 0.7);
+  color: rgba(223, 231, 255, 0.7);
   text-decoration: none;
   font-size: 0.6rem;
   letter-spacing: 0.22em;
@@ -338,7 +338,7 @@
   top: 50%;
   width: 15px;
   height: 21px;
-  background: var(--pc, rgba(217, 191, 127, 0.5));
+  background: var(--pc, rgba(223, 231, 255, 0.5));
   border-radius: 50% 50% 50% 50% / 64% 64% 36% 36%;
   transform: translate(-50%, -50%) rotate(var(--a)) translateY(-11px);
 }
@@ -399,7 +399,7 @@
   background-color: var(--green);
   background-image: radial-gradient(
     120% 90% at 50% 0%,
-    #7a9471,
+    #3d63dd,
     var(--green) 55%,
     var(--green-deep)
   );
@@ -413,12 +413,12 @@
 }
 .nayla-wedding #opening {
   background-image: linear-gradient(var(--photo-dim), var(--photo-dim)),
-    radial-gradient(120% 90% at 50% 0%, rgba(120, 148, 110, 0.55), transparent 60%),
+    radial-gradient(120% 90% at 50% 0%, rgba(77, 111, 224, 0.55), transparent 60%),
     var(--hero-photo);
 }
 .nayla-wedding #closing {
   background-image: linear-gradient(var(--photo-dim), var(--photo-dim)),
-    radial-gradient(120% 90% at 50% 0%, rgba(120, 148, 110, 0.55), transparent 60%),
+    radial-gradient(120% 90% at 50% 0%, rgba(77, 111, 224, 0.55), transparent 60%),
     var(--closing-photo);
 }
 .nayla-wedding .bg-green .label,
@@ -556,7 +556,7 @@
 .nayla-wedding .cd {
   min-width: 74px;
   padding: 0.9rem 0.5rem;
-  border: 1px solid rgba(217, 191, 127, 0.45);
+  border: 1px solid rgba(223, 231, 255, 0.45);
   background: rgba(255, 255, 255, 0.04);
   backdrop-filter: blur(2px);
   display: flex;
@@ -652,7 +652,7 @@
   width: 200px;
   height: 280px;
   border-radius: 150px 150px 0 0;
-  box-shadow: 0 18px 40px rgba(40, 56, 40, 0.28);
+  box-shadow: 0 18px 40px rgba(14, 30, 100, 0.28);
   overflow: hidden;
 }
 .nayla-wedding .portrait img {
@@ -697,14 +697,14 @@
   letter-spacing: 0.08em;
   color: var(--ink-soft);
   text-decoration: none;
-  border: 1px solid rgba(184, 150, 74, 0.4);
+  border: 1px solid rgba(77, 111, 224, 0.4);
   padding: 0.4rem 1rem;
   border-radius: 30px;
   transition: 0.3s;
 }
 .nayla-wedding .bg-green .ig {
   color: rgba(246, 241, 232, 0.82);
-  border-color: rgba(217, 191, 127, 0.4);
+  border-color: rgba(223, 231, 255, 0.4);
 }
 .nayla-wedding .ig:hover {
   background: var(--gold);
@@ -730,7 +730,7 @@
 }
 .nayla-wedding .event-card {
   background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(217, 191, 127, 0.35);
+  border: 1px solid rgba(223, 231, 255, 0.35);
   padding: 2.2rem 1.6rem;
   display: flex;
   flex-direction: column;
@@ -740,8 +740,8 @@
 }
 .nayla-wedding .bg-ivory .event-card {
   background: #fff;
-  border-color: rgba(184, 150, 74, 0.3);
-  box-shadow: 0 12px 34px rgba(40, 56, 40, 0.08);
+  border-color: rgba(77, 111, 224, 0.3);
+  box-shadow: 0 12px 34px rgba(14, 30, 100, 0.08);
 }
 .nayla-wedding .event-card h3 {
   font-family: var(--font-script);
@@ -790,8 +790,8 @@
 /* map */
 .nayla-wedding .map-frame {
   width: 100%;
-  border: 1px solid rgba(217, 191, 127, 0.4);
-  background: #26332a;
+  border: 1px solid rgba(223, 231, 255, 0.4);
+  background: #0d1d5c;
 }
 .nayla-wedding .map-frame iframe {
   width: 100%;
@@ -827,14 +827,14 @@
 
 /* generic image-slot placeholder */
 .nayla-wedding .img-slot {
-  background: linear-gradient(135deg, rgba(217, 191, 127, 0.16), rgba(184, 150, 74, 0.08));
-  border: 1px solid rgba(217, 191, 127, 0.3);
+  background: linear-gradient(135deg, rgba(223, 231, 255, 0.16), rgba(77, 111, 224, 0.08));
+  border: 1px solid rgba(223, 231, 255, 0.3);
   border-radius: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  color: rgba(217, 191, 127, 0.65);
+  color: rgba(223, 231, 255, 0.65);
   font-family: var(--font-sans);
   font-size: 0.62rem;
   letter-spacing: 0.18em;
@@ -849,7 +849,7 @@
 /* gift */
 .nayla-wedding .gift-card {
   background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(217, 191, 127, 0.35);
+  border: 1px solid rgba(223, 231, 255, 0.35);
   padding: 1.6rem;
   width: 100%;
   display: flex;
@@ -1010,4 +1010,28 @@
   line-height: 1.5;
   margin-top: 0.5rem;
   color: rgba(246, 241, 232, 0.65);
+}
+/* Daun cover (aset bersama /anggi) berwarna oranye; diwarnai ulang jadi
+   biru pucat-putih supaya serasi dengan latar foto biru. */
+.nayla-wedding .leaf > i img {
+  filter: hue-rotate(195deg) saturate(0.55) brightness(1.75);
+}
+/* Layar lebar (desktop/landscape): foto cover potret jangan di-crop
+   `cover` (kepala terpotong). Foto ditampilkan setinggi layar di tengah,
+   sisi kiri-kanan diisi warna latar studio yang sama (#1d46d1). Berlaku
+   juga untuk hero & penutup. */
+@media (min-aspect-ratio: 4/5) {
+  .nayla-wedding .cover {
+    background-color: #1d46d1;
+    background-size: cover, auto 100%;
+    background-repeat: no-repeat;
+    background-position: center, center bottom;
+  }
+  .nayla-wedding #opening,
+  .nayla-wedding #closing {
+    background-color: #1d46d1;
+    background-size: cover, cover, auto 100%;
+    background-repeat: no-repeat;
+    background-position: center, center, center top;
+  }
 }

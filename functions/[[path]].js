@@ -136,10 +136,9 @@ const ROUTES = {
     title: "Undangan Pernikahan Nayla & Dawi 💍",
     description:
       "Dengan memohon rahmat Allah, kami mengundang Anda di hari bahagia kami. Minggu, 22 November 2026 · Indrasari, Martapura, Kalimantan Selatan",
-    // Sementara memakai foto default sampai /nayla/preview.jpg tersedia.
-    image: BASE + "/my.png",
-    imageW: "997",
-    imageH: "1247",
+    image: BASE + "/nayla/preview.jpg",
+    imageW: "1200",
+    imageH: "630",
     url: BASE + "/nayla-dawi",
     siteName: "Undangan Pernikahan",
   },

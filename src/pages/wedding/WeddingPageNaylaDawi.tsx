@@ -4,14 +4,10 @@ import "./WeddingPageNaylaDawi.css";
 
 /*
  * Undangan Nayla & Dawi — konsep sama dengan /anggi-rezza (WeddingPageAnggi),
- * palet sage + emas.
+ * palet biru + putih (menyesuaikan latar studio biru di foto).
  *
- * Foto dan musik belum ada. Taruh file di /public/nayla/ lalu isi path di
- * bagian CONFIG; selama masih kosong:
- *   - foto mempelai tampil sebagai kotak placeholder,
- *   - cover / hero / penutup memakai gradasi warna saja,
- *   - section galeri tidak dirender,
- *   - tombol musik tidak dirender.
+ * Foto di /public/nayla/ adalah versi kecil dari image_*.webp kiriman klien.
+ * Musik belum ada: selama AUDIO_SRC kosong, tombol musik tidak dirender.
  */
 
 // ─── CONFIG ────────────────────────────────────────────────────────
@@ -27,14 +23,14 @@ const MAP_LINK = "https://maps.app.goo.gl/owipS3NdUunXcwwA8";
 const AUDIO_SRC = "";
 
 // Foto — isi path di /public/nayla/ bila sudah tersedia.
-const BRIDE_PHOTO = "";
-const GROOM_PHOTO = "";
-const GALLERY_PHOTOS: string[] = [];
+const BRIDE_PHOTO = "/nayla/bride.webp";
+const GROOM_PHOTO = "/nayla/groom.webp";
+const GALLERY_PHOTOS: string[] = ["/nayla/gallery-1.webp", "/nayla/gallery-2.webp", "/nayla/gallery-3.webp"];
 
 // Foto background section (di-set sebagai CSS variable lewat inline style)
-const COVER_PHOTO = "";
-const HERO_PHOTO = "";
-const CLOSING_PHOTO = "";
+const COVER_PHOTO = "/nayla/cover.webp";
+const HERO_PHOTO = "/nayla/hero.webp";
+const CLOSING_PHOTO = "/nayla/gallery-2.webp";
 
 // Foto yang ditunggu (preload) sebelum halaman tampil — yang kosong dilewati
 const PRELOAD_PHOTOS = [COVER_PHOTO, HERO_PHOTO, BRIDE_PHOTO, GROOM_PHOTO].filter(Boolean);
@@ -182,10 +178,10 @@ const Corner: React.FC<{ pos: "tl" | "tr" | "bl" | "br" }> = ({ pos }) => (
   </span>
 );
 
-// Warna kelopak bunga hias: emas, emas tua, sage muda
-const PC_GOLD = "rgba(217,191,127,.55)";
-const PC_GOLD_DEEP = "rgba(184,150,74,.55)";
-const PC_SAGE = "rgba(183,201,168,.65)";
+// Warna kelopak bunga hias: putih kebiruan, biru, biru muda
+const PC_GOLD = "rgba(223,231,255,.6)";
+const PC_GOLD_DEEP = "rgba(77,111,224,.55)";
+const PC_SAGE = "rgba(174,191,246,.65)";
 
 const Bloom: React.FC<{
   cls: string;
@@ -278,7 +274,7 @@ const GiftCard: React.FC<{ bank: string; number: string }> = ({ bank, number }) 
     <Reveal
       className="gift-card"
       d={2}
-      style={{ background: "var(--green)", borderColor: "rgba(217,191,127,.4)" }}
+      style={{ background: "var(--green)", borderColor: "rgba(223,231,255,.4)" }}
     >
       <span className="bank">{bank}</span>
       <span className="no">{number}</span>

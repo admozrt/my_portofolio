@@ -93,10 +93,10 @@ const weddings: WeddingEntry[] = [
     date: new Date('2026-11-22T07:00:00+08:00'),
     dateLabel: '22 November 2026',
     location: 'Martapura, Kalimantan Selatan',
-    cover: '/nayla/preview.svg',
+    cover: '/nayla/cover.webp',
     href: '/nayla-dawi',
-    accent: '#5f7a5b',
-    theme: 'Sage Emas',
+    accent: '#1f45c9',
+    theme: 'Biru Putih',
   },
   {
     id: 'dimas-laila',
