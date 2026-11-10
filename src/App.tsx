@@ -114,8 +114,10 @@ const App: React.FC = () => {
         <Route path="/solusi-digital" element={<InstitutionalSolutionsPage />} />
         <Route path="/en/solusi-digital" element={<InstitutionalSolutionsPage />} />
 
-        {/* Landing produk Core POS (Sistem Kasir Dinamis Multi-Sektor) */}
-        <Route path="/corepos" element={<CorePOSPage />} />
+        {/* Landing produk ArmeaPOS (Sistem Kasir Dinamis Multi-Sektor) */}
+        <Route path="/armeapos" element={<CorePOSPage />} />
+        {/* Nama lama produk (Core POS) — tautan lama tetap jalan */}
+        <Route path="/corepos" element={<RedirectKeepQuery to="/armeapos" />} />
 
         {/* Portofolio kreator "Rekomendasyi" — dari desain Claude Design */}
         <Route path="/rekomendasyi" element={<RekomendasyiPage />} />

@@ -68,7 +68,7 @@ export const SEOHead: React.FC<SEOHeadProps> = ({ data }) => {
       structuredData = {
         "@context": "https://schema.org",
         "@type": "SoftwareApplication",
-        "name": "Core POS by Dirakhmat",
+        "name": "ArmeaPOS by Dirakhmat",
         "applicationCategory": "BusinessApplication",
         "operatingSystem": "Web",
         "description": data.description,

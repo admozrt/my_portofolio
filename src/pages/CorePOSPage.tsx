@@ -30,14 +30,14 @@ import {
 import { SEOHead } from '../components/ui/SEOHead';
 
 /**
- * Landing page produk "Core POS" — diadaptasi dari halaman marketing asli
+ * Landing page produk "ArmeaPOS" — diadaptasi dari halaman marketing asli
  * (apps/web/src/pages/Landing.tsx pada repo pos-kasirku). Palet, copy, dan
  * struktur konten dipertahankan; bagian yang bergantung pada auth/dashboard
  * produk (login, register, "Buka Dashboard") dilepas karena portofolio ini
  * tidak punya backend produk — CTA di sini selalu membuka modal kontak.
  */
 const BRAND = {
-  name: 'Core POS by Dirakhmat',
+  name: 'ArmeaPOS by Dirakhmat',
   tagline: 'Sistem Kasir Dinamis Multi-Sektor',
 };
 
@@ -51,7 +51,7 @@ const CONTACT = [
 function LogoMark({ boxClass }: { boxClass: string }) {
   return (
     <div className={`${boxClass} overflow-hidden p-0`}>
-      <img src="/corepos/icon.png" alt={BRAND.name} className="h-full w-full object-contain" />
+      <img src="/armeapos/mark.png" alt={BRAND.name} className="h-full w-full object-contain" />
     </div>
   );
 }
@@ -119,7 +119,7 @@ const STEPS = [
 ];
 
 const FAQ = [
-  { q: 'Apakah data tersimpan di server saya sendiri?', a: 'Ya. Core POS diinstal on-premise per klien — data sepenuhnya berada di infrastruktur Anda, bukan cloud multi-tenant pihak ketiga.' },
+  { q: 'Apakah data tersimpan di server saya sendiri?', a: 'Ya. ArmeaPOS diinstal on-premise per klien — data sepenuhnya berada di infrastruktur Anda, bukan cloud multi-tenant pihak ketiga.' },
   { q: 'Bisa dipakai untuk lebih dari satu cabang?', a: 'Fondasi multi-cabang sudah dirancang dalam arsitektur sistem dan akan terus dikembangkan pada rilis berikutnya.' },
   { q: 'Apakah mendukung printer struk thermal?', a: 'Struk digital sudah tersedia (cetak browser atau bagikan via WhatsApp); integrasi ESC/POS langsung ada di roadmap.' },
   { q: 'Bagaimana keamanan akun & data transaksi?', a: 'Otentikasi berbasis sesi dengan validasi ulang otomatis tiap 2 jam, kontrol akses granular per peran, dan pencatatan aktivitas (audit trail) untuk perubahan sensitif.' },
@@ -148,11 +148,11 @@ export const CorePOSPage: React.FC = () => {
     <div className="min-h-screen bg-corepos-cream font-sans text-corepos-ink">
       <SEOHead
         data={{
-          title: 'Core POS by Dirakhmat — Sistem Kasir Dinamis Multi-Sektor',
+          title: 'ArmeaPOS by Dirakhmat — Sistem Kasir Dinamis Multi-Sektor',
           description:
             'Satu platform kasir untuk Retail, F&B, Jasa, Apotek, dan Koperasi — dikonfigurasi bukan dibangun ulang. RBAC granular, stok FEFO, struk digital, dan dashboard real-time.',
           keywords: [
-            'Core POS',
+            'ArmeaPOS',
             'Sistem Kasir',
             'Aplikasi POS',
             'Software Kasir',
@@ -166,8 +166,8 @@ export const CorePOSPage: React.FC = () => {
             'Dirakhmat',
           ],
           author: "Adi Rakhmatullah Ma'arif",
-          url: 'https://dirakhmat.app/corepos',
-          image: 'https://dirakhmat.app/corepos/icon.png',
+          url: 'https://dirakhmat.app/armeapos',
+          image: 'https://dirakhmat.app/armeapos/og.png',
           type: 'website',
           schemaType: 'SoftwareApplication',
         }}

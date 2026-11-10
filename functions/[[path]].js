@@ -154,15 +154,15 @@ const ROUTES = {
     siteName: "Adi Rakhmatullah Ma'arif - Portfolio",
   },
   corepos: {
-    match: (path) => /corepos/i.test(path),
-    title: "Core POS by Dirakhmat - Sistem Kasir Dinamis Multi-Sektor",
+    match: (path) => /corepos|armeapos/i.test(path),
+    title: "ArmeaPOS by Dirakhmat - Sistem Kasir Dinamis Multi-Sektor",
     description:
       "Satu platform kasir untuk Retail, F&B, Jasa, Apotek, dan Koperasi, dikonfigurasi bukan dibangun ulang. RBAC granular, stok FEFO, struk digital, dan dashboard real-time.",
-    image: BASE + "/corepos/icon.png",
-    imageW: "512",
-    imageH: "512",
-    url: BASE + "/corepos",
-    siteName: "Core POS by Dirakhmat",
+    image: BASE + "/armeapos/og.png",
+    imageW: "1200",
+    imageH: "630",
+    url: BASE + "/armeapos",
+    siteName: "ArmeaPOS by Dirakhmat",
   },
   rekomendasyi: {
     match: (path) => /^\/rekomendasyi\/?$/i.test(path),

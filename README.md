@@ -109,7 +109,7 @@ projects, clients, experience, and skills.
 | `/`                | Portfolio homepage                |
 | `/project-wedding` | Wedding invitation showcase index |
 | `/solusi-digital`  | Institutional solutions           |
-| `/corepos`         | Core POS product page             |
+| `/armeapos`        | ArmeaPOS product page             |
 | `/ajie-alya`       | Wedding — Ajie & Alya             |
 | `/anggi-rezza`     | Wedding — Anggi & Rezza           |
 | `/nayla-dawi`      | Wedding — Nayla & Dawi            |

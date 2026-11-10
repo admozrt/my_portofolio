@@ -4,7 +4,7 @@ import type { Project } from '../../types';
  * Terjemahan English untuk `src/data/project.ts`, per `id` projek.
  *
  * Hanya field yang berbeda yang ditulis. Nama produk yang memang nama diri
- * (Sinergi Health, TMU Ferry, SIPARBA, Core POS) tidak diterjemahkan; teknologi,
+ * (Sinergi Health, TMU Ferry, SIPARBA, ArmeaPOS) tidak diterjemahkan; teknologi,
  * tautan, dan logo jatuh ke data asli.
  */
 export const projectsEn: Partial<Record<number, Partial<Project>>> = {

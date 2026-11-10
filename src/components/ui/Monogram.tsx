@@ -14,9 +14,9 @@ interface MonogramProps {
 }
 
 /**
- * Logo "A" — sama dengan ikon tab browser (public/favicon.ico): ubin biru
- * dengan huruf A krem yang terbelah. Digambar ulang sebagai SVG (grid 48)
- * supaya tajam di semua ukuran. Dipakai di header, splash, dan footer.
+ * Logo "A" — sumber: public/logo.svg (juga dipakai untuk favicon dan
+ * logo192/512). Ubin biru, huruf A krem dua potong (kaki
+ * kiri tipis + blok kanan), ditelusuri dari file logo asli (grid 48). Dipakai di header, splash, dan footer.
  * `draw` = muncul dengan skala halus saat mount (menghormati reduced-motion).
  * `strokeClassName` dipertahankan untuk kompatibilitas pemanggil lama; tidak
  * lagi dipakai karena warna logo tetap.
@@ -42,9 +42,8 @@ export const Monogram: React.FC<MonogramProps> = ({
       transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
     >
       <title>{title}</title>
-      <rect width="48" height="48" rx="7" fill="#0055aa" />
-      <polygon points="10,37.5 19.5,10 21,10 22.3,18 19.8,28 18.6,37.5" fill="#dfe4b9" />
-      <polygon points="22.2,10 29,10 37.8,37.5 30.2,37.5 28.8,32.5 21.6,32.5 23.6,24.5 22.6,17" fill="#dfe4b9" />
+      <rect width="48" height="48" rx="3.6" fill="#0054a9" />
+      <path fill="#efedba" d="M19.07 9.87 L19.63 9.87 L22.80 21.40 L17.93 38.22 L10.24 38.22 Z M21.59 9.87 L29.03 9.87 L37.72 38.22 L29.89 38.22 L28.42 33.24 L21.24 33.24 L23.41 26.80 L26.44 26.80 Z" />
     </motion.svg>
   );
 };
