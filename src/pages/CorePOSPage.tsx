@@ -600,7 +600,7 @@ function ContactModal({ open, onClose }: { open: boolean; onClose: () => void })
           </button>
 
           {!photoError ? (
-            <img src="/my.png" alt="Foto profil" onError={() => setPhotoError(true)} className="h-56 w-full object-cover" />
+            <img src="/my.png" alt="Foto profil" onError={() => setPhotoError(true)} className="h-64 w-full object-cover object-[50%_18%] sm:h-72" />
           ) : (
             <div className="flex h-56 w-full items-center justify-center bg-corepos-accent/10">
               <User className="h-16 w-16 text-corepos-accent/50" />
